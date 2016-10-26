@@ -20,30 +20,7 @@
 	<div class="col_lock">
 		<a href="{!! URL::to('/auth/logout') !!}" data-toggle="tooltip" title="{!! trans('front/header.logout') !!}">{!! HTML::image('img/front/img3.png') !!}</a>
 	</div>
-	
-	
-	<?php 
-		$currLang = Config::get('app.locale');
-		$select1 = '';
-		if($currLang == 'en'){
-			$select1 = 'selected="selected"';
-		}
 
-		$select2 = '';
-		if($currLang == 'ca'){
-			$select2 = 'selected="selected"';
-		}
-
-		$select3 = '';
-		if($currLang == 'es'){
-			$select3 = 'selected="selected"';
-		}
-	?>
-	<select name="select_lang" onchange="changeLang();" id="select_lang">
-		<option <?php echo $select1;?> value="{!! URL::to('/language/en') !!}">{!! trans('front/header.english') !!}</option>
-		<option <?php echo $select2;?> value="{!! URL::to('/language/ca') !!}">{!! trans('front/header.catalan') !!}</option>
-		<option <?php echo $select3;?> value="{!! URL::to('/language/es') !!}">{!! trans('front/header.spanish') !!}</option>
-	</select>
 	
 	<script>
 		function changeLang(){
@@ -51,4 +28,79 @@
 			window.location.href = url;
 		}
 	</script>
+</div>
+
+
+<div class="col-sm-3 col-sm-offset-1  col-lg-2 col-lg-offset-1 ">
+	<h1 class="logo">
+		<a href="{!! URL::to('/dashboard') !!}">
+			{!! HTML::image('img/front/logo.png') !!}
+		</a>
+	</h1>
+	<?php
+	$currLang = Config::get('app.locale');
+	$select1 = '';
+	if($currLang == 'en'){
+		$select1 = 'selected="selected"';
+	}
+
+	$select2 = '';
+	if($currLang == 'ca'){
+		$select2 = 'selected="selected"';
+	}
+
+	$select3 = '';
+	if($currLang == 'es'){
+		$select3 = 'selected="selected"';
+	}
+	?>
+	<select name="select_lang" onchange="changeLang();" id="select_lang">
+		<option <?php echo $select1;?> value="{!! URL::to('/language/en') !!}">{!! trans('front/header.english') !!}</option>
+		<option <?php echo $select2;?> value="{!! URL::to('/language/ca') !!}">{!! trans('front/header.catalan') !!}</option>
+		<option <?php echo $select3;?> value="{!! URL::to('/language/es') !!}">{!! trans('front/header.spanish') !!}</option>
+	</select>
+	<h3>{{ trans('front/MyChannel.summary') }}</h3>
+	<ul>
+		<li>
+			<p>
+				<a href="{!! URL::to('/front_user') !!}"><span>{!! count($total_bots) !!}</span>{{ trans('front/dashboard.bots') }}</a>
+			</p>
+		</li>
+
+		<li>
+			<p><a href="{!! URL::to('/front_user') !!}"><span>{!! count($total_chanels) !!}</span>{{ trans('front/dashboard.channels') }}</a></p>
+		</li>
+	</ul>
+
+	<div class="new_bot_channel">
+		<a class="bot_button" href="{!! URL::to('/my_channel/create') !!}">{!! HTML::image('img/front/plus.png') !!}</a>
+		<p>{{ trans('front/MyChannel.add_new_bot') }}</p>
+	</div>
+
+	<div class="col-summary">
+		<div class="summary_content">
+			<h4>{{ trans('front/dashboard.bots') }}</h4>
+			<?php
+			if(isset($total_bots) && !empty($total_bots)){
+			foreach($total_bots as $tbk1 => $tbv1){
+			?>
+			<p><a href="{!! URL::to('/bot/detail/'.$tbv1->id) !!}"><?php echo $tbv1->username;?></a></p>
+			<?php
+			}
+			}
+			?>
+		</div>
+
+		<div class="summary_content"><h4>{{ trans('front/dashboard.channels') }}</h4>
+			<?php
+			if(isset($total_chanels) && !empty($total_chanels)){
+			foreach($total_chanels as $tck1 => $tcv1){
+			?>
+			<p><a href="{!! URL::to('/my_channel/detail/'.$tcv1->id) !!}"><?php echo $tcv1->name;?></a></p>
+			<?php
+			}
+			}
+			?>
+		</div>
+	</div>
 </div>

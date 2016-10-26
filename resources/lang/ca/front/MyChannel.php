@@ -13,7 +13,7 @@ return [
 	'edit' => 'Update channel',
 	'confirm' => 'Really delete this channel ?',
 	'channels' => 'Channels',
-	'add_new_bot' => 'Add a new channel &amp; Channel',
+	'add_new_bot' => 'Nou Bot o Canal',
 	'our_plans' => 'Our Plans',
 	'telegram' => 'Telegram',
 	'service_and_features' => 'Services and features',

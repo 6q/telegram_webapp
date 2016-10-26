@@ -25,57 +25,6 @@
   }
 </script>
 
-<div class="col-sm-3 col-sm-offset-1  col-lg-2 col-lg-offset-1 ">
-    <h1 class="logo">
-        <a href="{!! URL::to('/dashboard') !!}">
-            {!! HTML::image('img/front/logo.png') !!}
-        </a>
-    </h1>
-
-    <h3>{{ trans('front/dashboard.summary') }}</h3>
-    <ul>
-        <li>
-            <p>
-                <a href="{!! URL::to('/front_user') !!}"><span>{!! count($total_bots) !!}</span>{{ trans('front/dashboard.bots') }}</a>
-            </p>
-        </li>
-
-        <li>
-            <p><a href="{!! URL::to('/front_user') !!}"><span>{!! count($total_chanels) !!}</span>{{ trans('front/dashboard.channels') }}</a></p>
-        </li>
-    </ul>
-
-    <div class="new_bot_channel">
-        <a class="bot_button" href="{!! URL::to('/bot/create') !!}">{!! HTML::image('img/front/plus.png') !!}</a>
-        <p>{{ trans('front/dashboard.add_new_bot_chanel') }}</p>
-    </div>
-<div class="col-summary">
-    <div class="summary_content">
-        <h4>{{ trans('front/dashboard.bots') }}</h4>
-        <?php
-            if(isset($total_bots) && !empty($total_bots)){
-                foreach($total_bots as $tbk1 => $tbv1){
-                    ?>
-        <p><a href="{!! URL::to('/bot/detail/'.$tbv1->id) !!}"><?php echo $tbv1->username;?></a></p>
-                    <?php
-                }
-            }
-        ?>
-    </div>
-
-    <div class="summary_content"><h4>{{ trans('front/dashboard.channels') }}</h4>
-        <?php
-            if(isset($total_chanels) && !empty($total_chanels)){
-                foreach($total_chanels as $tck1 => $tcv1){
-                    ?>
-        <p><a href="{!! URL::to('/my_channel/detail/'.$tcv1->id) !!}"><?php echo $tcv1->name;?></a></p>
-                    <?php
-                }
-            }
-        ?>
-    </div>
-</div>
-</div>
 <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
     @include('front.top')
 
@@ -87,24 +36,7 @@
     
     <div class="col-dashboard">
         <div class="col-lg-9 col-dash">
-            <ul>
-                <li>
-                    <h4>{{ trans('front/dashboard.last') }} 30 {{ trans('front/dashboard.days') }}</h4>
-                    <!--<div data-provide="datepicker" class="input-group date date-content">
-                        <input type="text" class="datepicker">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-th "></span>
-                        </div>
-                    </div>-->
-                </li>
 
-                <li>
-                    <h4>{{ trans('front/dashboard.recieved_message') }}</h4>
-                    <!--<a href="#">{!! HTML::image('img/front/edit.png') !!}</a>-->
-                </li>
-            </ul>
-
-            <h3>{!! count($recivedMsg) !!}</h3>
             <div class="status">
                 <h4>{{ trans('front/dashboard.global_statistics') }} <span>{{ trans('front/dashboard.status_measuring') }}</span></h4>
               
@@ -160,17 +92,8 @@
                                 <div class="days_preparing">
                                     <h4><a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{{ $bv1->username }}</a></h4>
                                     <p class="h2">
-                                        <?php
-                                            if(isset($bv1->bot_image) && !empty($bv1->bot_image)){
-                                            ?>
-                                                <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{!! HTML::image('uploads/'.$bv1->bot_image) !!}</a>
-                                            <?php
-                                            }
-                                            else{
-                                        ?>
                                       <span>{!! $bv1->total_msg !!}</span>
                                         <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{!! HTML::image('img/front/days_counting_img.png') !!}</a>
-                                        <?php }?>
                                     </p>
                                     <h5>{{ trans('front/dashboard.last') }} 30 {{ trans('front/dashboard.days') }}</h5>
                                   <a href="{!! URL::to('/bot/update_bot/'.$bv1->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a>
@@ -504,10 +427,6 @@
 
 </div>-->
 <style>
-.col-summary {
-    max-height: 159px;
-    overflow: auto;
-}
   #status_dropdown.form-horizontal.panel {
   float: right;
 }

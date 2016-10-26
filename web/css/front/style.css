@@ -52,9 +52,9 @@
 	appearance:none;
   background-color: #2ca2c4;
   background-image: url("../../img/down_arrow.png");
-  background-position: 96% center;
+  background-position: 94% center;
   background-repeat: no-repeat;
-  background-size: 12px auto;
+  background-size: 14px auto;
   border: medium none;
   border-radius: 3px;
   color: #000;
@@ -125,7 +125,7 @@ img.register_logo {
   width: 100%;
 }
 h1.logo {
-  margin: 0 0 20%;
+  margin: 0 0 20px;
 }
 .col_top .col-lg-1 > div {
   padding: 20px;
@@ -972,19 +972,17 @@ p.h2 > img {
 .col-profiletab li {
   float: left;
   margin-bottom: 12px;
-  width: 50%;
 }
 select#select_lang {
-  background-color: #2ca2c4;
-  bottom: 15px;
-  left: 11px;
-  padding: 5px 7px;
-  position: fixed;
-  background-color: #2ca2c4;
-  border:1px solid #fff;
+  background-color: #fff;
   border-radius: 3px;
-  color: #000;
+  color: #24A1DA;
+  font-weight:bold;
   padding: 6px 20px 6px 8px;
+  margin:0 auto;
+  width:90%;
+  display:block;
+  position:relative;
 }
 #preview img {
   max-width: 200px;
@@ -1403,7 +1401,7 @@ select#select_lang {
   position: relative;
 }
 h1.logo {
-  margin: 0 0 40px;
+  margin: 0 0 20px;
 }
 .container_1 .col-lg-2 {
   padding-bottom: 20px;
