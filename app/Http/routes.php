@@ -1,0 +1,788 @@
+<?php
+use Telegram\Bot\Api;
+Route::group(['middleware' => ['web']], function () {
+
+    // Home
+
+    Route::get('/', 'Auth\AuthController@getLogin');
+    Route::post('/', 'Auth\AuthController@postLogin');
+
+    /* Route::get('/', [
+      'uses' => 'HomeController@index',
+      'as' => 'home'
+      ]); */
+    Route::get('language/{lang}', 'HomeController@language')->where('lang', '[A-Za-z_-]+');
+
+
+    // Admin
+    Route::get('admin', [
+        'uses' => 'AdminController@admin',
+        'as' => 'admin',
+        'middleware' => 'admin'
+    ]);
+    Route::get('dashboard', 'DashboardController@index');
+    Route::post('dashboard/getcharts', 'DashboardController@getcharts');
+    Route::post('dashboard/sendmessage', 'DashboardController@sendmessage');
+    Route::post('dashboard/sendbotmessage', 'DashboardController@sendbotmessage');
+
+
+    // Blog
+    // Contact
+    Route::resource('contact', 'ContactController', [
+        'except' => ['show', 'edit']
+    ]);
+
+
+    // User
+    //Route::get('auth/login', 'Auth\AuthController@getLogin');
+    //Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::get('user/sort/{role}', 'UserController@indexSort');
+
+    Route::get('user/roles', 'UserController@getRoles');
+    Route::post('user/roles', 'UserController@postRoles');
+
+    Route::put('userseen/{user}', 'UserController@updateSeen');
+
+    Route::post('front_user/update', 'FrontUserController@update');
+    Route::get('front_user/change_password/{user_id}', 'FrontUserController@change_password');
+    Route::post('front_user/change_password', 'FrontUserController@change_password');
+    Route::resource('front_user', 'FrontUserController');
+    
+    Route::resource('messages', 'MessageController');
+    Route::resource('recent_activity', 'RecentActivityController');
+
+    Route::resource('user', 'UserController');
+
+    Route::resource('plan', 'PlanController');
+    
+    Route::get('pages/detail/{pageid?}', 'PageController@detail');
+    Route::resource('page', 'PageController');
+    Route::resource('emailtemplate', 'EmailtemplateController');
+
+    Route::get('bot/userbot/{user_id?}', 'BotController@userbot');
+    Route::get('bot/bot_detail/{bot_id?}', 'BotController@admin_bot_detail');
+    Route::get('bot/contactform_ques/{contact_form_id?}', 'BotController@contactform_ques');
+    Route::get('bot/gallery_img/{gallery_id?}', 'BotController@gallery_img');
+    Route::get('bot/detail/{botid?}', 'BotController@detail');
+    Route::post('bot/setweb_hook', 'BotController@setweb_hook');
+    Route::get('bot/update_bot/{bot_id?}', 'BotController@edit_bot');
+    Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
+    
+    Route::resource('bot', 'BotController');
+
+    Route::post('command/create/{bot_id?}', 'CommandController@create');
+    Route::get('command/create/{bot_id?}', 'CommandController@create');
+    
+    Route::post('command/autoresponse_edit/{auto_id?}', 'CommandController@autoresponse_update');
+    Route::get('command/autoresponse_edit/{auto_id?}', 'CommandController@autoresponse_edit');
+    
+    Route::post('command/chanel_edit/{chanel_id?}', 'CommandController@chanel_update');
+    Route::get('command/chanel_edit/{chanel_id?}', 'CommandController@chanel_edit');
+    
+    Route::post('command/contactform_edit/{contactform_id?}', 'CommandController@contactform_update');
+    Route::get('command/contactform_edit/{contactform_id?}', 'CommandController@contactform_edit');
+    
+    Route::post('command/gallery_edit/{contactform_id?}', 'CommandController@gallery_update');
+    Route::get('command/gallery_edit/{contactform_id?}', 'CommandController@gallery_edit');
+    
+    Route::resource('command/upload', 'CommandController@imgupload');
+    Route::resource('command', 'CommandController');
+
+    // Routes for mychannel Controller
+
+    Route::get('my_channel/detail/{cahnelId?}', 'MyChannelController@detail');
+    Route::get('my_channel/update_channel/{cahnelId?}', 'MyChannelController@edit_channel');
+    Route::post('my_channel/update_channel/{cahnelId?}', 'MyChannelController@update_channel');
+    Route::resource('my_channel', 'MyChannelController');
+    // End
+
+
+    Route::get('/bot/get_state/{country_id?}', function(Request $request, $country_id) {
+        $state = DB::table('countries')->get();
+
+        $states = DB::table('states')
+                ->where('country_id', '=', $country_id)
+                ->get();
+
+        $stateHtml = '';
+        $stateHtml .= '<select id="state" name="state" class="form-control">';
+        $stateHtml .= '<option value="">Select State</option>';
+        if (!empty($states)) {
+            foreach ($states as $k1 => $v1) {
+                $stateHtml .= '<option value="' . $v1->id . '">' . $v1->name . '</option>';
+            }
+        }
+        $stateHtml .= '</select>';
+
+        echo $stateHtml;
+        die;
+    });
+
+    // Authentication routes...
+
+    Route::get('auth/logout', 'Auth\AuthController@getLogout');
+    Route::get('auth/confirm/{token}', 'Auth\AuthController@getConfirm');
+
+    // Resend routes...
+    Route::get('auth/resend', 'Auth\AuthController@getResend');
+
+    // Registration routes...
+    Route::get('auth/register', 'Auth\AuthController@getRegister');
+    Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+    // Password reset link request routes...
+    Route::get('password/email', 'Auth\PasswordController@getEmail');
+    Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+    // Password reset routes...
+    Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+    Route::post('password/reset', 'Auth\PasswordController@postReset');
+});
+
+Route::get('/user_images/{size}/{name}', function($size = NULL, $name = NULL) {
+
+    if (!is_null($size) && !is_null($name)) {
+        $size = explode('x', $size);
+        $cache_image = Image::cache(function($image) use($size, $name) {
+                    return $image->make(url('/user_images/' . $name))->resize($size[0], $size[1]);
+                }, 10); // cache for 10 minutes
+
+
+        return Response::make($cache_image, 200, ['Content-Type' => 'image']);
+    } else {
+        abort(404);
+    }
+});
+
+
+Route::post('/{bottoken}/webhook', function ($token) {
+    
+    $update = Telegram::commandsHandler(true);
+    
+    $data = json_decode($update,true);
+    $messageText = (isset($data['message']['text']) && !empty($data['message']['text']))?$data['message']['text']:'';
+    
+    file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
+    
+    $telegram = new Api($token);
+    $response = $telegram->getMe();
+    
+	$botId = $response->getId();
+    $chatId = $data['message']['chat']['id'];
+    $message_id = $data['message']['message_id'];
+    
+    $bot_data = DB::table('bots')->where('bot_token', 'LIKE', '%'.$token.'%')->get();
+    $dbBotId = (isset($bot_data[0]->id) && $bot_data[0]->id!='')?$bot_data[0]->id:'';
+    
+    /* Add bot user */
+    $from_id = $data['message']['from']['id'];
+    $first_name = $data['message']['from']['first_name'];
+    $last_name = $data['message']['from']['last_name'];
+    
+    $bot_user = DB::table('bot_users')
+                    ->where('bot_id', '=', $dbBotId)
+                    ->where('first_name', 'LIKE', $first_name)
+                    ->get();
+    
+    $bot_user_id = '';
+    if(isset($bot_user[0]->id) && !empty($bot_user[0]->id)){
+        $bot_user_id = $bot_user[0]->id;
+    }
+    else{
+        $bot_user_id = DB::table('bot_users')->insertGetId(
+                ['bot_id' => $dbBotId, 'first_name' => $first_name, 'last_name' => $last_name, 'username' => '', 'fromid' => $from_id, 'created_at' => date('Y-m-d h:i:s'), 'modified_at' => date('Y-m-d h:i:s')]
+            );
+        
+        //file_put_contents(public_path().'/result.txt',$bot_user_id);
+    }
+    /*******************************************************/
+    
+    
+    
+    /* Bot Message */
+    if(!empty($bot_user_id)){
+        
+        //$date = $data['message']['date'];
+        $bot_msg_date = date('Y-m-d h:i:s');
+        
+        $bot_messages_id = DB::table('bot_messages')->insertGetId(
+                ['bot_id' => $dbBotId,'bot_user_id' => $bot_user_id,'date' => $bot_msg_date,'forward_from' => $from_id, 'forward_from_chat' => $chatId, 'forward_date' => $bot_msg_date, 'reply_to_chat' => '', 'reply_to_message' => '', 'text' => $messageText]
+            );
+    }    
+    /*******************************************************/
+    
+    
+    
+    /*
+    DB::table('tmp_bots')->insert(
+        ['data_value' => serialize($bot_data)]
+    );
+    */
+    
+    
+    
+    
+    if(!empty($dbBotId)){
+        
+        $autoresponse = '';
+        if(isset($bot_data[0]->autoresponse) && !empty($bot_data[0]->autoresponse)){
+            $autoresponse = $bot_data[0]->autoresponse;
+        }
+        
+        $contact_form = '';
+        if(isset($bot_data[0]->contact_form) && !empty($bot_data[0]->contact_form)){
+            $contact_form = $bot_data[0]->contact_form;
+        }
+        
+        $galleries = '';
+        if(isset($bot_data[0]->galleries) && !empty($bot_data[0]->galleries)){
+            $galleries = $bot_data[0]->galleries;
+        }
+        
+        $channels = '';
+        if(isset($bot_data[0]->channels) && !empty($bot_data[0]->channels)){
+            $channels = $bot_data[0]->channels;
+        }
+        
+        $array = array(
+                '0' => $autoresponse,
+                '1' => $contact_form,
+                '2' => $galleries,
+                '3' => $channels
+        );
+        
+        $ke_arr = '';
+        for($i = 0; $i<=3;$i++){
+            if(isset($array[$i]) && !empty($array[$i])){
+                $ke_arr[$i] = $array[$i];
+            }
+        }
+
+        $ke_arr = array_chunk($ke_arr,2);
+        $keyboard = $ke_arr;
+		$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
+        
+       // file_put_contents(public_path().'/result.txt',serialize($keyboard));
+        
+        if($messageText != 'Back'){
+            DB::table('tmp_message')->insert(
+                ['chat_id' => $chatId,'message_id' => $message_id,'message' => $messageText.'_'.$dbBotId]
+            );
+        }
+        
+        if(!empty($messageText) && $messageText == $autoresponse){
+            
+            $db_autoresponse = DB::table('autoresponses')->where('type_id', '=', $dbBotId)->get();
+            
+            $arr = '';
+            $Back = 'Back';
+            $i = 0;
+            if(isset($db_autoresponse) && !empty($db_autoresponse)){
+                foreach($db_autoresponse as $ak1 => $av1){
+                    $arr[$i]['text'] = $av1->submenu_heading_text;
+                    $arr[$i]['callback_data'] = $av1->id;
+                    $i++;
+                }
+            }
+            $arr[$i]['text'] = $Back;
+            $arr[$i]['callback_data'] = '';
+
+            $arr = array_chunk($arr,2);
+
+            $keyboard = $arr;
+            
+            //file_put_contents(public_path().'/result.txt',json_encode($keyboard));  
+            /*
+            DB::table('tmp_bots')->insert(
+                ['data_value' => json_encode($keyboard)]
+            );
+            */
+          
+            $msg = "you are in ".$autoresponse;
+            
+            
+        }
+        else if(!empty($messageText) && $messageText == $contact_form){
+            $db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
+            
+            $arr = '';
+            $Back = 'Back';
+            $i = 0;
+            if(isset($db_contact_form) && !empty($db_contact_form)){
+                foreach($db_contact_form as $ac1 => $cv1){
+                    $arr[$i]['text'] = $cv1->submenu_heading_text;
+                    $arr[$i]['callback_data'] = $cv1->id;
+                    $i++;
+                }
+            }
+            $arr[$i]['text'] = $Back;
+            $arr[$i]['callback_data'] = '';
+
+            $arr = array_chunk($arr,2);
+
+            $keyboard = $arr;
+            
+            $msg = "you are in ".$contact_form;
+        }
+        else if(!empty($messageText) && $messageText == $galleries){
+            $db_galleries = DB::table('galleries')->where('type_id', '=', $dbBotId)->get();
+            
+            $arr = '';
+            $Back = 'Back';
+            $i = 0;
+            if(isset($db_galleries) && !empty($db_galleries)){
+                foreach($db_galleries as $gk1 => $gv1){
+                    $arr[$i]['text'] = $gv1->gallery_submenu_heading_text;
+                    $arr[$i]['callback_data'] = $gv1->id;
+                    $i++;
+                }
+            }
+            $arr[$i]['text'] = $Back;
+            $arr[$i]['callback_data'] = '';
+
+            $arr = array_chunk($arr,2);
+
+            $keyboard = $arr;
+            
+            $msg = "you are in ".$galleries;
+        }
+        else if(!empty($messageText) && $messageText == $channels){
+            $db_chanels = DB::table('chanels')->where('type_id', '=', $dbBotId)->get();
+            
+            $arr = '';
+            $Back = 'Back';
+            $i = 0;
+            if(isset($db_chanels) && !empty($db_chanels)){
+                foreach($db_chanels as $ck1 => $ch1){
+                    $arr[$i]['text'] = $ch1->chanel_submenu_heading_text;
+                    $arr[$i]['callback_data'] = $ch1->id;
+                    $i++;
+                }
+            }
+            $arr[$i]['text'] = $Back;
+            $arr[$i]['callback_data'] = '';
+
+            $arr = array_chunk($arr,2);
+
+            $keyboard = $arr;
+            
+            file_put_contents(public_path().'/result.txt',json_encode($keyboard));  
+            /*
+            DB::table('tmp_bots')->insert(
+                ['data_value' => json_encode($keyboard)]
+            );
+            */
+          
+            $msg = "you are in ".$channels;
+        }
+        else{
+            if($messageText != 'Back')
+            {
+                DB::table('tmp_bots')->insert(
+                    ['data_value' => serialize($messageText)]
+                );
+                
+                $tbl_autoresponse = DB::table('autoresponses')
+                    ->where('type_id', '=', $dbBotId)
+                    ->where('submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->get();
+            
+            
+                $tbl_contact_forms = DB::table('contact_forms')
+                    ->where('type_id', '=', $dbBotId)
+                    ->where('submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->get();
+                
+                $tbl_galleries = DB::table('galleries')
+                    ->where('type_id', '=', $dbBotId)
+                    ->where('gallery_submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->get();
+
+                
+                $tbl_chanels = DB::table('chanels')
+                    ->where('type_id', '=', $dbBotId)
+                    ->where('chanel_submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->get();
+            
+                /*
+                DB::table('tmp_bots')->insert(
+                    ['data_value' => serialize($tbl_autoresponse)]
+                );
+                */
+            
+            
+                if(isset($tbl_autoresponse[0]) && !empty($tbl_autoresponse[0])){
+					DB::table('tmp_mytable')->truncate();
+					
+                    if(isset($tbl_autoresponse[0]->autoresponse_msg) && !empty($tbl_autoresponse[0]->autoresponse_msg)){
+                        $msg = $tbl_autoresponse[0]->autoresponse_msg;
+                    }
+                    else{
+                        $msg = '';
+                        $img_url = public_path().'/uploads/'.$tbl_autoresponse[0]->image;
+                        $image_name = $tbl_autoresponse[0]->image;
+                    }
+                
+                    /* Autoresponse Keyboard */
+                    $arr = '';
+                    $Back = 'Back';
+                    $i = 0;
+                    $db_autoresponse = DB::table('autoresponses')->where('type_id', '=', $dbBotId)->get();
+                    if(isset($db_autoresponse) && !empty($db_autoresponse)){
+                        foreach($db_autoresponse as $ak1 => $av1){
+                            $arr[$i]['text'] = $av1->submenu_heading_text;
+                            $arr[$i]['callback_data'] = $av1->id;
+                            $i++;
+                        }
+                    }
+                    $arr[$i]['text'] = $Back;
+                    $arr[$i]['callback_data'] = '';
+
+                    $arr = array_chunk($arr,2);
+
+                    $keyboard = $arr;
+
+                    /* Autoresponse Keyboard */
+                }
+                else if(isset($tbl_contact_forms[0]) && !empty($tbl_contact_forms[0])){
+                    /* ContactForms */
+					DB::table('tmp_mytable')->truncate();
+					DB::table('tmp_mytable')->insert(
+						['data_key' => $tbl_contact_forms[0]->id,'data_value' => $tbl_contact_forms[0]->headline]
+					);
+                    $db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
+            
+                    $arr = '';
+                    $Back = 'Back';
+                    $i = 0;
+                    if(isset($db_contact_form) && !empty($db_contact_form)){
+                        foreach($db_contact_form as $ac1 => $cv1){
+                            $arr[$i]['text'] = $cv1->submenu_heading_text;
+                            $arr[$i]['callback_data'] = $cv1->id;
+                            $i++;
+                        }
+                    }
+                    $arr[$i]['text'] = $Back;
+                    $arr[$i]['callback_data'] = '';
+
+                    $arr = array_chunk($arr,2);
+
+                    $keyboard = $arr;
+                    
+                    $cfq_ID = $tbl_contact_forms[0]->id;	
+                    $q_limit = 1;
+                    $offset = 0;
+                    
+                    $cf_ques = DB::table('tmp_ques')
+                        ->where('ques_id', '=', $cfq_ID)
+                        ->orderBy('id', 'desc')
+                        ->get();
+					
+					if(isset($cf_ques[0]->data_limit) && count($cf_ques[0]->data_limit) != 0){
+                        $offset = $cf_ques[0]->data_limit+1;
+                    }	
+					
+					$contact_form_questions = DB::table('contact_form_questions')
+                        ->where('contact_form_id', '=', $cfq_ID)
+                        ->limit($q_limit)
+                        ->offset($offset)
+                        ->get();
+						
+					$msg = '';
+                    if(isset($contact_form_questions[0]->ques_heading) && !empty($contact_form_questions[0]->ques_heading)){
+                        $msg = $contact_form_questions[0]->ques_heading;
+                        DB::table('tmp_ques')->insert(
+                            [
+                                'ques_id' => $cfq_ID,
+                                'data_limit' => $offset
+                            ]
+                        );
+                    }
+					else{
+						$msg = $tbl_contact_forms[0]->headline;
+						DB::table('tmp_ques')->truncate();
+					}
+                    
+                 //   file_put_contents(public_path().'/result.txt',json_encode($contact_form_questions)); 
+                
+                    /* ContactForms */
+                }
+                else if(isset($tbl_galleries[0]) && !empty($tbl_galleries[0])){
+					DB::table('tmp_mytable')->truncate();
+					DB::table('tmp_mytable')->truncate();
+                    /* Gallery */
+                    $db_galleries = DB::table('galleries')->where('type_id', '=', $dbBotId)->get();
+            
+                    $arr = '';
+                    $Back = 'Back';
+                    $i = 0;
+                    if(isset($db_galleries) && !empty($db_galleries)){
+                        foreach($db_galleries as $gk1 => $gv1){
+                            $arr[$i]['text'] = $gv1->gallery_submenu_heading_text;
+                            $arr[$i]['callback_data'] = $gv1->id;
+                            $i++;
+                        }
+                    }
+                    $arr[$i]['text'] = $Back;
+                    $arr[$i]['callback_data'] = '';
+
+                    $arr = array_chunk($arr,2);
+
+                    $keyboard = $arr;
+                    
+                    $gallery_ID = $tbl_galleries[0]->id;
+                    $g_limit = 1;
+                    $offset = 0;
+                    
+                    $g_images = DB::table('tmp_img')
+                        ->where('gallery_id', '=', $gallery_ID)
+                        ->orderBy('id', 'desc')
+                        ->get();
+                    
+                    if(isset($g_images[0]->data_limit) && count($g_images[0]->data_limit) != 0){
+                        $offset = $g_images[0]->data_limit+1;
+                    }
+                    
+                    $gallery_images = DB::table('gallery_images')
+                        ->where('gallery_id', '=', $gallery_ID)
+                        ->limit($g_limit)
+                        ->offset($offset)
+                        ->get();
+                    
+                   // file_put_contents(public_path().'/result.txt',$gallery_ID);
+                    
+                    $msg = '';
+                    $img_url = '';
+                    $image_name = '';
+                    if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){
+                        $img_url = public_path().'/uploads/'.$gallery_images[0]->image; 
+                        $image_name = $gallery_images[0]->image;
+                        
+                        DB::table('tmp_img')->insert(
+                            [
+                                'gallery_id' => $gallery_ID,
+                                'data_limit' => $offset
+                            ]
+                        );
+                    }
+                    else{
+						DB::table('tmp_mytable')->truncate();
+                        DB::table('tmp_img')->truncate();
+                        
+                        $gallery_ID = $tbl_galleries[0]->id;
+                        $g_limit = 1;
+                        $offset = 0;
+
+                        $g_images = DB::table('tmp_img')
+                            ->where('gallery_id', '=', $gallery_ID)
+                            ->orderBy('id', 'desc')
+                            ->get();
+
+                        if(isset($g_images[0]->data_limit) && count($g_images[0]->data_limit) != 0){
+                            $offset = $g_images[0]->data_limit+1;
+                        }
+
+                        $gallery_images = DB::table('gallery_images')
+                            ->where('gallery_id', '=', $gallery_ID)
+                            ->limit($g_limit)
+                            ->offset($offset)
+                            ->get();
+
+                       // file_put_contents(public_path().'/result.txt',$gallery_ID);
+
+                        $msg = '';
+                        $img_url = '';
+                        $image_name = '';
+                        if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){
+                            $img_url = public_path().'/uploads/'.$gallery_images[0]->image; 
+                            $image_name = $gallery_images[0]->image;
+
+                            DB::table('tmp_img')->insert(
+                                [
+                                    'gallery_id' => $gallery_ID,
+                                    'data_limit' => $offset
+                                ]
+                            );
+                        }
+                    }
+                    /* Gallery */
+                }
+                else if(isset($tbl_chanels[0]) && !empty($tbl_chanels[0])){
+					DB::table('tmp_mytable')->truncate();
+					DB::table('tmp_mytable')->truncate();
+                    if(isset($tbl_chanels[0]->chanel_msg) && !empty($tbl_chanels[0]->chanel_msg)){
+                        $msg = $tbl_chanels[0]->chanel_msg;
+                    }
+                    else{
+                        $msg = '';
+                        $img_url = public_path().'/uploads/'.$tbl_chanels[0]->image;
+                        $image_name = $tbl_chanels[0]->image;
+                    }
+                
+                    /* Channel Keyboard */
+                    $arr = '';
+                    $Back = 'Back';
+                    $i = 0;
+                    $db_chanels = DB::table('chanels')->where('type_id', '=', $dbBotId)->get();
+                    if(isset($db_chanels) && !empty($db_chanels)){
+                        foreach($db_chanels as $ck1 => $chv1){
+                            $arr[$i]['text'] = $chv1->chanel_submenu_heading_text ;
+                            $arr[$i]['callback_data'] = $chv1->id;
+                            $i++;
+                        }
+                    }
+                    $arr[$i]['text'] = $Back;
+                    $arr[$i]['callback_data'] = '';
+
+                    $arr = array_chunk($arr,2);
+
+                    $keyboard = $arr;
+                }
+                else{
+					$chk_ques_data = DB::table('tmp_mytable')->get();
+					if($messageText != 'Back' && !empty($chk_ques_data[0]->data_key)){
+						$dataKey = $chk_ques_data[0]->data_key;
+						$dataValue = $chk_ques_data[0]->data_value;
+						DB::table('tmp_mytable')->truncate();
+						DB::table('tmp_mytable')->insert(
+							['data_key' => $dataKey,'data_value' => $dataValue]
+						);
+						$db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
+				
+						$arr = '';
+						$Back = 'Back';
+						$i = 0;
+						if(isset($db_contact_form) && !empty($db_contact_form)){
+							foreach($db_contact_form as $ac1 => $cv1){
+								$arr[$i]['text'] = $cv1->submenu_heading_text;
+								$arr[$i]['callback_data'] = $cv1->id;
+								$i++;
+							}
+						}
+						$arr[$i]['text'] = $Back;
+						$arr[$i]['callback_data'] = '';
+	
+						$arr = array_chunk($arr,2);
+	
+						$keyboard = $arr;
+						
+						$cfq_ID = $dataKey;	
+						$q_limit = 1;
+						$offset = 0;
+						
+						$cf_ques = DB::table('tmp_ques')
+							->where('ques_id', '=', $cfq_ID)
+							->orderBy('id', 'desc')
+							->get();
+						
+						if(isset($cf_ques[0]->data_limit) && count($cf_ques[0]->data_limit) != 0){
+							$offset = $cf_ques[0]->data_limit+1;
+						}	
+						
+						$contact_form_questions = DB::table('contact_form_questions')
+							->where('contact_form_id', '=', $cfq_ID)
+							->limit($q_limit)
+							->offset($offset)
+							->get();
+							
+						$msg = '';
+						if(isset($contact_form_questions[0]->ques_heading) && !empty($contact_form_questions[0]->ques_heading)){
+							$msg = $contact_form_questions[0]->ques_heading;
+							DB::table('tmp_ques')->insert([
+									'ques_id' => $cfq_ID,
+									'data_limit' => $offset
+								]
+							);
+						}
+						else{
+							$msg = $dataValue;
+							DB::table('tmp_ques')->truncate();
+						}
+					}					
+					
+                    /*
+                    $keyboard = [
+                        [$autoresponse, $contact_form],
+                        [$galleries, $channels],
+                    ];
+                    
+
+                    $msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
+                    
+                    if(!empty($bot_messages_id)){
+                        DB::table('bot_messages')->where('id', $bot_messages_id)->update(['reply_to_message' => $msg]);
+                    }
+					*/
+                }
+            }
+        }
+        
+        if(!empty($messageText) && $messageText == 'Back'){
+            /*$keyboard = [
+                [$autoresponse, $contact_form],
+                [$galleries, $channels],
+            ];
+			*/
+            $msg = "You are in root menu";
+            
+            DB::table('tmp_img')->truncate();
+            DB::table('tmp_bots')->truncate();
+            DB::table('tmp_message')->truncate();
+            DB::table('tmp_ques')->truncate();
+			DB::table('tmp_mytable')->truncate();
+        }
+        
+    }		
+	//$new_keyboard_arr=array();	
+    //$new_keyboard_arr['inline_keyboard']=$keyboard;
+	//$markup = json_encode($keyboard, true);
+	
+	 
+    $reply_markup = $telegram->replyKeyboardMarkup([
+		  'keyboard' => $keyboard, 
+		  'resize_keyboard' => true, 
+		  'one_time_keyboard' => false
+		]);
+	
+	
+    if(!empty($msg)){
+        if(!empty($bot_messages_id)){
+            DB::table('bot_messages')->where('id', $bot_messages_id)->update(array('reply_message' => $msg));
+        }
+        
+        $response = $telegram->sendMessage([
+          'chat_id' => $chatId, 
+          'text' => $msg, 
+		  'reply_markup' => $reply_markup
+        ]);
+    }
+    
+    if(!empty($img_url)){
+        if(!empty($bot_messages_id)){
+            DB::table('bot_messages')->where('id', $bot_messages_id)->update(['reply_message' => $image_name]);
+        }
+        
+        $BOT_TOKEN = $token;
+        $chat_id = $chatId;
+        
+        $BOTAPI = 'https://api.telegram.org/bot' . $BOT_TOKEN .'/';
+        
+        $cfile = new CURLFile($img_url, 'image/jpg'); 
+        
+        $data = [
+            'chat_id' => $chat_id , 
+            'photo' => $cfile
+        ];
+
+        $ch = curl_init($BOTAPI.'sendPhoto');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $result = curl_exec($ch);
+        curl_close($ch);
+    }
+
+    return 'ok';
+});

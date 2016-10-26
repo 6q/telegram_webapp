@@ -1,0 +1,32 @@
+====== Changelog ======
+
+v1.0.3 - 3 January, 2016
+------------------------
+- [fix] Single seller mode checkbox issue fixed on payment system toggle
+
+v1.0.2 - 7 September, 2015
+------------------------
+- [fix] Plugin updater fix (plugin_information)
+
+v1.0.1 - 26 August, 2015
+------------------------
+- [fix] Fix subscription payment and normal payment gateway selected issue
+- [fix] PayPal SDK SSL version changed to 4
+- [fix] 100% seller amount issue fixed
+
+v1.0 - 25 Sep, 2014
+------------------------
+- [new] Single seller mode added and set the seller as primary receiver
+- [new] Customer shipping details added to PayPal
+
+v0.1.2
+------------------------
+- [fix] Fix cart error when adding more than 5 products
+
+v0.1.1
+------------------------
+- [fix] Hide withdraw page bug fix
+
+v0.1
+------------------------
+- Initial Release
