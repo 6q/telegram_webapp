@@ -205,6 +205,7 @@ class DashboardController extends Controller {
                             ->whereIn('bot_id',$botId)
                             ->whereIn('reply_message',$ques_heading)
                             ->orderBy('id','desc')
+	                        ->limit(10)
                             ->get();    
         }
         

@@ -20,7 +20,7 @@ return [
 	'custom_message_welcome' => 'Custom message welcome',
 	'custom_not_allowed_message_response' => 'Custom not allowed message response',
 	'buy' => 'Buy',
-	'summary' => 'Summary',
+	'summary' => 'Resum',
 	'how_to_create' => 'How to create Channel on telegram, please click the button',
 	'click_here' => 'click here',
 	'description' => 'Description',

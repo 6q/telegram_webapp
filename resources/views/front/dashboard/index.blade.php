@@ -95,7 +95,6 @@
                                       <span>{!! $bv1->total_msg !!}</span>
                                         <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{!! HTML::image('img/front/days_counting_img.png') !!}</a>
                                     </p>
-                                    <h5>{{ trans('front/dashboard.last') }} 30 {{ trans('front/dashboard.days') }}</h5>
                                   <a href="{!! URL::to('/bot/update_bot/'.$bv1->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a>
                                   <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bv1->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
                                 </div>
@@ -124,7 +123,6 @@
                                     <p class="h2"><span>215</span>
                                         {!! HTML::image('img/front/days_counting_img.png') !!}
                                     </p>
-                                    <h5>{{ trans('front/dashboard.last') }} 30 {{ trans('front/dashboard.days') }}</h5>
                                   <a href="{!! URL::to('/my_channel/update_channel/'.$myChanel->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_channel') !!}</a>
                                   <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $myChanel->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
                                 </div>
@@ -165,19 +163,20 @@
                                 <li>
                                     <!--<span>{!! HTML::image('img/front/profile_img.png') !!}</span>-->
                                     <div class="side_content">
-                                        <h4><?php echo $rv1->text;?></h4>
                                         <p>
-                                            <?php 
+                                            <?php
                                             if(file_exists(public_path().'/uploads/'.$rv1->reply_message) && !empty($rv1->reply_message)){
-                                                ?>
-                                                {!! HTML::image('uploads/'.$rv1->reply_message) !!}
-                                                <?php
+                                            ?>
+                                            {!! HTML::image('uploads/'.$rv1->reply_message) !!}
+                                            <?php
                                             }
                                             else{
                                                 echo substr($rv1->reply_message,0,30).'...';
                                             }
                                             ?>
                                         </p>
+                                        <p><b><?php echo $rv1->text;?></b></p>
+
                                         <div class="side_time"><?php echo get_timeago(strtotime($rv1->forward_date))?></div>
                                     </div>
                                 </li>

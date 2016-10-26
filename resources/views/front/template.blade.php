@@ -24,13 +24,19 @@
 				@if(isset($info))
 					@include('partials/error', ['type' => 'info', 'message' => $info])
 				@endif
+					@include('front.header')
 				@yield('main')
 				
 				
-				@include('front.header')
+
 				
 				@yield('content')
+
+
 			</div>
+			<footer>
+				<a href="">Contactar</a> | &copy; Citymes
+			</footer>
 		</section>
 	</body>
 </html>
