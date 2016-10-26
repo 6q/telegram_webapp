@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG', false),
+	'debug' => env('APP_DEBUG', true),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
 	! and at least, add the ISO code in languages array.
 	*/
 
-	'languages' => ['en', 'fr', 'pt-BR'],	
+	'languages' => ['en', 'ca', 'es'],
 
 	/*
 	|--------------------------------------------------------------------------

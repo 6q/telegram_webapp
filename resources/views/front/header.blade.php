@@ -28,15 +28,21 @@
 		if($currLang == 'en'){
 			$select1 = 'selected="selected"';
 		}
-	
+
 		$select2 = '';
-		if($currLang == 'fr'){
+		if($currLang == 'ca'){
 			$select2 = 'selected="selected"';
+		}
+
+		$select3 = '';
+		if($currLang == 'es'){
+			$select3 = 'selected="selected"';
 		}
 	?>
 	<select name="select_lang" onchange="changeLang();" id="select_lang">
 		<option <?php echo $select1;?> value="{!! URL::to('/language/en') !!}">{!! trans('front/header.english') !!}</option>
-		<option <?php echo $select2;?> value="{!! URL::to('/language/fr') !!}">{!! trans('front/header.french') !!}</option>
+		<option <?php echo $select2;?> value="{!! URL::to('/language/ca') !!}">{!! trans('front/header.catalan') !!}</option>
+		<option <?php echo $select3;?> value="{!! URL::to('/language/es') !!}">{!! trans('front/header.spanish') !!}</option>
 	</select>
 	
 	<script>
