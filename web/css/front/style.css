@@ -140,7 +140,7 @@ h1.logo {
   margin: 0 0 20px;
 }
 #menu > div {
-  padding: 20px;
+  padding: 20px 10px;
 }
 #menu > div:hover {
   background:#1991C4;
