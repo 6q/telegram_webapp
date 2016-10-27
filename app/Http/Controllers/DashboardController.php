@@ -333,7 +333,6 @@ class DashboardController extends Controller {
     }
     
     public function sendmessage(Request $request){
-		echo '<pre>';print_r($request->all());die;
         $bot_token = '';
         $channel_name = '';
         $perDaySendMesgLimit = '';
