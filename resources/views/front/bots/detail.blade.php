@@ -20,7 +20,10 @@
           }
         ?></li>
            </ul>
+        <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a> <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
       </div>
+
+
       
     
       

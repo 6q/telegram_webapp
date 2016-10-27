@@ -142,6 +142,9 @@ h1.logo {
 #menu > div {
   padding: 20px;
 }
+#menu > div:hover {
+  background:#1991C4;
+}
 #sidebar ul {
   margin: 35px auto;
   overflow: hidden;
@@ -1243,11 +1246,12 @@ img {
   right: 0;
   top: 0;
 }
-.days_preparing p.h2 > span {
+.days_preparing p.h2 > a span {
   left: 0;
   position: absolute;
   top: 46px;
   width: 100%;
+  color:#28B1D3;
 }
 
 @media (max-width:1620px){
@@ -1436,6 +1440,9 @@ select#select_lang {
 #menu > div {
   display: inline-block;
 }
+  #menu > div:hover {
+    background:#1991C4;
+  }
 #sidebar {
   position: relative;
 }

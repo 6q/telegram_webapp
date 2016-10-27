@@ -26,6 +26,7 @@ return [
 	'active_users' => 'Usuaris actius',
 	'error' => 'Error',
 	'send_message' => 'Enviar Missatge',
-	'edit_bot' => 'Editar',
+	'edit_bot' => 'Editar el Bot',
+	'create_command' => 'Crear un nou submenú',
 	'edit_channel' => 'Editar',
 ];
