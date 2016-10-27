@@ -29,7 +29,6 @@
                     <p><?php echo $dv1['user_subscription']['Plan']['name'];?></p>
                     <!--<a href="{!! URL::to('/bot/destroy/'.$dv1['bot']['id']) !!}" onclick="return confirm('Are you sure want to delete this bot?');"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a>-->
                     <a href="#" onclick="return confirm('Are you sure want to delete this bot?');"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a>
-                    <a href="{!! URL::to('/command/create/'.$dv1['bot']['id']) !!}">{!! HTML::image('img/front/setting_icon.png') !!}</a>
                   </li>
 
                   <li><p>{{ trans('front/fornt_user.automatic_renewal') }}:<?php echo date('d/m/Y',strtotime($dv1['user_subscription']['expiry_date']));?></p></li>

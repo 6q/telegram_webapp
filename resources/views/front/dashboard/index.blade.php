@@ -82,7 +82,7 @@
             </div>
 
             <div class="col-my-content">
-                <h3>{{ trans('front/dashboard.my_bots') }}</h3>
+                <h3 id="my_bots">{{ trans('front/dashboard.my_bots') }}</h3>
                 <ul class="row">
                     <?php
                     if (isset($bots) && !empty($bots)) {
@@ -92,10 +92,9 @@
                                 <div class="days_preparing">
                                     <h4><a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{{ $bv1->username }}</a></h4>
                                     <p class="h2">
-                                      <span>{!! $bv1->total_msg !!}</span>
-                                        <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{!! HTML::image('img/front/days_counting_img.png') !!}</a>
+
+                                        <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{!! HTML::image('img/front/days_counting_img.png') !!}<span>{!! $bv1->total_msg !!}</span></a>
                                     </p>
-                                  <a href="{!! URL::to('/bot/update_bot/'.$bv1->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a>
                                   <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bv1->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
                                 </div>
                             </li>
@@ -111,7 +110,7 @@
                     </li>
                 </ul>
 
-                <h3>{{ trans('front/dashboard.my_channels') }}</h3>
+                <h3 id="my_channels">{{ trans('front/dashboard.my_channels') }}</h3>
                 <ul class="row">
                     <?php
                     if (isset($chanel) && !empty($chanel)) {
@@ -120,8 +119,10 @@
                             <li class="col-sm-4">
                                 <div class="days_preparing">
                                     <h4><a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}">{{ $myChanel->name }}</a></h4>
-                                    <p class="h2"><span>215</span>
-                                        {!! HTML::image('img/front/days_counting_img.png') !!}
+                                    <p class="h2">
+                                        <a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}">
+                                            {!! HTML::image('img/front/days_counting_img.png') !!}<span>215</span>
+                                        </a>
                                     </p>
                                   <a href="{!! URL::to('/my_channel/update_channel/'.$myChanel->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_channel') !!}</a>
                                   <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $myChanel->id;?>');">{{ trans('front/dashboard.send_message') }}</a>

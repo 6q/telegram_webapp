@@ -45,12 +45,18 @@
 		<ul>
 			<li>
 				<p>
-					<a href="{!! URL::to('/front_user') !!}"><span>{!! count($total_bots) !!}</span>{{ trans('front/dashboard.bots') }}</a>
+					<a href="{!! URL::to('/dashboard') !!}#my_bots">
+						<span>{!! count($total_bots) !!}</span>{{ trans('front/dashboard.bots') }}
+					</a>
 				</p>
 			</li>
 
 			<li>
-				<p><a href="{!! URL::to('/front_user') !!}"><span>{!! count($total_chanels) !!}</span>{{ trans('front/dashboard.channels') }}</a></p>
+				<p>
+					<a href="{!! URL::to('/dashboard') !!}#my_channels">
+						<span>{!! count($total_chanels) !!}</span>{{ trans('front/dashboard.channels') }}
+					</a>
+				</p>
 			</li>
 		</ul>
 
