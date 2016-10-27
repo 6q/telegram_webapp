@@ -358,6 +358,7 @@ class DashboardController extends Controller {
                             ->where('types','=','Channel')
                             ->where('type_id','=',$request->get('channel_id'))
                             ->get();
+			echo '<pre>';print_r($checkData);die;				
             
             $planId = $checkData[0]->plan_id;
             
