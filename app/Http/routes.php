@@ -264,7 +264,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
         
        // file_put_contents(public_path().'/result.txt',serialize($keyboard));
         
-        if($messageText != 'Back'){
+        if($messageText != "\xE2\x97\x80"){
             DB::table('tmp_message')->insert(
                 ['chat_id' => $chatId,'message_id' => $message_id,'message' => $messageText.'_'.$dbBotId]
             );
@@ -275,7 +275,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             $db_autoresponse = DB::table('autoresponses')->where('type_id', '=', $dbBotId)->get();
             
             $arr = '';
-            $Back = 'Back';
+            $Back = "\xE2\x97\x80";
             $i = 0;
             if(isset($db_autoresponse) && !empty($db_autoresponse)){
                 foreach($db_autoresponse as $ak1 => $av1){
@@ -298,7 +298,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             );
             */
           
-            $msg = "you are in ".$autoresponse;
+            $msg = "\xE2\x9E\xA1 ".$autoresponse;
             
             
         }
@@ -306,7 +306,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             $db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
             
             $arr = '';
-            $Back = 'Back';
+            $Back = "\xE2\x97\x80";
             $i = 0;
             if(isset($db_contact_form) && !empty($db_contact_form)){
                 foreach($db_contact_form as $ac1 => $cv1){
@@ -322,13 +322,13 @@ Route::post('/{bottoken}/webhook', function ($token) {
 
             $keyboard = $arr;
             
-            $msg = "you are in ".$contact_form;
+            $msg = "\xE2\x9E\xA1 ".$contact_form;
         }
         else if(!empty($messageText) && $messageText == $galleries){
             $db_galleries = DB::table('galleries')->where('type_id', '=', $dbBotId)->get();
             
             $arr = '';
-            $Back = 'Back';
+            $Back = "\xE2\x97\x80";
             $i = 0;
             if(isset($db_galleries) && !empty($db_galleries)){
                 foreach($db_galleries as $gk1 => $gv1){
@@ -344,13 +344,13 @@ Route::post('/{bottoken}/webhook', function ($token) {
 
             $keyboard = $arr;
             
-            $msg = "you are in ".$galleries;
+            $msg = "\xE2\x9E\xA1 ".$galleries;
         }
         else if(!empty($messageText) && $messageText == $channels){
             $db_chanels = DB::table('chanels')->where('type_id', '=', $dbBotId)->get();
             
             $arr = '';
-            $Back = 'Back';
+            $Back = "\xE2\x97\x80";
             $i = 0;
             if(isset($db_chanels) && !empty($db_chanels)){
                 foreach($db_chanels as $ck1 => $ch1){
@@ -373,10 +373,10 @@ Route::post('/{bottoken}/webhook', function ($token) {
             );
             */
           
-            $msg = "you are in ".$channels;
+            $msg = "\xE2\x9E\xA1 ".$channels;
         }
         else{
-            if($messageText != 'Back')
+            if($messageText != "\xE2\x97\x80")
             {
                 DB::table('tmp_bots')->insert(
                     ['data_value' => serialize($messageText)]
@@ -425,7 +425,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                 
                     /* Autoresponse Keyboard */
                     $arr = '';
-                    $Back = 'Back';
+                    $Back = "\xE2\x97\x80";
                     $i = 0;
                     $db_autoresponse = DB::table('autoresponses')->where('type_id', '=', $dbBotId)->get();
                     if(isset($db_autoresponse) && !empty($db_autoresponse)){
@@ -453,7 +453,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     $db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
             
                     $arr = '';
-                    $Back = 'Back';
+                    $Back = "\xE2\x97\x80";
                     $i = 0;
                     if(isset($db_contact_form) && !empty($db_contact_form)){
                         foreach($db_contact_form as $ac1 => $cv1){
@@ -514,7 +514,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     $db_galleries = DB::table('galleries')->where('type_id', '=', $dbBotId)->get();
             
                     $arr = '';
-                    $Back = 'Back';
+                    $Back = "\xE2\x97\x80";
                     $i = 0;
                     if(isset($db_galleries) && !empty($db_galleries)){
                         foreach($db_galleries as $gk1 => $gv1){
@@ -621,7 +621,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                 
                     /* Channel Keyboard */
                     $arr = '';
-                    $Back = 'Back';
+                    $Back = "\xE2\x97\x80";
                     $i = 0;
                     $db_chanels = DB::table('chanels')->where('type_id', '=', $dbBotId)->get();
                     if(isset($db_chanels) && !empty($db_chanels)){
@@ -640,7 +640,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                 }
                 else{
 					$chk_ques_data = DB::table('tmp_mytable')->get();
-					if($messageText != 'Back' && !empty($chk_ques_data[0]->data_key)){
+					if($messageText != "\xE2\x97\x80" && !empty($chk_ques_data[0]->data_key)){
 						$dataKey = $chk_ques_data[0]->data_key;
 						$dataValue = $chk_ques_data[0]->data_value;
 						DB::table('tmp_mytable')->truncate();
@@ -650,7 +650,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						$db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
 				
 						$arr = '';
-						$Back = 'Back';
+						$Back = "\xE2\x97\x80";
 						$i = 0;
 						if(isset($db_contact_form) && !empty($db_contact_form)){
 							foreach($db_contact_form as $ac1 => $cv1){
@@ -717,13 +717,13 @@ Route::post('/{bottoken}/webhook', function ($token) {
             }
         }
         
-        if(!empty($messageText) && $messageText == 'Back'){
+        if(!empty($messageText) && $messageText == "\xE2\x97\x80"){
             /*$keyboard = [
                 [$autoresponse, $contact_form],
                 [$galleries, $channels],
             ];
 			*/
-            $msg = "You are in root menu";
+            $msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
             
             DB::table('tmp_img')->truncate();
             DB::table('tmp_bots')->truncate();
