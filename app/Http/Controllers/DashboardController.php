@@ -333,7 +333,7 @@ class DashboardController extends Controller {
     }
     
     public function sendmessage(Request $request){
-	echo '<pre>';print_r($request->all());die;
+		echo '<pre>';print_r($request->all());die;
         $bot_token = '';
         $channel_name = '';
         $perDaySendMesgLimit = '';
@@ -352,33 +352,7 @@ class DashboardController extends Controller {
             $channel_data = DB::table('my_channels')
                                 ->where('id','=',$request->get('channel_id'))
                                 ->get();
-            $channel_name = $channel_data[0]->name;
-            
-            
-            $checkData = DB::table('user_subscriptions')
-                            ->where('types','=','Channel')
-                            ->where('type_id','=',$request->get('channel_id'))
-                            ->get();
-            
-            $planId = $checkData[0]->plan_id;
-            
-            $plan = DB::table('plans')
-                        ->where('id','=',$planId)
-                        ->get();
-            
-            $perDaySendMesgLimit = $plan[0]->manual_message;
-            
-            $chkData = DB::table('channel_send_message')
-                            ->where('channel_id','=',$request->get('channel_id'))
-                            ->where('send_date','=',date('Y-m-d'))
-                            ->get();
-            
-            $totalCount = count($chkData);
-            
-            if($totalCount >= $perDaySendMesgLimit){
-                echo 'Your message send limit is over.';
-                exit();
-            }
+            $channel_name = $channel_data[0]->name;            
         }
         
         if(!empty($bot_token) && !empty($channel_name)){
