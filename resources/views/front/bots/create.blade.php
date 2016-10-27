@@ -72,7 +72,6 @@
               <div class="buing_row">{{ trans('front/bots.contact_from') }}</div>
               <div class="buing_row">{{ trans('front/bots.image_galleries') }}</div>
               <div class="buing_row"> {{ trans('front/bots.manual_message_per_day') }} </div>
-              <div class="buing_row">{{ trans('front/bots.custom_image_and_description') }}</div>
               <div class="buing_row">{{ trans('front/bots.custom_message_welcome') }}</div>
               <div class="buing_row">{{ trans('front/bots.custom_not_allowed_message_response') }}</div>
               <div class="buing_row last_child">
@@ -118,11 +117,6 @@
                           <span class="heading_content">{{ trans('front/bots.image_galleries') }}</span><?php echo $pv1->image_gallery .' de '.$pv1->gallery_images.' imgs'; ?>
                         </div>
                         <div class="buing_row"><span class="heading_content">{{ trans('front/bots.manual_message_per_day') }}</span><?php echo $pv1->manual_message;?></div>
-                        <div class="buing_row"><span class="heading_content">{{ trans('front/bots.custom_image_and_description') }}</span>
-                          <?php if($pv1->custom_image == 1){?>
-                          {!! HTML::image('img/front/right_icon.png') !!}
-                          <?php }?>
-                        </div>
                         <div class="buing_row"><span class="heading_content">{{ trans('front/bots.custom_message_welcome') }}</span>
                           <?php if($pv1->custom_welcome_message == 1){?>
                           {!! HTML::image('img/front/right_icon.png') !!}

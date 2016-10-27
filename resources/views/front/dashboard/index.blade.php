@@ -38,7 +38,7 @@
         <div class="col-lg-9 col-dash">
 
             <div class="status">
-                <h4>{{ trans('front/dashboard.global_statistics') }} <span>{{ trans('front/dashboard.status_measuring') }}</span></h4>
+                <h4>{{ trans('front/dashboard.global_statistics') }}</h4>
               
               {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}
                 

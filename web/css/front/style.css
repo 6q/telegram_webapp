@@ -249,7 +249,7 @@ h1.logo {
   color: #727575;
 }
 .my_account {
-  box-shadow: 0 3px 1px #c0c0c0;
+  border-bottom: 1px solid #EFEFEF;
   display: inline-block;
   margin-bottom: 30px;
   padding: 20px;
@@ -407,17 +407,17 @@ section.col_top, .container_1 {
   padding: 20px 10px;
 }
 .buying_table .col-lg-2 {
-  color: #c8c8c8;
+  color: #3F6280;
   font-size: 18px;
   padding:0px;
 }
 .row_1.heading {
-  border: 1px solid #c8c8c8;
+
   display: inline-block;
   width: 100%;
 }
 .buing_row:first-child, .buing_row.last_child {
-  background-color: #00aca0;
+  background-color: #3F6280;
 }
 .buing_row h3 span {
   display: block;
@@ -463,13 +463,24 @@ div.buying_table {
   width: 100%;
 }
 .summary_content > p {
-  color: #fff;
+  color: #3F6280;
 }
 .summary_content > h4 {
   border-bottom: 1px solid #66839b;
   color: #2bbbcf;
-  margin: 0 0 10px;
+  margin: 0;
   padding: 10px 0;
+}
+.summary_content .square {
+  height:100px;
+  background:#fff;
+  overflow-y: scroll;
+  width:100%;
+  display:block;
+  padding:10px 20px;
+}
+.summary_content .square p a{
+  color: #3F6280;
 }
 .summary_content {
   margin-bottom: 15px;
@@ -547,6 +558,11 @@ div.buying_table {
   font-size: 16px;
   padding: 0 14px;
   cursor:pointer;
+  margin: 0 10px;
+  padding: 5px 10px;
+}
+#status_dropdown {
+  box-shadow: none;
 }
 .graph {
   clear: both;
@@ -651,19 +667,23 @@ p.h2 > img {
   color: #34adac;
   display: block;
   float: none;
-    padding:66.1px 0;
+    padding:66.1px 0 0;
 
 }
 
 .col-my-content > h3 {
   color: #2cbdce;
-  margin-top: 25px;
+  margin-top: 0;
+  border-top:1px solid #EFEFEF;
+  padding-top:20px;
 }
 .col-my-content {
   display: inline-block;
-  margin-top: 35px;
+  margin-top: 20px;
   width: 100%;
+
 }
+
 .side_dashboard_content span {
   float: left;
 }
@@ -989,7 +1009,7 @@ select#select_lang {
   color: #24A1DA;
   font-weight:bold;
   padding: 6px 20px 6px 8px;
-  margin:0 auto;
+  margin:30px auto 0;
   width:90%;
   display:block;
   position:relative;
@@ -1314,7 +1334,7 @@ img {
   margin-top: 20px;
 }
 .col-dash .add_plus > a {
-  padding: 65.8px 0;
+  padding: 65.8px 0 0;
 }
 .col-notification > ul {
   padding-left: 14px;
@@ -1350,7 +1370,7 @@ body .datepicker.dropdown-menu {
   margin: 0 0 5px;
 }
   .col-dash .add_plus > a {
-  padding: 68.7px 0;
+  padding: 68.7px 0 0;
 }
   .col-about {
     width: 50%;
@@ -1386,15 +1406,13 @@ select#select_lang {
   border: 1px solid #e8e8e8;
   border-radius: 3px;
   bottom: 15px;
-  float: left;
   left: 11px;
-  margin-left: 6px;
-  margin-top: 22px;
+  margin: 10px auto;
   padding: 5px 7px;
   position: initial;
 }
   .col-dash .add_plus > a {
-  padding: 40.2px 0;
+  padding: 40.2px 0 0;
 }
 	.add-discrption ul {
   border-bottom: medium none;
