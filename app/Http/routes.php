@@ -23,7 +23,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('dashboard', 'DashboardController@index');
     Route::post('dashboard/getcharts', 'DashboardController@getcharts');
     Route::post('dashboard/sendmessage', 'DashboardController@sendmessage');
-	Route::get('dashboard/sendmessage', 'DashboardController@sendmessage');
     Route::post('dashboard/sendbotmessage', 'DashboardController@sendbotmessage');
 
 

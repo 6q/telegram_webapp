@@ -45,10 +45,8 @@ class TelegramResponseException extends TelegramSDKException
      */
     public static function create(TelegramResponse $response)
     {
-		die('afsd');
-		/*
         $data = $response->getDecodedBody();
-		
+
         $code = null;
         $message = null;
         if (isset($data['ok'], $data['error_code']) && $data['ok'] === false) {
@@ -58,7 +56,6 @@ class TelegramResponseException extends TelegramSDKException
 
         // Others
         return new static($response, new TelegramOtherException($message, $code));
-		*/
     }
 
     /**
