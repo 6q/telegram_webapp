@@ -8,13 +8,13 @@
 			<a href="{!! URL::to('/front_user') !!}" data-toggle="tooltip" title="{!! trans('front/header.my_account') !!}">{!! HTML::image('img/front/img1.png') !!}</a>
 		<!--{!! link_to_route_img('front_user.edit', HTML::image('img/front/img1.png'), [Auth::user()->id], ['class' => '']) !!}-->
 		</div>
-
+<!--
 		<div class="col_content">
 			<a href="{!! URL::to('/recent_activity') !!}" data-toggle="tooltip" title="{!! trans('front/header.logs') !!}">{!! HTML::image('img/front/img2.png') !!}</a>
 		</div>
-
+-->
 		<div class="col_message">
-			<a href="{!! URL::to('/messages') !!}" data-toggle="tooltip" title="{!! trans('front/header.messages') !!}">{!! HTML::image('img/front/message.png') !!}</a>
+			<a href="{!! URL::to('/messages') !!}" data-toggle="tooltip" title="{!! trans('front/header.logs') !!}">{!! HTML::image('img/front/img2.png') !!}</a>
 		</div>
 
 	<!--<div class="col_lock">

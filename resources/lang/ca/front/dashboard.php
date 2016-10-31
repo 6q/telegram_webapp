@@ -6,6 +6,8 @@ return [
 	'add_new_bot_chanel' => 'Nou Canal o Bot',
 	'last' => 'Últims',
 	'days' => 'Dies',
+	'active_users' => 'Usuaris actius',
+	'activity_last_days' => 'Activitat dels últims 30 dies',
 	'recieved_message' => 'Missatges rebuts',
 	'global_statistics' => 'Estadístiques globals',
 	'this_week' => 'Aquesta setmana',

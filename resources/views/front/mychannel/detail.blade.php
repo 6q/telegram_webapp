@@ -9,9 +9,10 @@
     @include('front.top')
 
     <div class="my_account">
-        <h4>{!! $chanels[0]->name !!}</h4>
+        <h4 class="left">{!! $chanels[0]->name !!}</h4>
+        <a href="{!! URL::to('/my_channel/update_channel/'.$chanels[0]->id) !!}" class="btn btn-primary right">{!! trans('front/dashboard.edit_channel') !!}</a>
+        <div class="clear"></div>
     </div>
-
 
     <div class="buying">
         <div class="create_bot">

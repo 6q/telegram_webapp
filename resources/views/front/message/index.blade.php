@@ -9,15 +9,30 @@
       <div class="my_account">
         <h4>{{ trans('front/message.message') }}</h4>
       </div>
-      
-    
-      
-      <div class="col-lg-12">
+
+        <ul class="nav nav-tabs nav-pills messages_bots" role="tablist">
+            <?php
+            if(isset($bots) && !empty($bots)){
+                $i = 0;
+                foreach($bots as $k1 => $v1){
+                    ++$i;
+            ?>
+                    <li class=" <?php if ($i==1) echo 'active'?>"><a data-toggle="tab" href="#<?php echo $v1->username;?>"><?php echo $v1->username;?></a></li>
+                <?php
+                }
+            }
+            ?>
+        </ul>
+
+
+      <div class="col-lg-12 tab-content">
         <?php
           if(isset($bots) && !empty($bots)){
-            foreach($bots as $k1 => $v1){
+          $i = 0;
+          foreach($bots as $k1 => $v1){
+          ++$i;
              ?>
-                <div class="col-plan">
+                <div class="col-plan tab-pane fade <?php if ($i==1) echo 'in active'?>" id="<?php echo $v1->username;?>">
                   <h2><?php echo $v1->username;?></h2>
                   <table>
                       <thead>

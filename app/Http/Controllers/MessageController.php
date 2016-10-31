@@ -42,12 +42,14 @@ class MessageController extends Controller
 			foreach($bots as $k1 => $v1){
 				$msg = DB::table('bot_messages')
                         ->where('bot_id', '=', $v1->id)
+						->orderby('id','DESC')
                         ->get();
 				
 				if(!empty($msg)){
 					foreach($msg as $k2 => $v2){
 						$bot_user = DB::table('bot_users')
                         ->where('id', '=', $v2->bot_user_id)
+							->orderby('id','DESC')
                         ->get();
 						
 						$msg[$k2]->bot_user = '';

@@ -28,16 +28,12 @@
     
       
       <div class="col-lg-12">
-        <div class="col-plan">
+        <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.autoresponse') }}</h2>
           <table>
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
-                <th>{{ trans('front/bots.autoresponse_msg') }} </th>
-                <th>{{ trans('front/bots.image') }} </th>
-                <th>{{ trans('front/bots.created_at') }}</th>
-                <th>{{ trans('front/bots.updated_at') }}</th>
                 <th>{{ trans('front/bots.action') }}</th>
               </tr>
             </thead>
@@ -48,18 +44,6 @@
                     ?>
                         <tr>
                           <td><?php echo $v2->submenu_heading_text;?></td>
-                          <td><?php echo $v2->autoresponse_msg;?></td>
-                          <td>
-                            <?php
-                              $src = '';
-                              if(!empty($v2->image)){
-                                $src = 'uploads/'.$v2->image;
-                              }
-                            ?>
-                              {!! HTML::image($src,'', array('class' => 'thumb')) !!}
-                          </td>
-                          <td><?php echo $v2->created_at;?></td>
-                          <td><?php echo $v2->updated_at;?></td>
                           <td>
                             <a class="btn btn-primary" href="{!! URL::to('/command/autoresponse_edit/'.$v2->id) !!}">{{ trans('front/bots.update_command') }}</a>
                           </td>
@@ -79,15 +63,12 @@
           </table>
         </div>
         
-        <div class="col-plan">
+        <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.contact_form') }}</h2>
           <table>
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
-                <th>{{ trans('front/bots.headline') }} </th>
-                <th>{{ trans('front/bots.created_at') }}</th>
-                <th>{{ trans('front/bots.updated_at') }}</th>
                 <th>{{ trans('front/bots.action') }}</th>
               </tr>
             </thead>
@@ -98,9 +79,6 @@
                     ?>
                         <tr>
                           <td><?php echo $v3->submenu_heading_text;?></td>
-                          <td><?php echo $v3->headline;?></td>
-                          <td><?php echo $v3->created_at;?></td>
-                          <td><?php echo $v3->updated_at;?></td>
                           <td><a class="btn btn-primary" href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}">{{ trans('front/bots.update_command') }}</a></td>
                         </tr>
                     <?php
@@ -117,16 +95,13 @@
             </tbody>
           </table>
         </div>
-        
-        <div class="col-plan">
+        <div style="clear:both"></div>
+        <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.galleries') }}</h2>
           <table>
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
-                <th>{{ trans('front/bots.headline') }} </th>
-                <th>{{ trans('front/bots.created_at') }}</th>
-                <th>{{ trans('front/bots.updated_at') }}</th>
                 <th>{{ trans('front/bots.action') }}</th>
               </tr>
             </thead>
@@ -137,9 +112,6 @@
                     ?>
                         <tr>
                           <td><?php echo $v4->gallery_submenu_heading_text;?></td>
-                          <td><?php echo $v4->introduction_headline;?></td>
-                          <td><?php echo $v4->created_at;?></td>
-                          <td><?php echo $v4->updated_at;?></td>
                           <td><a class="btn btn-primary" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}">{{ trans('front/bots.update_command') }}</a></td>
                         </tr>
                     <?php
@@ -157,16 +129,12 @@
           </table>
         </div>
         
-        <div class="col-plan">
+        <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.channels') }}</h2>
           <table>
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
-                <th>{{ trans('front/bots.chanel_msg') }} </th>
-                <th>{{ trans('front/bots.image') }} </th>
-                <th>{{ trans('front/bots.created_at') }}</th>
-                <th>{{ trans('front/bots.updated_at') }}</th>
                 <th>{{ trans('front/bots.action') }}</th>
               </tr>
             </thead>
@@ -177,18 +145,6 @@
                     ?>
                         <tr>
                           <td><?php echo $v5->chanel_submenu_heading_text;?></td>
-                          <td><?php echo $v5->chanel_msg;?></td>
-                          <td>
-                            <?php
-                              $src = '';
-                              if(!empty($v5->image)){
-                                $src = 'uploads/'.$v5->image;
-                              }
-                            ?>
-                              {!! HTML::image($src,'', array('class' => 'thumb')) !!}
-                          </td>
-                          <td><?php echo $v5->created_at;?></td>
-                          <td><?php echo $v5->updated_at;?></td>
                           <td><a class="btn btn-primary" href="{!! URL::to('/command/chanel_edit/'.$v5->id) !!}">{{ trans('front/bots.update_command') }}</a></td>
                         </tr>
                     <?php
@@ -205,7 +161,7 @@
             </tbody>
           </table>
         </div>
-        
+        <div style="clear:both"></div>
         
         <div class="col-plan">
           <h2>{{ trans('front/bots.active_user') }}</h2>
@@ -215,7 +171,6 @@
                 <th>{{ trans('front/bots.first_name') }}</th>
                 <th>{{ trans('front/bots.last_name') }} </th>
                 <th>{{ trans('front/bots.created_at') }}</th>
-                <th>{{ trans('front/bots.updated_at') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -227,7 +182,6 @@
                           <td><?php echo $auv1->first_name;?></td>
                           <td><?php echo $auv1->last_name;?></td>
                           <td><?php echo $auv1->created_at;?></td>
-                          <td><?php echo $auv1->modified_at;?></td>
                         </tr>
                     <?php
                   }

@@ -49,7 +49,7 @@
         });
     });
   jQuery(document).ready(function(){
-	  jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottom"});
+	  jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottomreat el"});
 	});
 </script>
 @yield('scripts')

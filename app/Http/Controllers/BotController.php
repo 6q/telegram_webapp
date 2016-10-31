@@ -299,7 +299,9 @@ class BotController extends Controller
                 
                 $botMessages = DB::table('bot_messages')
                                 ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
-                                ->where('bot_messages.bot_id', '=', $botid)->get();
+                                ->where('bot_messages.bot_id', '=', $botid)
+	                            ->orderby('bot_messages.id','DESC')
+	                            ->get();
             }
             
             return view('front.bots.detail', compact('bots','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages'));	
