@@ -140,7 +140,17 @@ class DashboardController extends Controller {
 
                 $bot_total_msg = count($msg);
                 $bots[$k1]->total_msg = $bot_total_msg;
+
+	            $usrs = DB::table('bot_users')
+		            ->where('bot_id', '=', $v1->id)
+		            ->get();
+
+
+	            $bot_total_usrs = count($usrs);
+	            $bots[$k1]->total_usrs = $bot_total_usrs;
+
             }
+
         }
         
         /* Chanels */
@@ -208,20 +218,25 @@ class DashboardController extends Controller {
 	                        ->limit(10)
                             ->get();    
         }
-        
-        
-        
-        
-        /*
-        $rec_msg = DB::table('bot_messages')
-                        ->whereIn('bot_id',$botId)
-                        ->orderBy('id','desc')
-                        ->limit(6)
-                        ->get();
-        */
+	    $rec_usrs = DB::table('bot_users')
+		    ->whereIn('bot_id',$botId)
+		    ->leftJoin('bots', 'bot_users.bot_id', '=', 'bots.id')
+		    ->orderBy('bot_users.id','desc')
+		    ->limit(10)
+		    ->get();
+
+
+
+	    /*
+		$rec_msg = DB::table('bot_messages')
+						->whereIn('bot_id',$botId)
+						->orderBy('id','desc')
+						->limit(6)
+						->get();
+		*/
         /*****************************/
         
-        return view('front.dashboard.index', compact('bots','chanel','total_bots', 'total_chanels','Form_action','search','startDate','endDate','recivedMsg','rec_msg'));
+        return view('front.dashboard.index', compact('bots','chanel','total_bots', 'total_chanels','Form_action','search','startDate','endDate','recivedMsg','rec_msg','rec_usrs'));
     }
     
     public function getcharts(Request $request){

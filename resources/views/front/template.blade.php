@@ -48,6 +48,9 @@
             jQuery(".datepicker").datepicker();
         });
     });
+  jQuery(document).ready(function(){
+	  jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottom"});
+	});
 </script>
 @yield('scripts')
 

@@ -69,6 +69,9 @@ footer {
   padding: 6px 20px 6px 8px;
   position: relative;
 }
+.tooltip > .tooltip-inner {
+  padding:10px 20px;
+}
 
 .content h3 {
   color: #bbbbbb;
@@ -139,9 +142,6 @@ img.register_logo {
 h1.logo {
   margin: 0 0 20px;
 }
-#menu > div {
-  padding: 20px 10px;
-}
 #menu > div:hover {
   background:#1991C4;
 }
@@ -185,7 +185,16 @@ h1.logo {
   text-align: center;
   width: 75%;
 }
-.new_bot_channel > p {
+.new_bot_channel .left {
+  float:left;
+  width:45%;
+}
+.new_bot_channel .right {
+  float:right;
+  width:45%;
+}
+
+.new_bot_channel p {
   color: #fff;
   margin: 15px 0 0;
 }
@@ -626,6 +635,15 @@ p.h2 > img {
 .days_preparing p.h2 a {
   float: none;
 }
+.days_preparing p.h2 a .count_users {
+  top:40px;
+}
+
+.days_preparing p.h2 a .count_messages {
+  top:75px;
+  font-size:12px;
+}
+
 .col-dash li .days_preparing h4 {
   display: inline-block;
   float: none;
@@ -1235,8 +1253,14 @@ img {
   height: 50px;
   width: 50px;
 }
-.container_1 .col-sm-3 a {
+.container_1 .col-sm-3  a {
   color: #fff;
+}
+.container_1 .col-sm-3 #menu a {
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 20px 10px;
 }
 .col-lg-3.side_dashboard_content.col-right_tab {
   display: inline-table;

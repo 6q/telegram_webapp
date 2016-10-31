@@ -61,41 +61,22 @@
 		</ul>
 
 		<div class="new_bot_channel">
-			<a class="bot_button" href="{!! URL::to('/my_channel/create') !!}">{!! HTML::image('img/front/plus.png') !!}</a>
-			<p>{{ trans('front/MyChannel.add_new_bot') }}</p>
-		</div>
-
-		<div class="col-summary">
-			<div class="summary_content">
-				<h4>{{ trans('front/dashboard.bots') }}</h4>
-				<div class="square">
-					<?php
-					if(isset($total_bots) && !empty($total_bots)){
-					foreach($total_bots as $tbk1 => $tbv1){
-					?>
-					<p><a href="{!! URL::to('/bot/detail/'.$tbv1->id) !!}"><?php echo $tbv1->username;?></a></p>
-					<?php
-					}
-					}
-					?>
-				</div>
+			<div class="left">
+				<a class="bot_button" href="{!! URL::to('/bot/create') !!}">
+					{!! HTML::image('img/front/plus.png') !!}
+				</a>
+				<p>{{ trans('front/MyChannel.add_new_bot') }}</p>
 			</div>
 
-			<div class="summary_content">
-				<h4>{{ trans('front/dashboard.channels') }}</h4>
-				<div class="square">
-					<?php
-					if(isset($total_chanels) && !empty($total_chanels)){
-					foreach($total_chanels as $tck1 => $tcv1){
-					?>
-					<p><a href="{!! URL::to('/my_channel/detail/'.$tcv1->id) !!}"><?php echo $tcv1->name;?></a></p>
-					<?php
-					}
-					}
-					?>
-				</div>
+			<div class="right">
+				<a class="bot_button" href="{!! URL::to('/my_channel/create') !!}">
+					{!! HTML::image('img/front/plus.png') !!}
+				</a>
+				<p>{{ trans('front/MyChannel.add_new_channel') }}</p>
 			</div>
+			<div style="clear:both"></div>
 		</div>
+
 		<?php
 		$currLang = Config::get('app.locale');
 		$select1 = '';

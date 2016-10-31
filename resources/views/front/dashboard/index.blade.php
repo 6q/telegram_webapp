@@ -92,8 +92,12 @@
                                 <div class="days_preparing">
                                     <h4><a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{{ $bv1->username }}</a></h4>
                                     <p class="h2">
+                                        <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">
+                                            {!! HTML::image('img/front/days_counting_img.png') !!}
+                                            <span class="count_users" data-toggle="tooltip" title="Usuaris actius">{!! $bv1->total_usrs !!}</span>
+                                            <span class="count_messages" data-toggle="tooltip" title="Activitat dels últims 30 dies">{!! $bv1->total_msg !!}</span>
 
-                                        <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">{!! HTML::image('img/front/days_counting_img.png') !!}<span>{!! $bv1->total_msg !!}</span></a>
+                                        </a>
                                     </p>
                                   <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bv1->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
                                 </div>
@@ -158,27 +162,16 @@
             <h3>{{ trans('front/dashboard.recent_activity') }}</h3>
             <ul>
                 <?php
-                    if(isset($rec_msg) && !empty($rec_msg)){
-                        foreach($rec_msg as $rk1 => $rv1){
+
+                    if(isset($rec_usrs) && !empty($rec_usrs)){
+                        foreach($rec_usrs as $rk1 => $rv1){
                             ?>
                                 <li>
-                                    <!--<span>{!! HTML::image('img/front/profile_img.png') !!}</span>-->
                                     <div class="side_content">
                                         <p>
-                                            <?php
-                                            if(file_exists(public_path().'/uploads/'.$rv1->reply_message) && !empty($rv1->reply_message)){
-                                            ?>
-                                            {!! HTML::image('uploads/'.$rv1->reply_message) !!}
-                                            <?php
-                                            }
-                                            else{
-                                                echo substr($rv1->reply_message,0,30).'...';
-                                            }
-                                            ?>
+                                            {{ trans('front/dashboard.the_user') }} <b><?php echo $rv1->first_name;?> <?php echo $rv1->last_name;?></b> {{ trans('front/dashboard.joined_the_bot') }} <b><?php echo $rv1->username;?></b>.
                                         </p>
-                                        <p><b><?php echo $rv1->text;?></b></p>
-
-                                        <div class="side_time"><?php echo get_timeago(strtotime($rv1->forward_date))?></div>
+                                        <div class="side_time"><?php echo get_timeago(strtotime($rv1->created_at))?></div>
                                     </div>
                                 </li>
                             <?php
@@ -194,16 +187,16 @@
                
                     if( $estimate_time < 1 )
                     {
-                        return 'less than 1 second ago';
+                        return trans('front/dashboard.less_than_1_second_ago');
                     }
 
                     $condition = array(
-                                12 * 30 * 24 * 60 * 60  =>  'year',
-                                30 * 24 * 60 * 60       =>  'month',
-                                24 * 60 * 60            =>  'day',
-                                60 * 60                 =>  'hour',
-                                60                      =>  'minute',
-                                1                       =>  'second'
+                                12 * 30 * 24 * 60 * 60  =>  trans('front/dashboard.year'),
+                                30 * 24 * 60 * 60       =>  trans('front/dashboard.month'),
+                                24 * 60 * 60            =>  trans('front/dashboard.day'),
+                                60 * 60                 =>  trans('front/dashboard.hour'),
+                                60                      =>  trans('front/dashboard.minute'),
+                                1                       =>  trans('front/dashboard.second')
                     );
 
                     foreach( $condition as $secs => $str )
@@ -213,14 +206,14 @@
                         if( $d >= 1 )
                         {
                             $r = round( $d );
-                            return 'about ' . $r . ' ' . $str . ( $r > 1 ? 's' : '' ) . ' ago';
+                            return trans('front/dashboard.about').' ' . $r . ' ' . $str . ' ' . trans('front/dashboard.ago');
                         }
                     }
                 }
 
             ?>
 
-            <div class="view_log"><a href="{!! URL::to('/recent_activity') !!}">{{ trans('front/dashboard.view_log') }}</a></div>
+            <!--<div class="view_log"><a href="{!! URL::to('/recent_activity') !!}">{{ trans('front/dashboard.view_log') }}</a></div>-->
         </div>
     </div>
 </div>
