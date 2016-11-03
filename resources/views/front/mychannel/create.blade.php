@@ -171,17 +171,17 @@
                 <div class="crete_bot_form">
                     <ul>
                         <li>
-                            <span>{{ trans('front/MyChannel.name') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                            <span>{{ trans('front/MyChannel.name') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
                             <label id="uName">{!! Form::control('text', 0, 'name', $errors) !!}</label>
                         </li>
 
                         <li>
-                            <span>{{ trans('front/MyChannel.description') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                            <span>{{ trans('front/MyChannel.description') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelDecriptionModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
                             <label>{!! Form::control('textarea', 0, 'description', $errors) !!}</label>
                         </li>
 
                         <li>
-                            <span>{{ trans('front/MyChannel.share_link') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                            <span>{{ trans('front/MyChannel.share_link') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelShareLink');">{!! HTML::image('img/front/icon.png') !!}</a></span>
                             <label id="uShareLink">{!! Form::control('text', 0, 'share_link', $errors) !!}</label>
                         </li>
 
@@ -457,6 +457,67 @@
 
 </div>
 
+  <!-- Modal -->
+<div id="ChannelNameModal" class="modal fade" role="dialog" style="display:none";>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{!! trans('front/MyChannel.name') !!}</h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $channelName[0]->content;?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="ChannelDecriptionModal" class="modal fade" role="dialog" style="display:none";>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{!! trans('front/MyChannel.description') !!}</h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $channelName[0]->content;?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="ChannelShareLink" class="modal fade" role="dialog" style="display:none";>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{!! trans('front/MyChannel.description') !!}</h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $channelName[0]->content;?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
 <script>
     function muFunctionPlan(plan_id, plan_name, plan_price, duration, id) {
@@ -664,6 +725,12 @@
         var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
 
         return pattern.test(emailAddress);
+    }
+	
+	
+	
+	function mypopupinfo(id){
+        $('#'+id).modal();
     }
 
 

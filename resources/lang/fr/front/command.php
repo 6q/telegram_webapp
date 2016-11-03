@@ -29,5 +29,6 @@ return [
 	'upload_image' => 'Upload image',
 	'upload' => 'Upload',
 	'up_grade' => 'Please upgrade your menbership.',
-	'updated' => 'Update Successfully'
+	'updated' => 'Update Successfully',
+	'email' => 'Email'
 ];

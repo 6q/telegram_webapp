@@ -102,9 +102,56 @@ class CommandController extends Controller
         
         if(!empty($request->get('contact_form')) && $request->get('contact_form') == 1)
         {
+				
+			$email_template = DB::table('email_templates')
+								->where('title','LIKE','channel_create')
+								->get();
+			$template = $email_template[0]->description;
+			
+			$botId = $request->get('bot_id');
+			
+			$bot_name = DB::table('bots')
+							->where('id','=',$botId)
+							->get();
+			$name = $bot_name[0]->username;
+			
+			$to = $request->get('email');
+			
+			$ques_html = '';
+			 foreach($request->get('ques_heading') as $k1 => $v1){
+                 $ques_html .= '<tr>';   
+				 $ques_html .= '<td>'.$v1.'</td>';   
+                 $ques_html .= '<td>'.$request->get('type_response')[$k1].'</td>';   
+				 $ques_html .= '</tr>';   
+              }
+			
+			$emailFindReplace = array(
+				'##SITE_LINK##' => asset('/'),
+				'##SITE_NAME##' => 'Citymes',
+				'##USERNAME##' => 'sd',
+				'##BOT_NAME##' => $name,
+				'##SUBMENU_HEADING_TEXT##' => $request->get('contact_submenu_heading_text'),
+				'##HEADLINE##' => $request->get('headline'),
+				'##QUES-ANS##' => $ques_html
+			);
+				
+			$html = strtr($template, $emailFindReplace);
+				
+			\Mail::send(['html' => 'front.command.email_command_contact_template'],
+				array(
+					'text' => $html
+				), function($message)
+			{
+				$message->from('admin@admin.com');
+				$message->to('stn.bhupesh@gmail.com', 'Admin')->subject('Contact Form');
+			});
+						
+		//	echo '<pre>';print_r($request->all());die;
+			
             $contact_form = new ContactForm;
             
             $contact_form->types = 'bot';
+			$contact_form->email = $request->get('email');
             $contact_form->type_id = $request->get('bot_id');
             $contact_form->submenu_heading_text = $request->get('contact_submenu_heading_text');
             $contact_form->user_id = $userId;

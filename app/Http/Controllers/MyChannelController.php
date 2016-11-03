@@ -66,8 +66,13 @@ class MyChannelController extends Controller {
         else{
             $plans = DB::table('plans')->get();
         }
+		
+		/* channelName popup */
+        $channelName = DB::table('pages')
+                        ->where('id','=','16')
+                        ->get();
         
-        return view('front.mychannel.create', compact('plans', 'email', 'country','total_bots','total_chanels','Form_action','search'));
+        return view('front.mychannel.create', compact('plans', 'email', 'country','total_bots','total_chanels','Form_action','search','channelName'));
     }
 
     /**

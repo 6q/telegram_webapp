@@ -183,16 +183,21 @@
                 <div class="crete_bot_form">
                   <ul>
                     <li>
-                      <span>{{ trans('front/bots.bot_username') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/bots.bot_username') }} <a href="javascript:void(0);" onclick="mypopupinfo('BotUserNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
                       <label id="uName">{!! Form::control('text', 0, 'username', $errors) !!}</label>
                     </li>
                     
                     <li>
-                      <span>{{ trans('front/bots.bot_access_token') }} {!! HTML::image('img/front/icon.png') !!}</span>
-                      <label id="aToken">{!! Form::control('text', 0, 'bot_token', $errors) !!}</label>
+                      <span>{{ trans('front/bots.bot_nick_name') }} <a href="javascript:void(0);" onclick="mypopupinfo('nickNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
+                      <label>{!! Form::control('text', 0, 'nick_name', $errors) !!}</label>
                     </li>
                     
                     <li>
+                      <span>{{ trans('front/bots.bot_access_token') }} <a href="javascript:void(0);" onclick="mypopupinfo('BotAccessTokenModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
+                      <label id="aToken">{!! Form::control('text', 0, 'bot_token', $errors) !!}</label>
+                    </li>
+                    
+                   <!-- <li>
                       <span>{{ trans('front/bots.bot_image') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control('file', 0, 'bot_image', $errors) !!}<span>{{ trans('front/bots.browse') }}</span></label>
                     </li>
@@ -201,6 +206,7 @@
                       <span>{{ trans('front/bots.description') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control('textarea', 0, 'bot_description', $errors) !!}</label>
                     </li>
+                    -->
                     
                     <li>
                       <span>{{ trans('front/bots.start_message') }} {!! HTML::image('img/front/icon.png') !!}</span>
@@ -568,6 +574,70 @@
       {!! Form::close() !!}
       
   </div>
+  
+  
+  <!-- Modal -->
+<div id="nickNameModal" class="modal fade" role="dialog" style="display:none";>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{!! trans('front/bots.bot_nick_name') !!}</h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $nickName[0]->content;?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="BotUserNameModal" class="modal fade" role="dialog" style="display:none";>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{!! trans('front/bots.name') !!}</h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $botUserName[0]->content;?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="BotAccessTokenModal" class="modal fade" role="dialog" style="display:none";>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{!! trans('front/bots.bot_token') !!}</h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $botAccessToken[0]->content;?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
     
 
   <script>
@@ -585,7 +655,7 @@
     function muFunctionBotForm(id){
       var bot_uname = $('#username').val();
       var bot_access_token = $('#bot_token').val();
-      var bot_description = $('#bot_description').val();
+      //var bot_description = $('#bot_description').val();
       var bot_start_msg = $('#start_message').val();
       
       var bot_name_of_a_btn = $('#autoresponse').val();
@@ -619,7 +689,7 @@
       
       $('#bot_usname').html(bot_uname);
       $('#bot_acces_tkn').html(bot_access_token);
-      $('#description').html(bot_description);
+     // $('#description').html(bot_description);
       $('#start_messages').html(bot_start_msg);
       
       $('#name_a_btn').html(bot_name_of_a_btn);
@@ -842,6 +912,11 @@
             
         });
     });
+	
+	
+	function mypopupinfo(id){
+        $('#'+id).modal();
+    }
 </script>
 
 

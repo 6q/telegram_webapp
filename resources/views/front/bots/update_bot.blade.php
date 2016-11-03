@@ -21,11 +21,11 @@
                 <div class="crete_bot_form">
                   <ul>
                     <li>
-                      <span>{{ trans('front/bots.bot_nick_name') }} <a href="javascript:void(0);" onclick="mypopupinfonick_name();">{!! HTML::image('img/front/icon.png') !!}</a></span>
+                      <span>{{ trans('front/bots.bot_nick_name') }} <a href="javascript:void(0);" onclick="mypopupinfo('nickNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
                       <label>{!! Form::control('text', 0, 'nick_name', $errors,'',$bot->nick_name) !!}</label>
                     </li>
                     
-                    <li>
+                    <!--<li>
                       <span>{{ trans('front/bots.bot_image') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control('file', 0, 'bot_image', $errors) !!}<span>{{ trans('front/bots.browse') }}</span></label>
                       <span>
@@ -43,6 +43,7 @@
                       <span>{{ trans('front/bots.description') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control('textarea', 0, 'bot_description', $errors,'',$bot->bot_description) !!}</label>
                     </li>
+                    -->
                     
                     <li>
                       <span>{{ trans('front/bots.start_message') }} {!! HTML::image('img/front/icon.png') !!}</span>
@@ -90,10 +91,32 @@
       {!! Form::close() !!}
       
   </div>
+  
+  
+    <!-- Modal -->
+<div id="nickNameModal" class="modal fade" role="dialog" style="display:none";>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{!! trans('front/bots.bot_nick_name') !!}</h4>
+      </div>
+      <div class="modal-body">
+        <p><?php echo $nickName[0]->content;?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
-  function mypopupinfonick_name(){
-    
+  function mypopupinfo(id){
+    $('#'+id).modal();
   }
 </script>
  
