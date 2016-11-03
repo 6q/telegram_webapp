@@ -34,12 +34,13 @@
 
 
 			</div>
-			<footer>
 
-				Citymes © Copyright – Tots els drets reservats   |   <a href="http://www.citymes.com/#contactar" target="_blank">Contactar</a> | <a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Avís Legal</a>   |   <a href="http://www.citymes.com/" target="_blank">Citymes.com</a>
-
-			</footer>
 		</section>
+		<footer>
+
+			Citymes © Copyright – Tots els drets reservats   |   <a href="http://www.citymes.com/#contactar" target="_blank">Contactar</a> | <a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Avís Legal</a>   |   <a href="http://www.citymes.com/" target="_blank">Citymes.com</a>
+
+		</footer>
 	</body>
 </html>
    

@@ -1,13 +1,25 @@
 @charset "utf-8";
 /* CSS Document */
-
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+body {
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+}
 footer {
   margin:0;
   padding:20px 20px;
   background:#263B4D;
   text-align:right;
-  width:100%;
+  width:75%;
   color:#fff;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
 }
 footer a {
   color:#fff;
@@ -363,6 +375,11 @@ h1.logo {
   display: inline-block;
   padding: 5px 20px;
   width: 100%;
+}
+section.col_top {
+  padding-bottom:60px;
+  min-height: 100%;
+  position: relative;
 }
 section.col_top, .container_1 {
   display: inline-block;
@@ -1453,6 +1470,13 @@ img {
   }
 }
 @media (max-width:767px){
+  section.col_top {
+    padding-bottom:100px
+  }
+  footer {
+    width:100%;
+    text-align:center;
+  }
   #main-sidebar {
     height: auto;
     left: 0;

@@ -159,7 +159,7 @@
                                 <?php echo get_timeago(strtotime($rv1->created_at))?>
                                 <b><?php echo $rv1->first_name;?> <?php echo $rv1->last_name;?></b>
                                     {{ trans('front/dashboard.joined_the_bot') }}
-                                    <b><?php echo $rv1->username;?></b>.
+                                    <b><a href="{!! URL::to('/bot/detail/'.$rv1->id) !!}"><?php echo $rv1->username;?></a></b>.
                             </p>
                         </div>
                     </li>
