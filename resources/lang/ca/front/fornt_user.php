@@ -25,7 +25,7 @@ return [
 	'my_bots' => 'Els meus bots',
 	'automatic_renewal' => 'Renovació automàtics',
 	'my_channel' => 'My Channel',
-	'plan_subscription' => 'Bot Plan Subscription',
+	'plan_subscription' => 'Subscripcions actives de Bots',
 	'chanel_plan_subscription' => 'Channel Plan Subscription',
 	'plan' => 'Plan',
 	'cost' => 'Cost',
