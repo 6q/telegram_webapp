@@ -100,8 +100,22 @@ class BotController extends Controller
         
         $country = DB::table('countries')->get();
         
-        
-        return view('front.bots.create',compact('plans','email','country','total_bots','total_chanels','Form_action','search','billing_details','states'));
+        /* nickName popup */
+        $nickName = DB::table('pages')
+                        ->where('id','=','13')
+                        ->get();
+						
+		/* botusername popup */
+        $botUserName = DB::table('pages')
+                        ->where('id','=','14')
+                        ->get();
+						
+		/* botaccesstoken popup */
+        $botAccessToken = DB::table('pages')
+                        ->where('id','=','15')
+                        ->get();				
+						
+        return view('front.bots.create',compact('plans','email','country','total_bots','total_chanels','Form_action','search','billing_details','states','nickName','botUserName','botAccessToken'));
     }
     
     
@@ -445,7 +459,14 @@ class BotController extends Controller
     }
     
     public function edit_bot($bot_id = NULL){
-        if(!empty($bot_id)){
+		if(!empty($bot_id)){
+			
+			/* nickName popup */
+			$nickName = DB::table('pages')
+							->where('id','=','13')
+							->get();
+							
+			
             $bot = Bot::find($bot_id);
             
             $total_bots = $this->botsTOTAL;
@@ -460,7 +481,7 @@ class BotController extends Controller
                 $search = $_REQUEST['search'];
             }
 
-            return view('front.bots.update_bot',compact('total_bots','total_chanels','Form_action','search','bot'));
+            return view('front.bots.update_bot',compact('total_bots','total_chanels','Form_action','search','bot','nickName'));
         }
     }
     

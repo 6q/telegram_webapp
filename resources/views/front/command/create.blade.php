@@ -167,6 +167,14 @@
 			{!! Form::hidden('contact_form', 0, array('id' => 'contact_form')) !!}
 			
             	<ul class="show_hide_ul" id="row_2">
+                
+                <li> 
+                	<span>{!! trans('front/command.email') !!}</span>
+                	<label id="email_err">
+                  		{!! Form::control_new('text', 0, 'email', $errors) !!}
+                	</label>
+              	</li>
+              
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
                 <label id="contact">
@@ -303,6 +311,7 @@
 $(document).ready(function()
 {
   var count = 1; 
+  var img_path = "{{ URL::to('/') }}";
   var totalUpImg = '<?php echo $plan[0]->gallery_images; ?>';	
   var token = $('input[name=_token]').val();	
 	$("#fileuploader").uploadFile({
@@ -317,7 +326,7 @@ $(document).ready(function()
 			}
         },
         onSuccess: function (files, data, xhr){
-			$('#preview').append('<li id="'+count+'"><a href="javascript:void(0);" class="close_button" onclick="rmv('+count+')">X</a><span><img src="{{ URL::to('/') }}/uploads/'+data+'" /></span><input type="text" name="title['+data+'_'+count+']" value="" /></li>');
+			$('#preview').append('<li id="'+count+'"><a href="javascript:void(0);" class="close_button" onclick="rmv('+count+')">X</a><span><img src="'+img_path+'/uploads/'+data+'" /></span><input type="text" name="title['+data+'_'+count+']" value="" /></li>');
 			
 			count = parseInt(count)+1;
 		},
@@ -508,8 +517,21 @@ function myFunctionShow(id){
 	
 	function validateContactForm(){
 		var chk = 1;
+		var email = $('#email').val();
 		var contact_submenu_heading_text = $('#contact_submenu_heading_text').val();
 		var headline = $('#headline').val();
+		
+		if(email == ''){
+			chk = 0;
+			$('#email_err div').addClass('has-error');
+		}
+		else if(!isValidEmailAddress(email)){
+			chk = 0;
+			$('#email_err div').addClass('has-error');
+		}
+		else{
+			$('#email_err div').removeClass('has-error');
+		}
 		
 		if(contact_submenu_heading_text == ''){
 			chk = 0;
@@ -609,6 +631,13 @@ function myFunctionShow(id){
 		else{
 			return false;
 		}
+	}
+	
+	
+	function isValidEmailAddress(emailAddress) {
+		var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+		
+		return pattern.test(emailAddress);
 	}
   
 </script>
