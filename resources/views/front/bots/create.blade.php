@@ -712,7 +712,11 @@
                 alert('Some error occured. Please check bot token and username');
                   return false;
               }
-          }
+          },
+          error: function (request, status, error) {
+            alert('Some error occured. Please check bot token and username');
+                  return false;
+        }
       });  
       
       
