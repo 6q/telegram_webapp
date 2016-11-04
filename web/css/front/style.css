@@ -169,8 +169,9 @@ img.register_logo {
 h1.logo {
   margin: 0 0 20px;
 }
-#menu > div:hover {
+#menu > div a:hover {
   background:#1991C4;
+  cursor:pointer;
 }
 #sidebar ul {
   margin: 35px auto;
@@ -229,7 +230,7 @@ h1.logo {
   float: left;
   margin-top: 15px;
   position: relative;
-  width: 75%;
+  width: 100%;
 }
 .col-about {
   float: left;
@@ -270,6 +271,7 @@ h1.logo {
   background-color: #fbfbfb;
   border: medium none;
   width: 100%;
+  padding-left:30px;
 }
 .col-profile-view > span {
   float: left;
@@ -1328,7 +1330,7 @@ img {
   width: 100%;
   color:#28B1D3;
 }
-#menu .col_lock {
+#menu .languages {
   position: absolute;
   width: 100%;
   bottom:0;
@@ -1346,7 +1348,7 @@ img {
     width: 30%;
   }
   .search {
-    width: 70%;
+    width: 100%;
   }
   .buying_table h3 {
     font-size: 15px;
@@ -1426,7 +1428,7 @@ img {
     width: 37%;
   }
   .search {
-    width: 63%;
+    width: 100%;
   }
   body .datepicker.dropdown-menu {
     border-radius: 4px;
@@ -1463,7 +1465,7 @@ img {
     width: 50%;
   }
   .search {
-    width: 50%;
+    width: 100%;
   }
   .add-discrption li {
     min-height: 230px;
@@ -1530,7 +1532,7 @@ img {
   #menu > div {
     display: inline-block;
   }
-  #menu > div:hover {
+  #menu > a:hover {
     background:#1991C4;
   }
   #sidebar {

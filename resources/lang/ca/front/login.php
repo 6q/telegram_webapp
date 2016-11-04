@@ -1,19 +1,19 @@
 <?php
 
 return [
-	'connection' => 'Login Account',
-	'login_text' => 'Login',
-	'send' => 'Login',
-	'login_desc' => 'Lorem Ipsum proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egest',
-	'text' => 'Enter Email & Password to log in',
-	'email' => 'Your email',
-	'password' => 'Password',
-	'remind' => 'Remember me',
-	'forget' => 'Forget password',
-	'register' => 'Not registered ?',
-	'register-info' => 'To register quickly just click on the button !',
-	'registering' => 'Click here to Register',
-	'credentials' => 'These credentials do not match our records.',
-	'log' => 'Email',
-	'maxattempt' => 'You have reached the maximum number of login attempts. Try again in one minute.'
+	'connection' => 'Entrar a Citymes',
+	'login_text' => 'Entrar',
+	'send' => 'Entrar',
+	'login_desc' => 'Benvingut a Citymes. Entra o registra\'t per començar a fer servir el nostre servei',
+	'text' => 'Introdueix el teu email i contrasenya de Citymes per entrar',
+	'email' => 'Correu electrònic',
+	'password' => 'Contrasenya',
+	'remind' => 'Recordar-me',
+	'forget' => 'He oblidat la contrasenya',
+	'register' => 'No estàs registrat?',
+	'register-info' => 'Per registrar-te ràpidament, clica aquest botó',
+	'registering' => 'Clica aquí per registrar-te',
+	'credentials' => 'Dades introduïdes incorrectes.',
+	'log' => 'Correu electrònic',
+	'maxattempt' => 'Has arribat al nombre màxim d\'intents. Torna a provar-ho en uns minuts.'
 ];

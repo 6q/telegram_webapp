@@ -42,4 +42,7 @@ return [
 	'edit_bot' => 'Editar el Bot',
 	'create_command' => 'Crear un nou submenú',
 	'edit_channel' => 'Editar',
+	'send_a_message' => 'Enviar un missatge a tots els usuaris',
+	'enter_message' => 'Escriu el missatge',
+	'send' => 'Enviar'
 ];

@@ -147,6 +147,13 @@
 
             <div class="col-lg-3 side_dashboard_content col-right_tab">
                 <h3>{{ trans('front/dashboard.recent_activity') }}</h3>
+                <div class="search">
+                    {!! Form::open(['url' => $Form_action, 'method' => 'get','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <input type="search" placeholder="Search here" value="{!! $search !!}" name="search">
+                    {!! Form::close() !!}
+                </div>
+
                 <ul>
                     <?php
 
@@ -215,7 +222,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
@@ -237,11 +244,11 @@
 
                     <br>
 
-                    <textarea id="channel_msg" class="form-control" cols="20" rows="5" placeholder="Enter message"></textarea>
+                    <textarea id="channel_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
 
                     <br>
 
-                    <a href="javascript:void(0);" class="btn btn-primary" onclick="sendMsg();">Send</a>
+                    <a href="javascript:void(0);" class="btn btn-primary" onclick="sendMsg();">{{ trans('front/dashboard.send') }}</a>
 
                     {!! Form::close() !!}
                 </div>
@@ -259,18 +266,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
 
                     <input type="hidden" id="b_bot_id" />
 
-                    <textarea id="bot_msg" class="form-control" cols="20" rows="5" placeholder="Enter message"></textarea>
+                    <textarea id="bot_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
 
                     <br>
 
-                    <a href="javascript:void(0);" class="btn btn-primary" onclick="sendMsgBot();">Send</a>
+                    <a href="javascript:void(0);" class="btn btn-primary" onclick="sendMsgBot();">{{ trans('front/dashboard.send') }}</a>
 
                     {!! Form::close() !!}
                 </div>

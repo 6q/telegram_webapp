@@ -17,22 +17,16 @@
 			<a href="{!! URL::to('/messages') !!}" data-toggle="tooltip" title="{!! trans('front/header.logs') !!}">{!! HTML::image('img/front/img2.png') !!}</a>
 		</div>
 
-	<!--<div class="col_lock">
-			<a href="{!! URL::to('/front_user/change_password/'.Auth::user()->id) !!}" data-toggle="tooltip" title="{!! trans('front/header.password_change') !!}">{!! HTML::image('img/password.png') !!}</a>
-		</div>
-		-->
 
+		<div class="languages">
+			<a data-toggle="modal" data-target="#languages">{!! trans('front/header.lan') !!}</a>
+		</div>
 		<div class="col_lock">
 			<a href="{!! URL::to('/auth/logout') !!}" data-toggle="tooltip" title="{!! trans('front/header.logout') !!}">{!! HTML::image('img/front/img3.png') !!}</a>
 		</div>
 
 
-		<script>
-			function changeLang(){
-				var url = $('#select_lang').val();
-				window.location.href = url;
-			}
-		</script>
+
 	</div>
 
 	<div class="col-sm-10 col-sm-offset-2  col-lg-10 col-lg-offset-2 " id="sidebar">
@@ -77,28 +71,28 @@
 			<div style="clear:both"></div>
 		</div>
 
-		<?php
-		$currLang = Config::get('app.locale');
-		$select1 = '';
-		if($currLang == 'en'){
-			$select1 = 'selected="selected"';
-		}
 
-		$select2 = '';
-		if($currLang == 'ca'){
-			$select2 = 'selected="selected"';
-		}
-
-		$select3 = '';
-		if($currLang == 'es'){
-			$select3 = 'selected="selected"';
-		}
-		?>
-		<select name="select_lang" onchange="changeLang();" id="select_lang">
-			<option <?php echo $select1;?> value="{!! URL::to('/language/en') !!}">{!! trans('front/header.english') !!}</option>
-			<option <?php echo $select2;?> value="{!! URL::to('/language/ca') !!}">{!! trans('front/header.catalan') !!}</option>
-			<option <?php echo $select3;?> value="{!! URL::to('/language/es') !!}">{!! trans('front/header.spanish') !!}</option>
-		</select>
 	</div>
+</div>
 
+<div id="languages" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">{!! trans('front/header.change_language') !!}</h4>
+			</div>
+			<div class="modal-body" style="text-align:center">
+				<p><a href="{!! URL::to('/language/ca') !!}">Català</a></p>
+				<p><a href="{!! URL::to('/language/es') !!}">Español</a></p>
+				<p><a href="{!! URL::to('/language/en') !!}">English</a></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{!! trans('front/header.close') !!}</button>
+			</div>
+		</div>
+
+	</div>
 </div>
