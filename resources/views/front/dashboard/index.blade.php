@@ -125,7 +125,7 @@
                                 <h4><a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}">{{ $myChanel->name }}</a></h4>
                                 <p class="h2">
                                     <a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}">
-                                        {!! HTML::image('img/front/days_counting_img.png') !!}<span>215</span>
+                                        {!! HTML::image('img/front/days_counting_img.png') !!}<span>{!! $myChanel->total_msg !!}</span>
                                     </a>
                                 </p>
 

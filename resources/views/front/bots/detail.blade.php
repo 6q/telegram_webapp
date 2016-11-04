@@ -3,6 +3,8 @@
 
 <!-- http://jlinn.github.io/stripe-api-php/api/subscriptions.html -->
 
+{!! HTML::script('js/front/paging.js') !!}
+
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
      
       @include('front.top')  
@@ -30,7 +32,7 @@
       <div class="col-lg-12">
         <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.autoresponse') }}</h2>
-          <table>
+          <table id="botAutoresponse">
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
@@ -61,11 +63,12 @@
               ?>
             </tbody>
           </table>
+          <ul id="botAutoresponseNavPosition" class="pagination"></ul>
         </div>
         
         <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.contact_form') }}</h2>
-          <table>
+          <table id="botContactForm">
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
@@ -94,11 +97,12 @@
               ?>
             </tbody>
           </table>
+          <ul id="botContactFormNavPosition" class="pagination"></ul>
         </div>
         <div style="clear:both"></div>
         <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.galleries') }}</h2>
-          <table>
+          <table id="botGallery">
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
@@ -127,11 +131,12 @@
               ?>
             </tbody>
           </table>
+          <ul id="botGalleryNavPosition" class="pagination"></ul>
         </div>
         
         <div class="col-plan col-lg-6">
           <h2>{{ trans('front/bots.channels') }}</h2>
-          <table>
+          <table id="botChannels">
             <thead>
               <tr>
                 <th>{{ trans('front/bots.submenu_heading_text') }}</th>
@@ -160,12 +165,13 @@
               ?>
             </tbody>
           </table>
+          <ul id="botChannelsNavPosition" class="pagination"></ul>
         </div>
         <div style="clear:both"></div>
         
         <div class="col-plan">
           <h2>{{ trans('front/bots.active_user') }}</h2>
-          <table>
+          <table id="activeUser">
             <thead>
               <tr>
                 <th>{{ trans('front/bots.first_name') }}</th>
@@ -196,11 +202,12 @@
               ?>
             </tbody>
           </table>
+          <ul id="activeUserNavPosition" class="pagination"></ul>
         </div>
         
         <div class="col-plan">
           <h2>{{ trans('front/bots.messages_activity') }}</h2>
-          <table>
+          <table id="message_activity">
             <thead>
               <tr>
                 <th>{{ trans('front/bots.user') }}</th>
@@ -233,12 +240,48 @@
               ?>
             </tbody>
           </table>
+          <ul id="messageNavPosition" class="pagination"></ul>
         </div>
         
       
 </div>
       
   </div>
+  
+  <script type="text/javascript"><!--
+
+  	var pager_botAutoresponse = new Pager('botAutoresponse', 5); 
+	pager_botAutoresponse.init(); 
+	pager_botAutoresponse.showPageNav('pager_botAutoresponse', 'botAutoresponseNavPosition'); 
+	pager_botAutoresponse.showPage('pager_botAutoresponse',1);
+	
+	var pager_botContactForm = new Pager('botContactForm', 5); 
+	pager_botContactForm.init(); 
+	pager_botContactForm.showPageNav('pager_botContactForm', 'botContactFormNavPosition'); 
+	pager_botContactForm.showPage('pager_botContactForm',1);
+	
+	var pager_botGallery = new Pager('botGallery', 5); 
+	pager_botGallery.init(); 
+	pager_botGallery.showPageNav('pager_botGallery', 'botGalleryNavPosition'); 
+	pager_botGallery.showPage('pager_botGallery',1);
+	
+	var pager_botChannels = new Pager('botChannels', 5); 
+	pager_botChannels.init(); 
+	pager_botChannels.showPageNav('pager_botChannels', 'botChannelsNavPosition'); 
+	pager_botChannels.showPage('pager_botChannels',1);
+	
+  	var pager_activeUser = new Pager('activeUser', 5); 
+	pager_activeUser.init(); 
+	pager_activeUser.showPageNav('pager_activeUser', 'activeUserNavPosition'); 
+	pager_activeUser.showPage('pager_activeUser',1);
+		
+	var pager_message_activity = new Pager('message_activity', 15); 
+	pager_message_activity.init(); 
+	pager_message_activity.showPageNav('pager_message_activity', 'messageNavPosition'); 
+	pager_message_activity.showPage('pager_message_activity',1);
+    //-->
+  </script>
+  
 
 <style>
   .thumb {

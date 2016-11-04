@@ -166,7 +166,19 @@ class DashboardController extends Controller {
             ->get();
         }     
         
-        
+		$startDate_thisMonth = date('Y-m-01');
+        $endDate_thisMonth = date('Y-m-t');
+				
+        if(!empty($chanel)){
+            foreach($chanel as $ch1 => $cv1){
+                $send_message = DB::table('channel_send_message')
+                                    ->where('channel_id','=',$cv1->id)
+									->whereBetween('send_date', array($startDate_thisMonth, $endDate_thisMonth))
+                                    ->get();
+                $total_msg = count($send_message);
+                $chanel[$ch1]->total_msg = $total_msg;
+            }
+        }
         
         $total_bots = $this->botsTOTAL;
         $total_chanels = $this->chanelTOTAL;

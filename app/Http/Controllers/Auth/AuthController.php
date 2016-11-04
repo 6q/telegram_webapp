@@ -13,6 +13,12 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Repositories\UserRepository;
 use App\Jobs\SendMail;
 
+use Illuminate\Contracts\Auth\User;
+use Auth;
+use App\Http\Controllers\Auth\AuthController;
+
+use Illuminate\Support\Facades\Route;
+
 class AuthController extends Controller
 {
 
@@ -26,6 +32,16 @@ class AuthController extends Controller
 	public function __construct()
 	{
 		$this->middleware('guest', ['except' => 'getLogout']);
+		
+		$actionname = Route::getCurrentRoute()->getActionName();
+		$dd = explode('@',$actionname);
+		
+		if (Auth::check() && $dd[1] == 'getLogin'){
+			//redirect('/dashboard');
+			header('Location: dashboard');
+			die();
+		}
+		
 	}
 
 	/**
