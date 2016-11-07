@@ -3,13 +3,13 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-
+        google.charts.load('current', {'packages':['line']});
         function drawChart(data_arr) {
             var data = google.visualization.arrayToDataTable(data_arr);
 
             var options_fullStacked = {
                 title: '',
-                chartArea:{left:0,top:10,bottom:30,width:"100%",height:"100%"},
+                chartArea:{left:0,top:10,bottom:0,width:"100%",height:"100%"},
                 curveType: 'function',
                 tooltip: {
                     isHtml: true
@@ -18,7 +18,7 @@
             };
 
 
-            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            var chart = new google.charts.Line(document.getElementById('chart_div'));
             chart.draw(data, options_fullStacked);
         }
     </script>

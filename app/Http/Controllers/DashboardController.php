@@ -297,9 +297,9 @@ class DashboardController extends Controller {
         
         $arr_dates = $this->date_range($startDate,$endDate,$step,$output_format);
         $i = 0;
-        
-        $arr[$i][0] = 'Date';
-		$arr[$i][1] = 'Bot';
+
+        $arr[$i][0] = '';
+		$arr[$i][1] = 'Bot seleccionat';
 		
 		if(!empty($bot_id) && $bot_id == 'all_bots' && ($chart_details == 'recieved_messages' || $chart_details == 'send_messages' || $chart_details == 'active_users')){
 			$j = 1;
