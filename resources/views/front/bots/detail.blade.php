@@ -210,10 +210,10 @@
           <table id="message_activity">
             <thead>
               <tr>
-                <th>{{ trans('front/bots.user') }}</th>
-                <th>{{ trans('front/bots.message') }} </th>
-                <th>{{ trans('front/bots.replay_message') }}</th>
-                <th>{{ trans('front/bots.date') }}</th>
+                <th width="20%">{{ trans('front/bots.user') }}</th>
+                <th width="30%">{{ trans('front/bots.message') }} </th>
+                <th width="30%">{{ trans('front/bots.replay_message') }}</th>
+                <th width="20%">{{ trans('front/bots.date') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -250,22 +250,22 @@
   
   <script type="text/javascript"><!--
 
-  	var pager_botAutoresponse = new Pager('botAutoresponse', 5); 
+  	var pager_botAutoresponse = new Pager('botAutoresponse', 4);
 	pager_botAutoresponse.init(); 
 	pager_botAutoresponse.showPageNav('pager_botAutoresponse', 'botAutoresponseNavPosition'); 
 	pager_botAutoresponse.showPage('pager_botAutoresponse',1);
 	
-	var pager_botContactForm = new Pager('botContactForm', 5); 
+	var pager_botContactForm = new Pager('botContactForm', 4);
 	pager_botContactForm.init(); 
 	pager_botContactForm.showPageNav('pager_botContactForm', 'botContactFormNavPosition'); 
 	pager_botContactForm.showPage('pager_botContactForm',1);
 	
-	var pager_botGallery = new Pager('botGallery', 5); 
+	var pager_botGallery = new Pager('botGallery', 4);
 	pager_botGallery.init(); 
 	pager_botGallery.showPageNav('pager_botGallery', 'botGalleryNavPosition'); 
 	pager_botGallery.showPage('pager_botGallery',1);
 	
-	var pager_botChannels = new Pager('botChannels', 5); 
+	var pager_botChannels = new Pager('botChannels', 4);
 	pager_botChannels.init(); 
 	pager_botChannels.showPageNav('pager_botChannels', 'botChannelsNavPosition'); 
 	pager_botChannels.showPage('pager_botChannels',1);
@@ -275,7 +275,7 @@
 	pager_activeUser.showPageNav('pager_activeUser', 'activeUserNavPosition'); 
 	pager_activeUser.showPage('pager_activeUser',1);
 		
-	var pager_message_activity = new Pager('message_activity', 15); 
+	var pager_message_activity = new Pager('message_activity', 10);
 	pager_message_activity.init(); 
 	pager_message_activity.showPageNav('pager_message_activity', 'messageNavPosition'); 
 	pager_message_activity.showPage('pager_message_activity',1);

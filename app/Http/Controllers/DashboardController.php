@@ -299,7 +299,7 @@ class DashboardController extends Controller {
         $i = 0;
         
         $arr[$i][0] = 'Date';
-        $arr[$i][1] = 'Bot Messages';
+        $arr[$i][1] = $chart_details;
         $i = 1;
         
         foreach($arr_dates as $k1 => $v1){

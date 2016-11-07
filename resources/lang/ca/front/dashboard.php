@@ -32,7 +32,7 @@ return [
 	'view_log' => 'Veure tots',
 	'sub_heading' => 'benvingut a Citymes. Crea i gestiona els teus bots i canals de Telegram.',
 	'bot_edit' => 'Bot edit',
-	'select_bot' => 'Select Bots',
+	'select_bot' => 'Seleccionar Bots',
 	'select_time_duraction' => 'Seleccionar',
 	'recieved_messages' => 'Interaccions',
 	'send_messages' => 'Missatges enviats',
@@ -44,5 +44,7 @@ return [
 	'edit_channel' => 'Editar',
 	'send_a_message' => 'Enviar un missatge a tots els usuaris',
 	'enter_message' => 'Escriu el missatge',
-	'send' => 'Enviar'
+	'send' => 'Enviar',
+	'search_here' => 'Cercar',
+	'select_bot' => 'Seleccionar un bot que estigui assignat com administrador del canal'
 ];

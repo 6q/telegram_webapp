@@ -150,7 +150,7 @@
                 <div class="search">
                     {!! Form::open(['url' => $Form_action, 'method' => 'get','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <input type="search" placeholder="Search here" value="{!! $search !!}" name="search">
+                    <input type="search" placeholder="{{ trans('front/dashboard.search_here') }}" value="{!! $search !!}" name="search">
                     {!! Form::close() !!}
                 </div>
 
@@ -230,7 +230,7 @@
                     <input type="hidden" id="chat_id" />
 
                     <select id="botID" class="form-control">
-                        <option value="">Select bot</option>
+                        <option value="">{{ trans('front/dashboard.select_bot') }}</option>
                         <?php
                         if (isset($bots) && !empty($bots)) {
                         foreach ($bots as $b1 => $bv1) {

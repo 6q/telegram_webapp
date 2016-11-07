@@ -428,7 +428,8 @@ section.col_top, .container_1 {
   border-top: 1px solid #dddddd;
 }
 .col-plan {
-  border: 1px solid #dddddd;
+  /*border: 1px solid #dddddd;*/
+  text-align:center;
   border-radius: 7px;
   margin-bottom: 20px;
 }
