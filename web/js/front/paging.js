@@ -59,10 +59,10 @@ function Pager(tableName, itemsPerPage) {
     	}
     	var element = document.getElementById(positionId);
     	
-    	var pagerHtml = '<li> <a href="javascript:void(0);" onclick="' + pagerName + '.prev('+"'"+pagerName+"'"+');"> &#171 Prev </a></li>';
+    	var pagerHtml = '<li> <a href="javascript:void(0);" onclick="' + pagerName + '.prev('+"'"+pagerName+"'"+');"> &#171</a></li>';
         for (var page = 1; page <= this.pages; page++) 
     pagerHtml += '<li id="'+pagerName+ page + '"> <a href="javascript:void(0);" class="pg-normal" onclick="'+pagerName+ '.showPage('+"'"+pagerName+"'"+',' + page + ');">' + page + '</a></li>';
-        pagerHtml += '<li> <a href="javascript:void(0);" onclick="'+pagerName+'.next('+"'"+pagerName+"'"+');" class="pg-normal"> Next &#187;</a></li>';            
+        pagerHtml += '<li> <a href="javascript:void(0);" onclick="'+pagerName+'.next('+"'"+pagerName+"'"+');" class="pg-normal">&#187;</a></li>';
         
         element.innerHTML = pagerHtml;
     }

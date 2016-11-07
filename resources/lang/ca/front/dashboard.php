@@ -34,6 +34,7 @@ return [
 	'bot_edit' => 'Bot edit',
 	'select_bot' => 'Seleccionar Bots',
 	'select_time_duraction' => 'Seleccionar',
+	'search' => 'Cercar',
 	'recieved_messages' => 'Interaccions',
 	'send_messages' => 'Missatges enviats',
 	'active_users' => 'Usuaris actius',

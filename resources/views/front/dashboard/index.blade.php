@@ -9,16 +9,14 @@
 
             var options_fullStacked = {
                 title: '',
-                chartArea:{left:40,top:20,bottom:50,width:"80%",height:"100%"},
-                hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
+                chartArea:{left:0,top:10,bottom:30,width:"100%",height:"100%"},
+                curveType: 'function',
                 tooltip: {
                     isHtml: true
                 },
-                vAxis: {
-                    minValue: 0,
-                    ticks: [0, 50, 100, 150, 200]
-                }
+                legend: { position: 'bottom' }
             };
+
 
             var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
             chart.draw(data, options_fullStacked);
@@ -151,7 +149,7 @@
                 <div class="search">
                     {!! Form::open(['url' => $Form_action, 'method' => 'get','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <input type="search" placeholder="Search here" value="{!! $search !!}" name="search">
+                    <input type="search" placeholder="{{ trans('front/dashboard.search') }}" value="{!! $search !!}" name="search">
                     {!! Form::close() !!}
                 </div>
 

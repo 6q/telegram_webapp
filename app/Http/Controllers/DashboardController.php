@@ -342,7 +342,7 @@ class DashboardController extends Controller {
 				foreach($bots as $bk1 => $bv1){					
                		$count_bot = DB::table('bot_users')
                                 ->where('bot_id',$bv1->id)
-                                ->where('created_at','LIKE','%'.$v1.'%')
+                                ->where('created_at','<=',$v1)
                                 ->get();			
 					
 					$arr[$i][0] = date('d.m',strtotime($v1));			
@@ -354,7 +354,7 @@ class DashboardController extends Controller {
             else if(!empty($bot_id) && $bot_id != 'all_bots' && $chart_details == 'active_users'){
                 $count_bot = DB::table('bot_users')
                                 ->where('bot_id','=',$bot_id)
-                                ->where('created_at','LIKE','%'.$v1.'%')
+                                ->where('created_at','<=',$v1)
                                 ->get();
 								
 				$arr[$i][0] = date('d.m',strtotime($v1));
