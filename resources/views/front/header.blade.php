@@ -53,7 +53,7 @@
 				</p>
 			</li>
 		</ul>
-
+<div class="col-content_tab">
 		<div class="new_bot_channel">
 			<div class="left">
 				<a class="bot_button" href="{!! URL::to('/bot/create') !!}">
@@ -69,9 +69,35 @@
 				<p>{{ trans('front/MyChannel.add_new_channel') }}</p>
 			</div>
 			<div style="clear:both"></div>
+            
 		</div>
+<div class="chat_box" style="display:none;">
+<h6>Media</h6>
+<div class="chat_content">
+<ul>
+<li>11.50px</li>
+<li>11.50px</li>
+<li>11.50px</li>
+<li>11.50px</li>
+<li>11.50px</li>
+<li>11.50px</li>
+<li>11.50px</li>
 
+</ul>
+</div>
+<div class="chat_type">
+<img src="{{URL::asset('img/chat_type.png')}}" >
 
+</div>
+<div class="chat_tab"><ul>
+<li><a id="auto_resp" href="#">1</a></li>
+<li><a id="conntact_fbutton" href="#">2</a></li>
+<li><a id="gallery_imgs" href="#">3</a></li>
+<li><a id="chnl_btn" href="#">4</a></li>
+
+</ul></div>
+</div>
+</div>
 	</div>
 </div>
 

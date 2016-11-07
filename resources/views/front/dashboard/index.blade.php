@@ -76,9 +76,10 @@
                     {!! Form::close() !!}
 
                 </div>
-
+				
                 <div class="graph">
-                    <div id="chart_div"></div>
+                	<img src="{{URL::asset('img/balls.gif')}}" class="loading_img">
+                    <div id="chart_div" style="height: 300px;"></div>
                 </div>
 
                 <div class="col-my-content">
@@ -150,7 +151,7 @@
                 <div class="search">
                     {!! Form::open(['url' => $Form_action, 'method' => 'get','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <input type="search" placeholder="{{ trans('front/dashboard.search_here') }}" value="{!! $search !!}" name="search">
+                    <input type="search" placeholder="Search here" value="{!! $search !!}" name="search">
                     {!! Form::close() !!}
                 </div>
 
@@ -230,7 +231,7 @@
                     <input type="hidden" id="chat_id" />
 
                     <select id="botID" class="form-control">
-                        <option value="">{{ trans('front/dashboard.select_bot') }}</option>
+                        <option value="">Select bot</option>
                         <?php
                         if (isset($bots) && !empty($bots)) {
                         foreach ($bots as $b1 => $bv1) {
@@ -293,6 +294,7 @@
         });
 
         function getCharts(){
+			$('.loading_img').css('display','block');
             var id = $('#chart_bots').val();
             var chart_time = $('#chart_time').val();
             var chart_details = $('#chart_details').val();
@@ -308,6 +310,7 @@
                     google.charts.setOnLoadCallback(function(){
                         var data_arr = JSON.parse(resp);
                         drawChart(data_arr);
+						$('.loading_img').css('display','none');
                     });
                 }
             });

@@ -58,6 +58,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('pages/detail/{pageid?}', 'PageController@detail');
     Route::resource('page', 'PageController');
     Route::resource('emailtemplate', 'EmailtemplateController');
+	
+	Route::resource('setting','SettingController');
 
     Route::get('bot/userbot/{user_id?}', 'BotController@userbot');
     Route::get('bot/bot_detail/{bot_id?}', 'BotController@admin_bot_detail');

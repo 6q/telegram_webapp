@@ -141,7 +141,11 @@ class CommandController extends Controller
 									->get();
 					$name = $bot_name[0]->username;
 					
-					$to_email = $request->get('email');
+					$contactFormEmail = DB::table('site_settings')
+											->where('name','=','contact_form_email')
+											->get();
+					
+					$to_email = $contactFormEmail[0]->value;//$request->get('email');
 					
 					$ques_html = '';
 					 foreach($request->get('ques_heading') as $k1 => $v1){
@@ -431,7 +435,12 @@ class CommandController extends Controller
 	
 	public function contactform_update(Request $request){
 		if(!empty($request->get('id'))){
-			$to_email = $request->get('email');
+			//$to_email = $request->get('email');
+			$contactFormEmail = DB::table('site_settings')
+											->where('name','=','contact_form_email')
+											->get();
+					
+			$to_email = $contactFormEmail[0]->value;//$request->get('email');
 			
 			$bot_id = $request->get('bot_id');
 			$contact_form = ContactForm::find($request->get('id'));

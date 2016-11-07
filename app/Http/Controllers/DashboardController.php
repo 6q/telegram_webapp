@@ -277,7 +277,7 @@ class DashboardController extends Controller {
         
         if($chart_time == 'this_week'){
             $day = date('w');
-            $startDate = date('Y-m-d', strtotime('-'.$day.' days'));
+            $startDate = date('Y-m-d', strtotime('-'.$day.' days'));	
             $endDate = date('Y-m-d', strtotime('+'.(6-$day).' days'));    
         }
 
@@ -299,40 +299,70 @@ class DashboardController extends Controller {
         $i = 0;
         
         $arr[$i][0] = 'Date';
-        $arr[$i][1] = $chart_details;
-        $i = 1;
+		$arr[$i][1] = 'Bot';
+		
+		if(!empty($bot_id) && $bot_id == 'all_bots' && ($chart_details == 'recieved_messages' || $chart_details == 'send_messages' || $chart_details == 'active_users')){
+			$j = 1;
+			foreach($bots as $k1 => $v1){			
+				$arr[$i][$j] = $v1->username;
+				$j++;
+			}
+		}
+				
         
+		$i = 1;
+		
         foreach($arr_dates as $k1 => $v1){
             if(!empty($bot_id) && $bot_id == 'all_bots' && ($chart_details == 'recieved_messages' || $chart_details == 'send_messages')){
-                $count_bot = DB::table('bot_messages')
-                                ->whereIn('bot_id',$bot_id_arr)
+				$j = 1;
+				foreach($bots as $bk1 => $bv1){
+					$count_bot = DB::table('bot_messages')
+                                ->where('bot_id',$bv1->id)
                                 ->where('date','LIKE','%'.$v1.'%')
                                 ->get();
+					
+					$arr[$i][0] = date('d.m',strtotime($v1));			
+					$arr[$i][$j] = count($count_bot);	
+					$j++;
+				}
+				$i++;
             }
             else if(!empty($bot_id) && $bot_id != 'all_bots' && ($chart_details == 'recieved_messages' || $chart_details == 'send_messages')){
                 $count_bot = DB::table('bot_messages')
                                 ->where('bot_id','=',$bot_id)
                                 ->where('date','LIKE','%'.$v1.'%')
                                 ->get();
+				
+				$arr[$i][0] = date('d.m',strtotime($v1));
+				$arr[$i][1] = count($count_bot);	
+				$i++;			
             }
             else if(!empty($bot_id) && $bot_id == 'all_bots' && $chart_details == 'active_users'){
-                $count_bot = DB::table('bot_users')
-                                ->whereIn('bot_id',$bot_id_arr)
+				$j = 1;
+				foreach($bots as $bk1 => $bv1){					
+               		$count_bot = DB::table('bot_users')
+                                ->where('bot_id',$bv1->id)
                                 ->where('created_at','LIKE','%'.$v1.'%')
-                                ->get();
+                                ->get();			
+					
+					$arr[$i][0] = date('d.m',strtotime($v1));			
+					$arr[$i][$j] = count($count_bot);	
+					$j++;
+				}
+				$i++;
             }
             else if(!empty($bot_id) && $bot_id != 'all_bots' && $chart_details == 'active_users'){
                 $count_bot = DB::table('bot_users')
                                 ->where('bot_id','=',$bot_id)
                                 ->where('created_at','LIKE','%'.$v1.'%')
                                 ->get();
+								
+				$arr[$i][0] = date('d.m',strtotime($v1));
+				$arr[$i][1] = count($count_bot);	
+				$i++;				
             }
-            
-            $arr[$i][0] = date('d.m',strtotime($v1));
-            $arr[$i][1] = count($count_bot);
-            $i++;
         }
-                
+        
         $arr = json_encode($arr);
         echo $arr;die;
     }
