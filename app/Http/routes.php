@@ -158,7 +158,36 @@ Route::get('/user_images/{size}/{name}', function($size = NULL, $name = NULL) {
 
 
 Route::post('/{bottoken}/webhook', function ($token) {
-    
+   
+   $url='https://api.telegram.org/bot'.$token.'/getWebhookInfo';
+   $options = array(
+        CURLOPT_RETURNTRANSFER => true,     // return web page
+        CURLOPT_HTTPHEADER     => array("Accept-Language: en-US;q=0.6,en;q=0.4"),
+        CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+        CURLOPT_ENCODING       => "",       // handle all encodings
+        CURLOPT_USERAGENT      => "spider", // who am i
+        CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+        CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+        CURLOPT_TIMEOUT        => 120,      // timeout on response
+        CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+    );
+
+    $ch      = curl_init( $url );
+    curl_setopt_array( $ch, $options );
+    $content = curl_exec( $ch );
+    $err     = curl_errno( $ch );
+    $errmsg  = curl_error( $ch );
+    $header  = curl_getinfo( $ch );
+    curl_close( $ch );
+
+   
+   // $header['content'] = $content;
+     $rs= $content;
+
+    //$rs=@file_get_contents('https://api.telegram.org/bot'.$token.'/getWebhookInfo');
+	file_put_contents(public_path().'/'.$token.'webhook_info.txt',$rs);
+	file_put_contents(public_path().'/updates_error.txt',$token);
+	
     $update = Telegram::commandsHandler(true);
     
     $data = json_decode($update,true);
@@ -167,7 +196,12 @@ Route::post('/{bottoken}/webhook', function ($token) {
     file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
     
     $telegram = new Api($token);
+	
+	
     $response = $telegram->getMe();
+	
+	//$rs = $telegram->getWebhookInfo();
+	
     
 	$botId = $response->getId();
     $chatId = $data['message']['chat']['id'];
@@ -179,7 +213,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
     /* Add bot user */
     $from_id = $data['message']['from']['id'];
     $first_name = $data['message']['from']['first_name'];
-    $last_name = $data['message']['from']['last_name'];
+    //$last_name = $data['message']['from']['last_name'];
     
     $bot_user = DB::table('bot_users')
                     ->where('bot_id', '=', $dbBotId)
@@ -192,7 +226,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
     }
     else{
         $bot_user_id = DB::table('bot_users')->insertGetId(
-                ['bot_id' => $dbBotId, 'first_name' => $first_name, 'last_name' => $last_name, 'username' => '', 'fromid' => $from_id, 'created_at' => date('Y-m-d h:i:s'), 'modified_at' => date('Y-m-d h:i:s')]
+                ['bot_id' => $dbBotId, 'first_name' => $first_name, 'username' => '', 'fromid' => $from_id, 'created_at' => date('Y-m-d h:i:s'), 'modified_at' => date('Y-m-d h:i:s')]
             );
         
         //file_put_contents(public_path().'/result.txt',$bot_user_id);

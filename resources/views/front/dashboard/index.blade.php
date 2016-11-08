@@ -50,9 +50,9 @@
 
                     <div class="week">
                         <select id="chart_time" onchange="getCharts()">
-                            <option value="this_week" selected>{{ trans('front/dashboard.this_week') }} </option>
-                            <option value="this_month">{{ trans('front/dashboard.this_month') }}</option>
-                            <option value="this_year">{{ trans('front/dashboard.this_year') }}</option>
+                            <option value="10_days" selected>{{ trans('front/dashboard.10_days') }} </option>
+                            <option value="30_days">{{ trans('front/dashboard.30_days') }}</option>
+                            <option value="90_days">{{ trans('front/dashboard.90_days') }}</option>
                         </select>
                     </div>
 

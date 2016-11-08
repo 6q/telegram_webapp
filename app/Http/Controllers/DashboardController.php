@@ -275,23 +275,23 @@ class DashboardController extends Controller {
         }
         
         
-        if($chart_time == 'this_week'){
+        if($chart_time == '10_days'){
             $day = date('w');
-            $startDate = date('Y-m-d', strtotime('-'.$day.' days'));	
-            $endDate = date('Y-m-d', strtotime('+'.(6-$day).' days'));    
+            $startDate = date('Y-m-d',strtotime('today - 7 days'));
+            $endDate = date('Y-m-d');
         }
 
-        if($chart_time == 'this_month'){
+        if($chart_time == '30_days'){
             $month = date('m');
             $year = date('Y');
 
-            $startDate = date('d-m-Y',strtotime('first day of this month'));
-            $endDate = date('d-m-Y',strtotime('last day of this month'));
+            $startDate = date('d-m-Y',strtotime('today - 30 days'));
+            $endDate = date('d-m-Y');
         }
 
-        if($chart_time == 'this_year'){
-            $startDate = '01-01-'.date('Y');
-            $endDate = '31-12-'.date('Y');
+        if($chart_time == '90_days'){
+	        $startDate = date('d-m-Y',strtotime('today - 90 days'));
+	        $endDate = date('d-m-Y');
         }
         
         
