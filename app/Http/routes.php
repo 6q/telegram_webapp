@@ -158,7 +158,7 @@ Route::get('/user_images/{size}/{name}', function($size = NULL, $name = NULL) {
 
 
 Route::post('/{bottoken}/webhook', function ($token) {
-   
+
    $url='https://api.telegram.org/bot'.$token.'/getWebhookInfo';
    $options = array(
         CURLOPT_RETURNTRANSFER => true,     // return web page
@@ -180,7 +180,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
     $header  = curl_getinfo( $ch );
     curl_close( $ch );
 
-   
+
    // $header['content'] = $content;
      $rs= $content;
 
@@ -212,8 +212,8 @@ Route::post('/{bottoken}/webhook', function ($token) {
     
     /* Add bot user */
     $from_id = $data['message']['from']['id'];
-    $first_name = $data['message']['from']['first_name'];
-    //$last_name = $data['message']['from']['last_name'];
+    $first_name = isset($data['message']['from']['first_name'])?$data['message']['from']['first_name']:'';
+    $last_name = isset($data['message']['from']['last_name'])?$data['message']['from']['last_name']:'';
     
     $bot_user = DB::table('bot_users')
                     ->where('bot_id', '=', $dbBotId)
@@ -226,7 +226,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
     }
     else{
         $bot_user_id = DB::table('bot_users')->insertGetId(
-                ['bot_id' => $dbBotId, 'first_name' => $first_name, 'username' => '', 'fromid' => $from_id, 'created_at' => date('Y-m-d h:i:s'), 'modified_at' => date('Y-m-d h:i:s')]
+                ['bot_id' => $dbBotId, 'first_name' => $first_name, 'last_name' => $last_name, 'username' => '', 'fromid' => $from_id, 'created_at' => date('Y-m-d h:i:s'), 'modified_at' => date('Y-m-d h:i:s')]
             );
         
         //file_put_contents(public_path().'/result.txt',$bot_user_id);

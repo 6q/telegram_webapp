@@ -451,6 +451,10 @@ class BotController extends Controller
            //https://api.telegram.org/bot288327776:AAEVhPyxdDqOjtNb6_q35mVptq1X3kjRsDA/setwebhook?url=https://app.citymes.com/288327776:AAEVhPyxdDqOjtNb6_q35mVptq1X3kjRsDA/webhook 
             $telegram = new Api($token);
             $result = $telegram->setWebhook(['url' => $url]);
+			
+			//$rs = $telegram->getWebhookInfo();
+			//$rs = $telegram->WebhookInfo();
+			//echo '<pre>';print_r($rs);die;
             
             $res = json_decode(json_encode($result));
             echo $res[0];
