@@ -107,6 +107,9 @@
                                 <li><a href="{!! url('emailtemplate/create') !!}">{{ trans('back/admin.add') }}</a></li>
                             </ul>
                         </li>
+                        <li {!! classActivePath('setting') !!}>
+                             <a href="{!! url('setting') !!}"><span class="fa fa-fw fa-dashboard"></span> {{ trans('back/admin.setting') }}</a>
+                        </li>
                     @endif                  
                 </ul>
             </div>
