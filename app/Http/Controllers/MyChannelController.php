@@ -193,7 +193,9 @@ class MyChannelController extends Controller {
     public function detail($botid = NULL) {
         $total_bots = $this->botsTOTAL;
         $total_chanels = $this->chanelTOTAL;
-        
+		
+		$bots = $total_bots;
+		        
         $Form_action = '';
        	$search = '';
        	if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
@@ -206,7 +208,7 @@ class MyChannelController extends Controller {
             $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $botid)->get();
            // echo '<pre>';print_r($chanels);die;
 
-            return view('front.mychannel.detail', compact('chanels','total_bots','total_chanels','Form_action','search','chanelMesg'));
+            return view('front.mychannel.detail', compact('chanels','total_bots','total_chanels','Form_action','search','chanelMesg','bots'));
         }
     }
 
@@ -246,19 +248,11 @@ class MyChannelController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Plan $plan) {
-        
+    public function destroy(MyChannel $MyChannel) {
+        $MyChannel->delete();
+        return redirect('user')->with('ok', trans('back/user.channel_destroyed'));
     }
-
-    /* in amdin section */
-
-    function userbot($user_id) {
-        $totalBots = Bot::where(['user_id' => $user_id])->count();
-        $bots = Bot::where('user_id', '=', $user_id)->paginate(2);
-        $links = $bots->render();
-        return view('back.bots.index', compact('bots', 'links', 'totalBots'));
-    }
-    
+ 
     
     public function edit_channel($channel_id = NULL){
         if(!empty($channel_id)){
@@ -293,5 +287,26 @@ class MyChannelController extends Controller {
               }
         }
     }
+	
+	
+	
+	
+	/* in amdin section */
+    public function userchannel($user_id){
+        $totalChannels = MyChannel::where(['user_id' => $user_id])->count();
+        $channels = MyChannel::where('user_id', '=', $user_id)->paginate(2);
+		$links = $channels->render();
+        return view('back.mychannel.index', compact('channels', 'links','totalChannels'));	
+    }
+    /***************************************/
+	
+	
+	public function mychannel_detail($channelID){
+		 if (!empty($channelID)) {
+            $chanels = DB::table('my_channels')->where('id', '=', $channelID)->get();
+            $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $channelID)->get();
+            return view('back.mychannel.detail', compact('chanels','chanelMesg'));
+        }
+	}
 
 }

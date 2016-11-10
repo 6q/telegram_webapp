@@ -22,7 +22,10 @@
           }
         ?></li>
            </ul>
-        <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a> <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+        <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a> 
+        <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+        
+        <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bots[0]->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
       </div>
 
 
@@ -248,6 +251,32 @@
       
   </div>
   
+  <div id="myModalBot" class="modal fade" role="dialog" style="display:none;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
+
+                    <input type="hidden" id="b_bot_id" />
+
+                    <textarea id="bot_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
+
+                    <br>
+
+                    <a href="javascript:void(0);" class="btn btn-primary" onclick="sendMsgBot();">{{ trans('front/dashboard.send') }}</a>
+
+                    {!! Form::close() !!}
+                </div>
+            </div>
+
+        </div>
+    </div>
+  
   <script type="text/javascript"><!--
 
   	var pager_botAutoresponse = new Pager('botAutoresponse', 4);
@@ -280,6 +309,48 @@
 	pager_message_activity.showPageNav('pager_message_activity', 'messageNavPosition'); 
 	pager_message_activity.showPage('pager_message_activity',1);
     //-->
+	
+	
+	function mypopup_botfunction(bot_id){
+		$('#bot_msg').css('border','1px solid #ccc');
+		$('#b_bot_id').val(bot_id);
+
+		$('#bot_msg').val('');
+
+		$('#myModalBot').modal();
+	}
+	
+	function sendMsgBot(){
+            var chk = true;
+            var bot_msg = $('#bot_msg').val();
+            var b_bot_id = $('#b_bot_id').val();
+
+            if(bot_msg == ''){
+                chk = false;
+                $('#bot_msg').css('border','1px solid #ff0000');
+            }
+            else{
+                $('#bot_msg').css('border','1px solid #ccc');
+            }
+
+
+            if(chk){
+                var token_new = $('input[name=_token]').val();
+                $.ajax({
+                    url: '<?php echo URL::to('/dashboard/sendbotmessage')?>',
+                    headers: {'X-CSRF-TOKEN': token_new},
+                    data: {bot_msg:bot_msg,b_bot_id:b_bot_id},
+                    type:'POST',
+                    success: function (resp) {
+                        alert(resp);
+                        $('#myModalBot').modal('hide');
+                    },
+                    error: function (request, status, error) {
+                        alert('Forbidden: bot is not a member of the channel chat');
+                    }
+                });
+            }
+        }
   </script>
   
 

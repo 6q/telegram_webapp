@@ -24,5 +24,7 @@ return [
 	'updated' => 'Usuário atualizado.',
 	'destroyed' => 'Usuário excluído.',
 	'confirmed' => 'Confirmado',
-	'not-confirmed' => 'Não confirmado'
+	'not-confirmed' => 'Não confirmado',
+	'view_channel' => 'View Channels',
+	'channel_destroyed' => 'Channel deleted successfully'
 ];

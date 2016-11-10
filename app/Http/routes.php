@@ -62,6 +62,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('setting','SettingController');
 
     Route::get('bot/userbot/{user_id?}', 'BotController@userbot');
+	Route::get('my_channel/userchannel/{user_id?}', 'MyChannelController@userchannel');
     Route::get('bot/bot_detail/{bot_id?}', 'BotController@admin_bot_detail');
     Route::get('bot/contactform_ques/{contact_form_id?}', 'BotController@contactform_ques');
     Route::get('bot/gallery_img/{gallery_id?}', 'BotController@gallery_img');
@@ -69,7 +70,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('bot/setweb_hook', 'BotController@setweb_hook');
     Route::get('bot/update_bot/{bot_id?}', 'BotController@edit_bot');
     Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
-    
+	Route::get('bot/bot_delete/{bot_id?}', 'BotController@bot_delete');
+   
     Route::resource('bot', 'BotController');
 
     Route::post('command/create/{bot_id?}', 'CommandController@create');
@@ -93,6 +95,7 @@ Route::group(['middleware' => ['web']], function () {
     // Routes for mychannel Controller
 
     Route::get('my_channel/detail/{cahnelId?}', 'MyChannelController@detail');
+	Route::get('my_channel/mychannel_detail/{cahnelId?}', 'MyChannelController@mychannel_detail');
     Route::get('my_channel/update_channel/{cahnelId?}', 'MyChannelController@edit_channel');
     Route::post('my_channel/update_channel/{cahnelId?}', 'MyChannelController@update_channel');
     Route::resource('my_channel', 'MyChannelController');
@@ -159,7 +162,7 @@ Route::get('/user_images/{size}/{name}', function($size = NULL, $name = NULL) {
 
 Route::post('/{bottoken}/webhook', function ($token) {
 
-   $url='https://api.telegram.org/bot'.$token.'/getWebhookInfo';
+   /*$url='https://api.telegram.org/bot'.$token.'/getWebhookInfo';
    $options = array(
         CURLOPT_RETURNTRANSFER => true,     // return web page
         CURLOPT_HTTPHEADER     => array("Accept-Language: en-US;q=0.6,en;q=0.4"),
@@ -186,9 +189,11 @@ Route::post('/{bottoken}/webhook', function ($token) {
 
     //$rs=@file_get_contents('https://api.telegram.org/bot'.$token.'/getWebhookInfo');
 	file_put_contents(public_path().'/'.$token.'webhook_info.txt',$rs);
-	file_put_contents(public_path().'/updates_error.txt',$token);
+	file_put_contents(public_path().'/updates_error.txt',$token);*/
 	
-    $update = Telegram::commandsHandler(true);
+   // $update = Telegram::commandsHandler(true);
+   
+   $update = file_get_contents('php://input');
     
     $data = json_decode($update,true);
     $messageText = (isset($data['message']['text']) && !empty($data['message']['text']))?$data['message']['text']:'';

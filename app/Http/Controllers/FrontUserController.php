@@ -31,6 +31,7 @@ class FrontUserController extends Controller
 		
 		$Form_action = 'front_user';
         $search = '';
+		
         if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
             $search = $_REQUEST['search'];
         }
@@ -131,8 +132,16 @@ class FrontUserController extends Controller
                     $data[$b1]['user_subscription']['updated_at'] = $user_subscription[0]->updated_at;
                     
                     $plan = DB::table('plans')->where('id', '=', $user_subscription[0]->plan_id)->get();
-                    $data[$b1]['user_subscription']['Plan']['id'] = $plan[0]->id;
-                    $data[$b1]['user_subscription']['Plan']['name'] = $plan[0]->name;
+                    //$data[$b1]['user_subscription']['Plan']['id'] = $plan[0]->id;
+                    //$data[$b1]['user_subscription']['Plan']['name'] = $plan[0]->name;
+					
+					$data[$b1]['user_subscription']['plan_id'] = '';
+                    $data[$b1]['user_subscription']['plan_name'] = '';				
+					if(isset($plan[0]->id) && !empty($plan[0]->id)){
+						$data[$b1]['user_subscription']['plan_id'] = $plan[0]->id;
+	                    $data[$b1]['user_subscription']['plan_name'] = $plan[0]->name;
+					}
+					
                 }
                 /*****************/
                 
@@ -140,7 +149,7 @@ class FrontUserController extends Controller
                 /* user_transactions */
                 $ut_conditions = ['user_id' => $v1->user_id,'types' => 'bot'];
                 $user_transaction = DB::table('user_transactions')->where($ut_conditions)->get();
-                
+				 
                 $data[$b1]['user_transaction'] = '';
                 if(!empty($user_transaction)){
                     foreach($user_transaction as $t1 => $tv1){
@@ -160,7 +169,7 @@ class FrontUserController extends Controller
             }
         }
         
-        
+		        
         $ut_conditions = ['user_id' => $user_id,'types' => 'bot'];
         $transactions = DB::table('user_transactions')->where($ut_conditions)->get();
         

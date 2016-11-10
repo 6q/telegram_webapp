@@ -641,6 +641,25 @@
     
 
   <script>
+  	$(document).ready(function(e) {
+        $('#autoresponse').keyup(function(e) {
+            $('#auto_resp').html($('#autoresponse').val());
+        });
+		
+		$('#contact_form').keyup(function(e) {
+            $('#conntact_fbutton').html($('#contact_form').val());
+        });
+		
+		$('#galleries').keyup(function(e) {
+            $('#gallery_imgs').html($('#galleries').val());
+        });
+		
+		$('#channels').keyup(function(e) {
+            $('#chnl_btn').html($('#channels').val());
+        });
+		
+    });
+	
     function muFunctionPlan(plan_id, plan_name,plan_price,duration,id){
       $('#plan_name').html(plan_name);
       $('#plan_price').html(plan_price);
@@ -870,6 +889,12 @@
     }
     
     function muFunction(id){
+		if(id == 2){
+			$('.chat_box').css('display','block');
+		}
+		else{
+			$('.chat_box').css('display','none');
+		}
       var last_id = parseInt(id)-1;
       $('#row'+last_id).css('display','none');
       $('#row'+id).css('display','block');
@@ -877,6 +902,12 @@
     
     function muFunctionBack(id){
       var last_id = parseInt(id)-1;
+	   if(last_id == 2){
+			$('.chat_box').css('display','block');
+		}
+		else{
+			$('.chat_box').css('display','none');
+		}
       $('#row'+last_id).css('display','block');
       $('#row'+id).css('display','none');
     }

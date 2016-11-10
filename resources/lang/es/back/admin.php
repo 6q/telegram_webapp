@@ -18,5 +18,6 @@ return [
 	'new-posts' => 'New posts !',
 	'new-comments' => 'New comments !',
 	'page' => 'Pages',
-	'emailtemplate' => 'E-mail template'
+	'emailtemplate' => 'E-mail template',
+	'setting' => 'Site Setting'
 ];

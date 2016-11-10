@@ -16,5 +16,6 @@ return [
 	'new-messages' => 'Novos posts !',
 	'new-registers' => 'Novos usuários !',
 	'new-posts' => 'Novos posts !',
-	'new-comments' => 'Novos comentários !'
+	'new-comments' => 'Novos comentários !',
+	'setting' => 'Site Setting'
 ];

@@ -207,15 +207,18 @@ class BotController extends Controller
             $customer = $stripe->customers()->create([
                 'source'  => $stripeToken,
                 'email' => $email,
-                'plan' => $stripe_plan_id
+                //'plan' => $stripe_plan_id
             ]);
             
             
             if(!empty($customer)){
                 $customerID = $customer['id'];
+				
+				$bot_subscription = $stripe->subscriptions()->create($customerID, ['plan' => $stripe_plan_id]);
                 
                 $bot = Bot::find($lastInsertId);
                 $bot->stripe_customer_id = $customerID;
+				$bot->stripe_subscription_id = $bot_subscription['id'];
                 $bot->save();
                                 
                 /* user_subscriptions */
@@ -226,8 +229,8 @@ class BotController extends Controller
                 $user_subscription->types = 'bot';
                 $user_subscription->type_id = $lastInsertId;
                 $user_subscription->price = $request->get('plan_price');
-                $user_subscription->subscription_date = date('Y-m-d',$customer['subscriptions']['data'][0]['current_period_start']);
-                $user_subscription->expiry_date = date('Y-m-d',$customer['subscriptions']['data'][0]['current_period_end']);
+                $user_subscription->subscription_date = date('Y-m-d',$bot_subscription['current_period_start']);
+                $user_subscription->expiry_date = date('Y-m-d',$bot_subscription['current_period_end']);
                 $user_subscription->last_billed = date('Y-m-d');
                 $user_subscription->status = 'Completed';
                 $user_subscription->created_at = date('Y-m-d h:i:s');
@@ -365,21 +368,29 @@ class BotController extends Controller
      */
     public function destroy($id)
     {
-        $conditions = ['id' => $id];
+		
+    }
+	
+	
+	public function bot_delete($id){
+		 $conditions = ['id' => $id];
         $bot = DB::table('bots')->where($conditions)->get();
         
         $stripe_customer_id = $bot[0]->stripe_customer_id;
-        echo $stripe_customer_id;
+		$stripe_subscription_id = $bot[0]->stripe_subscription_id;
       
-        /*
+        
         $stripe = Stripe::make(env('STRIPE_APP_KEY'));
+        $subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
         
-        $customer = $stripe->customers()->find($stripe_customer_id);
-        
-        echo '<pre>';print_r($customer);echo '</pre>';
-        */
-        echo '<pre>';print_r($bot);die;
-    }
+		if(isset($subscription['id']) && !empty($subscription['id'])){
+			DB::table('bots')->where('id', '=', $id)->delete();
+			return redirect('front_user')->with('ok', trans('front/bot.deleted'));
+		}
+		else{
+			return redirect('front_user')->with('ok', trans('front/bot.deleted'));
+		}
+	}
     
     
     
