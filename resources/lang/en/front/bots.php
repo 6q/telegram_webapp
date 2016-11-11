@@ -83,4 +83,5 @@ return [
 	'replay_message' => 'Replay Message',
 	'date' => 'Date',
 	'messages_activity' => 'Messages/activity',
+	'delete_command' => 'Delete'
 ];

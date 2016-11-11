@@ -82,7 +82,7 @@
                   <ul>
                     <li>
                       <p></p>
-                      <a href="#"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a>
+                      <a href="{!! URL::to('/my_channel/channel_delete/'.$cv1['channel']['id']) !!}" onclick="return confirm('Are you sure want to delete this channel?');"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a>
                     </li>
                     <li><p>{{ trans('front/fornt_user.automatic_renewal') }}:<?php echo date('d/m/Y',strtotime($cv1['user_subscription']['expiry_date']));?></p></li>
                 </ul>

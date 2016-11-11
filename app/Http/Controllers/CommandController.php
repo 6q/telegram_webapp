@@ -343,6 +343,16 @@ class CommandController extends Controller
 		}
 	}
 	
+	public function autoresponse_delete($botId = NULL,$autoId = NULL){
+		if(!empty($botId) && !empty($autoId)){
+			DB::table('autoresponses')->where('id', '=', $autoId)->delete();
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
+		}
+		else{
+			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+		}
+	}
+	
 	
 	public function chanel_edit($id = NULL){
 		if(!empty($id)){
@@ -402,6 +412,16 @@ class CommandController extends Controller
 		}
 	}
 	
+	
+	public function chanel_delete($botId = NULL,$channel_id = NULL){
+		if(!empty($botId) && !empty($channel_id)){
+			DB::table('chanels')->where('id', '=', $channel_id)->delete();
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
+		}
+		else{
+			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+		}
+	}
 	
 	
 	public function contactform_edit($id){
@@ -512,6 +532,16 @@ class CommandController extends Controller
 		}
 	}
 	
+	public function contactform_delete($botId = NULL,$contactform_id = NULL){
+		if(!empty($botId) && !empty($contactform_id)){
+			DB::table('contact_forms')->where('id', '=', $contactform_id)->delete();
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
+		}
+		else{
+			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+		}
+	}
+	
 	
 	public function gallery_edit($id = NULL){
 		if(!empty($id)){
@@ -589,6 +619,17 @@ class CommandController extends Controller
 		}
 		
 		return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+	}
+	
+	
+	public function gallery_delete($botId = NULL,$gallery_id = NULL){
+		if(!empty($botId) && !empty($gallery_id)){
+			DB::table('galleries')->where('id', '=', $gallery_id)->delete();
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
+		}
+		else{
+			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+		}
 	}
 	
 	

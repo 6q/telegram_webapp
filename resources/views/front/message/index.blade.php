@@ -1,6 +1,7 @@
 @extends('front.template')
 @section('main')
 
+{!! HTML::script('js/front/paging.js') !!}
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3 col-message">
      
@@ -34,7 +35,7 @@
              ?>
                 <div class="col-plan tab-pane fade <?php if ($i==1) echo 'in active'?>" id="<?php echo $v1->username;?>">
                   <h2><?php echo $v1->username;?></h2>
-                  <table>
+                  <table id="message_tbl_<?php echo $i;?>">
                       <thead>
                         <tr>
                           <th>{{ trans('front/message.bot_user') }}</th>
@@ -78,7 +79,16 @@
                       ?>
                     </tbody>
                   </table>
+                  <ul id="MessgNavPosition_<?php echo $i;?>" class="pagination"></ul>
                 </div>
+                <script type="text/javascript"><!--
+					var pager_message_<?php echo $i;?> = new Pager('message_tbl_<?php echo $i;?>', 4);
+					pager_message_<?php echo $i;?>.init(); 
+					pager_message_<?php echo $i;?>.showPageNav('pager_message_<?php echo $i;?>', 'MessgNavPosition_<?php echo $i;?>'); 
+					pager_message_<?php echo $i;?>.showPage('pager_message_<?php echo $i;?>',1);
+				//-->
+				</script>
+
               <?php
             }
           }
@@ -86,7 +96,9 @@
 </div>
       
   </div>
-
+  
+  
+  
 <style>
   .thumb {
     width: 20%;

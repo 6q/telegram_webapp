@@ -115,6 +115,31 @@
 </div>
 
 <script>
+	$(document).ready(function(e) {
+		$('.chat_box').css('display','block');
+		$('#auto_resp').html('<?php echo $bot->autoresponse; ?>');
+		$('#conntact_fbutton').html('<?php echo $bot->contact_form; ?>');
+		$('#gallery_imgs').html('<?php echo $bot->galleries; ?>');
+		$('#chnl_btn').html('<?php echo $bot->channels; ?>');
+		
+        $('#autoresponse').keyup(function(e) {
+            $('#auto_resp').html($('#autoresponse').val());
+        });
+		
+		$('#contact_form').keyup(function(e) {
+            $('#conntact_fbutton').html($('#contact_form').val());
+        });
+		
+		$('#galleries').keyup(function(e) {
+            $('#gallery_imgs').html($('#galleries').val());
+        });
+		
+		$('#channels').keyup(function(e) {
+            $('#chnl_btn').html($('#channels').val());
+        });
+		
+    });
+	
   function mypopupinfo(id){
     $('#'+id).modal();
   }

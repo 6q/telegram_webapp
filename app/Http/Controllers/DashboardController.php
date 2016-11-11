@@ -396,24 +396,41 @@ class DashboardController extends Controller {
         
         $message = $request->get('channel_msg');
         
-        if($request->get('bot_id')){
+        if($request->get('botID')){
             $bot_data = DB::table('bots')
-                            ->where('id','=',$request->get('bot_id'))
+                            ->where('id','=',$request->get('botID'))
                             ->get();
             
             $bot_token = $bot_data[0]->bot_token;
         }
+		
+		$img_url = '';
+		if($request->hasFile('channel_image')){
+			$error_img = $_FILES["channel_image"]["error"];
+			$img_name = $_FILES["channel_image"]["name"];
+
+			if($error_img == '0' && $img_name != '' )
+			{
+			   $img_path = $_FILES["channel_image"]["tmp_name"];
+			   $img_name_s = time()."_".$img_name;
+			   $upload_img = public_path().'/uploads/'.$img_name_s;
+
+			   move_uploaded_file($img_path,$upload_img);
+			   $img_url = $upload_img;
+			}
+		}
+		
         
-        if($request->get('channel_id')){
+        if($request->get('chat_id')){
             $channel_data = DB::table('my_channels')
-                                ->where('id','=',$request->get('channel_id'))
+                                ->where('id','=',$request->get('chat_id'))
                                 ->get();
             $channel_name = $channel_data[0]->name;
             
             
             $checkData = DB::table('user_subscriptions')
                             ->where('types','=','Channel')
-                            ->where('type_id','=',$request->get('channel_id'))
+                            ->where('type_id','=',$request->get('chat_id'))
                             ->get();
             
             $planId = $checkData[0]->plan_id;
@@ -425,12 +442,11 @@ class DashboardController extends Controller {
             $perDaySendMesgLimit = $plan[0]->manual_message;
             
             $chkData = DB::table('channel_send_message')
-                            ->where('channel_id','=',$request->get('channel_id'))
+                            ->where('channel_id','=',$request->get('chat_id'))
                             ->where('send_date','=',date('Y-m-d'))
                             ->get();
             
             $totalCount = count($chkData);
-            
             if($totalCount >= $perDaySendMesgLimit){
                 echo 'Your message send limit is over.';
                 exit();
@@ -439,31 +455,78 @@ class DashboardController extends Controller {
         
         if(!empty($bot_token) && !empty($channel_name)){
             $userId = Auth::user()->id;
+			
+			if(!empty($img_url)){
+				$BOT_TOKEN = $bot_token;
+				$chat_id = $channel_name;
+				
+				$BOTAPI = 'https://api.telegram.org/bot' . $BOT_TOKEN .'/';
+				$cfile = new \CURLFile($img_url, 'image/jpg'); 
+				$data = [
+					'chat_id' => '@'.$channel_name,
+					'photo' => $cfile
+				];
+		
+				$ch = curl_init($BOTAPI.'sendPhoto');
+				curl_setopt($ch, CURLOPT_HEADER, false);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				$result = curl_exec($ch);
+				curl_close($ch);
+				
+				DB::table('channel_send_message')->insertGetId(
+						['user_id' => $userId, 'channel_id' => $request->get('chat_id'), 'channel_name' => '@'.$channel_name, 'send_date' => date('Y-m-d'), 'message' => $img_url]
+					);
+					
+				echo 'Image sent succesfully' ;
+			}
+			else{
+				$telegram = new Api($bot_token);
             
-            $telegram = new Api($bot_token);
+				$data = [];
+				$data['chat_id'] = '@'.$channel_name;
+				$data['text'] = $message;
+				
+				$result = $telegram->sendMessage($data);
+				
+				$response = json_decode(json_encode($result));
+				
+				if ($response->message_id) {
+					DB::table('channel_send_message')->insertGetId(
+						['user_id' => $userId, 'channel_id' => $request->get('chat_id'), 'channel_name' => '@'.$channel_name, 'send_date' => date('Y-m-d'), 'message' => $message]
+					);
+					
+					echo 'Message sent succesfully' ;
+				} else {
+					echo 'Sorry message not sent';
+				}
+			}
             
-            $data = [];
-            $data['chat_id'] = '@'.$channel_name;
-            $data['text'] = $message;
-            
-            $result = $telegram->sendMessage($data);
-            
-            $response = json_decode(json_encode($result));
-            
-            if ($response->message_id) {
-                DB::table('channel_send_message')->insertGetId(
-                    ['user_id' => $userId, 'channel_id' => $request->get('channel_id'), 'channel_name' => '@'.$channel_name, 'send_date' => date('Y-m-d'), 'message' => $message]
-                );
-                
-                echo 'Message sent succesfully' ;
-            } else {
-                echo 'Sorry message not sent';
-            }
         }
+		die;
     }
     
     
     public function sendbotmessage(Request $request){
+		$img_url = '';
+		if($request->hasFile('bot_image')){
+			$error_img = $_FILES["bot_image"]["error"];
+			$img_name = $_FILES["bot_image"]["name"];
+
+			if($error_img == '0' && $img_name != '' )
+			{
+			   $img_path = $_FILES["bot_image"]["tmp_name"];
+			   $img_name_s = time()."_".$img_name;
+			   $upload_img = public_path().'/uploads/'.$img_name_s;
+
+			   move_uploaded_file($img_path,$upload_img);
+			   $img_url = $upload_img;
+			}
+		}
+		
+				
         $bot_token = '';
         $chatIdArr = array();
         $botId = ($request->get('b_bot_id') && !empty($request->get('b_bot_id')))?$request->get('b_bot_id'):'';
@@ -490,26 +553,54 @@ class DashboardController extends Controller {
                 }
             }
         }
-        
+		
+        $chk_img = false;
         if(!empty($chatIdArr) && !empty($bot_token)){
             foreach($chatIdArr as $ck2 => $cv2){
-                $telegram = new Api($bot_token);
-            
-            $data = [];
-            $data['chat_id'] = $cv2;
-            $data['text'] = $message;
-            
-            $result = $telegram->sendMessage($data);
-            
-            $response = json_decode(json_encode($result));
-            
-            if ($response->message_id) {
-                echo 'Message sent succesfully' ;
-            } else {
-                echo 'Sorry message not sent';
+				if(!empty($img_url)){
+					$BOT_TOKEN = $bot_token;
+					$chat_id = $cv2;
+					
+					$BOTAPI = 'https://api.telegram.org/bot' . $BOT_TOKEN .'/';
+					$cfile = new \CURLFile($img_url, 'image/jpg'); 
+					$data = [
+						'chat_id' => $cv2 , 
+						'photo' => $cfile
+					];
+			
+					$ch = curl_init($BOTAPI.'sendPhoto');
+					curl_setopt($ch, CURLOPT_HEADER, false);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($ch, CURLOPT_POST, 1);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+					$result = curl_exec($ch);
+					curl_close($ch);
+					$chk_img = true;
+				}
+				else{
+					$telegram = new Api($bot_token);
+					$data = [];
+					$data['chat_id'] = $cv2;
+					$data['text'] = $message;
+				
+					$result = $telegram->sendMessage($data);
+					
+					$response = json_decode(json_encode($result));
+				}
             }
-            }
+			
+			if (isset($response->message_id) && !empty($response->message_id)) {
+				echo 'Message sent succesfully' ;
+			} 
+			else if($chk_img){
+				echo 'Image sent succesfully' ;
+			}
+			else {
+				echo 'Sorry message not sent';
+			}
         }
-    }   
+		die;
+    }  
     
 }

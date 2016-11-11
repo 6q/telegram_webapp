@@ -29,5 +29,6 @@ return [
 	'upload' => 'Carrega',
 	'up_grade' => 'Necessites ampliar el teu tipus de subscripció.',
 	'updated' => 'Actualitzat correctament',
-	'email' => 'Correu electrònic'
+	'email' => 'Correu electrònic',
+	'deleted' => 'Command deleted' 
 ];

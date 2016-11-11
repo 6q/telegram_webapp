@@ -51,6 +51,7 @@
                           <td><?php echo $v2->submenu_heading_text;?></td>
                           <td>
                             <a class="btn btn-primary" href="{!! URL::to('/command/autoresponse_edit/'.$v2->id) !!}">{{ trans('front/bots.update_command') }}</a>
+                            <a class="btn btn-primary" href="{!! URL::to('/command/autoresponse_delete/'.$v2->type_id.'/'.$v2->id) !!}" onclick="return confirm('Are you sure want to delete this command?');">{{ trans('front/bots.delete_command') }}</a>
                           </td>
                         </tr>
                     <?php
@@ -85,7 +86,9 @@
                     ?>
                         <tr>
                           <td><?php echo $v3->submenu_heading_text;?></td>
-                          <td><a class="btn btn-primary" href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}">{{ trans('front/bots.update_command') }}</a></td>
+                          <td><a class="btn btn-primary" href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}">{{ trans('front/bots.update_command') }}</a>
+                          <a class="btn btn-primary" href="{!! URL::to('/command/contactform_delete/'.$v3->type_id.'/'.$v3->id) !!}" onclick="return confirm('Are you sure want to delete this contact form?');">{{ trans('front/bots.delete_command') }}</a>
+                          </td>
                         </tr>
                     <?php
                   }
@@ -119,7 +122,10 @@
                     ?>
                         <tr>
                           <td><?php echo $v4->gallery_submenu_heading_text;?></td>
-                          <td><a class="btn btn-primary" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}">{{ trans('front/bots.update_command') }}</a></td>
+                          <td>
+                          	<a class="btn btn-primary" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}">{{ trans('front/bots.update_command') }}</a>
+                          	<a class="btn btn-primary" href="{!! URL::to('/command/gallery_delete/'.$v4->type_id.'/'.$v4->id) !!}" onclick="return confirm('Are you sure want to delete this gallery?');">{{ trans('front/bots.delete_command') }}</a>
+                          </td>
                         </tr>
                     <?php
                   }
@@ -153,7 +159,10 @@
                     ?>
                         <tr>
                           <td><?php echo $v5->chanel_submenu_heading_text;?></td>
-                          <td><a class="btn btn-primary" href="{!! URL::to('/command/chanel_edit/'.$v5->id) !!}">{{ trans('front/bots.update_command') }}</a></td>
+                          <td>
+                          	<a class="btn btn-primary" href="{!! URL::to('/command/chanel_edit/'.$v5->id) !!}">{{ trans('front/bots.update_command') }}</a>
+                          	<a class="btn btn-primary" href="{!! URL::to('/command/chanel_delete/'.$v5->type_id.'/'.$v5->id) !!}" onclick="return confirm('Are you sure want to delete this channel?');">{{ trans('front/bots.delete_command') }}</a>
+                          </td>
                         </tr>
                     <?php
                   }
@@ -260,15 +269,20 @@
                     <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
                 </div>
                 <div class="modal-body">
-                    {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
+                    {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'send_msg_bot']) !!}
 
-                    <input type="hidden" id="b_bot_id" />
+                    <input type="hidden" name="b_bot_id" id="b_bot_id" />
 
-                    <textarea id="bot_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
+                    <textarea id="bot_msg" class="form-control" name="bot_msg" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
 
                     <br>
-
-                    <a href="javascript:void(0);" class="btn btn-primary" onclick="sendMsgBot();">{{ trans('front/dashboard.send') }}</a>
+                    
+                    <label> OR </label>
+                    
+                    <input type="file" name="bot_image" id="bot_image" accept="image/*"  />
+                    <br />
+                    
+                    <input type="submit" name="submit" value="{{ trans('front/dashboard.send') }}" class="btn btn-primary"  />
 
                     {!! Form::close() !!}
                 </div>
@@ -320,6 +334,7 @@
 		$('#myModalBot').modal();
 	}
 	
+	/*
 	function sendMsgBot(){
             var chk = true;
             var bot_msg = $('#bot_msg').val();
@@ -337,7 +352,7 @@
             if(chk){
                 var token_new = $('input[name=_token]').val();
                 $.ajax({
-                    url: '<?php echo URL::to('/dashboard/sendbotmessage')?>',
+                    url: '<?php //echo URL::to('/dashboard/sendbotmessage')?>',
                     headers: {'X-CSRF-TOKEN': token_new},
                     data: {bot_msg:bot_msg,b_bot_id:b_bot_id},
                     type:'POST',
@@ -351,6 +366,51 @@
                 });
             }
         }
+		*/
+		
+		
+		$(document).ready(function(e) {
+            $("form#send_msg_bot").submit(function(event){
+				event.preventDefault();
+				
+				var chk = true;
+				var bot_msg = $('#bot_msg').val();
+				var b_bot_id = $('#b_bot_id').val();
+				var bot_img = $('#bot_image').val();
+	
+				if(bot_msg == '' && bot_img == ''){
+					chk = false;
+					$('#bot_msg').css('border','1px solid #ff0000');
+				}
+				else{
+					$('#bot_msg').css('border','1px solid #ccc');
+				}
+			
+				var formData = new FormData($(this)[0]);
+				var token_new = $('input[name=_token]').val();
+				
+				if(chk){
+					$.ajax({
+						url: '<?php echo URL::to('/dashboard/sendbotmessage')?>',
+						headers: {'X-CSRF-TOKEN': token_new},
+						data:formData,
+						async: false,
+						cache: false,
+						contentType: false,
+						processData: false,
+						type:'POST',
+						success: function (resp) {
+							alert(resp);
+							$('#myModalBot').modal('hide');
+						},
+						error: function (request, status, error) {
+							alert('Forbidden: Some error occured');
+						}
+					});
+				}				
+				return false;
+			});
+        });
   </script>
   
 

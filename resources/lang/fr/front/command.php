@@ -30,5 +30,6 @@ return [
 	'upload' => 'Upload',
 	'up_grade' => 'Please upgrade your menbership.',
 	'updated' => 'Update Successfully',
-	'email' => 'Email'
+	'email' => 'Email',
+	'deleted' => 'Command deleted'
 ];

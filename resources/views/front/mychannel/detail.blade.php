@@ -95,11 +95,11 @@
                     <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
                 </div>
                 <div class="modal-body">
-                    {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'']) !!}
+                    {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'send_channel_msg']) !!}
 
-                    <input type="hidden" id="chat_id" />
+                    <input type="hidden" id="chat_id" name="chat_id" />
 
-                    <select id="botID" class="form-control">
+                    <select id="botID" name="botID" class="form-control">
                         <option value="">Select bot</option>
                         <?php
                         if (isset($bots) && !empty($bots)) {
@@ -114,11 +114,15 @@
 
                     <br>
 
-                    <textarea id="channel_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
+                    <textarea id="channel_msg" name="channel_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
+                    
+                    <label> OR </label>
+                    
+                    <input type="file" name="channel_image" id="channel_image" accept="image/*"  />
+                    <br />
 
-                    <br>
+                    <input type="submit" name="submit" value="{{ trans('front/dashboard.send') }}" class="btn btn-primary"  />
 
-                    <a href="javascript:void(0);" class="btn btn-primary" onclick="sendMsg();">{{ trans('front/dashboard.send') }}</a>
 
                     {!! Form::close() !!}
                 </div>
@@ -146,7 +150,7 @@
 		$('#myModal').modal();
 	}
 	
-	
+	/*
 	function sendMsg(){
             var chk = true;
             var botID = $('#botID').val();
@@ -173,7 +177,7 @@
             if(chk){
                 var token_new = $('input[name=_token]').val();
                 $.ajax({
-                    url: '<?php echo URL::to('/dashboard/sendmessage')?>',
+                    url: '<?php // echo URL::to('/dashboard/sendmessage')?>',
                     headers: {'X-CSRF-TOKEN': token_new},
                     data: {bot_id: botID, channel_msg:channel_msg,channel_id:channel_id},
                     type:'POST',
@@ -187,6 +191,61 @@
                 });
             }
         }
+		*/
+		
+		
+		$(document).ready(function(e) {
+            $("form#send_channel_msg").submit(function(event) {
+				event.preventDefault();
+				
+				var chk = true;
+				var botID = $('#botID').val();
+    	        var channel_msg = $('#channel_msg').val();
+	            var channel_id = $('#chat_id').val();
+				var channel_image = $('#channel_image').val();
+			
+				if(botID == ''){
+					chk = false;
+					$('#botID').css('border','1px solid #ff0000');
+				}
+				else{
+					$('#botID').css('border','1px solid #ccc');
+				}
+	
+				if(channel_msg == '' && channel_image == ''){
+					chk = false;
+					$('#channel_msg').css('border','1px solid #ff0000');
+				}
+				else{
+					$('#channel_msg').css('border','1px solid #ccc');
+				}
+				
+				
+				var formData = new FormData($(this)[0]);
+				var token_new = $('input[name=_token]').val();
+				
+				if(chk){
+					$.ajax({
+						url: '<?php echo URL::to('/dashboard/sendmessage')?>',
+						headers: {'X-CSRF-TOKEN': token_new},
+						data:formData,
+						async: false,
+						cache: false,
+						contentType: false,
+						processData: false,
+						type:'POST',
+						success: function (resp) {
+							alert(resp);
+							$('#myModal').modal('hide');
+						},
+						error: function (request, status, error) {
+							alert('Forbidden: Some error occured');
+						}
+					});
+				}				
+				return false;
+            });
+        });
   </script>
 
 <style>

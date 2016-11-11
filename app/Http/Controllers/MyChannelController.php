@@ -137,15 +137,18 @@ class MyChannelController extends Controller {
             $customer = $stripe->customers()->create([
                 'source' => $stripeToken,
                 'email' => $email,
-                'plan' => $stripe_plan_id
+                //'plan' => $stripe_plan_id
             ]);
 
 
             if (!empty($customer)) {
                 $customerID = $customer['id'];
+				
+				$chanel_subscription = $stripe->subscriptions()->create($customerID, ['plan' => $stripe_plan_id]);
 
                 $chanel = MyChannel::find($lastInsertId);
                 $chanel->stripe_customer_id = $customerID;
+				$chanel->stripe_subscription_id = $chanel_subscription['id'];
                 $chanel->save();
 
                 /* user_subscriptions */
@@ -156,8 +159,8 @@ class MyChannelController extends Controller {
                 $user_subscription->types = 'Channel';
                 $user_subscription->type_id = $lastInsertId;
                 $user_subscription->price = $request->get('plan_price');
-                $user_subscription->subscription_date = date('Y-m-d', $customer['subscriptions']['data'][0]['current_period_start']);
-                $user_subscription->expiry_date = date('Y-m-d', $customer['subscriptions']['data'][0]['current_period_end']);
+                $user_subscription->subscription_date = date('Y-m-d', $chanel_subscription['current_period_start']);
+                $user_subscription->expiry_date = date('Y-m-d', $chanel_subscription['current_period_end']);
                 $user_subscription->last_billed = date('Y-m-d');
                 $user_subscription->status = 'Completed';
                 $user_subscription->created_at = date('Y-m-d h:i:s');
@@ -252,6 +255,26 @@ class MyChannelController extends Controller {
         $MyChannel->delete();
         return redirect('user')->with('ok', trans('back/user.channel_destroyed'));
     }
+	
+	public function channel_delete($id){
+		$conditions = ['id' => $id];
+        $channel = DB::table('my_channels')->where($conditions)->get();
+        
+        $stripe_customer_id = $channel[0]->stripe_customer_id;
+		$stripe_subscription_id = $channel[0]->stripe_subscription_id;
+      
+        
+        $stripe = Stripe::make(env('STRIPE_APP_KEY'));
+        $subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+        
+		if(isset($subscription['id']) && !empty($subscription['id'])){
+			DB::table('my_channels')->where('id', '=', $id)->delete();
+			return redirect('front_user')->with('ok', trans('front/fornt_user.deleted'));
+		}
+		else{
+			return redirect('front_user')->with('ok', trans('front/fornt_user.deleted'));
+		}
+	}
  
     
     public function edit_channel($channel_id = NULL){

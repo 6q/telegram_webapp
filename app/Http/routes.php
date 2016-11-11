@@ -72,6 +72,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
 	Route::get('bot/bot_delete/{bot_id?}', 'BotController@bot_delete');
    
+    Route::get('my_channel/channel_delete/{channel_id?}', 'MyChannelController@channel_delete');
+	
     Route::resource('bot', 'BotController');
 
     Route::post('command/create/{bot_id?}', 'CommandController@create');
@@ -79,15 +81,20 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::post('command/autoresponse_edit/{auto_id?}', 'CommandController@autoresponse_update');
     Route::get('command/autoresponse_edit/{auto_id?}', 'CommandController@autoresponse_edit');
+	Route::get('command/autoresponse_delete/{bot_id?}/{auto_id?}', 'CommandController@autoresponse_delete');
     
     Route::post('command/chanel_edit/{chanel_id?}', 'CommandController@chanel_update');
     Route::get('command/chanel_edit/{chanel_id?}', 'CommandController@chanel_edit');
+	Route::get('command/chanel_delete/{bot_id?}/{chanel_id?}', 'CommandController@chanel_delete');
+	
     
     Route::post('command/contactform_edit/{contactform_id?}', 'CommandController@contactform_update');
     Route::get('command/contactform_edit/{contactform_id?}', 'CommandController@contactform_edit');
+	Route::get('command/contactform_delete/{bot_id?}/{contactform_id?}', 'CommandController@contactform_delete');
     
-    Route::post('command/gallery_edit/{contactform_id?}', 'CommandController@gallery_update');
-    Route::get('command/gallery_edit/{contactform_id?}', 'CommandController@gallery_edit');
+    Route::post('command/gallery_edit/{gallery_id?}', 'CommandController@gallery_update');
+    Route::get('command/gallery_edit/{gallery_id?}', 'CommandController@gallery_edit');
+	Route::get('command/gallery_delete/{bot_id?}/{gallery_id?}', 'CommandController@gallery_delete');
     
     Route::resource('command/upload', 'CommandController@imgupload');
     Route::resource('command', 'CommandController');
