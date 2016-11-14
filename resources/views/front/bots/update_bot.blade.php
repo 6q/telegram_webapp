@@ -58,7 +58,7 @@
                   <ul>
                     <li class="example_information">
                       <span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'autoresponse', $errors,'',$bot->autoresponse) !!}</label>
+                      <label>{!! Form::control('text', 0, 'autoresponse', $errors, '',$bot->autoresponse) !!}</label>
                     </li>
 
                     <li class="example_contact">

@@ -1,0 +1,1 @@
+[14-Nov-2016 08:15:06 UTC] PHP Fatal error:  Call to a member function has() on a non-object in /home/gestinet/www/citymes.app/app/Services/Html/FormBuilder.php on line 43

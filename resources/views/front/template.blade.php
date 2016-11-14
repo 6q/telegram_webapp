@@ -9,10 +9,18 @@
 		{!! HTML::style('css/front/style.css') !!}
 		{!! HTML::style('css/front/bootstrap.css') !!}
 		{!! HTML::style('css/front/datepicker.css') !!}
-		
+		{!! HTML::style('css/front/nanoscroller.css') !!}
+		{!! HTML::style('css/front/emoji.css') !!}
+
 		{!! HTML::script('js/front/jquery1.12.4.js') !!}
 		{!! HTML::script('js/front/bootstrap-datepicker.js') !!}
 		{!! HTML::script('js/front/bootstrap.js') !!}
+		{!! HTML::script('js/front/nanoscroller.min.js') !!}
+		{!! HTML::script('js/front/tether.min.js') !!}
+		{!! HTML::script('js/front/config.js') !!}
+		{!! HTML::script('js/front/util.js') !!}
+		{!! HTML::script('js/front/jquery.emojiarea.js') !!}
+		{!! HTML::script('js/front/emoji-picker.js') !!}
 	</head>
 	
 	<body>
