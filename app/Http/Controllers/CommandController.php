@@ -65,9 +65,11 @@ class CommandController extends Controller
         //echo '<pre>';print_r($request->all());die;
 
         $userId = Auth::user()->id;
+		$botId = $request->get('bot_id');
+		
         if(!empty($request->get('autoresponse')) && $request->get('autoresponse') == 1)
         {
-            $autoresponse = new Autoresponse;    
+			$autoresponse = new Autoresponse;    
             $autoresponse->types = 'bot';
             $autoresponse->type_id = $request->get('bot_id');
             $autoresponse->user_id = $userId;
@@ -97,7 +99,8 @@ class CommandController extends Controller
             $autoresponse->image = $img_name_s;
             $autoresponse->save();
             
-            return redirect('front_user')->with('ok', trans('front/command.created'));
+            //return redirect('front_user')->with('ok', trans('front/command.created'));
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
         }
         
         if(!empty($request->get('contact_form')) && $request->get('contact_form') == 1)
@@ -177,11 +180,13 @@ class CommandController extends Controller
 						$message->to($to_email, 'Admin')->subject('Contact Form');
 					});
 					
-                    return redirect('front_user')->with('ok', trans('front/command.created'));
+                    //return redirect('front_user')->with('ok', trans('front/command.created'));
+					return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
                 }
             }
             
-            return redirect('front_user')->with('ok', trans('front/command.created'));
+            //return redirect('front_user')->with('ok', trans('front/command.created'));
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
         }
         
         if(!empty($request->get('gallery_form')) && $request->get('gallery_form') == 1)
@@ -217,7 +222,8 @@ class CommandController extends Controller
                 }
             }
             
-            return redirect('front_user')->with('ok', trans('front/command.created'));
+            //return redirect('front_user')->with('ok', trans('front/command.created'));
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
         }
         
         
@@ -257,7 +263,8 @@ class CommandController extends Controller
             $chanel->updated_at = date('Y-m-d h:i:s');
             $chanel->save();
             
-            return redirect('front_user')->with('ok', trans('front/command.created'));
+           // return redirect('front_user')->with('ok', trans('front/command.created'));
+		   return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
         }
     }
     
@@ -339,7 +346,8 @@ class CommandController extends Controller
 			$autoresponse->image = $img_name_s;
 			$autoresponse->save();
 
-			return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+			//return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+			return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.created'));
 		}
 	}
 	
@@ -349,7 +357,8 @@ class CommandController extends Controller
 			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
 		}
 		else{
-			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			//return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
 		}
 	}
 	
@@ -419,7 +428,8 @@ class CommandController extends Controller
 			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
 		}
 		else{
-			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			//return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.updated'));
 		}
 	}
 	
@@ -538,7 +548,8 @@ class CommandController extends Controller
 			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
 		}
 		else{
-			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			//return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.updated'));
 		}
 	}
 	
@@ -628,7 +639,8 @@ class CommandController extends Controller
 			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.deleted'));
 		}
 		else{
-			return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			//return redirect('front_user')->with('ok', trans('front/command.deleted'));
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.updated'));
 		}
 	}
 	

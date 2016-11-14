@@ -381,15 +381,32 @@ class BotController extends Controller
       
         
         $stripe = Stripe::make(env('STRIPE_APP_KEY'));
-        $subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
         
-		if(isset($subscription['id']) && !empty($subscription['id'])){
+		$get_subscription = $stripe->subscriptions()->all($stripe_customer_id);
+		if(isset($get_subscription['data']) && !empty($get_subscription['data'])){
+			foreach($get_subscription['data'] as $sk1 => $sv1){
+				if($sv1['id'] == $stripe_subscription_id){
+					$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+					if(isset($subscription['id']) && !empty($subscription['id'])){
+						DB::table('bots')->where('id', '=', $id)->delete();
+						return redirect('front_user')->with('ok', trans('front/bot.deleted'));
+					}
+					else{
+						return redirect('front_user')->with('ok', trans('front/bot.deleted'));
+					}	
+				}
+				else{
+					DB::table('bots')->where('id', '=', $id)->delete();
+					return redirect('front_user')->with('ok', trans('front/bot.deleted'));
+				}
+			}
+		}
+		else{
 			DB::table('bots')->where('id', '=', $id)->delete();
 			return redirect('front_user')->with('ok', trans('front/bot.deleted'));
 		}
-		else{
-			return redirect('front_user')->with('ok', trans('front/bot.deleted'));
-		}
+
+		
 	}
     
     
@@ -514,9 +531,46 @@ class BotController extends Controller
           $bot->channels = $request->get('channels');
           
           if($bot->save()){
-            return redirect('dashboard')->with('ok', trans('front/bots.updated'));
+            return redirect('bot/detail/'.$id)->with('ok', trans('front/bots.updated'));
           }
         }
     }
+	
+	
+	
+	public function bot_subscription_cancel($botID = NULL){
+		if(!empty($botID)){
+			$conditions = ['id' => $botID];
+			$bot = DB::table('bots')->where($conditions)->get();
+			
+			$stripe_customer_id = $bot[0]->stripe_customer_id;
+			$stripe_subscription_id = $bot[0]->stripe_subscription_id;
+		  
+			$stripe = Stripe::make(env('STRIPE_APP_KEY'));
+			
+			$get_subscription = $stripe->subscriptions()->all($stripe_customer_id);
+			if(isset($get_subscription['data']) && !empty($get_subscription['data']))
+			{
+				foreach($get_subscription['data'] as $sk1 => $sv1)
+				{
+					if($sv1['id'] == $stripe_subscription_id)
+					{
+						$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+						if(isset($subscription['id']) && !empty($subscription['id']))
+						{
+							return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));
+						}
+						else{
+							return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));
+						}	
+					}
+				}
+			}
+			else{
+				return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_already_cancled'));
+			}
+
+		}
+	}
     
 }

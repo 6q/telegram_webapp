@@ -41,4 +41,7 @@ return [
 	'no_record_found' => 'No Record Found',
 	'new_password' => 'New Password',
 	'confirm_password' => 'Confirm Password',
+	'subscription_cancel' => 'Subscription cancel',
+	'subscription_cancled' => 'Subscription cancel Successfully',
+	'subscription_already_cancled' => 'Subscription already cancel'
 ];

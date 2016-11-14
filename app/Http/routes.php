@@ -71,6 +71,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('bot/update_bot/{bot_id?}', 'BotController@edit_bot');
     Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
 	Route::get('bot/bot_delete/{bot_id?}', 'BotController@bot_delete');
+	Route::get('bot/bot_subscription_cancel/{bot_id?}', 'BotController@bot_subscription_cancel');
    
     Route::get('my_channel/channel_delete/{channel_id?}', 'MyChannelController@channel_delete');
 	

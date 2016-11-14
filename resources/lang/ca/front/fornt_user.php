@@ -41,4 +41,7 @@ return [
 	'no_record_found' => 'No s\'ha trobat',
 	'new_password' => 'Nova contrasenya',
 	'confirm_password' => 'Confirmar la nova contrasenya',
+	'subscription_cancel' => 'Subscription cancel',
+	'subscription_cancled' => 'Subscription cancel Successfully',
+	'subscription_already_cancled' => 'Subscription already cancel'
 ];

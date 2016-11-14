@@ -39,6 +39,8 @@
                     <p><?php echo $planName; ?></p>
                     <a href="{!! URL::to('/bot/bot_delete/'.$dv1['bot']['id']) !!}" onclick="return confirm('Are you sure want to delete this bot?');"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a>
                     
+                    <a href="{!! URL::to('/bot/bot_subscription_cancel/'.$dv1['bot']['id']) !!}" onclick="return confirm('Are you sure want to cancel the subscription');">{{ trans('front/fornt_user.subscription_cancel') }}</a>
+                    
                     <!--<a href="#" onclick="return confirm('Are you sure want to delete this bot?');"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a>-->
                   </li>
 
