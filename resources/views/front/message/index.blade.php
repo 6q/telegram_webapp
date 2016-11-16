@@ -1,7 +1,8 @@
 @extends('front.template')
 @section('main')
 
-{!! HTML::script('js/front/paging.js') !!}
+{!! HTML::style('css/front/simplePagination.css') !!}
+{!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3 col-message">
      
@@ -79,16 +80,27 @@
                       ?>
                     </tbody>
                   </table>
-                  <ul id="MessgNavPosition_<?php echo $i;?>" class="pagination"></ul>
+                  <div id="MessgNavPosition_<?php echo $i;?>"></div>
                 </div>
-                <script type="text/javascript"><!--
-					var pager_message_<?php echo $i;?> = new Pager('message_tbl_<?php echo $i;?>', 4);
-					pager_message_<?php echo $i;?>.init(); 
-					pager_message_<?php echo $i;?>.showPageNav('pager_message_<?php echo $i;?>', 'MessgNavPosition_<?php echo $i;?>'); 
-					pager_message_<?php echo $i;?>.showPage('pager_message_<?php echo $i;?>',1);
-				//-->
+                <script type="text/javascript">				
+					jQuery(function($) {
+						var pageParts = $("#message_tbl_<?php echo $i;?> tbody tr");
+						var numPages = pageParts.length;
+						var perPage = 5;
+						pageParts.slice(perPage).hide();
+						
+						$("#MessgNavPosition_<?php echo $i;?>").pagination({
+							items: numPages,
+							itemsOnPage: perPage,
+							cssStyle: "light-theme",
+							onPageClick: function(pageNum) {
+								var start = perPage * (pageNum - 1);
+								var end = start + perPage;
+								pageParts.hide().slice(start, end).show();
+							}
+						});
+					});
 				</script>
-
               <?php
             }
           }

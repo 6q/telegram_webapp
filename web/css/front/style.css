@@ -1415,6 +1415,25 @@ img {
   color:black!important;
 }
 
+#bots_contentNavPosition ul li span, #bots_contentNavPosition ul li a {
+  margin: 0;
+}
+#bots_contentNavPosition ul li {
+  display: inline-block;
+  margin: 0 2px;
+  width: auto;
+}
+
+#channel_contentNavPosition ul li span, #channel_contentNavPosition ul li a {
+  margin: 0;
+}
+#channel_contentNavPosition ul li {
+  display: inline-block;
+  margin: 0 2px;
+  width: auto;
+}
+
+
 @media (max-width:1620px){
   .col_top .col-lg-2 h3 {
     font-size: 16px;

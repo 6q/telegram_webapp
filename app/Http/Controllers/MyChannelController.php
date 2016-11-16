@@ -259,20 +259,34 @@ class MyChannelController extends Controller {
 	public function channel_delete($id){
 		$conditions = ['id' => $id];
         $channel = DB::table('my_channels')->where($conditions)->get();
-        
-        $stripe_customer_id = $channel[0]->stripe_customer_id;
+		
+		$stripe_customer_id = $channel[0]->stripe_customer_id;
 		$stripe_subscription_id = $channel[0]->stripe_subscription_id;
-      
-        
-        $stripe = Stripe::make(env('STRIPE_APP_KEY'));
-        $subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
-        
-		if(isset($subscription['id']) && !empty($subscription['id'])){
-			DB::table('my_channels')->where('id', '=', $id)->delete();
-			return redirect('front_user')->with('ok', trans('front/fornt_user.deleted'));
+	  
+		$stripe = Stripe::make(env('STRIPE_APP_KEY'));
+		
+		$get_subscription = $stripe->subscriptions()->all($stripe_customer_id);
+		if(isset($get_subscription['data']) && !empty($get_subscription['data']))
+		{
+			foreach($get_subscription['data'] as $sk1 => $sv1)
+			{
+				if($sv1['id'] == $stripe_subscription_id)
+				{
+					$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+					if(isset($subscription['id']) && !empty($subscription['id']))
+					{
+						DB::table('my_channels')->where('id', '=', $id)->delete();
+						return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));
+					}
+					else{
+						return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));
+					}	
+				}
+			}
 		}
 		else{
-			return redirect('front_user')->with('ok', trans('front/fornt_user.deleted'));
+			DB::table('my_channels')->where('id', '=', $id)->delete();
+			return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_already_cancled'));
 		}
 	}
  
@@ -330,6 +344,43 @@ class MyChannelController extends Controller {
             $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $channelID)->get();
             return view('back.mychannel.detail', compact('chanels','chanelMesg'));
         }
+	}
+	
+	
+	public function channel_subscription_cancel($channelID = NULL){
+		
+		if(!empty($channelID)){
+			$conditions = ['id' => $channelID];
+			$my_channels = DB::table('my_channels')->where($conditions)->get();
+			
+			$stripe_customer_id = $my_channels[0]->stripe_customer_id;
+			$stripe_subscription_id = $my_channels[0]->stripe_subscription_id;
+		  
+			$stripe = Stripe::make(env('STRIPE_APP_KEY'));
+			
+			$get_subscription = $stripe->subscriptions()->all($stripe_customer_id);
+			if(isset($get_subscription['data']) && !empty($get_subscription['data']))
+			{
+				foreach($get_subscription['data'] as $sk1 => $sv1)
+				{
+					if($sv1['id'] == $stripe_subscription_id)
+					{
+						$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+						if(isset($subscription['id']) && !empty($subscription['id']))
+						{
+							return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));
+						}
+						else{
+							return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));
+						}	
+					}
+				}
+			}
+			else{
+				return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_already_cancled'));
+			}
+
+		}
 	}
 
 }

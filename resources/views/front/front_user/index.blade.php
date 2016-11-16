@@ -1,8 +1,8 @@
 @extends('front.template')
 @section('main')
 
-<!-- http://jlinn.github.io/stripe-api-php/api/subscriptions.html -->
-{!! HTML::script('js/front/paging.js') !!}
+{!! HTML::style('css/front/simplePagination.css') !!}
+{!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
      
@@ -22,7 +22,10 @@
 		?>
         <div class="bots_content">
         	<table id="bots_content">
-        	<tr><td></td></tr>
+            <thead
+        		<tr><td></td></tr>
+            </thead>
+            <tbody>
         <?php
           if(!empty($data)){
             foreach($data as $d1 => $dv1){
@@ -63,8 +66,9 @@
             <?php
           }
         ?>
+        </tbody>
         </table>
-        <ul id="bots_contentNavPosition" class="pagination"></ul>
+        <div id="bots_contentNavPosition"></div>
         </div>
         
       
@@ -73,7 +77,8 @@
         
         <div class="bots_content">
         <table id="channel_content">
-        	<tr><td></td></tr>
+        	<thead><tr><td></td></tr></thead>
+            <tbody>
           <?php
             if(!empty($chanel_data)){
               foreach($chanel_data as $ck1 => $cv1){
@@ -85,6 +90,8 @@
                     <li>
                       <p></p>
                       <a href="{!! URL::to('/my_channel/channel_delete/'.$cv1['channel']['id']) !!}" onclick="return confirm('Are you sure want to delete this channel?');"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a>
+                      
+                      <a href="{!! URL::to('/my_channel/channel_subscription_cancel/'.$cv1['channel']['id']) !!}" onclick="return confirm('Are you sure want to cancel the subscription');">{{ trans('front/fornt_user.subscription_cancel') }}</a>
                     </li>
                     <li><p>{{ trans('front/fornt_user.automatic_renewal') }}:<?php echo date('d/m/Y',strtotime($cv1['user_subscription']['expiry_date']));?></p></li>
                 </ul>
@@ -105,8 +112,9 @@
             <?php
           }
           ?>
+          </tbody>
           </table>
-          <ul id="channel_contentNavPosition" class="pagination"></ul>
+          <div id="channel_contentNavPosition"></div>
         </div>
         
         </div>
@@ -153,7 +161,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="bot_plan_subNavPosition" class="pagination"></ul>
+          <div id="bot_plan_subNavPosition"></div>
         </div>
         
         <div class="col-plan">
@@ -191,7 +199,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="bot_billingNavPosition" class="pagination"></ul>
+          <div id="bot_billingNavPosition"></div>
         </div>
         
         <!------------ Channel ------------------->
@@ -230,7 +238,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="channel_plansNavPosition" class="pagination"></ul>
+          <div id="channel_plansNavPosition"></div>
         </div>
         
         <div class="col-plan">
@@ -268,7 +276,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="channel_billingNavPosition" class="pagination"></ul>
+          <div id="channel_billingNavPosition"></div>
         </div>
         <!----------------------------------------->
         
@@ -276,40 +284,118 @@
       
   </div>
   
-  <script type="text/javascript"><!--
+  
+  <script>
+  	jQuery(function($) {
+		var pageParts = $("#bots_content tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 2;
+		pageParts.slice(perPage).hide();
+		
+		$("#bots_contentNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	jQuery(function($) {
+		var pageParts = $("#channel_content tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 2;
+		pageParts.slice(perPage).hide();
+		
+		$("#channel_contentNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	
+	jQuery(function($) {
+		var pageParts = $("#bot_plan_sub tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 2;
+		pageParts.slice(perPage).hide();
+		
+		$("#bot_plan_subNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	jQuery(function($) {
+		var pageParts = $("#bot_billing tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 2;
+		pageParts.slice(perPage).hide();
+		
+		$("#bot_billingNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	jQuery(function($) {
+		var pageParts = $("#channel_plans tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 2;
+		pageParts.slice(perPage).hide();
+		
+		$("#channel_plansNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	
+	jQuery(function($) {
+		var pageParts = $("#channel_billing tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 2;
+		pageParts.slice(perPage).hide();
+		
+		$("#channel_billingNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
 
-  	var pager_bots_content = new Pager('bots_content', 2); 
-	pager_bots_content.init(); 
-	pager_bots_content.showPageNav('pager_bots_content', 'bots_contentNavPosition'); 
-	pager_bots_content.showPage('pager_bots_content',1);
-	
-	var pager_channel_content = new Pager('channel_content', 2); 
-	pager_channel_content.init(); 
-	pager_channel_content.showPageNav('pager_channel_content', 'channel_contentNavPosition'); 
-	pager_channel_content.showPage('pager_channel_content',1);
-	
-	var pager_bot_plan_sub = new Pager('bot_plan_sub', 5); 
-	pager_bot_plan_sub.init(); 
-	pager_bot_plan_sub.showPageNav('pager_bot_plan_sub', 'bot_plan_subNavPosition'); 
-	pager_bot_plan_sub.showPage('pager_bot_plan_sub',1);
-	
-	
-	var pager_bot_billing = new Pager('bot_billing', 5); 
-	pager_bot_billing.init(); 
-	pager_bot_billing.showPageNav('pager_bot_billing', 'bot_billingNavPosition'); 
-	pager_bot_billing.showPage('pager_bot_billing',1);
-	
-	var pager_channel_plans = new Pager('channel_plans', 5); 
-	pager_channel_plans.init(); 
-	pager_channel_plans.showPageNav('pager_channel_plans', 'channel_plansNavPosition'); 
-	pager_channel_plans.showPage('pager_channel_plans',1);
-	
-	var pager_channel_billing = new Pager('channel_billing', 5); 
-	pager_channel_billing.init(); 
-	pager_channel_billing.showPageNav('pager_channel_billing', 'channel_billingNavPosition'); 
-	pager_channel_billing.showPage('pager_channel_billing',1);
-	
-    //-->
-  </script>
+	</script>
   
 @stop

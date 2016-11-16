@@ -1,9 +1,9 @@
 @extends('front.template')
 @section('main')
 
-<!-- http://jlinn.github.io/stripe-api-php/api/subscriptions.html -->
+{!! HTML::style('css/front/simplePagination.css') !!}
+{!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
-{!! HTML::script('js/front/paging.js') !!}
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
      
@@ -67,7 +67,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="botAutoresponseNavPosition" class="pagination"></ul>
+          <div id="botAutoresponseNavPosition"></div>
         </div>
         
         <div class="col-plan col-lg-6">
@@ -103,7 +103,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="botContactFormNavPosition" class="pagination"></ul>
+          <div id="botContactFormNavPosition"></div>
         </div>
         <div style="clear:both"></div>
         <div class="col-plan col-lg-6">
@@ -140,7 +140,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="botGalleryNavPosition" class="pagination"></ul>
+          <div id="botGalleryNavPosition"></div>
         </div>
         
         <div class="col-plan col-lg-6">
@@ -177,7 +177,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="botChannelsNavPosition" class="pagination"></ul>
+          <div id="botChannelsNavPosition"></div>
         </div>
         <div style="clear:both"></div>
         
@@ -214,7 +214,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="activeUserNavPosition" class="pagination"></ul>
+          <div id="activeUserNavPosition"></div>
         </div>
         
         <div class="col-plan">
@@ -252,7 +252,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="messageNavPosition" class="pagination"></ul>
+          <div id="messageNavPosition"></div>
         </div>
         
       
@@ -290,6 +290,138 @@
 
         </div>
     </div>
+    
+  <script>
+  	jQuery(function($) {
+		var pageParts = $("#botAutoresponse tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 5;
+		pageParts.slice(perPage).hide();
+		
+		$("#botAutoresponseNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+  	jQuery(function($) {
+		var pageParts = $("#botContactForm tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 5;
+		pageParts.slice(perPage).hide();
+		
+		$("#botContactFormNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	
+	jQuery(function($) {
+		var pageParts = $("#botContactForm tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 5;
+		pageParts.slice(perPage).hide();
+		
+		$("#botContactFormNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	jQuery(function($) {
+		var pageParts = $("#botGallery tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 5;
+		pageParts.slice(perPage).hide();
+		
+		$("#botGalleryNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	
+	jQuery(function($) {
+		var pageParts = $("#botChannels tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 5;
+		pageParts.slice(perPage).hide();
+		
+		$("#botChannelsNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	
+  	jQuery(function($) {
+		var pageParts = $("#activeUser tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 5;
+		pageParts.slice(perPage).hide();
+		
+		$("#activeUserNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+	
+	
+  	jQuery(function($) {
+		var pageParts = $("#message_activity tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 10;
+		pageParts.slice(perPage).hide();
+		
+		$("#messageNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
+  </script>
   
   <script type="text/javascript"><!--
 
@@ -308,21 +440,16 @@
 	pager_botGallery.showPageNav('pager_botGallery', 'botGalleryNavPosition'); 
 	pager_botGallery.showPage('pager_botGallery',1);
 	
+	/*
 	var pager_botChannels = new Pager('botChannels', 4);
 	pager_botChannels.init(); 
 	pager_botChannels.showPageNav('pager_botChannels', 'botChannelsNavPosition'); 
 	pager_botChannels.showPage('pager_botChannels',1);
-	
-  	var pager_activeUser = new Pager('activeUser', 5); 
-	pager_activeUser.init(); 
-	pager_activeUser.showPageNav('pager_activeUser', 'activeUserNavPosition'); 
-	pager_activeUser.showPage('pager_activeUser',1);
-		
-	var pager_message_activity = new Pager('message_activity', 10);
-	pager_message_activity.init(); 
-	pager_message_activity.showPageNav('pager_message_activity', 'messageNavPosition'); 
-	pager_message_activity.showPage('pager_message_activity',1);
+	*/
     //-->
+	
+	
+	
 	
 	
 	function mypopup_botfunction(bot_id){

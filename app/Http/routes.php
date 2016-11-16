@@ -74,6 +74,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('bot/bot_subscription_cancel/{bot_id?}', 'BotController@bot_subscription_cancel');
    
     Route::get('my_channel/channel_delete/{channel_id?}', 'MyChannelController@channel_delete');
+	Route::get('my_channel/channel_subscription_cancel/{channel_id?}', 'MyChannelController@channel_subscription_cancel');
+	
 	
     Route::resource('bot', 'BotController');
 

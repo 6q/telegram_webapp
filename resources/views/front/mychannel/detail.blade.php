@@ -1,8 +1,8 @@
 @extends('front.template')
 @section('main')
 
-<!-- http://jlinn.github.io/stripe-api-php/api/subscriptions.html -->
-{!! HTML::script('js/front/paging.js') !!}
+{!! HTML::style('css/front/simplePagination.css') !!}
+{!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
 <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
 
@@ -78,7 +78,7 @@
               ?>
             </tbody>
           </table>
-          <ul id="channelMessagesNavPosition" class="pagination"></ul>
+          <div id="channelMessagesNavPosition"></div>
         </div>
     </div>
 
@@ -131,12 +131,25 @@
         </div>
     </div>
 
-<script type="text/javascript"><!--
-  	var pager_channelMessages = new Pager('channelMessages', 4);
-	pager_channelMessages.init(); 
-	pager_channelMessages.showPageNav('pager_channelMessages', 'channelMessagesNavPosition'); 
-	pager_channelMessages.showPage('pager_channelMessages',1);
-    //-->
+<script type="text/javascript">
+	
+	jQuery(function($) {
+		var pageParts = $("#channelMessages tbody tr");
+		var numPages = pageParts.length;
+		var perPage = 10;
+		pageParts.slice(perPage).hide();
+		
+		$("#channelMessagesNavPosition").pagination({
+			items: numPages,
+			itemsOnPage: perPage,
+			cssStyle: "light-theme",
+			onPageClick: function(pageNum) {
+				var start = perPage * (pageNum - 1);
+				var end = start + perPage;
+				pageParts.hide().slice(start, end).show();
+			}
+		});
+	});
 	
 	
 	 function mypopupfunction(channel_id){
