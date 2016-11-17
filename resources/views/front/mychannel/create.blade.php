@@ -63,13 +63,19 @@
                         <div class="buing_row">
                             <h3>{{ trans('front/MyChannel.service_and_features') }}</h3>
                         </div>
-
+                        
+                        <!--
                         <div class="buing_row">{{ trans('front/MyChannel.autoresponses') }}</div>
                         <div class="buing_row">{{ trans('front/MyChannel.contact_from') }}</div>
                         <div class="buing_row">{{ trans('front/MyChannel.image_galleries') }}</div>
+                        -->
+                        
                         <div class="buing_row"> {{ trans('front/MyChannel.manual_message_per_day') }} </div>
+                       
+                       <!--
                         <div class="buing_row">{{ trans('front/MyChannel.custom_message_welcome') }}</div>
                         <div class="buing_row">{{ trans('front/MyChannel.custom_not_allowed_message_response') }}</div>
+                        -->
                         <div class="buing_row last_child">
                             <h3></h3>
                         </div>
@@ -94,6 +100,11 @@
                                 <div class="buing_row">
                                     <h3><?php echo $pv1->name; ?></h3>
                                 </div>
+                                
+                                <div class="buing_row"><span class="heading_content">{{ trans('front/MyChannel.manual_message_per_day') }}</span><?php echo $pv1->manual_message; ?></div>
+                                
+                                <!--
+                                
                                 <div class="buing_row">
                                     <span class="heading_content">{{ trans('front/MyChannel.autoresponses') }}</span><?php echo $pv1->autoresponses; ?>
                                 </div>
@@ -121,6 +132,8 @@
                                         {!! HTML::image('img/front/right_icon.png') !!}
                                     <?php } ?>
                                 </div>
+                                -->
+                                
                                 <div class="buing_row last_child">
                                     <h3 style="line-height: normal">
                                         <span><?php echo $pv1->price; ?> $</span>

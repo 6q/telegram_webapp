@@ -32,5 +32,8 @@ return [
 	'updated' => 'Plan updated.',
 	'destroyed' => 'Plan destroyed.',
 	'confirmed' => 'Confirmed',
-	'not-confirmed' => 'Not confirmed'
+	'not-confirmed' => 'Not confirmed',
+	'type' => 'Plan type',
+	'plan_type_bot' => 'Bot',
+	'plan_type_channel' => 'Channel'
 ];

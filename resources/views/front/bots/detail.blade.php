@@ -423,34 +423,7 @@
 	});
   </script>
   
-  <script type="text/javascript"><!--
-
-  	var pager_botAutoresponse = new Pager('botAutoresponse', 4);
-	pager_botAutoresponse.init(); 
-	pager_botAutoresponse.showPageNav('pager_botAutoresponse', 'botAutoresponseNavPosition'); 
-	pager_botAutoresponse.showPage('pager_botAutoresponse',1);
-	
-	var pager_botContactForm = new Pager('botContactForm', 4);
-	pager_botContactForm.init(); 
-	pager_botContactForm.showPageNav('pager_botContactForm', 'botContactFormNavPosition'); 
-	pager_botContactForm.showPage('pager_botContactForm',1);
-	
-	var pager_botGallery = new Pager('botGallery', 4);
-	pager_botGallery.init(); 
-	pager_botGallery.showPageNav('pager_botGallery', 'botGalleryNavPosition'); 
-	pager_botGallery.showPage('pager_botGallery',1);
-	
-	/*
-	var pager_botChannels = new Pager('botChannels', 4);
-	pager_botChannels.init(); 
-	pager_botChannels.showPageNav('pager_botChannels', 'botChannelsNavPosition'); 
-	pager_botChannels.showPage('pager_botChannels',1);
-	*/
-    //-->
-	
-	
-	
-	
+  <script type="text/javascript">
 	
 	function mypopup_botfunction(bot_id){
 		$('#bot_msg').css('border','1px solid #ccc');

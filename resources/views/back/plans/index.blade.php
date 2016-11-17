@@ -28,6 +28,7 @@
 			<thead>
 				<tr>
 					<th>{{ trans('back/plans.name') }}</th>
+                    <th>{{ trans('back/plans.type') }}</th>
 					<th>{{ trans('back/plans.duration') }}</th>
 					<th>{{ trans('back/plans.price') }}</th>
 					<th>{{ trans('back/plans.status') }}</th>

@@ -1,7 +1,21 @@
 	@foreach ($plans as $plan)
 		<tr>
 			<td class="text-primary"><strong>{{ $plan->name }}</strong></td>
-			
+			<td>
+            	<?php
+                	if($plan->plan_type == 1){
+					?>
+                  		{{ trans('back/plans.plan_type_bot') }}
+                    <?php
+					}
+					else if($plan->plan_type == 2){
+					?>
+                    	{{ trans('back/plans.plan_type_channel') }}
+                        
+					<?php
+					}
+				?>
+           	</td>
 			<td>{{ $plan->duration }}</td>
 			<td>{{ $plan->price }}</td>
 			<td>

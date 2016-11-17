@@ -80,11 +80,12 @@ class BotController extends Controller
         
         if(!empty($search)){
             $plans = DB::table('plans')
-                        ->where('name', 'LIKE', '%'.$search.'%')
+                        ->where('plan_type', '=', '1')
+						->where('name', 'LIKE', '%'.$search.'%')
                         ->get();
         }
         else{
-            $plans = DB::table('plans')->get();
+            $plans = DB::table('plans')->where('plan_type','=','1')->get();
         }
         
         

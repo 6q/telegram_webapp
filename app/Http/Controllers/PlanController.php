@@ -19,8 +19,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans=Plan::latest()
-		->paginate(20);
+        $plans = Plan::latest()->paginate(20);
 		$links = $plans->render();
 		
 		return view('back.plans.index', compact('plans','links'));	
@@ -50,6 +49,7 @@ class PlanController extends Controller
       	$plan = new Plan;
 		
 		$plan->name=$request->get('name');
+		$plan->plan_type = $request->get('plan_type');
 		$plan->description=$request->get('description');
 		$plan->duration=$request->get('duration');
 		$plan->price=$request->get('price');
@@ -81,8 +81,7 @@ class PlanController extends Controller
 		}
 		
 		$plan->save();
-		
-		
+
 		$stripe = Stripe::make(env('STRIPE_APP_KEY'));
 		if($plan->price>0){
 			$subscription_plan = $stripe->plans()->create([
@@ -91,7 +90,7 @@ class PlanController extends Controller
 				'amount'                => $request->get('price'),
 				'currency'              => 'EUR',
 				'interval'              => 'month',
-				'interval_count'              => $request->get('duration')
+				'interval_count'        => $request->get('duration')
 			]);
 			
 			if(isset($subscription_plan['id']) && $subscription_plan['id']!=''){
@@ -200,8 +199,6 @@ class PlanController extends Controller
 		
 		$plan->save();
 		
-		
-
 		return redirect('plan')->with('ok', trans('back/plans.updated'));
     }
 

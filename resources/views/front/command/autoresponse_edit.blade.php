@@ -65,8 +65,13 @@
 					<?php
 						if(isset($autoresponses[0]->image) && !empty($autoresponses[0]->image)){
 							?>
-								<p>{!! HTML::image('uploads/'.$autoresponses[0]->image) !!}</p>
+								<div id="image-holder">{!! HTML::image('uploads/'.$autoresponses[0]->image) !!}</div>
 							<?php
+						}
+						else{
+						?>
+                        	<div id="image-holder"> </div>
+                        <?php
 						}
 					?>
 				</label>
@@ -86,6 +91,27 @@
 
 
 <script>
+	$(document).ready(function(e) {
+        $("#image").on('change', function () {
+			if (typeof (FileReader) != "undefined") {
+				var image_holder = $("#image-holder");
+				image_holder.empty();
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$("<img />", {
+						"src": e.target.result,
+						"class": "thumb-image"
+					}).appendTo(image_holder);
+	 
+				}
+				image_holder.show();
+				reader.readAsDataURL($(this)[0].files[0]);
+			} else {
+				alert("This browser does not support FileReader.");
+			}
+		});
+    });
+	
 	function add_more(){
 		var i = $('#add_more').attr('data-rel');
 		i = parseInt(i)+1;
@@ -136,6 +162,11 @@
 
 
 <style>
+	#image-holder {
+  display: inline-block;
+  width: 20%;
+}
+
 	 .bot_command_form input {
 		padding: 16px;
 	  }

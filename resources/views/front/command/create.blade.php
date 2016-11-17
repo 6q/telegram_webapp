@@ -150,7 +150,7 @@
               
               <li class="browse_content"> 
                 <label><input type="file" name="image" id="image"><span>{{ trans('front/command.browse') }}</span></label>
-                
+                <div id="image-holder"> </div>
                 
               </li>
               
@@ -310,6 +310,26 @@
 <script>
 $(document).ready(function()
 {
+	$("#image").on('change', function () {
+        if (typeof (FileReader) != "undefined") {
+            var image_holder = $("#image-holder");
+            image_holder.empty();
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image"
+                }).appendTo(image_holder);
+ 
+            }
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        } else {
+            alert("This browser does not support FileReader.");
+        }
+    });
+	
+	
   var count = 1; 
   var img_path = "{{ URL::to('/') }}";
   var totalUpImg = '<?php echo $plan[0]->gallery_images; ?>';	
@@ -357,6 +377,11 @@ $(function(){
 
 
 <style>
+#image-holder {
+  display: inline-block;
+  width: 20%;
+}
+
   .show_hide_ul, .alert_show{
     display:none;
   }

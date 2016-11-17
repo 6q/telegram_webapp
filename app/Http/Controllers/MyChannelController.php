@@ -60,11 +60,12 @@ class MyChannelController extends Controller {
         
         if(!empty($search)){
             $plans = DB::table('plans')
+						->where('plan_type','=','2')
                         ->where('name', 'LIKE', '%'.$search.'%')
                         ->get();
         }
         else{
-            $plans = DB::table('plans')->get();
+            $plans = DB::table('plans')->where('plan_type','=','2')->get();
         }
 		
 		/* channelName popup */

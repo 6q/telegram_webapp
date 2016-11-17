@@ -460,25 +460,22 @@ class DashboardController extends Controller {
 				$BOT_TOKEN = $bot_token;
 				$chat_id = $channel_name;
 				
-				$BOTAPI = 'https://api.telegram.org/bot' . $BOT_TOKEN .'/';
-				$cfile = new \CURLFile($img_url, 'image/jpg'); 
+				$telegram = new Api($bot_token);
+				$data = array();
+				
 				$data = [
 					'chat_id' => '@'.$channel_name,
-					'photo' => $cfile
+					'photo' => $img_url
 				];
-		
-				$ch = curl_init($BOTAPI.'sendPhoto');
-				curl_setopt($ch, CURLOPT_HEADER, false);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-				$result = curl_exec($ch);
-				curl_close($ch);
 				
-				DB::table('channel_send_message')->insertGetId(
+				$result = $telegram->sendPhoto($data);
+				$response = json_decode(json_encode($result));
+				
+				if(isset($response->message_id) && !empty($response->message_id)){
+					DB::table('channel_send_message')->insertGetId(
 						['user_id' => $userId, 'channel_id' => $request->get('chat_id'), 'channel_name' => '@'.$channel_name, 'send_date' => date('Y-m-d'), 'message' => $img_url]
 					);
+				}
 					
 				echo 'Image sent succesfully' ;
 			}

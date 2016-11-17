@@ -3,6 +3,8 @@
 use App\Repositories\ContactRepository;
 use App\Repositories\UserRepository;
 
+use DB;
+
 class AdminController extends Controller {
 
     /**
@@ -31,14 +33,20 @@ class AdminController extends Controller {
 	* @param  App\Repositories\CommentRepository $comment_gestion
 	* @return Response
 	*/
-	public function admin(
-		ContactRepository $contact_gestion 
-		)
-	{	
-	
-		$nbrMessages = 0;
+	public function admin(ContactRepository $contact_gestion)
+	{
+		$nbrMessages = array();
+		$channels = DB::table('my_channels')->get();
+		$nbrMessages['total'] = count($channels);
+		$nbrMessages['new'] = count($channels);
+			
 		$nbrUsers = $this->user_gestion->getNumber();
-		$nbrPosts = 0;
+		
+		$nbrPosts = array();
+		$bots = DB::table('bots')->get();
+		$nbrPosts['total'] = count($bots);
+		$nbrPosts['new'] = count($bots);
+		
 		$nbrComments = 0;
 
 		return view('back.index', compact('nbrMessages', 'nbrUsers', 'nbrPosts', 'nbrComments'));
