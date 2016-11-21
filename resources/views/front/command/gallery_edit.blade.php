@@ -7,7 +7,7 @@
 {!! HTML::style('css/front/nice-select.css') !!}
 
 
-<!--<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">-->
+<link href="{{ URL::to('/') }}/css/front/uploadfile.css" rel="stylesheet">
 {!! HTML::script('js/jquery.uploadfile.min.js') !!}
 {!! HTML::script('js/jquery-ui.js') !!}
 
@@ -29,6 +29,13 @@
 
 	<div class="bot_command">        
         <div class="bot_command_content">
+        @if ($errors->has())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br>        
+                    @endforeach
+                </div>
+                @endif
           <h2>{!! trans('front/command.select_type') !!}</h2>
         </div>
         

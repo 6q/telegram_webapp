@@ -144,3 +144,24 @@ margin: 5px 10px 5px 0px;
 {
   margin:20px 0px 20px 0px;
 }
+.upload .ajax-file-upload {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+.upload > .ajax-file-upload-container {
+  margin: 0;
+}
+body .bot_command_form .upload > span {
+  padding: 0;
+}
+.upload .ajax-upload-dragdrop {
+  width: 131px !important;
+}
+#command_form .upload_content li {
+  width: auto;
+}
+.bot_command_form .upload_content input {
+  padding: 4px 0;
+}

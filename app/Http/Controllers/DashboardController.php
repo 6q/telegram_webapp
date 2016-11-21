@@ -479,7 +479,8 @@ class DashboardController extends Controller {
 					
 				echo 'Image sent succesfully' ;
 			}
-			else{
+			
+			if(!empty($message)){
 				$telegram = new Api($bot_token);
             
 				$data = [];
@@ -575,7 +576,7 @@ class DashboardController extends Controller {
 					curl_close($ch);
 					$chk_img = true;
 				}
-				else{
+				if(!empty($message)){
 					$telegram = new Api($bot_token);
 					$data = [];
 					$data['chat_id'] = $cv2;

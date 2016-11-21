@@ -29,6 +29,13 @@
 
 	<div class="bot_command">        
         <div class="bot_command_content">
+        	@if ($errors->has())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br>        
+                    @endforeach
+                </div>
+                @endif
           <h2>{!! trans('front/command.select_type') !!}</h2>
         </div>
         
@@ -50,7 +57,7 @@
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
                 <label id="contact">
-                  {!! Form::control_new('text', 0, 'contact_submenu_heading_text', $errors,'',$contact_forms[0]->submenu_heading_text) !!}
+                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors,'',$contact_forms[0]->submenu_heading_text) !!}
                 </label>
               </li>
               
@@ -201,7 +208,7 @@
 	function validateContactForm(){
 		var chk = 1;
 		var email = $('#email').val();
-		var contact_submenu_heading_text = $('#contact_submenu_heading_text').val();
+		var contact_submenu_heading_text = $('#submenu_heading_text').val();
 		var headline = $('#headline').val();
 		
 		if(email == ''){

@@ -468,8 +468,9 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     if(isset($tbl_autoresponse[0]->autoresponse_msg) && !empty($tbl_autoresponse[0]->autoresponse_msg)){
                         $msg = $tbl_autoresponse[0]->autoresponse_msg;
                     }
-                    else{
-                        $msg = '';
+                    
+					if(!empty($tbl_autoresponse[0]->image)){
+                        //$msg = '';
                         $img_url = public_path().'/uploads/'.$tbl_autoresponse[0]->image;
                         $image_name = $tbl_autoresponse[0]->image;
                     }
@@ -664,8 +665,9 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     if(isset($tbl_chanels[0]->chanel_msg) && !empty($tbl_chanels[0]->chanel_msg)){
                         $msg = $tbl_chanels[0]->chanel_msg;
                     }
-                    else{
-                        $msg = '';
+                    
+					if(!empty($tbl_chanels[0]->image)){
+                        //$msg = '';
                         $img_url = public_path().'/uploads/'.$tbl_chanels[0]->image;
                         $image_name = $tbl_chanels[0]->image;
                     }

@@ -7,7 +7,7 @@
 {!! HTML::style('css/front/nice-select.css') !!}
 
 
-<!--<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">-->
+<link href="{{ URL::to('/') }}/css/front/uploadfile.css" rel="stylesheet">
 {!! HTML::script('js/jquery.uploadfile.min.js') !!}
 {!! HTML::script('js/jquery-ui.js') !!}
 
@@ -30,6 +30,13 @@
 
 	<div class="bot_command">        
         <div class="bot_command_content">
+        	@if ($errors->has())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br>        
+                    @endforeach
+                </div>
+                @endif
           <h2>{!! trans('front/command.select_type') !!}</h2>
           <ul class="row select_type">
             <li class="col-xs-6 col-sm-3">
@@ -133,7 +140,7 @@
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
                 <label id="auto">
-                  {!! Form::control_new('text', 0, 'autoresponse_submenu_heading_text', $errors) !!}
+                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors) !!}
                 </label>
               </li>
               
@@ -178,7 +185,7 @@
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
                 <label id="contact">
-                  {!! Form::control_new('text', 0, 'contact_submenu_heading_text', $errors) !!}
+                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors) !!}
                 </label>
               </li>
               
@@ -288,6 +295,7 @@
               
               <li class="browse_content"> 
                 <label><input type="file" name="chanel_image" id="chanel_image"><span>{{ trans('front/command.browse') }}</span></label>
+                <div id="channel-image-holder"> </div>
                 
                 
               </li>
@@ -328,6 +336,27 @@ $(document).ready(function()
             alert("This browser does not support FileReader.");
         }
     });
+	
+	
+	$("#chanel_image").on('change', function () {
+        if (typeof (FileReader) != "undefined") {
+            var image_holder = $("#channel-image-holder");
+            image_holder.empty();
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image"
+                }).appendTo(image_holder);
+ 
+            }
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        } else {
+            alert("This browser does not support FileReader.");
+        }
+    });
+	
 	
 	
   var count = 1; 
@@ -377,7 +406,7 @@ $(function(){
 
 
 <style>
-#image-holder {
+#image-holder, #channel-image-holder{
   display: inline-block;
   width: 20%;
 }
@@ -509,7 +538,7 @@ function myFunctionShow(id){
 	
 	function validateAutoresponse(){
 		var chk = 1;
-		var autoresponse_submenu_heading_text = $('#autoresponse_submenu_heading_text').val();
+		var autoresponse_submenu_heading_text = $('#submenu_heading_text').val();
 		var autoresponse_msg = $('#autoresponse_msg').val();
 		var chk_img = $('#image').val();
 		
@@ -543,7 +572,7 @@ function myFunctionShow(id){
 	function validateContactForm(){
 		var chk = 1;
 		var email = $('#email').val();
-		var contact_submenu_heading_text = $('#contact_submenu_heading_text').val();
+		var contact_submenu_heading_text = $('#submenu_heading_text').val();
 		var headline = $('#headline').val();
 		
 		if(email == ''){

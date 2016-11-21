@@ -20,6 +20,8 @@ use App\Models\Gallery;
 use App\Models\GalleryImage;
 use App\Models\Chanel;
 
+use Illuminate\Support\Facades\Validator;
+
 class CommandController extends Controller
 {
 	public function __construct() {
@@ -69,202 +71,250 @@ class CommandController extends Controller
 		
         if(!empty($request->get('autoresponse')) && $request->get('autoresponse') == 1)
         {
-			$autoresponse = new Autoresponse;    
-            $autoresponse->types = 'bot';
-            $autoresponse->type_id = $request->get('bot_id');
-            $autoresponse->user_id = $userId;
-            $autoresponse->submenu_heading_text = $request->get('autoresponse_submenu_heading_text');
-            
-            $autoresponse->autoresponse_msg = '';
-            $img_name_s = '';
-            if(!empty($request->get('autoresponse_msg'))){
-                $autoresponse->autoresponse_msg = $request->get('autoresponse_msg');
-            }
-            else{
-                if($request->hasFile('image')){
-                    $error_img = $_FILES["image"]["error"];
-                    $img_name = $_FILES["image"]["name"];
+			$rules = array(
+				'submenu_heading_text' => 'required|unique:autoresponses',
+				'autoresponse_msg' => 'required:autoresponses'
+			);
 
-                    if($error_img == '0' && $img_name != '' )
-                    {
-                       $img_path = $_FILES["image"]["tmp_name"];
-                       $img_name_s = time()."_".$img_name;
-                       $upload_img = public_path().'/uploads/'.$img_name_s;
+			$v = Validator::make($request->all(), $rules);
 
-                       move_uploaded_file($img_path,$upload_img);
-                    }
-                }
-            }
-            
-            $autoresponse->image = $img_name_s;
-            $autoresponse->save();
-            
-            //return redirect('front_user')->with('ok', trans('front/command.created'));
-			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+			if( $v->passes() ) 
+			{
+				$autoresponse = new Autoresponse;    
+				$autoresponse->types = 'bot';
+				$autoresponse->type_id = $request->get('bot_id');
+				$autoresponse->user_id = $userId;
+				$autoresponse->submenu_heading_text = $request->get('submenu_heading_text');
+				
+				$autoresponse->autoresponse_msg = '';
+				$img_name_s = '';
+				if(!empty($request->get('autoresponse_msg'))){
+					$autoresponse->autoresponse_msg = $request->get('autoresponse_msg');
+				}
+				
+				if($request->hasFile('image')){
+					$error_img = $_FILES["image"]["error"];
+					$img_name = $_FILES["image"]["name"];
+	
+					if($error_img == '0' && $img_name != '' )
+					{
+					   $img_path = $_FILES["image"]["tmp_name"];
+					   $img_name_s = time()."_".$img_name;
+					   $upload_img = public_path().'/uploads/'.$img_name_s;
+	
+					   move_uploaded_file($img_path,$upload_img);
+					}
+				}
+				
+				$autoresponse->image = $img_name_s;
+				$autoresponse->save();
+				
+				//return redirect('front_user')->with('ok', trans('front/command.created'));
+				return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+			} else { 
+				$messages = $v->messages();
+				return redirect('command/create/'.$botId)->withErrors($v);
+			}
         }
         
         if(!empty($request->get('contact_form')) && $request->get('contact_form') == 1)
         {
-            $contact_form = new ContactForm;
+			$rules = array(
+				'submenu_heading_text' => 'required|unique:contact_forms',
+			);
+
+			$v = Validator::make($request->all(), $rules);
+
+			if($v->passes())
+			{
+				$contact_form = new ContactForm;
             
-            $contact_form->types = 'bot';
-			$contact_form->email = $request->get('email');
-            $contact_form->type_id = $request->get('bot_id');
-            $contact_form->submenu_heading_text = $request->get('contact_submenu_heading_text');
-            $contact_form->user_id = $userId;
-            $contact_form->headline = $request->get('headline');
-            
-            $contact_form->save();
-            
-            $contact_form_id = $contact_form->id;
-            
-            if(!empty($contact_form_id) && count($request->get('ques_heading'))>0){
-                $chk = 0;
-                foreach($request->get('ques_heading') as $k1 => $v1){
-                    
-                    $contact_form_ques = new ContactFormQuestion;
-                    $contact_form_ques->contact_form_id = $contact_form_id;
-                    $contact_form_ques->ques_heading = $v1;
-                    $contact_form_ques->response_type = $request->get('type_response')[$k1];
-                    
-                    $contact_form_ques->save();
-                    $chk = 1;
-                }
-                
-                if($chk == 1){
-					$email_template = DB::table('email_templates')
-								->where('title','LIKE','channel_create')
-								->get();
-					$template = $email_template[0]->description;
+				$contact_form->types = 'bot';
+				$contact_form->email = $request->get('email');
+				$contact_form->type_id = $request->get('bot_id');
+				$contact_form->submenu_heading_text = $request->get('submenu_heading_text');
+				$contact_form->user_id = $userId;
+				$contact_form->headline = $request->get('headline');
+				
+				$contact_form->save();
+				
+				$contact_form_id = $contact_form->id;
+				
+				if(!empty($contact_form_id) && count($request->get('ques_heading'))>0){
+					$chk = 0;
+					foreach($request->get('ques_heading') as $k1 => $v1){
+						
+						$contact_form_ques = new ContactFormQuestion;
+						$contact_form_ques->contact_form_id = $contact_form_id;
+						$contact_form_ques->ques_heading = $v1;
+						$contact_form_ques->response_type = $request->get('type_response')[$k1];
+						
+						$contact_form_ques->save();
+						$chk = 1;
+					}
 					
-					$botId = $request->get('bot_id');
-					
-					$bot_name = DB::table('bots')
-									->where('id','=',$botId)
+					if($chk == 1){
+						$email_template = DB::table('email_templates')
+									->where('title','LIKE','channel_create')
 									->get();
-					$name = $bot_name[0]->username;
-					
-					$contactFormEmail = DB::table('site_settings')
-											->where('name','=','contact_form_email')
-											->get();
-					
-					$to_email = $contactFormEmail[0]->value;//$request->get('email');
-					
-					$ques_html = '';
-					 foreach($request->get('ques_heading') as $k1 => $v1){
-						 $ques_html .= '<tr>';   
-						 $ques_html .= '<td>'.$v1.'</td>';   
-						 $ques_html .= '<td>'.$request->get('type_response')[$k1].'</td>';   
-						 $ques_html .= '</tr>';   
-					  }
-					
-					$emailFindReplace = array(
-						'##SITE_LOGO##' => asset('/img/front/logo.png'),
-						'##SITE_LINK##' => asset('/'),
-						'##SITE_NAME##' => 'Citymes',
-						'##USERNAME##' => Auth::user()->first_name.' '.Auth::user()->last_name,
-						'##BOT_NAME##' => $name,
-						'##SUBMENU_HEADING_TEXT##' => $request->get('contact_submenu_heading_text'),
-						'##HEADLINE##' => $request->get('headline'),
-						'##QUES-ANS##' => $ques_html
-					);
+						$template = $email_template[0]->description;
 						
-					$html = strtr($template, $emailFindReplace);
+						$botId = $request->get('bot_id');
 						
-					\Mail::send(['html' => 'front.command.email_command_contact_template'],
-						array(
-							'text' => $html
-						), function($message) use ($to_email)
-					{
-						$message->from('admin@admin.com');
-						$message->to($to_email, 'Admin')->subject('Contact Form');
-					});
-					
-                    //return redirect('front_user')->with('ok', trans('front/command.created'));
-					return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
-                }
-            }
-            
-            //return redirect('front_user')->with('ok', trans('front/command.created'));
-			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+						$bot_name = DB::table('bots')
+										->where('id','=',$botId)
+										->get();
+						$name = $bot_name[0]->username;
+						
+						$contactFormEmail = DB::table('site_settings')
+												->where('name','=','contact_form_email')
+												->get();
+						
+						$to_email = $contactFormEmail[0]->value;//$request->get('email');
+						
+						$ques_html = '';
+						 foreach($request->get('ques_heading') as $k1 => $v1){
+							 $ques_html .= '<tr>';   
+							 $ques_html .= '<td>'.$v1.'</td>';   
+							 $ques_html .= '<td>'.$request->get('type_response')[$k1].'</td>';   
+							 $ques_html .= '</tr>';   
+						  }
+						
+						$emailFindReplace = array(
+							'##SITE_LOGO##' => asset('/img/front/logo.png'),
+							'##SITE_LINK##' => asset('/'),
+							'##SITE_NAME##' => 'Citymes',
+							'##USERNAME##' => Auth::user()->first_name.' '.Auth::user()->last_name,
+							'##BOT_NAME##' => $name,
+							'##SUBMENU_HEADING_TEXT##' => $request->get('contact_submenu_heading_text'),
+							'##HEADLINE##' => $request->get('headline'),
+							'##QUES-ANS##' => $ques_html
+						);
+							
+						$html = strtr($template, $emailFindReplace);
+							
+						\Mail::send(['html' => 'front.command.email_command_contact_template'],
+							array(
+								'text' => $html
+							), function($message) use ($to_email)
+						{
+							$message->from('admin@admin.com');
+							$message->to($to_email, 'Admin')->subject('Contact Form');
+						});
+						
+						//return redirect('front_user')->with('ok', trans('front/command.created'));
+						return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+					}
+				}
+				
+				//return redirect('front_user')->with('ok', trans('front/command.created'));
+				return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));	
+			}else { 
+				$messages = $v->messages();
+				return redirect('command/create/'.$botId)->withErrors($v);
+			}
         }
         
         if(!empty($request->get('gallery_form')) && $request->get('gallery_form') == 1)
         {
             //echo '<pre>';print_r($request->all());die;
-            
-            $gallery = new Gallery; 
-            $gallery->types = 'bot';
-            $gallery->type_id = $request->get('bot_id');
-            $gallery->user_id = $userId;
-            $gallery->gallery_submenu_heading_text = $request->get('gallery_submenu_heading_text');
-            $gallery->introduction_headline = $request->get('introduction_headline');
-            $gallery->created_at = date('Y-m-d h:i:s');
-            $gallery->updated_at = date('Y-m-d h:i:s');
-            
-            if($gallery->save()){
-                $galleryId = $gallery->id;
-                
-                if(!empty($request->get('title'))){
-                    foreach($request->get('title') as $k1 => $v1){
-                        $data = explode('_',$k1);
-                        
-                        $gallery_img = new GalleryImage;
-                        $gallery_img->gallery_id = $galleryId;
-                        $gallery_img->title = $v1;
-                        $gallery_img->image = $data[0];
-                        $gallery_img->sort_order = $data[1];
-                        $gallery_img->created_at = date('Y-m-d h:i:s');
-                        $gallery_img->updated_at = date('Y-m-d h:i:s');
-                        
-                        $gallery_img->save();
-                    }
-                }
-            }
-            
-            //return redirect('front_user')->with('ok', trans('front/command.created'));
-			return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+            $rules = array(
+				'gallery_submenu_heading_text' => 'required|unique:galleries',
+			);
+
+			$v = Validator::make($request->all(), $rules);
+			
+			if($v->passes())
+			{
+				$gallery = new Gallery; 
+				$gallery->types = 'bot';
+				$gallery->type_id = $request->get('bot_id');
+				$gallery->user_id = $userId;
+				$gallery->gallery_submenu_heading_text = $request->get('gallery_submenu_heading_text');
+				$gallery->introduction_headline = $request->get('introduction_headline');
+				$gallery->created_at = date('Y-m-d h:i:s');
+				$gallery->updated_at = date('Y-m-d h:i:s');
+				
+				if($gallery->save()){
+					$galleryId = $gallery->id;
+					
+					if(!empty($request->get('title'))){
+						foreach($request->get('title') as $k1 => $v1){
+							$data = explode('_',$k1);
+							
+							$gallery_img = new GalleryImage;
+							$gallery_img->gallery_id = $galleryId;
+							$gallery_img->title = $v1;
+							$gallery_img->image = $data[0];
+							$gallery_img->sort_order = $data[1];
+							$gallery_img->created_at = date('Y-m-d h:i:s');
+							$gallery_img->updated_at = date('Y-m-d h:i:s');
+							
+							$gallery_img->save();
+						}
+					}
+				}
+				
+				//return redirect('front_user')->with('ok', trans('front/command.created'));
+				return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+			}
+			else{
+				$messages = $v->messages();
+				return redirect('command/create/'.$botId)->withErrors($v);
+			}
         }
         
         
         if(!empty($request->get('chanel')) && $request->get('chanel') == 1)
         {
-            //echo '<pre>';print_r($request->all());die;
-            $chanel = new Chanel; 
-            
-            $chanel->types = 'bot';
-            $chanel->type_id = $request->get('bot_id');
-            $chanel->user_id = $userId;
-            $chanel->chanel_submenu_heading_text = $request->get('chanel_submenu_heading_text');
-            
-            $chanel->chanel_msg = '';
-            $img_name_s = '';
-            if(!empty($request->get('chanel_msg'))){
-                $chanel->chanel_msg = $request->get('chanel_msg');
-            }
-            else{
-                if($request->hasFile('chanel_image')){
-                    $error_img = $_FILES["chanel_image"]["error"];
-                    $img_name = $_FILES["chanel_image"]["name"];
+			$rules = array(
+				'chanel_submenu_heading_text' => 'required|unique:chanels',
+			);
 
-                    if($error_img == '0' && $img_name != '' )
-                    {
-                       $img_path = $_FILES["chanel_image"]["tmp_name"];
-                       $img_name_s = time()."_".$img_name;
-                       $upload_img = public_path().'/uploads/'.$img_name_s;
+			$v = Validator::make($request->all(), $rules);
 
-                       move_uploaded_file($img_path,$upload_img);
-                    }
-                }
-            }
-            
-            $chanel->image = $img_name_s;
-            $chanel->created_at = date('Y-m-d h:i:s');
-            $chanel->updated_at = date('Y-m-d h:i:s');
-            $chanel->save();
-            
-           // return redirect('front_user')->with('ok', trans('front/command.created'));
-		   return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+			if($v->passes())
+			{
+				//echo '<pre>';print_r($request->all());die;
+				$chanel = new Chanel; 
+				
+				$chanel->types = 'bot';
+				$chanel->type_id = $request->get('bot_id');
+				$chanel->user_id = $userId;
+				$chanel->chanel_submenu_heading_text = $request->get('chanel_submenu_heading_text');
+				
+				$chanel->chanel_msg = '';
+				$img_name_s = '';
+				if(!empty($request->get('chanel_msg'))){
+					$chanel->chanel_msg = $request->get('chanel_msg');
+				}
+				
+				if($request->hasFile('chanel_image')){
+						$error_img = $_FILES["chanel_image"]["error"];
+						$img_name = $_FILES["chanel_image"]["name"];
+	
+						if($error_img == '0' && $img_name != '' )
+						{
+						   $img_path = $_FILES["chanel_image"]["tmp_name"];
+						   $img_name_s = time()."_".$img_name;
+						   $upload_img = public_path().'/uploads/'.$img_name_s;
+	
+						   move_uploaded_file($img_path,$upload_img);
+						}
+					}
+								
+				$chanel->image = $img_name_s;
+				$chanel->created_at = date('Y-m-d h:i:s');
+				$chanel->updated_at = date('Y-m-d h:i:s');
+				$chanel->save();
+				
+			   // return redirect('front_user')->with('ok', trans('front/command.created'));
+			   return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
+			}
+			else{
+				$messages = $v->messages();
+				return redirect('command/create/'.$botId)->withErrors($v);	
+			}
         }
     }
     
@@ -317,37 +367,52 @@ class CommandController extends Controller
 	
 	public function autoresponse_update(Request $request){
 		if(!empty($request->get('id'))){
+			$id = $request->get('id');
 			$bot_id = $request->get('bot_id');
-			$autoresponse = Autoresponse::find($request->get('id'));
-			$autoresponse->id = $request->get('id');
-			$autoresponse->submenu_heading_text = $request->get('autoresponse_submenu_heading_text');
-			$autoresponse->autoresponse_msg = '';
+			$rules = array(
+				'submenu_heading_text' => 'required|unique:autoresponses',
+				'autoresponse_msg' => 'required:autoresponses'
+			);
 
-			$img_name_s = $request->get('old_image');
-			if(!empty($request->get('autoresponse_msg'))){
-				$autoresponse->autoresponse_msg = $request->get('autoresponse_msg');
-			}
-			else{
+			$v = Validator::make($request->all(), $rules);
+
+			if( $v->passes() ) 
+			{
+				$autoresponse = Autoresponse::find($request->get('id'));
+				$autoresponse->id = $request->get('id');
+				$autoresponse->submenu_heading_text = $request->get('submenu_heading_text');
+				$autoresponse->autoresponse_msg = '';
+	
+				
+				if(!empty($request->get('autoresponse_msg'))){
+					$autoresponse->autoresponse_msg = $request->get('autoresponse_msg');
+				}
+				
+				$img_name_s = $request->get('old_image');
 				if($request->hasFile('image')){
 					$error_img = $_FILES["image"]["error"];
 					$img_name = $_FILES["image"]["name"];
-
+	
 					if($error_img == '0' && $img_name != '' )
 					{
 					   $img_path = $_FILES["image"]["tmp_name"];
 					   $img_name_s = time()."_".$img_name;
 					   $upload_img = public_path().'/uploads/'.$img_name_s;
-
+	
 					   move_uploaded_file($img_path,$upload_img);
 					}
 				}
+	
+				$autoresponse->image = $img_name_s;
+				$autoresponse->save();
+	
+				//return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.created'));
 			}
-
-			$autoresponse->image = $img_name_s;
-			$autoresponse->save();
-
-			//return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
-			return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.created'));
+			else{
+				$messages = $v->messages();
+				return redirect('command/autoresponse_edit/'.$id)->withErrors($v);
+			}
 		}
 	}
 	
@@ -389,35 +454,49 @@ class CommandController extends Controller
 	public function chanel_update(Request $request){
 		if(!empty($request->get('id'))){
 			$bot_id = $request->get('bot_id');
-			$chanel = Chanel::find($request->get('id'));
-			$chanel->id = $request->get('id');
-			$chanel->chanel_submenu_heading_text = $request->get('chanel_submenu_heading_text');
-			$chanel->chanel_msg = '';
+			$id = $request->get('id');
+			$rules = array(
+				'chanel_submenu_heading_text' => 'required|unique:chanels',
+			);
 
-			$img_name_s = $request->get('old_image');
-			if(!empty($request->get('chanel_msg'))){
-				$chanel->chanel_msg = $request->get('chanel_msg');
-			}
-			else{
+			$v = Validator::make($request->all(), $rules);
+
+			if($v->passes())
+			{
+				$chanel = Chanel::find($request->get('id'));
+				$chanel->id = $request->get('id');
+				$chanel->chanel_submenu_heading_text = $request->get('chanel_submenu_heading_text');
+				$chanel->chanel_msg = '';
+	
+				
+				if(!empty($request->get('chanel_msg'))){
+					$chanel->chanel_msg = $request->get('chanel_msg');
+				}
+				
+				$img_name_s = $request->get('old_image');
 				if($request->hasFile('image')){
 					$error_img = $_FILES["image"]["error"];
 					$img_name = $_FILES["image"]["name"];
-
+	
 					if($error_img == '0' && $img_name != '' )
 					{
 					   $img_path = $_FILES["image"]["tmp_name"];
 					   $img_name_s = time()."_".$img_name;
 					   $upload_img = public_path().'/uploads/'.$img_name_s;
-
+	
 					   move_uploaded_file($img_path,$upload_img);
 					}
 				}
+	
+				$chanel->image = $img_name_s;
+				$chanel->save();
+	
+				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 			}
-
-			$chanel->image = $img_name_s;
-			$chanel->save();
-
-			return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+			else{
+				$messages = $v->messages();
+				return redirect('command/chanel_edit/'.$id)->withErrors($v);
+			}
 		}
 	}
 	
@@ -465,80 +544,96 @@ class CommandController extends Controller
 	
 	public function contactform_update(Request $request){
 		if(!empty($request->get('id'))){
-			//$to_email = $request->get('email');
-			$contactFormEmail = DB::table('site_settings')
-											->where('name','=','contact_form_email')
-											->get();
-					
-			$to_email = $contactFormEmail[0]->value;//$request->get('email');
-			
+			$id = $request->get('id');
 			$bot_id = $request->get('bot_id');
-			$contact_form = ContactForm::find($request->get('id'));
-			$contact_form->id = $request->get('id');
-			$contact_form->email = $request->get('email');
-			$contact_form->submenu_heading_text = $request->get('contact_submenu_heading_text');
-			$contact_form->headline = $request->get('headline');
-
-			$contact_form->save();
 			
-			$contact_form_id = $request->get('id');
-            
-            if(!empty($contact_form_id) && count($request->get('ques_heading'))>0){
-                DB::table('contact_form_questions')->where('contact_form_id', '=', $contact_form_id)->delete();
-                foreach($request->get('ques_heading') as $k1 => $v1){
-                    $contact_form_ques = new ContactFormQuestion;
-                    $contact_form_ques->contact_form_id = $contact_form_id;
-                    $contact_form_ques->ques_heading = $v1;
-                    $contact_form_ques->response_type = $request->get('type_response')[$k1];
-                    $contact_form_ques->save();
-                }
-            }
-			
-			
-			$email_template = DB::table('email_templates')
-								->where('title','LIKE','channel_create')
-								->get();
-			$template = $email_template[0]->description;
-			
-			$botId = $bot_id;
-			
-			$bot_name = DB::table('bots')
-							->where('id','=',$botId)
-							->get();
-			$name = $bot_name[0]->username;
-			
-			$ques_html = '';
-			 foreach($request->get('ques_heading') as $k1 => $v1){
-                 $ques_html .= '<tr>';   
-				 $ques_html .= '<td>'.$v1.'</td>';   
-                 $ques_html .= '<td>'.$request->get('type_response')[$k1].'</td>';   
-				 $ques_html .= '</tr>';   
-              }
-			
-			$emailFindReplace = array(
-				'##SITE_LOGO##' => asset('/img/front/logo.png'),
-				'##SITE_LINK##' => asset('/'),
-				'##SITE_NAME##' => 'Citymes',
-				'##USERNAME##' => Auth::user()->first_name.' '.Auth::user()->last_name,
-				'##BOT_NAME##' => $name,
-				'##SUBMENU_HEADING_TEXT##' => $request->get('contact_submenu_heading_text'),
-				'##HEADLINE##' => $request->get('headline'),
-				'##QUES-ANS##' => $ques_html
+			$rules = array(
+				'submenu_heading_text' => 'required|unique:contact_forms',
 			);
-				
-			$html = strtr($template, $emailFindReplace);
-				
-			\Mail::send(['html' => 'front.command.email_command_contact_template'],
-				array(
-					'text' => $html
-				), function($message) use ($to_email)
+
+			$v = Validator::make($request->all(), $rules);
+
+			if($v->passes())
 			{
-				$message->from('admin@admin.com');
-				$message->to($to_email, 'Admin')->subject('Contact Form');
-			});
-			
-			
-			return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+				//$to_email = $request->get('email');
+				$contactFormEmail = DB::table('site_settings')
+												->where('name','=','contact_form_email')
+												->get();
+						
+				$to_email = $contactFormEmail[0]->value;//$request->get('email');
+				
+				
+				$contact_form = ContactForm::find($request->get('id'));
+				$contact_form->id = $request->get('id');
+				$contact_form->email = $request->get('email');
+				$contact_form->submenu_heading_text = $request->get('contact_submenu_heading_text');
+				$contact_form->headline = $request->get('headline');
+	
+				$contact_form->save();
+				
+				$contact_form_id = $request->get('id');
+				
+				if(!empty($contact_form_id) && count($request->get('ques_heading'))>0){
+					DB::table('contact_form_questions')->where('contact_form_id', '=', $contact_form_id)->delete();
+					foreach($request->get('ques_heading') as $k1 => $v1){
+						$contact_form_ques = new ContactFormQuestion;
+						$contact_form_ques->contact_form_id = $contact_form_id;
+						$contact_form_ques->ques_heading = $v1;
+						$contact_form_ques->response_type = $request->get('type_response')[$k1];
+						$contact_form_ques->save();
+					}
+				}
+				
+				
+				$email_template = DB::table('email_templates')
+									->where('title','LIKE','channel_create')
+									->get();
+				$template = $email_template[0]->description;
+				
+				$botId = $bot_id;
+				
+				$bot_name = DB::table('bots')
+								->where('id','=',$botId)
+								->get();
+				$name = $bot_name[0]->username;
+				
+				$ques_html = '';
+				 foreach($request->get('ques_heading') as $k1 => $v1){
+					 $ques_html .= '<tr>';   
+					 $ques_html .= '<td>'.$v1.'</td>';   
+					 $ques_html .= '<td>'.$request->get('type_response')[$k1].'</td>';   
+					 $ques_html .= '</tr>';   
+				  }
+				
+				$emailFindReplace = array(
+					'##SITE_LOGO##' => asset('/img/front/logo.png'),
+					'##SITE_LINK##' => asset('/'),
+					'##SITE_NAME##' => 'Citymes',
+					'##USERNAME##' => Auth::user()->first_name.' '.Auth::user()->last_name,
+					'##BOT_NAME##' => $name,
+					'##SUBMENU_HEADING_TEXT##' => $request->get('contact_submenu_heading_text'),
+					'##HEADLINE##' => $request->get('headline'),
+					'##QUES-ANS##' => $ques_html
+				);
+					
+				$html = strtr($template, $emailFindReplace);
+					
+				\Mail::send(['html' => 'front.command.email_command_contact_template'],
+					array(
+						'text' => $html
+					), function($message) use ($to_email)
+				{
+					$message->from('admin@admin.com');
+					$message->to($to_email, 'Admin')->subject('Contact Form');
+				});
+				
+				
+				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+			}
+			else{
+				$messages = $v->messages();
+				return redirect('command/contactform_edit/'.$id)->withErrors($v);
+			}
 		}
 	}
 	
@@ -601,35 +696,51 @@ class CommandController extends Controller
 	public function gallery_update(Request $request){
 		if(!empty($request->get('id'))){
 			$bot_id = $request->get('bot_id');
-			$gallery = Gallery::find($request->get('id'));
-			$gallery->id = $request->get('id');
-			$gallery->gallery_submenu_heading_text = $request->get('gallery_submenu_heading_text');
-			$gallery->introduction_headline = $request->get('introduction_headline');
-			$gallery->updated_at = date('Y-m-d h:i:s');
-
-			if($gallery->save()){
-				$galleryId = $gallery->id;
-
-				if(!empty($request->get('title'))){
-					DB::table('gallery_images')->where('gallery_id', '=', $galleryId)->delete();
-					foreach($request->get('title') as $k1 => $v1){
-						$data = explode('_',$k1);
-
-						$gallery_img = new GalleryImage;
-						$gallery_img->gallery_id = $galleryId;
-						$gallery_img->title = $v1;
-						$gallery_img->image = $data[0];
-						$gallery_img->sort_order = $data[1];
-						$gallery_img->created_at = date('Y-m-d h:i:s');
-						$gallery_img->updated_at = date('Y-m-d h:i:s');
-
-						$gallery_img->save();
-					}
-				}
-			}	
-		}
+			$id = $request->get('id');
+			
+			 $rules = array(
+					'gallery_submenu_heading_text' => 'required|unique:galleries',
+				);
+	
+				$v = Validator::make($request->all(), $rules);
+				
+				if($v->passes())
+				{
+					$gallery = Gallery::find($request->get('id'));
+					$gallery->id = $request->get('id');
+					$gallery->gallery_submenu_heading_text = $request->get('gallery_submenu_heading_text');
+					$gallery->introduction_headline = $request->get('introduction_headline');
+					$gallery->updated_at = date('Y-m-d h:i:s');
 		
-		return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+					if($gallery->save()){
+						$galleryId = $gallery->id;
+		
+						if(!empty($request->get('title'))){
+							DB::table('gallery_images')->where('gallery_id', '=', $galleryId)->delete();
+							foreach($request->get('title') as $k1 => $v1){
+								$data = explode('_',$k1);
+		
+								$gallery_img = new GalleryImage;
+								$gallery_img->gallery_id = $galleryId;
+								$gallery_img->title = $v1;
+								$gallery_img->image = $data[0];
+								$gallery_img->sort_order = $data[1];
+								$gallery_img->created_at = date('Y-m-d h:i:s');
+								$gallery_img->updated_at = date('Y-m-d h:i:s');
+		
+								$gallery_img->save();
+							}
+						}
+					}	
+				}
+				
+				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+			}
+			else{
+				$messages = $v->messages();
+				return redirect('command/gallery_edit/'.$id)->withErrors($v);
+			}
+			
 	}
 	
 	

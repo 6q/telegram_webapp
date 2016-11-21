@@ -29,6 +29,14 @@
 
 	<div class="bot_command">        
         <div class="bot_command_content">
+        	@if ($errors->has())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br>        
+                    @endforeach
+                </div>
+                @endif
+                
           <h2>{!! trans('front/command.autoresponse') !!}</h2>
         </div>
         
@@ -42,7 +50,7 @@
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
                 <label id="auto">
-                  {!! Form::control_new('text', 0, 'autoresponse_submenu_heading_text', $errors,'',$autoresponses[0]->submenu_heading_text) !!}
+                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors,'',$autoresponses[0]->submenu_heading_text) !!}
                 </label>
               </li>
               
@@ -127,7 +135,7 @@
 	
 	function validateAutoresponse(){
 		var chk = 1;
-		var autoresponse_submenu_heading_text = $('#autoresponse_submenu_heading_text').val();
+		var autoresponse_submenu_heading_text = $('#submenu_heading_text').val();
 		var autoresponse_msg = $('#autoresponse_msg').val();
 		var chk_img = $('#image').val();
 		var old_img = $('#old_img').val();
