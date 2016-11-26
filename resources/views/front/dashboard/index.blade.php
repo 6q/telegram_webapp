@@ -219,6 +219,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
+            	<img id="imgLoadChannel" src="{{URL::asset('img/balls.gif')}}" class="loading2_img" style="display:none;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
@@ -250,7 +251,7 @@
                     <input type="file" name="channel_image" id="channel_image" accept="image/*"  />
                     <br />
 
-                    <input type="submit" name="submit" value="{{ trans('front/dashboard.send') }}" class="btn btn-primary"  />
+                    <input id="sendChannelBtn" type="submit" name="submit" value="{{ trans('front/dashboard.send') }}" class="btn btn-primary"  />
 
 
                     {!! Form::close() !!}
@@ -267,6 +268,7 @@
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
+            	<img id="imgLoad" src="{{URL::asset('img/balls.gif')}}" class="loading2_img" style="display:none;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
@@ -285,7 +287,7 @@
                     <input type="file" name="bot_image" id="bot_image" accept="image/*"  />
                     <br />
                     
-                    <input type="submit" name="submit" value="{{ trans('front/dashboard.send') }}" class="btn btn-primary"  />
+                    <input id="sendBotBtn" type="submit" name="submit" value="{{ trans('front/dashboard.send') }}" class="btn btn-primary"  />
 
                     {!! Form::close() !!}
                 </div>
@@ -377,6 +379,9 @@
 				var token_new = $('input[name=_token]').val();
 				
 				if(chk){
+					$('#imgLoadChannel').css('display','block');
+					$('#sendChannelBtn').attr('disabled','disabled');
+					
 					$.ajax({
 						url: '<?php echo URL::to('/dashboard/sendmessage')?>',
 						headers: {'X-CSRF-TOKEN': token_new},
@@ -388,9 +393,13 @@
 						type:'POST',
 						success: function (resp) {
 							alert(resp);
+							$('#imgLoadChannel').css('display','block');
+							$('#sendChannelBtn').attr('disabled','disabled');
 							$('#myModal').modal('hide');
 						},
 						error: function (request, status, error) {
+							$('#imgLoadChannel').css('display','block');
+							$('#sendChannelBtn').attr('disabled','disabled');
 							alert('Forbidden: Some error occured');
 						}
 					});
@@ -419,6 +428,9 @@
 				var token_new = $('input[name=_token]').val();
 				
 				if(chk){
+					$('#imgLoad').css('display','block');
+					$('#sendBotBtn').attr('disabled','disabled');
+				
 					$.ajax({
 						url: '<?php echo URL::to('/dashboard/sendbotmessage')?>',
 						headers: {'X-CSRF-TOKEN': token_new},
@@ -430,9 +442,13 @@
 						type:'POST',
 						success: function (resp) {
 							alert(resp);
+							$('#imgLoad').css('display','none');
+							$('#sendBotBtn').removeAttr('disabled','disabled');
 							$('#myModalBot').modal('hide');
 						},
 						error: function (request, status, error) {
+							$('#imgLoad').css('display','none');
+							$('#sendBotBtn').removeAttr('disabled','disabled');
 							alert('Forbidden: Some error occured');
 						}
 					});

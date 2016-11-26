@@ -1350,6 +1350,15 @@ img {
   z-index: 999;
 }
 
+.loading2_img {
+  height: 35%;
+  left: 38%;
+  position: absolute;
+  top: 25.7%;
+  width: 16% !important;
+  z-index: 999;
+}
+
 #sidebar .chat_content ul {
   bottom: 20px;
   margin: 0;

@@ -207,6 +207,11 @@ Route::post('/{bottoken}/webhook', function ($token) {
     
     $data = json_decode($update,true);
     $messageText = (isset($data['message']['text']) && !empty($data['message']['text']))?$data['message']['text']:'';
+	$messageTextImg = (isset($data['message']['document']['file_name']) && !empty($data['message']['document']['file_name']))?$data['message']['document']['file_name']:'';
+	
+	if(empty($messageText) && !empty($messageTextImg)){
+		$messageText = $messageTextImg;
+	}
     
     file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
     
@@ -427,7 +432,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             $msg = "\xE2\x9E\xA1 ".$channels;
         }
         else{
-            if($messageText != "\xE2\x97\x80")
+            if(!empty($messageText) && $messageText != "\xE2\x97\x80")
             {
                 DB::table('tmp_bots')->insert(
                     ['data_value' => serialize($messageText)]
@@ -541,8 +546,10 @@ Route::post('/{bottoken}/webhook', function ($token) {
                         ->get();
 						
 					$msg = '';
+						
                     if(isset($contact_form_questions[0]->ques_heading) && !empty($contact_form_questions[0]->ques_heading)){
                         $msg = $contact_form_questions[0]->ques_heading;
+						
                         DB::table('tmp_ques')->insert(
                             [
                                 'ques_id' => $cfq_ID,
@@ -551,10 +558,14 @@ Route::post('/{bottoken}/webhook', function ($token) {
                         );
                     }
 					else{
+						//$ques_ans_data = DB::table('tmp_ques_ans')->get();
+						
 						$msg = $tbl_contact_forms[0]->headline;
 						DB::table('tmp_ques')->truncate();
+						
+						//DB::table('tmp_ques_ans')->truncate();
 					}
-                    
+					
                  //   file_put_contents(public_path().'/result.txt',json_encode($contact_form_questions)); 
                 
                     /* ContactForms */
@@ -783,6 +794,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             DB::table('tmp_message')->truncate();
             DB::table('tmp_ques')->truncate();
 			DB::table('tmp_mytable')->truncate();
+			DB::table('tmp_ques_ans')->truncate();
         }
         
     }		
@@ -798,10 +810,24 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		]);
 	
 	
+	/*
+	$ques = (isset($msg) && !empty($msg))?$msg:'';
+	if($messageText != "\xE2\x97\x80"){
+		DB::table('tmp_ques_ans')->insert(
+			[
+				'bot_id' => $dbBotId,
+				'ques' => $ques,
+				'ans' => $messageText
+			]
+		);
+	}
+	*/
+							
+		
     if(!empty($msg)){
         if(!empty($bot_messages_id)){
             DB::table('bot_messages')->where('id', $bot_messages_id)->update(array('reply_message' => $msg));
-        }
+        } 
         
         $response = $telegram->sendMessage([
           'chat_id' => $chatId, 

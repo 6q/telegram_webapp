@@ -127,7 +127,7 @@ class BotController extends Controller
      */
     public function store(BotCreateRequest $request)
     {
-        $firstName = Auth::user()->first_name;
+		$firstName = Auth::user()->first_name;
         $lastName = Auth::user()->last_name;
         $user_id = Auth::user()->id;
         $email = Auth::user()->email;
@@ -257,6 +257,93 @@ class BotController extends Controller
 
                $user_transaction->save();
                /* UserTransaction */
+			   
+			   
+			   
+			   
+			   
+			   $contactFormEmail = DB::table('site_settings')
+								->where('name','=','contact_form_email')
+								->get();
+		
+				//$to_email = $contactFormEmail[0]->value;//$request->get('email');
+				$to_email = $request->get('email');
+				
+				$email_template = DB::table('email_templates')
+										->where('title','LIKE','email_bot')
+										->get();
+				$template = $email_template[0]->description;
+				
+				
+				$planDetail = DB::table('plans')
+								->where('id','=',$request->get('plan_id'))
+								->get();
+								
+				$planName = (isset($planDetail[0]->name) && !empty($planDetail[0]->name))?$planDetail[0]->name:'';
+				$NO_AUTORESPONSE = (isset($planDetail[0]->autoresponses) && !empty($planDetail[0]->autoresponses))?$planDetail[0]->autoresponses:'';
+				$NO_CONTACT_FORM = (isset($planDetail[0]->contact_forms) && !empty($planDetail[0]->contact_forms))?$planDetail[0]->contact_forms:'';
+				$image_gallery = (isset($planDetail[0]->image_gallery) && !empty($planDetail[0]->image_gallery))?$planDetail[0]->image_gallery:'';
+				$gallery_images = (isset($planDetail[0]->gallery_images) && !empty($planDetail[0]->gallery_images))?$planDetail[0]->gallery_images:'';
+				$custom_welcome_message = (isset($planDetail[0]->custom_welcome_message) && !empty($planDetail[0]->custom_welcome_message))?$planDetail[0]->custom_welcome_message:'';
+				$custom_not_allowed_message = (isset($planDetail[0]->custom_not_allowed_message) && !empty($planDetail[0]->custom_not_allowed_message))?$planDetail[0]->custom_not_allowed_message:'';
+				
+				
+				
+				$country = DB::table('countries')
+								->where('id','=',$request->get('country'))
+								->get();
+				$countryName = (isset($country[0]->name) && !empty($country[0]->name))?$country[0]->name:'';				
+		
+				
+				$state = DB::table('states')
+								->where('id','=',$request->get('state'))
+								->get();
+				$stateName = (isset($state[0]->name) && !empty($state[0]->name))?$state[0]->name:'';
+				
+		
+				$emailFindReplace = array(
+					'##SITE_LOGO##' => asset('/img/front/logo.png'),
+					'##SITE_LINK##' => asset('/'),
+					'##SITE_NAME##' => 'Citymes',
+					'##PLAN_USERNAME##' => $planName,
+					'##PRICE##' => $request->get('plan_price'),
+					'##NO_AUTORESPONSE##' => $NO_AUTORESPONSE,
+					'##NO_CONTACT_FORM##' => $NO_CONTACT_FORM,
+					'##NO_IMAGE_GALLERY##' => $image_gallery,
+					'##NO_MESSAGE_PER_DAY##' => $gallery_images,
+					'##NO_CUSTOM_WELCOME_MSG##' => $custom_welcome_message,
+					'##NO_CUSTOM_NOT_ALLOWED##' => $custom_not_allowed_message,
+					'##BOT_USERNAME##' => $request->get('username'),
+					'##NICK_NAME##' => $request->get('nick_name'),
+					'##BOT_ACCESS_TOKEN##' => $request->get('bot_token'),
+					'##START_MESSAGE##' => $request->get('start_message'),
+					'##AUTORESPONSE##' => $request->get('autoresponse'),
+					'##CONTACT_FORM##' => $request->get('contact_form'),
+					'##GALLERY_BUTTON##' => $request->get('galleries'),
+					'##CHANNELS_BUTTON##' => $request->get('channels'),
+					'##STREET##' => $request->get('street'),
+					'##COUNTRY##' => $countryName,
+					'##STATE##' => $stateName,
+					'##CITY##' => $request->get('city'),
+					'##POSTAL_CODE##' => $request->get('zip'),
+					'##EMAIL##' => $request->get('email'),
+					'##CARD_NAME##' => $request->get('cardholdername'),
+					'##NUMBER##' => $request->get('cardnumber'),
+					'##EXP_DATE##' => $request->get('card_exp'),
+					'##CVV##' => $request->get('cvv')
+				);
+				
+				$html = strtr($template, $emailFindReplace);
+				
+				\Mail::send(['html' => 'front.bots.email_bot_template'],
+					array(
+						'text' => $html
+					), function($message) use ($to_email)
+				{
+					$message->from('admin@admin.com');
+					$message->to($to_email, 'Admin')->subject('Bot Creation');
+				});
+		
                 
             }
            return redirect('dashboard')->with('ok', trans('front/bot.created'));

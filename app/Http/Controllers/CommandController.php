@@ -369,8 +369,9 @@ class CommandController extends Controller
 		if(!empty($request->get('id'))){
 			$id = $request->get('id');
 			$bot_id = $request->get('bot_id');
+			
 			$rules = array(
-				'submenu_heading_text' => 'required|unique:autoresponses',
+				'submenu_heading_text' => 'required|unique:autoresponses,submenu_heading_text,'.$id,
 				'autoresponse_msg' => 'required:autoresponses'
 			);
 
@@ -388,7 +389,7 @@ class CommandController extends Controller
 					$autoresponse->autoresponse_msg = $request->get('autoresponse_msg');
 				}
 				
-				$img_name_s = $request->get('old_image');
+				$img_name_s = $request->get('old_img');
 				if($request->hasFile('image')){
 					$error_img = $_FILES["image"]["error"];
 					$img_name = $_FILES["image"]["name"];
@@ -456,7 +457,7 @@ class CommandController extends Controller
 			$bot_id = $request->get('bot_id');
 			$id = $request->get('id');
 			$rules = array(
-				'chanel_submenu_heading_text' => 'required|unique:chanels',
+				'chanel_submenu_heading_text' => 'required|unique:chanels,chanel_submenu_heading_text,'.$id,
 			);
 
 			$v = Validator::make($request->all(), $rules);
@@ -548,7 +549,7 @@ class CommandController extends Controller
 			$bot_id = $request->get('bot_id');
 			
 			$rules = array(
-				'submenu_heading_text' => 'required|unique:contact_forms',
+				'submenu_heading_text' => 'required|unique:contact_forms,submenu_heading_text,'.$id,
 			);
 
 			$v = Validator::make($request->all(), $rules);
@@ -699,7 +700,7 @@ class CommandController extends Controller
 			$id = $request->get('id');
 			
 			 $rules = array(
-					'gallery_submenu_heading_text' => 'required|unique:galleries',
+					'gallery_submenu_heading_text' => 'required|unique:galleries,gallery_submenu_heading_text,'.$id
 				);
 	
 				$v = Validator::make($request->all(), $rules);
