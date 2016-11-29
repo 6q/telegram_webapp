@@ -1359,6 +1359,15 @@ img {
   z-index: 999;
 }
 
+.botDetail .loading_img {
+  height: auto;
+  left: 36%;
+  position: absolute;
+  top: 22.7%;
+  width: 16% !important;
+  z-index: 999;
+}
+
 #sidebar .chat_content ul {
   bottom: 20px;
   margin: 0;

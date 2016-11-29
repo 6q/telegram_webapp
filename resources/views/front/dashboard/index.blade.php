@@ -128,7 +128,7 @@
                                     </a>
                                 </p>
 
-                                <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $myChanel->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
+                                <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $myChanel->id;?>','<?php echo $myChanel->bot_id;?>');">{{ trans('front/dashboard.send_message') }}</a>
                             </div>
                         </li>
                         <?php
@@ -228,10 +228,13 @@
                     {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'send_channel_msg']) !!}
 
                     <input type="hidden" id="chat_id" name="chat_id" />
-
+                    <input type="hidden" id="bot_id" name="botID" />
+                    
+                    <!--
                     <select id="botID" name="botID" class="form-control">
                         <option value="">Select bot</option>
                         <?php
+						/*
                         if (isset($bots) && !empty($bots)) {
                         foreach ($bots as $b1 => $bv1) {
                         ?>
@@ -239,10 +242,12 @@
                         <?php
                         }
                         }
+						*/
                         ?>
                     </select>
 
                     <br>
+                    -->
 
                     <textarea id="channel_msg" name="channel_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
                     
@@ -336,12 +341,13 @@
         }
 
 
-        function mypopupfunction(channel_id){
-            $('#botID').css('border','1px solid #ccc');
+        function mypopupfunction(channel_id,bot_id){
+            //$('#botID').css('border','1px solid #ccc');
             $('#channel_msg').css('border','1px solid #ccc');
             $('#chat_id').val(channel_id);
+			$('#bot_id').val(bot_id);
 
-            $('#botID').val('');
+           // $('#botID').val('');
             $('#channel_msg').val('');
 
             $('#myModal').modal();
@@ -357,7 +363,12 @@
     	        var channel_msg = $('#channel_msg').val();
 	            var channel_id = $('#chat_id').val();
 				var channel_image = $('#channel_image').val();
-			
+				
+				if(botID == '' || botID == 0){
+					alert('Please update you channel and select bot for this channel.');
+					return false;
+				}
+				/*
 				if(botID == ''){
 					chk = false;
 					$('#botID').css('border','1px solid #ff0000');
@@ -365,6 +376,7 @@
 				else{
 					$('#botID').css('border','1px solid #ccc');
 				}
+				*/
 	
 				if(channel_msg == '' && channel_image == ''){
 					chk = false;
@@ -393,12 +405,12 @@
 						type:'POST',
 						success: function (resp) {
 							alert(resp);
-							$('#imgLoadChannel').css('display','block');
+							$('#imgLoadChannel').css('display','none');
 							$('#sendChannelBtn').attr('disabled','disabled');
 							$('#myModal').modal('hide');
 						},
 						error: function (request, status, error) {
-							$('#imgLoadChannel').css('display','block');
+							$('#imgLoadChannel').css('display','none');
 							$('#sendChannelBtn').attr('disabled','disabled');
 							alert('Forbidden: Some error occured');
 						}

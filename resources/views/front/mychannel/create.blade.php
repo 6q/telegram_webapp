@@ -183,6 +183,24 @@
 
                 <div class="crete_bot_form">
                     <ul>
+                    	<li>
+                        	<label id="bName">
+                            <div class="form-group">
+                                <select id="botID" name="botID" class="form-control">
+                                    <option value="">Select bot</option>
+                                    <?php
+                                    if (isset($bots) && !empty($bots)) {
+                                    foreach ($bots as $b1 => $bv1) {
+                                    ?>
+                                    <option value="<?php echo $bv1->id; ?>" data-rel="<?php echo $bv1->username;?>"><?php echo $bv1->username;?></option>
+                                    <?php
+                                    }
+                                    }
+                                    ?>
+                                </select>
+                               </div> 
+                    	</label>
+                        </li>
                         <li>
                             <span>{{ trans('front/MyChannel.name') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
                             <label id="uName">{!! Form::control('text', 0, 'name', $errors) !!}</label>
@@ -377,6 +395,11 @@
                 <div class="crete_bot_form">
                     <ul>
                         <li>
+                            <span>{{ trans('front/MyChannel.bot_name') }}</span>
+                            <label id="bot_name"></label>
+                        </li>
+                        
+                        <li>
                             <span>{{ trans('front/MyChannel.name') }}</span>
                             <label id="chanel_name"></label>
                         </li>
@@ -545,13 +568,23 @@
     }
 
     function muFunctionBotForm(id) {
-        var name = $('#name').val();
+        var bot_id = $('#botID').val();
+		var element = $("option:selected", $('#botID'));
+		var bot_name = element.attr('data-rel');
+
+		var name = $('#name').val();
         var channel_description = $('#description').val();
         var share_link = $('#share_link').val();
 
-
         var chk = 1;
-        if (name == '') {
+        if (bot_id == '') {
+            $('#bName .form-group').addClass('has-error');
+            chk = 0;
+        } else {
+            $('#bName .form-group').removeClass('has-error');
+        }
+		
+		if (name == '') {
             $('#uName .form-group').addClass('has-error');
             chk = 0;
         } else {
@@ -575,7 +608,8 @@
             $(window).scrollTop(300);
             return false;
         }
-
+		
+		$('#bot_name').html(bot_name);
         $('#chanel_name').html(name);
         $('#channel_description').html(channel_description);
         $('#channel_share_link').html(share_link);

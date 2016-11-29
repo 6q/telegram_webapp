@@ -154,54 +154,6 @@ class CommandController extends Controller
 					}
 					
 					if($chk == 1){
-						$email_template = DB::table('email_templates')
-									->where('title','LIKE','channel_create')
-									->get();
-						$template = $email_template[0]->description;
-						
-						$botId = $request->get('bot_id');
-						
-						$bot_name = DB::table('bots')
-										->where('id','=',$botId)
-										->get();
-						$name = $bot_name[0]->username;
-						
-						$contactFormEmail = DB::table('site_settings')
-												->where('name','=','contact_form_email')
-												->get();
-						
-						$to_email = $contactFormEmail[0]->value;//$request->get('email');
-						
-						$ques_html = '';
-						 foreach($request->get('ques_heading') as $k1 => $v1){
-							 $ques_html .= '<tr>';   
-							 $ques_html .= '<td>'.$v1.'</td>';   
-							 $ques_html .= '<td>'.$request->get('type_response')[$k1].'</td>';   
-							 $ques_html .= '</tr>';   
-						  }
-						
-						$emailFindReplace = array(
-							'##SITE_LOGO##' => asset('/img/front/logo.png'),
-							'##SITE_LINK##' => asset('/'),
-							'##SITE_NAME##' => 'Citymes',
-							'##USERNAME##' => Auth::user()->first_name.' '.Auth::user()->last_name,
-							'##BOT_NAME##' => $name,
-							'##SUBMENU_HEADING_TEXT##' => $request->get('contact_submenu_heading_text'),
-							'##HEADLINE##' => $request->get('headline'),
-							'##QUES-ANS##' => $ques_html
-						);
-							
-						$html = strtr($template, $emailFindReplace);
-							
-						\Mail::send(['html' => 'front.command.email_command_contact_template'],
-							array(
-								'text' => $html
-							), function($message) use ($to_email)
-						{
-							$message->from('admin@admin.com');
-							$message->to($to_email, 'Admin')->subject('Contact Form');
-						});
-						
 						//return redirect('front_user')->with('ok', trans('front/command.created'));
 						return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
 					}
@@ -584,49 +536,6 @@ class CommandController extends Controller
 						$contact_form_ques->save();
 					}
 				}
-				
-				
-				$email_template = DB::table('email_templates')
-									->where('title','LIKE','channel_create')
-									->get();
-				$template = $email_template[0]->description;
-				
-				$botId = $bot_id;
-				
-				$bot_name = DB::table('bots')
-								->where('id','=',$botId)
-								->get();
-				$name = $bot_name[0]->username;
-				
-				$ques_html = '';
-				 foreach($request->get('ques_heading') as $k1 => $v1){
-					 $ques_html .= '<tr>';   
-					 $ques_html .= '<td>'.$v1.'</td>';   
-					 $ques_html .= '<td>'.$request->get('type_response')[$k1].'</td>';   
-					 $ques_html .= '</tr>';   
-				  }
-				
-				$emailFindReplace = array(
-					'##SITE_LOGO##' => asset('/img/front/logo.png'),
-					'##SITE_LINK##' => asset('/'),
-					'##SITE_NAME##' => 'Citymes',
-					'##USERNAME##' => Auth::user()->first_name.' '.Auth::user()->last_name,
-					'##BOT_NAME##' => $name,
-					'##SUBMENU_HEADING_TEXT##' => $request->get('contact_submenu_heading_text'),
-					'##HEADLINE##' => $request->get('headline'),
-					'##QUES-ANS##' => $ques_html
-				);
-					
-				$html = strtr($template, $emailFindReplace);
-					
-				\Mail::send(['html' => 'front.command.email_command_contact_template'],
-					array(
-						'text' => $html
-					), function($message) use ($to_email)
-				{
-					$message->from('admin@admin.com');
-					$message->to($to_email, 'Admin')->subject('Contact Form');
-				});
 				
 				
 				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));

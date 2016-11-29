@@ -626,11 +626,12 @@ class BotController extends Controller
 	
 	
 	
-	public function bot_subscription_cancel($botID = NULL){
+	public function bot_subscription_cancel($botID = NULL)
+	{
 		if(!empty($botID)){
 			$conditions = ['id' => $botID];
 			$bot = DB::table('bots')->where($conditions)->get();
-			
+							
 			$stripe_customer_id = $bot[0]->stripe_customer_id;
 			$stripe_subscription_id = $bot[0]->stripe_subscription_id;
 		  
@@ -644,6 +645,37 @@ class BotController extends Controller
 					if($sv1['id'] == $stripe_subscription_id)
 					{
 						$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+						
+						$contactFormEmail = DB::table('site_settings')
+							->where('name','=','contact_form_email')
+							->get();
+							
+						//$to_email = $contactFormEmail[0]->value;//$request->get('email');
+						$to_email = Auth::user()->email;	
+						$email_template = DB::table('email_templates')
+											->where('title','LIKE','subscription_cancellation')
+											->get();
+											
+						$template = $email_template[0]->description;
+						$MESSAGE = '<b>Bot "'.$bot[0]->username.'"</b>';
+						
+						$emailFindReplace = array(
+							'##SITE_LOGO##' => asset('/img/front/logo.png'),
+							'##SITE_LINK##' => asset('/'),
+							'##SITE_NAME##' => 'Citymes',
+							'##MESSAGE##' => $MESSAGE
+						);
+						
+						$html = strtr($template, $emailFindReplace);
+						\Mail::send(['html' => 'front.bots.email_bot_template'],
+							array(
+								'text' => $html
+							), function($message) use ($to_email)
+						{
+							$message->from('admin@admin.com');
+							$message->to($to_email, 'Admin')->subject('Bot Creation');
+						});
+			
 						if(isset($subscription['id']) && !empty($subscription['id']))
 						{
 							return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));

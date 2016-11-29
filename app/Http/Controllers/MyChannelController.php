@@ -68,12 +68,17 @@ class MyChannelController extends Controller {
             $plans = DB::table('plans')->where('plan_type','=','2')->get();
         }
 		
+		$userId = Auth::user()->id;
+		$bots = DB::table('bots')
+            ->where('user_id', '=', $userId)
+            ->get();
+		
 		/* channelName popup */
         $channelName = DB::table('pages')
                         ->where('id','=','16')
                         ->get();
         
-        return view('front.mychannel.create', compact('plans', 'email', 'country','total_bots','total_chanels','Form_action','search','channelName'));
+        return view('front.mychannel.create', compact('plans', 'email', 'country','total_bots','total_chanels','Form_action','search','channelName','bots'));
     }
 
     /**
@@ -81,7 +86,8 @@ class MyChannelController extends Controller {
      *
      * @return Response
      */
-    public function store(MyChannelCreateRequest $request) {
+    public function store(MyChannelCreateRequest $request) 
+	{
         $firstName = Auth::user()->first_name;
         $lastName = Auth::user()->last_name;
         $user_id = Auth::user()->id;
@@ -96,6 +102,7 @@ class MyChannelController extends Controller {
 
         $chanel->user_id = $user_id;
         $chanel->name = $request->get('name');
+		$channel->bot_id = $request->get('botID');
         $chanel->description = $request->get('description');
         $chanel->share_link = $request->get('share_link');
 
@@ -187,6 +194,73 @@ class MyChannelController extends Controller {
 
                 $user_transaction->save();
                 /* UserTransaction */
+				
+				
+				
+				$contactFormEmail = DB::table('site_settings')
+								->where('name','=','contact_form_email')
+								->get();
+								
+				//$to_email = $contactFormEmail[0]->value;//$request->get('email');
+				$to_email = $request->get('email');	
+				$email_template = DB::table('email_templates')
+												->where('title','LIKE','channel_email')
+												->get();
+				$template = $email_template[0]->description;	
+				
+				$planDetail = DB::table('plans')
+										->where('id','=',$request->get('plan_id'))
+										->get();
+										
+				$planName = (isset($planDetail[0]->name) && !empty($planDetail[0]->name))?$planDetail[0]->name:'';				
+				$NO_MESSAGE_PER_DAY = (isset($planDetail[0]->manual_message) && !empty($planDetail[0]->manual_message))?$planDetail[0]->manual_message:'';
+				$PRICE = $request->get('plan_price');
+				
+				
+				$country = DB::table('countries')
+								->where('id','=',$request->get('country'))
+								->get();
+				$countryName = (isset($country[0]->name) && !empty($country[0]->name))?$country[0]->name:'';				
+		
+				
+				$state = DB::table('states')
+								->where('id','=',$request->get('state'))
+								->get();
+				$stateName = (isset($state[0]->name) && !empty($state[0]->name))?$state[0]->name:'';
+				
+				$emailFindReplace = array(
+					'##SITE_LOGO##' => asset('/img/front/logo.png'),
+					'##SITE_LINK##' => asset('/'),
+					'##SITE_NAME##' => 'Citymes',
+					'##PLAN_USERNAME##' => $planName,
+					'##PRICE##' => $request->get('plan_price'),
+					'##NO_MESSAGE_PER_DAY##' => $NO_MESSAGE_PER_DAY,
+					'##CHANNEL_NAME##' => $request->get('name'),
+					'##DESCRIPTION##' => $request->get('description'),
+					'##CHANNEL_SHARE_LINK##' => $request->get('share_link'),
+					'##STREET##' => $request->get('street'),
+					'##COUNTRY##' => $countryName,
+					'##STATE##' => $stateName,
+					'##CITY##' => $request->get('city'),
+					'##POSTAL_CODE##' => $request->get('zip'),
+					'##EMAIL##' => $request->get('email'),
+					'##CARD_NAME##' => $request->get('cardholdername'),
+					'##NUMBER##' => $request->get('cardnumber'),
+					'##EXP_DATE##' => $request->get('card_exp'),
+					'##CVV##' => $request->get('cvv')
+				);
+				
+				$html = strtr($template, $emailFindReplace);
+				
+				\Mail::send(['html' => 'front.bots.email_bot_template'],
+					array(
+						'text' => $html
+					), function($message) use ($to_email)
+				{
+					$message->from('admin@admin.com');
+					$message->to($to_email, 'Admin')->subject('Bot Creation');
+				});
+		
             }
             return redirect('dashboard')->with('ok', trans('front/MyChannel.created'));
         } else {
@@ -214,6 +288,75 @@ class MyChannelController extends Controller {
 
             return view('front.mychannel.detail', compact('chanels','total_bots','total_chanels','Form_action','search','chanelMesg','bots'));
         }
+    }
+	
+	
+	public function getchannelcharts(Request $request){
+		$userId = Auth::user()->id;
+		$chart_time = ($request->get('chart_time') && !empty($request->get('chart_time')))?$request->get('chart_time'):'';
+		$channelId = ($request->get('channel_id') && !empty($request->get('channel_id')))?$request->get('channel_id'):'';
+		
+		$channelData = DB::table('my_channels')
+						->where('id','=',$channelId)
+						->get();
+		
+		$startDate = date('Y-m-d', strtotime('today - 30 days'));
+        $endDate = date('Y-m-d');
+        $output_format = 'Y-m-d';
+        $step = '+1 day';
+		
+		 if($chart_time == '10_days'){
+            $day = date('w');
+            $startDate = date('Y-m-d',strtotime('today - 7 days'));
+            $endDate = date('Y-m-d');
+        }
+
+        if($chart_time == '30_days'){
+            $month = date('m');
+            $year = date('Y');
+
+            $startDate = date('d-m-Y',strtotime('today - 30 days'));
+            $endDate = date('d-m-Y');
+        }
+
+        if($chart_time == '90_days'){
+	        $startDate = date('d-m-Y',strtotime('today - 90 days'));
+	        $endDate = date('d-m-Y');
+        }
+        
+        
+        $arr_dates = $this->date_range($startDate,$endDate,$step,$output_format);
+        $i = 0;
+
+        $arr[$i][0] = '';
+		$arr[$i][1] = (isset($channelData[0]->name) && !empty($channelData[0]->name))?$channelData[0]->name:'Channel seleccionat';
+		
+		$i = 1;
+		foreach($arr_dates as $k1 => $v1){
+			 $count_bot = DB::table('channel_send_message')
+							->where('channel_id','=',$channelId)
+							->where('send_date','LIKE','%'.$v1.'%')
+							->get();
+			
+			$arr[$i][0] = date('d.m',strtotime($v1));
+			$arr[$i][1] = count($count_bot);	
+			$i++;
+		}
+		
+		$arr = json_encode($arr);
+        echo $arr;die;
+	}
+	
+	function date_range($first, $last, $step = '+1 day', $output_format = 'd/m/Y' ) {
+        $dates = array();
+        $current = strtotime($first);
+        $last = strtotime($last);
+
+        while( $current <= $last ) {
+            $dates[] = date($output_format, $current);
+            $current = strtotime($step, $current);
+        }
+        return $dates;
     }
 
     /**
@@ -294,6 +437,11 @@ class MyChannelController extends Controller {
     
     public function edit_channel($channel_id = NULL){
         if(!empty($channel_id)){
+			$userId = Auth::user()->id;
+			$bots = DB::table('bots')
+				->where('user_id', '=', $userId)
+				->get();
+			
             $total_bots = $this->botsTOTAL;
             $total_chanels = $this->chanelTOTAL;
 
@@ -308,7 +456,7 @@ class MyChannelController extends Controller {
             
             $channel = MyChannel::find($channel_id);
             //echo '<pre>';print_r($channel);die;
-            return view('front.mychannel.edit_channel',compact('total_bots','total_chanels','Form_action','search','channel'));
+            return view('front.mychannel.edit_channel',compact('total_bots','total_chanels','Form_action','search','channel','bots'));
         }
     }
     
@@ -317,6 +465,7 @@ class MyChannelController extends Controller {
         if(!empty($id)){
             $channel = MyChannel::find($id);
             $channel->id = $id;
+			$channel->bot_id = $request->get('botID');
             $channel->name = $request->get('name');
             $channel->description = $request->get('description');
             
@@ -367,6 +516,38 @@ class MyChannelController extends Controller {
 					if($sv1['id'] == $stripe_subscription_id)
 					{
 						$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+						
+						$contactFormEmail = DB::table('site_settings')
+							->where('name','=','contact_form_email')
+							->get();
+							
+						//$to_email = $contactFormEmail[0]->value;//$request->get('email');
+						$to_email = Auth::user()->email;	
+						$email_template = DB::table('email_templates')
+											->where('title','LIKE','subscription_cancellation')
+											->get();
+											
+						$template = $email_template[0]->description;
+						$MESSAGE = '<b>Channel "'.$my_channels[0]->name.'"</b>';
+						
+						$emailFindReplace = array(
+							'##SITE_LOGO##' => asset('/img/front/logo.png'),
+							'##SITE_LINK##' => asset('/'),
+							'##SITE_NAME##' => 'Citymes',
+							'##MESSAGE##' => $MESSAGE
+						);
+						
+						$html = strtr($template, $emailFindReplace);
+						\Mail::send(['html' => 'front.bots.email_bot_template'],
+							array(
+								'text' => $html
+							), function($message) use ($to_email)
+						{
+							$message->from('admin@admin.com');
+							$message->to($to_email, 'Admin')->subject('Bot Creation');
+						});
+						
+						
 						if(isset($subscription['id']) && !empty($subscription['id']))
 						{
 							return redirect('front_user')->with('ok', trans('front/fornt_user.subscription_cancled'));

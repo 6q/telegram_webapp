@@ -20,6 +20,25 @@
             <div class="create_bot">
                 <div class="crete_bot_form">
                     <ul>
+                    	<li>
+                        	<label id="bName">
+                            <div class="form-group">
+                                <select id="botID" name="botID" class="form-control">
+                                    <option value="">Select bot</option>
+                                    <?php
+                                    if (isset($bots) && !empty($bots)) {
+                                    foreach ($bots as $b1 => $bv1) {
+                                    ?>
+                                    <option value="<?php echo $bv1->id; ?>"><?php echo $bv1->username;?></option>
+                                    <?php
+                                    }
+                                    }
+                                    ?>
+                                </select>
+                               </div> 
+                    	</label>
+                        </li>
+                        
                         <li>
                             <span>{{ trans('front/MyChannel.name') }} {!! HTML::image('img/front/icon.png') !!}</span>
                             <label id="uName">{!! Form::control('text', 0, 'name', $errors,'',$channel->name) !!}</label>

@@ -22,6 +22,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
     Route::get('dashboard', 'DashboardController@index');
     Route::post('dashboard/getcharts', 'DashboardController@getcharts');
+	Route::post('my_channel/getchannelcharts', 'MyChannelController@getchannelcharts');
     Route::post('dashboard/sendmessage', 'DashboardController@sendmessage');
     Route::post('dashboard/sendbotmessage', 'DashboardController@sendbotmessage');
 
@@ -209,10 +210,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
     $messageText = (isset($data['message']['text']) && !empty($data['message']['text']))?$data['message']['text']:'';
 	$messageTextImg = (isset($data['message']['document']['file_name']) && !empty($data['message']['document']['file_name']))?$data['message']['document']['file_name']:'';
 	
-	if(empty($messageText) && !empty($messageTextImg)){
-		$messageText = $messageTextImg;
-	}
-    
+	
     file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
     
     $telegram = new Api($token);
@@ -229,6 +227,15 @@ Route::post('/{bottoken}/webhook', function ($token) {
     
     $bot_data = DB::table('bots')->where('bot_token', 'LIKE', '%'.$token.'%')->get();
     $dbBotId = (isset($bot_data[0]->id) && $bot_data[0]->id!='')?$bot_data[0]->id:'';
+	
+	if(empty($messageText) && !empty($messageTextImg)){
+		$file_id = $data['message']['document']['thumb']['file_id'];	
+		$file_response = $telegram->getFile(['file_id' => $file_id]);
+		$arr = json_decode(json_encode($file_response));
+		$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
+		$messageText = $path;
+	}
+	
     
     /* Add bot user */
     $from_id = $data['message']['from']['id'];
@@ -279,6 +286,17 @@ Route::post('/{bottoken}/webhook', function ($token) {
     
     
     if(!empty($dbBotId)){
+		
+		if($messageText != "\xE2\x97\x80"){
+			$quesRowId = DB::table('tmp_ques')
+							->orderBy('id', 'desc')
+							->get();
+			//file_put_contents(public_path().'/result.txt',serialize($quesRowId));
+			
+			if(isset($quesRowId[0]->id) && !empty($quesRowId[0]->id)){
+				 DB::table('tmp_ques_ans')->where('tmp_ques_id', $quesRowId[0]->id)->update(['ans' => $messageText]);
+			}
+		}
         
         $autoresponse = '';
         if(isset($bot_data[0]->autoresponse) && !empty($bot_data[0]->autoresponse)){
@@ -546,24 +564,96 @@ Route::post('/{bottoken}/webhook', function ($token) {
                         ->get();
 						
 					$msg = '';
-						
+					
                     if(isset($contact_form_questions[0]->ques_heading) && !empty($contact_form_questions[0]->ques_heading)){
                         $msg = $contact_form_questions[0]->ques_heading;
 						
-                        DB::table('tmp_ques')->insert(
+                       	DB::table('tmp_ques')->insertGetId(
                             [
                                 'ques_id' => $cfq_ID,
                                 'data_limit' => $offset
                             ]
                         );
+					
+					//file_put_contents(public_path().'/result.txt',serialize($msg));	
+						$lastID = DB::getPdo()->lastInsertId();
+					
+						DB::table('tmp_ques_ans')->insert(
+                            [
+								'tmp_ques_id' => $lastID,
+                                'bot_id' => $dbBotId,
+                                'ques' => $msg,
+								'ans' => ''
+                            ]
+                        );
                     }
 					else{
-						//$ques_ans_data = DB::table('tmp_ques_ans')->get();
-						
 						$msg = $tbl_contact_forms[0]->headline;
 						DB::table('tmp_ques')->truncate();
+							
+						$ques_ans_data = DB::table('tmp_ques_ans')->get();
 						
-						//DB::table('tmp_ques_ans')->truncate();
+						$contact_Form_Data = DB::table('contact_forms')
+											->where('id','=',$cfq_ID)
+											->get();
+										
+						$email_template = DB::table('email_templates')
+									->where('title','LIKE','channel_create')
+									->get();
+									
+						$template = $email_template[0]->description;
+						
+						$bot_name = DB::table('bots')
+										->where('id','=',$dbBotId)
+										->get();
+						$name = $bot_name[0]->username;
+						$userID = $bot_name[0]->user_id;
+						$userData = DB::table('users')
+										->where('id','=',$userID)
+										->get();
+						$userNAME = (isset($userData[0]->first_name) && !empty($userData[0]->first_name))?$userData[0]->first_name:'';
+						
+						$contactFormEmail = DB::table('site_settings')
+												->where('name','=','contact_form_email')
+												->get();
+						
+						//$to_email = $contactFormEmail[0]->value;
+						$to_email = (isset($contact_Form_Data[0]->email) && !empty($contact_Form_Data[0]->email))?$contact_Form_Data[0]->email:'';
+						
+						$ques_html = '';
+						 foreach($ques_ans_data as $k1 => $v1){
+							 $ques_html .= '<tr>';   
+							 $ques_html .= '<td>'.$v1->ques.'</td>';   
+							 $ques_html .= '<td>'.$v1->ans.'</td>';   
+							 $ques_html .= '</tr>';   
+						  }
+						
+						$emailFindReplace = array(
+							'##SITE_LOGO##' => asset('/img/front/logo.png'),
+							'##SITE_LINK##' => asset('/'),
+							'##SITE_NAME##' => 'Citymes',
+							'##USERNAME##' => $userNAME,
+							'##BOT_NAME##' => $name,
+							'##SUBMENU_HEADING_TEXT##' => $contact_Form_Data[0]->submenu_heading_text,
+							'##HEADLINE##' => $contact_Form_Data[0]->headline,
+							'##QUES-ANS##' => $ques_html
+						);
+							
+						$html = strtr($template, $emailFindReplace);
+						//file_put_contents(public_path().'/result.txt',json_encode($html));
+						
+						if(!empty($to_email)){
+							\Mail::send(['html' => 'front.bots.email_bot_template'],
+								array(
+									'text' => $html
+								), function($message) use ($to_email)
+							{
+								$message->from('admin@admin.com');
+								$message->to($to_email, 'Admin')->subject('Contact form Creation');
+							});
+						}
+					
+						DB::table('tmp_ques_ans')->truncate();
 					}
 					
                  //   file_put_contents(public_path().'/result.txt',json_encode($contact_form_questions)); 
@@ -757,10 +847,84 @@ Route::post('/{bottoken}/webhook', function ($token) {
 									'data_limit' => $offset
 								]
 							);
+							$lastID = DB::getPdo()->lastInsertId();
+						
+							DB::table('tmp_ques_ans')->insert(
+								[
+									'tmp_ques_id' => $lastID,
+									'bot_id' => $dbBotId,
+									'ques' => $msg,
+									'ans' => ''
+								]
+							);
 						}
 						else{
 							$msg = $dataValue;
 							DB::table('tmp_ques')->truncate();
+							
+							$ques_ans_data = DB::table('tmp_ques_ans')->get();
+							
+							$contact_Form_Data = DB::table('contact_forms')
+												->where('id','=',$cfq_ID)
+												->get();
+											
+							$email_template = DB::table('email_templates')
+										->where('title','LIKE','channel_create')
+										->get();
+										
+							$template = $email_template[0]->description;
+							
+							$bot_name = DB::table('bots')
+											->where('id','=',$dbBotId)
+											->get();
+							$name = $bot_name[0]->username;
+							$userID = $bot_name[0]->user_id;
+							$userData = DB::table('users')
+											->where('id','=',$userID)
+											->get();
+							$userNAME = (isset($userData[0]->first_name) && !empty($userData[0]->first_name))?$userData[0]->first_name:'';
+							
+							$contactFormEmail = DB::table('site_settings')
+													->where('name','=','contact_form_email')
+													->get();
+							
+							//$to_email = $contactFormEmail[0]->value;
+							$to_email = (isset($contact_Form_Data[0]->email) && !empty($contact_Form_Data[0]->email))?$contact_Form_Data[0]->email:'';
+							
+							$ques_html = '';
+							 foreach($ques_ans_data as $k1 => $v1){
+								 $ques_html .= '<tr>';   
+								 $ques_html .= '<td>'.$v1->ques.'</td>';   
+								 $ques_html .= '<td>'.$v1->ans.'</td>';   
+								 $ques_html .= '</tr>';   
+							  }
+							
+							$emailFindReplace = array(
+								'##SITE_LOGO##' => asset('/img/front/logo.png'),
+								'##SITE_LINK##' => asset('/'),
+								'##SITE_NAME##' => 'Citymes',
+								'##USERNAME##' => $userNAME,
+								'##BOT_NAME##' => $name,
+								'##SUBMENU_HEADING_TEXT##' => $contact_Form_Data[0]->submenu_heading_text,
+								'##HEADLINE##' => $contact_Form_Data[0]->headline,
+								'##QUES-ANS##' => $ques_html
+							);
+								
+							$html = strtr($template, $emailFindReplace);
+							//file_put_contents(public_path().'/result.txt',json_encode($html));
+							
+							if(!empty($to_email)){
+								\Mail::send(['html' => 'front.bots.email_bot_template'],
+									array(
+										'text' => $html
+									), function($message) use ($to_email)
+								{
+									$message->from('admin@admin.com');
+									$message->to($to_email, 'Admin')->subject('Contact form Creation');
+								});
+							}
+						
+							DB::table('tmp_ques_ans')->truncate();
 						}
 					}					
 					
@@ -809,20 +973,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		  'one_time_keyboard' => false
 		]);
 	
-	
-	/*
-	$ques = (isset($msg) && !empty($msg))?$msg:'';
-	if($messageText != "\xE2\x97\x80"){
-		DB::table('tmp_ques_ans')->insert(
-			[
-				'bot_id' => $dbBotId,
-				'ques' => $ques,
-				'ans' => $messageText
-			]
-		);
-	}
-	*/
-							
+						
 		
     if(!empty($msg)){
         if(!empty($bot_messages_id)){
@@ -864,4 +1015,11 @@ Route::post('/{bottoken}/webhook', function ($token) {
     }
 
     return 'ok';
+	
+});
+
+Route::post('stripe/stripe_webhook', function (){
+	$input = file_get_contents("php://input");
+	$event_json = json_decode($input);
+	file_put_contents(public_path().'/result2.txt',$input,FILE_APPEND);
 });

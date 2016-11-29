@@ -4,6 +4,30 @@
 {!! HTML::style('css/front/simplePagination.css') !!}
 {!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load('current', {'packages':['line']});
+	function drawChart(data_arr) {
+		var data = google.visualization.arrayToDataTable(data_arr);
+
+		var options_fullStacked = {
+			title: '',
+			chartArea:{left:0,top:10,bottom:0,width:"100%",height:"100%"},
+			curveType: 'function',
+			tooltip: {
+				isHtml: true
+			},
+			legend: { position: 'bottom' }
+		};
+
+
+		var chart = new google.charts.Line(document.getElementById('chart_div'));
+		chart.draw(data, options_fullStacked);
+	}
+</script>
+
+
 <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
 
     @include('front.top')
@@ -13,6 +37,28 @@
         <a href="{!! URL::to('/my_channel/update_channel/'.$chanels[0]->id) !!}" class="btn btn-primary right">{!! trans('front/dashboard.edit_channel') !!}</a>
         <div class="clear"></div>
     </div>
+    
+    <div class="my_account">
+      	<div class="col-lg-12 col-dash">
+      		<div class="status">
+        
+                {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}        
+                <div class="week">
+                    <select id="chart_time" onchange="getCharts()">
+                        <option value="10_days" selected>{{ trans('front/dashboard.ten_days') }}</option>
+                        <option value="30_days">{{ trans('front/dashboard.thirty_days') }}</option>
+                        <option value="90_days">{{ trans('front/dashboard.ninety_days') }}</option>
+                    </select>
+                </div>
+                {!! Form::close() !!}
+        
+            </div>
+     		<div class="graph botDetail">
+                <img src="{{URL::asset('img/balls.gif')}}" class="loading_img">
+                <div id="chart_div" style="height: 300px;"></div>
+              </div>
+      	</div>
+      </div>
 
     <div class="buying">
         <div class="create_bot">
@@ -22,8 +68,6 @@
                         <span>{{ trans('front/MyChannel.name') }}</span>
                         <label id="chanel_name">{!! $chanels[0]->name !!}</label>
                     </li>
-
-
 
                     <li>
                         <span>{{ trans('front/MyChannel.description') }}</span>
@@ -98,21 +142,25 @@
                     {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'send_channel_msg']) !!}
 
                     <input type="hidden" id="chat_id" name="chat_id" />
+                    <input type="hidden" id="bot_id" name="botID" value="<?php echo $chanels[0]->bot_id; ?>" />
 
+					<!--
                     <select id="botID" name="botID" class="form-control">
                         <option value="">Select bot</option>
-                        <?php
+                        <?php /*
                         if (isset($bots) && !empty($bots)) {
                         foreach ($bots as $b1 => $bv1) {
                         ?>
                         <option value="<?php echo $bv1->id; ?>"><?php echo $bv1->username;?></option>
-                        <?php
+                        <?php						
                         }
                         }
+						*/
                         ?>
                     </select>
 
                     <br>
+					-->
 
                     <textarea id="channel_msg" name="channel_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
                     
@@ -132,6 +180,34 @@
     </div>
 
 <script type="text/javascript">
+	
+	$(document).ready(function(){
+		getCharts();
+	});
+	
+	function getCharts(){
+		$('.loading_img').css('display','block');
+		var id = '<?php echo $chanels[0]->id;?>';
+		var chart_time = $('#chart_time').val();
+		var token = $('input[name=_token]').val();
+	
+		$.ajax({
+			url: '<?php echo URL::to('/my_channel/getchannelcharts')?>',
+			headers: {'X-CSRF-TOKEN': token},
+			data: {channel_id:id,chart_time:chart_time},
+			type:'POST',
+			success: function (resp) {
+				google.charts.load('current', {'packages':['corechart']});
+				google.charts.setOnLoadCallback(function(){
+					var data_arr = JSON.parse(resp);
+					drawChart(data_arr);
+					$('.loading_img').css('display','none');
+				});
+			}
+		});
+	
+	}
+	
 	
 	jQuery(function($) {
 		var pageParts = $("#channelMessages tbody tr");
@@ -153,11 +229,11 @@
 	
 	
 	 function mypopupfunction(channel_id){
-		$('#botID').css('border','1px solid #ccc');
+		//$('#botID').css('border','1px solid #ccc');
 		$('#channel_msg').css('border','1px solid #ccc');
 		$('#chat_id').val(channel_id);
 
-		$('#botID').val('');
+		//$('#botID').val('');
 		$('#channel_msg').val('');
 
 		$('#myModal').modal();
@@ -212,11 +288,12 @@
 				event.preventDefault();
 				
 				var chk = true;
-				var botID = $('#botID').val();
+				//var botID = $('#botID').val();
     	        var channel_msg = $('#channel_msg').val();
 	            var channel_id = $('#chat_id').val();
 				var channel_image = $('#channel_image').val();
-			
+				
+				/*
 				if(botID == ''){
 					chk = false;
 					$('#botID').css('border','1px solid #ff0000');
@@ -224,6 +301,7 @@
 				else{
 					$('#botID').css('border','1px solid #ccc');
 				}
+				*/
 	
 				if(channel_msg == '' && channel_image == ''){
 					chk = false;

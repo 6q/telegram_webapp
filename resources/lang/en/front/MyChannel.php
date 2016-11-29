@@ -64,5 +64,6 @@ return [
 	'channel_name' => 'Channel name',
 	'send_message' => 'Send Messages',
 	'send_date' => 'Date',
-	'no_record' => 'No recourd found'
+	'no_record' => 'No recourd found',
+	'bot_name' => 'Bot name'
 ];

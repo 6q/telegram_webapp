@@ -64,5 +64,6 @@ return [
 	'channel_name' => 'Nom del canal',
 	'send_message' => 'Missatges enviats',
 	'send_date' => 'Data',
-	'no_record' => 'Sense missatges'
+	'no_record' => 'Sense missatges',
+	'bot_name' => 'Bot name'
 ];

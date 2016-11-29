@@ -4,6 +4,28 @@
 {!! HTML::style('css/front/simplePagination.css') !!}
 {!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load('current', {'packages':['line']});
+	function drawChart(data_arr) {
+		var data = google.visualization.arrayToDataTable(data_arr);
+
+		var options_fullStacked = {
+			title: '',
+			chartArea:{left:0,top:10,bottom:0,width:"100%",height:"100%"},
+			curveType: 'function',
+			tooltip: {
+				isHtml: true
+			},
+			legend: { position: 'bottom' }
+		};
+
+
+		var chart = new google.charts.Line(document.getElementById('chart_div'));
+		chart.draw(data, options_fullStacked);
+	}
+</script>
+    
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
      
@@ -27,7 +49,58 @@
         
         <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bots[0]->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
       </div>
-
+      
+      
+      <div class="my_account">
+      	<div class="col-lg-12 col-dash">
+      		<div class="status">
+        
+                {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}
+        
+                <div class="week">
+                    <select id="chart_details" onchange="getCharts()">
+                        <option value="recieved_messages" selected>{{ trans('front/dashboard.recieved_messages') }}</option>
+                        <option value="send_messages">{{ trans('front/dashboard.send_messages') }} </option>
+                        <option value="active_users">{{ trans('front/dashboard.active_users') }}</option>
+                    </select>
+                </div>
+        
+                <div class="week">
+                    <select id="chart_time" onchange="getCharts()">
+                        <option value="10_days" selected>{{ trans('front/dashboard.ten_days') }}</option>
+                        <option value="30_days">{{ trans('front/dashboard.thirty_days') }}</option>
+                        <option value="90_days">{{ trans('front/dashboard.ninety_days') }}</option>
+                    </select>
+                </div>
+        
+                <div class="week">
+                    <select id="chart_bots" onchange="getCharts()" style="display:none;">
+                        <option value="all_bots" selected>{{ trans('front/dashboard.all_bot') }}</option>
+                        <?php
+                        if(isset($total_bots) && !empty($total_bots)){
+                        	foreach($total_bots as $tbk1 => $tbv1){
+								$select = '';
+								if($bots[0]->id ==  $tbv1->id){
+									$select = 'selected="selected"';
+								}
+                        ?>
+                        <option <?php echo $select; ?> value="<?php echo $tbv1->id; ?>"><?php echo $tbv1->username;?></option>
+                        <?php
+                        }
+                        }
+                        ?>
+                    </select>
+                </div>
+        
+                {!! Form::close() !!}
+        
+            </div>
+     		<div class="graph botDetail">
+                <img src="{{URL::asset('img/balls.gif')}}" class="loading_img">
+                <div id="chart_div" style="height: 300px;"></div>
+              </div>
+      	</div>
+      </div>
 
       
     
@@ -292,6 +365,36 @@
     </div>
     
   <script>
+	
+	$(document).ready(function(){
+		getCharts();
+	});
+	
+	function getCharts(){
+		$('.loading_img').css('display','block');
+		var id = $('#chart_bots').val();
+		var chart_time = $('#chart_time').val();
+		var chart_details = $('#chart_details').val();
+		var token = $('input[name=_token]').val();
+	
+		$.ajax({
+			url: '<?php echo URL::to('/dashboard/getcharts')?>',
+			headers: {'X-CSRF-TOKEN': token},
+			data: {bot_id: id, chart_time:chart_time, chart_details:chart_details},
+			type:'POST',
+			success: function (resp) {
+				google.charts.load('current', {'packages':['corechart']});
+				google.charts.setOnLoadCallback(function(){
+					var data_arr = JSON.parse(resp);
+					drawChart(data_arr);
+					$('.loading_img').css('display','none');
+				});
+			}
+		});
+	
+	}
+	
+	
   	jQuery(function($) {
 		var pageParts = $("#botAutoresponse tbody tr");
 		var numPages = pageParts.length;
