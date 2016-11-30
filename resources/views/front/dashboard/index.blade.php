@@ -359,15 +359,17 @@
 				event.preventDefault();
 				
 				var chk = true;
-				var botID = $('#botID').val();
+				var botID = $('#bot_id').val();
     	        var channel_msg = $('#channel_msg').val();
 	            var channel_id = $('#chat_id').val();
 				var channel_image = $('#channel_image').val();
-				
+
 				if(botID == '' || botID == 0){
 					alert('Please update you channel and select bot for this channel.');
+					$('#myModal').modal('hide');
 					return false;
 				}
+				
 				/*
 				if(botID == ''){
 					chk = false;

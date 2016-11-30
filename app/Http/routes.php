@@ -334,7 +334,14 @@ Route::post('/{bottoken}/webhook', function ($token) {
 
         $ke_arr = array_chunk($ke_arr,2);
         $keyboard = $ke_arr;
-		$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
+		
+		if($messageText == '/start'){
+			$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
+		}
+		else{
+			$msg = 'Exigency to valid bot command.';
+		}
+		
         
        // file_put_contents(public_path().'/result.txt',serialize($keyboard));
         
@@ -1022,4 +1029,91 @@ Route::post('stripe/stripe_webhook', function (){
 	$input = file_get_contents("php://input");
 	$event_json = json_decode($input);
 	file_put_contents(public_path().'/result2.txt',$input,FILE_APPEND);
+	file_put_contents(public_path().'/result3.txt',$input);
+	
+	$subscriptionID = (isset($event_json->data->object->id) && !empty($event_json->data->object->id))?$event_json->data->object->id:'';
+	
+	$userID = '';
+	$planID = '';
+	$type = '';
+	$typeId = '';
+	$price = '';
+	$created_at = date('Y-m-d h:i:s');
+	$updated_at = date('Y-m-d h:i:s');
+	$message = '';
+	
+	if(!empty($subscriptionID)){
+		$botDATA = DB::table('bots')
+					->where('stripe_subscription_id','=',$subscriptionID)
+					->get();
+		
+		if(isset($botDATA[0]->user_id) && !empty($botDATA[0]->user_id)){
+			$userID = $botDATA[0]->user_id;
+			$type = 'bot';
+			$typeId = $botDATA[0]->id;
+			
+			$message = 'bot <b>'.$botDATA[0]->username.'</b>';
+		}
+		
+		if(empty($userID)){
+			$channelData = DB::table('my_channels')
+								->where('stripe_subscription_id','=',$subscriptionID)
+								->get();
+			
+			if(isset($channelData[0]->user_id) && !empty($channelData[0]->user_id)){
+				$userID = $channelData[0]->user_id;
+				$type = 'Channel';
+				$typeId = $channelData[0]->id;
+				$message = 'Channel <b>@'.$channelData[0]->name.'</b>';
+			}
+		}
+		
+		
+		if(!empty($userID) && !empty($type) && !empty($typeId)){
+			$plan_id = DB::table('user_subscriptions')
+						->where('user_id','=',$userID)
+						->where('types','=',$type)
+						->where('type_id','=',$typeId)
+						->get();
+			
+			$planID = (isset($plan_id[0]->plan_id) && !empty($plan_id[0]->plan_id))?$plan_id[0]->plan_id:'';
+			$price = (isset($plan_id[0]->price) && !empty($plan_id[0]->price))?$plan_id[0]->price:'';
+		}
+		
+		
+		if(!empty($userID) && !empty($type) && !empty($typeId) && !empty($planID) && !empty($price)){
+			DB::table('user_transactions')->insert(
+				['user_id' => $userID, 'plan_id' => $planID, 'types' => $type, 'type_id' => $typeId, 'amount' => $price, 'Description' => '', 'created_at' => $created_at, 'updated_at' => $updated_at]
+			);
+			
+			$userDetail = DB::table('users')
+							->where('id','=',$userID)
+							->get();
+							
+			$to_email =  $userDetail[0]->email;				
+			
+			$email_template = DB::table('email_templates')
+								->where('title','LIKE','subscription_renu')
+								->get();
+			$template = $email_template[0]->description;
+			
+			$emailFindReplace = array(
+				'##SITE_LOGO##' => asset('/img/front/logo.png'),
+				'##SITE_LINK##' => asset('/'),
+				'##SITE_NAME##' => 'Citymes',
+				'##MESSAGE##' => $message
+			);
+				
+			$html = strtr($template, $emailFindReplace);
+			
+			\Mail::send(['html' => 'front.bots.email_bot_template'],
+				array(
+					'text' => $html
+				), function($message) use ($to_email)
+			{
+				$message->from('admin@admin.com');
+				$message->to($to_email, 'Admin')->subject('Subscription Renovation');
+			});
+		}
+	}
 });
