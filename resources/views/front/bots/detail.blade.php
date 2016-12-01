@@ -6,22 +6,31 @@
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-	google.charts.load('current', {'packages':['line']});
+    google.charts.load('current', {'packages':['corechart']});
+
 	function drawChart(data_arr) {
 		var data = google.visualization.arrayToDataTable(data_arr);
 
 		var options_fullStacked = {
 			title: '',
-			chartArea:{left:0,top:10,bottom:0,width:"100%",height:"100%"},
+			chartArea:{left:40,top:5,bottom:60,width:"100%",height:"100%"},
 			curveType: 'function',
 			tooltip: {
 				isHtml: true
 			},
-			legend: { position: 'bottom' }
+            vAxis: {
+                viewWindow: {
+                    min:0
+                }
+            },
+            lineWidth: 5,
+            pointSize: 10,
+            colors: ['#00B09E'],
+            legend: { position: 'bottom' }
 		};
 
 
-		var chart = new google.charts.Line(document.getElementById('chart_div'));
+		var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
 		chart.draw(data, options_fullStacked);
 	}
 </script>
@@ -32,22 +41,21 @@
       @include('front.top')  
       
       <div class="my_account col-user">
-        <ul>
-        <li><p>{{ trans('front/bots.name') }}</p> : <h4>{!! $bots[0]->username !!}</h4></li>
-        <li><p>{{ trans('front/bots.bot_token') }}</p> : <h4>{!! $bots[0]->bot_token !!}</h4></li>
-        <li>
-        <?php
-          if(isset($bots[0]->bot_image) && !empty($bots[0]->bot_image)){
-          ?>
-              <p>{{ trans('front/bots.image') }}</p> : {!! HTML::image('uploads/'.$bots[0]->bot_image) !!}
-          <?php
-          }
-        ?></li>
-           </ul>
-        <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a> 
-        <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
-        
-        <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bots[0]->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
+          <div class="col-lg-3">
+              <img src="{{URL::asset('img/front/bot.png')}}">
+          </div>
+          <div class="col-lg-9">
+              <ul>
+                  <li style="font-size:20px"><h4>{!! $bots[0]->username !!}</h4></li>
+                  <li><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
+              </ul>
+              <br>
+              <p>
+                  <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_bot') !!}</a>
+                  <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                  <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bots[0]->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
+              </p>
+          </div>
       </div>
       
       
@@ -383,7 +391,6 @@
 			data: {bot_id: id, chart_time:chart_time, chart_details:chart_details},
 			type:'POST',
 			success: function (resp) {
-				google.charts.load('current', {'packages':['corechart']});
 				google.charts.setOnLoadCallback(function(){
 					var data_arr = JSON.parse(resp);
 					drawChart(data_arr);
@@ -398,7 +405,7 @@
   	jQuery(function($) {
 		var pageParts = $("#botAutoresponse tbody tr");
 		var numPages = pageParts.length;
-		var perPage = 5;
+		var perPage = 4;
 		pageParts.slice(perPage).hide();
 		
 		$("#botAutoresponseNavPosition").pagination({
@@ -416,7 +423,7 @@
   	jQuery(function($) {
 		var pageParts = $("#botContactForm tbody tr");
 		var numPages = pageParts.length;
-		var perPage = 5;
+		var perPage = 4;
 		pageParts.slice(perPage).hide();
 		
 		$("#botContactFormNavPosition").pagination({
@@ -435,7 +442,7 @@
 	jQuery(function($) {
 		var pageParts = $("#botContactForm tbody tr");
 		var numPages = pageParts.length;
-		var perPage = 5;
+		var perPage = 4;
 		pageParts.slice(perPage).hide();
 		
 		$("#botContactFormNavPosition").pagination({
@@ -453,7 +460,7 @@
 	jQuery(function($) {
 		var pageParts = $("#botGallery tbody tr");
 		var numPages = pageParts.length;
-		var perPage = 5;
+		var perPage = 4;
 		pageParts.slice(perPage).hide();
 		
 		$("#botGalleryNavPosition").pagination({
@@ -472,7 +479,7 @@
 	jQuery(function($) {
 		var pageParts = $("#botChannels tbody tr");
 		var numPages = pageParts.length;
-		var perPage = 5;
+		var perPage = 4;
 		pageParts.slice(perPage).hide();
 		
 		$("#botChannelsNavPosition").pagination({
@@ -491,7 +498,7 @@
   	jQuery(function($) {
 		var pageParts = $("#activeUser tbody tr");
 		var numPages = pageParts.length;
-		var perPage = 5;
+		var perPage = 10;
 		pageParts.slice(perPage).hide();
 		
 		$("#activeUserNavPosition").pagination({

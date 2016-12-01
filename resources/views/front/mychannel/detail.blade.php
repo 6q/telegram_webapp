@@ -7,22 +7,30 @@
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-	google.charts.load('current', {'packages':['line']});
+	google.charts.load('current', {'packages':['corechart']});
 	function drawChart(data_arr) {
 		var data = google.visualization.arrayToDataTable(data_arr);
 
 		var options_fullStacked = {
-			title: '',
-			chartArea:{left:0,top:10,bottom:0,width:"100%",height:"100%"},
-			curveType: 'function',
-			tooltip: {
-				isHtml: true
-			},
-			legend: { position: 'bottom' }
-		};
+            title: '',
+            chartArea:{left:40,top:5,bottom:60,width:"100%",height:"100%"},
+            curveType: 'function',
+            tooltip: {
+                isHtml: true
+            },
+            vAxis: {
+                viewWindow: {
+                    min:0
+                }
+            },
+            lineWidth: 5,
+            pointSize: 10,
+            colors: ['#00B09E'],
+            legend: { position: 'bottom' }
+        };
 
 
-		var chart = new google.charts.Line(document.getElementById('chart_div'));
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
 		chart.draw(data, options_fullStacked);
 	}
 </script>
@@ -32,11 +40,29 @@
 
     @include('front.top')
 
-    <div class="my_account">
-        <h4 class="left">{!! $chanels[0]->name !!}</h4>
-        <a href="{!! URL::to('/my_channel/update_channel/'.$chanels[0]->id) !!}" class="btn btn-primary right">{!! trans('front/dashboard.edit_channel') !!}</a>
-        <div class="clear"></div>
-    </div>
+	<div class="my_account col-user">
+		<div class="col-lg-3">
+			<img src="{{URL::asset('img/front/channel.png')}}">
+		</div>
+		<div class="col-lg-9">
+			<ul>
+				<li style="font-size:20px"><h4>{!! $chanels[0]->name !!}</h4></li>
+				<li><b>{{ trans('front/MyChannel.description') }}:</b> {!! $chanels[0]->description !!}</li>
+				<li>
+					<b>{{ trans('front/MyChannel.share_link') }}:</b> <a href="{!! $chanels[0]->share_link !!}" target="_blank">{!! $chanels[0]->share_link !!}</a>
+				</li>
+
+				<li>
+				</li>
+			</ul>
+			<br>
+			<p>
+				<a href="{!! URL::to('/my_channel/update_channel/'.$chanels[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_channel') !!}</a>
+				<a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $chanels[0]->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
+			</p>
+		</div>
+	</div>
+
     
     <div class="my_account">
       	<div class="col-lg-12 col-dash">
@@ -60,33 +86,6 @@
       	</div>
       </div>
 
-    <div class="buying">
-        <div class="create_bot">
-            <div class="crete_bot_form">
-                <ul>
-                    <li>
-                        <span>{{ trans('front/MyChannel.name') }}</span>
-                        <label id="chanel_name">{!! $chanels[0]->name !!}</label>
-                    </li>
-
-                    <li>
-                        <span>{{ trans('front/MyChannel.description') }}</span>
-                        <label id="channel_description">{!! $chanels[0]->description !!}</label>
-                    </li>
-
-                    <li>
-                        <span>{{ trans('front/MyChannel.share_link') }}</span>
-                        <label id="channel_share_link">{!! $chanels[0]->share_link !!}</label>
-                    </li>
-					
-                    <li>
-                    	<a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $chanels[0]->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
     
     <div class="col-lg-12">
          <div class="col-plan">

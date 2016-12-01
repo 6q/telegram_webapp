@@ -589,9 +589,7 @@ div.buying_table {
   float: none;
 }
 .my_account.col-user img {
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
+  width:100%;
 }
 .col-message .col-plan img {
   border-radius: 50%;
@@ -601,7 +599,7 @@ div.buying_table {
 .bot_command_form form{ border:none;}
 .status > h4 {
   color: #34adac;
-  font-size: 25px;
+  font-size: 24px;
   float:left;
 }
 .bot_command_content {
@@ -625,6 +623,32 @@ div.buying_table {
 }
 #status_dropdown {
   box-shadow: none;
+}
+.status #status_dropdown {
+  position:absolute;
+  z-index:100;
+  background: #3F6280;
+  padding: 10px 5px;
+  border-radius: 10px;
+  opacity:0.6;
+  right:0
+}
+.col-dashboard .status #status_dropdown {
+  position:relative;
+}
+
+.status  #status_dropdown .week select{
+  padding:5px 15px 5px 5px;
+  margin:0 5px;
+  border-radius:3px;
+  font-size:10px
+}
+.status  #status_dropdown:hover {
+  opacity:1;
+}
+.status .panel {
+  border:none;
+  background:none;
 }
 .graph {
   clear: both;
@@ -743,10 +767,32 @@ p.h2 > img {
 }
 
 .col-my-content > h3 {
-  color: #2cbdce;
+  color: #23A0DA;
   margin-top: 0;
   border-top:1px solid #EFEFEF;
   padding-top:20px;
+}
+.col-my-content > h3#my_channels {
+  color:#57BA9D;
+}
+.col-dash .canals li .days_preparing h4 a {
+  color:#57BA9D;
+}
+.col-dash .bots a.btn {
+  background:#23A0DA;
+  border:1px solid #2BA1DA;
+}
+.col-dash .bots a.btn:hover {
+  background:#2FC6CA;
+  border:1px solid #2BA1DA;
+}
+.col-dash .canals a.btn {
+  background:#56BBB6;
+  border:1px solid #57BA9D;
+}
+.col-dash .canals a.btn:hover {
+  background:#57BA9D;
+  border:1px solid #56BBB6;
 }
 .col-my-content {
   display: inline-block;
@@ -1314,6 +1360,7 @@ img {
 }
 .col-dashboard {
   float:left;
+  margin-top:15px;
 }
 .col-lg-3.side_dashboard_content.col-right_tab {
   display: block;
@@ -1342,31 +1389,23 @@ img {
   text-align: inherit;
 }
 .loading_img {
-  height: 9%;
-  left: 36%;
+  height: auto;
+  left: 40%;
   position: absolute;
-  top: 5.7%;
+  top: 150px;
   width: 16% !important;
   z-index: 999;
 }
 
 .loading2_img {
   height: 35%;
-  left: 38%;
+  left: 40%;
   position: absolute;
-  top: 25.7%;
+  top: 150px;
   width: 16% !important;
   z-index: 999;
 }
 
-.botDetail .loading_img {
-  height: auto;
-  left: 36%;
-  position: absolute;
-  top: 22.7%;
-  width: 16% !important;
-  z-index: 999;
-}
 
 #sidebar .chat_content ul {
   bottom: 20px;

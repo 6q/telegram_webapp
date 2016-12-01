@@ -2,35 +2,37 @@
 @section('main')
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://use.fontawesome.com/f73f310856.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {'packages':['line']});
+        google.charts.load('current', {'packages':['corechart']});
         function drawChart(data_arr) {
             var data = google.visualization.arrayToDataTable(data_arr);
 
             var options_fullStacked = {
                 title: '',
-                chartArea:{left:0,top:10,bottom:0,width:"100%",height:"100%"},
+                chartArea:{left:40,top:10,bottom:50,width:"100%",height:"100%"},
                 curveType: 'function',
                 tooltip: {
                     isHtml: true
                 },
-                legend: { position: 'bottom' }
+                vAxis: {
+                    viewWindow: {
+                        min:0
+                    }
+                },
+                lineWidth: 3,
+                pointSize: 5,
+                legend: { position: 'bottom' },
             };
 
 
-            var chart = new google.charts.Line(document.getElementById('chart_div'));
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
             chart.draw(data, options_fullStacked);
         }
     </script>
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
         @include('front.top')
-
-        <div class="my_account">
-            <h4>{!! Auth::user()->first_name.' '.Auth::user()->last_name !!},</h4>
-            <p>{!! trans('front/dashboard.sub_heading') !!}</p>
-        </div>
-
 
         <div class="col-dashboard">
             <div class="col-lg-9 col-dash">
@@ -82,7 +84,7 @@
 
                 <div class="col-my-content">
                     <h3 id="my_bots">{{ trans('front/dashboard.my_bots') }}</h3>
-                    <ul class="row">
+                    <ul class="row bots">
                         <?php
                         if (isset($bots) && !empty($bots)) {
                         foreach ($bots as $b1 => $bv1) {
@@ -93,12 +95,12 @@
                                 <p class="h2">
                                     <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}">
                                         {!! HTML::image('img/front/days_counting_img.png') !!}
-                                        <span class="count_users"><b  data-toggle="tooltip" title="{{ trans('front/dashboard.active_users') }}">{!! $bv1->total_usrs !!}</b></span>
-                                        <span class="count_messages"><b  data-toggle="tooltip" title="{{ trans('front/dashboard.activity_last_days') }}">{!! $bv1->total_msg !!}</b></span>
+                                        <span class="count_users"><b  data-toggle="tooltip" title="{{ trans('front/dashboard.active_users') }}">{!! $bv1->total_usrs !!}<i class="fa fa-user-circle" aria-hidden="true" style="font-size:15px;"></i></b></span>
+                                        <span class="count_messages"><b data-toggle="tooltip" title="{{ trans('front/dashboard.activity_last_days') }}">{!! $bv1->total_msg !!} <i class="fa fa-line-chart" aria-hidden="true" style="font-size:12px;"></i></b></span>
 
                                     </a>
                                 </p>
-                                <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bv1->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
+                                <a href="{!! URL::to('/bot/detail/'.$bv1->id) !!}" class="btn btn-primary">{{ trans('front/dashboard.manage') }}</a>
                             </div>
                         </li>
                         <?php
@@ -114,7 +116,7 @@
                     </ul>
 
                     <h3 id="my_channels">{{ trans('front/dashboard.my_channels') }}</h3>
-                    <ul class="row">
+                    <ul class="row canals">
                         <?php
                         if (isset($chanel) && !empty($chanel)) {
                         foreach ($chanel as $chanelKey => $myChanel) {
@@ -124,11 +126,11 @@
                                 <h4><a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}">{{ $myChanel->name }}</a></h4>
                                 <p class="h2">
                                     <a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}">
-                                        {!! HTML::image('img/front/days_counting_img.png') !!}<span>{!! $myChanel->total_msg !!}</span>
+                                        {!! HTML::image('img/front/days_counting_img_channel.png') !!}<span>{!! $myChanel->total_msg !!}</span>
                                     </a>
                                 </p>
 
-                                <a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $myChanel->id;?>','<?php echo $myChanel->bot_id;?>');">{{ trans('front/dashboard.send_message') }}</a>
+                                <a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}" class="btn btn-primary">{{ trans('front/dashboard.manage') }}</a>
                             </div>
                         </li>
                         <?php
@@ -331,145 +333,6 @@
 
         }
 
-        function mypopup_botfunction(bot_id){
-            $('#bot_msg').css('border','1px solid #ccc');
-            $('#b_bot_id').val(bot_id);
-
-            $('#bot_msg').val('');
-
-            $('#myModalBot').modal();
-        }
-
-
-        function mypopupfunction(channel_id,bot_id){
-            //$('#botID').css('border','1px solid #ccc');
-            $('#channel_msg').css('border','1px solid #ccc');
-            $('#chat_id').val(channel_id);
-			$('#bot_id').val(bot_id);
-
-           // $('#botID').val('');
-            $('#channel_msg').val('');
-
-            $('#myModal').modal();
-        }
-
-		
-		$(document).ready(function(e) {
-			$("form#send_channel_msg").submit(function(event) {
-				event.preventDefault();
-				
-				var chk = true;
-				var botID = $('#bot_id').val();
-    	        var channel_msg = $('#channel_msg').val();
-	            var channel_id = $('#chat_id').val();
-				var channel_image = $('#channel_image').val();
-
-				if(botID == '' || botID == 0){
-					alert('Please update you channel and select bot for this channel.');
-					$('#myModal').modal('hide');
-					return false;
-				}
-				
-				/*
-				if(botID == ''){
-					chk = false;
-					$('#botID').css('border','1px solid #ff0000');
-				}
-				else{
-					$('#botID').css('border','1px solid #ccc');
-				}
-				*/
-	
-				if(channel_msg == '' && channel_image == ''){
-					chk = false;
-					$('#channel_msg').css('border','1px solid #ff0000');
-				}
-				else{
-					$('#channel_msg').css('border','1px solid #ccc');
-				}
-				
-				
-				var formData = new FormData($(this)[0]);
-				var token_new = $('input[name=_token]').val();
-				
-				if(chk){
-					$('#imgLoadChannel').css('display','block');
-					$('#sendChannelBtn').attr('disabled','disabled');
-					
-					$.ajax({
-						url: '<?php echo URL::to('/dashboard/sendmessage')?>',
-						headers: {'X-CSRF-TOKEN': token_new},
-						data:formData,
-						async: false,
-						cache: false,
-						contentType: false,
-						processData: false,
-						type:'POST',
-						success: function (resp) {
-							alert(resp);
-							$('#imgLoadChannel').css('display','none');
-							$('#sendChannelBtn').attr('disabled','disabled');
-							$('#myModal').modal('hide');
-						},
-						error: function (request, status, error) {
-							$('#imgLoadChannel').css('display','none');
-							$('#sendChannelBtn').attr('disabled','disabled');
-							alert('Forbidden: Some error occured');
-						}
-					});
-				}				
-				return false;
-            });
-			
-			
-            $("form#send_msg_bot").submit(function(event){
-				event.preventDefault();
-				
-				var chk = true;
-				var bot_msg = $('#bot_msg').val();
-				var b_bot_id = $('#b_bot_id').val();
-				var bot_img = $('#bot_image').val();
-	
-				if(bot_msg == '' && bot_img == ''){
-					chk = false;
-					$('#bot_msg').css('border','1px solid #ff0000');
-				}
-				else{
-					$('#bot_msg').css('border','1px solid #ccc');
-				}
-			
-				var formData = new FormData($(this)[0]);
-				var token_new = $('input[name=_token]').val();
-				
-				if(chk){
-					$('#imgLoad').css('display','block');
-					$('#sendBotBtn').attr('disabled','disabled');
-				
-					$.ajax({
-						url: '<?php echo URL::to('/dashboard/sendbotmessage')?>',
-						headers: {'X-CSRF-TOKEN': token_new},
-						data:formData,
-						async: false,
-						cache: false,
-						contentType: false,
-						processData: false,
-						type:'POST',
-						success: function (resp) {
-							alert(resp);
-							$('#imgLoad').css('display','none');
-							$('#sendBotBtn').removeAttr('disabled','disabled');
-							$('#myModalBot').modal('hide');
-						},
-						error: function (request, status, error) {
-							$('#imgLoad').css('display','none');
-							$('#sendBotBtn').removeAttr('disabled','disabled');
-							alert('Forbidden: Some error occured');
-						}
-					});
-				}				
-				return false;
-			});
-        });
     </script>
 
     <!--<div class="row">
