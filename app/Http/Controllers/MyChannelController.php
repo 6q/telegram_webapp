@@ -283,7 +283,7 @@ class MyChannelController extends Controller {
         if (!empty($botid)) {
             $chanels = DB::table('my_channels')->where('id', '=', $botid)->get();
             
-            $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $botid)->get();
+            $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $botid)->orderby('id','desc')->get();
            // echo '<pre>';print_r($chanels);die;
 
             return view('front.mychannel.detail', compact('chanels','total_bots','total_chanels','Form_action','search','chanelMesg','bots'));
@@ -491,7 +491,7 @@ class MyChannelController extends Controller {
 	public function mychannel_detail($channelID){
 		 if (!empty($channelID)) {
             $chanels = DB::table('my_channels')->where('id', '=', $channelID)->get();
-            $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $channelID)->get();
+            $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $channelID)->orderby('id','desc')->get();
             return view('back.mychannel.detail', compact('chanels','chanelMesg'));
         }
 	}
