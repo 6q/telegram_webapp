@@ -1,14 +1,14 @@
 <?php
 return [
-	'administration' => 'Administración',
-	'redaction' => 'Redacción',
+	'administration' => 'AdministraciÃ³n',
+	'redaction' => 'RedacciÃ³n',
 	'home' => 'Volver',
 	'logout' => 'Salir',
 	'dashboard' => 'Dashboard',
 	'users' => 'Usuarios',
 	'plans' => 'Planes',
 	'see-all' => 'Ver todo',
-	'add' => 'Añadir',
+	'add' => 'AÃ±adir',
 	'messages' => 'Canales',
 	'comments' => 'Comentarios',
 	'medias' => 'Medias',
@@ -17,7 +17,7 @@ return [
 	'new-registers' => 'Nuevos usuarios !',
 	'new-posts' => 'Total Bots !',
 	'new-comments' => 'Nuevos comentarios !',
-	'page' => 'Páginas',
+	'page' => 'PÃ¡ginas',
 	'emailtemplate' => 'E-mail',
 	'setting' => 'Ajustes'
 ];

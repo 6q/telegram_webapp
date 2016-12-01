@@ -5,7 +5,7 @@ return [
 	'plan' => 'Plan',
 	'price' => 'Precio',
 	'type' => 'Tipo',
-	'subscription_date' => 'Fecha suscripción',
+	'subscription_date' => 'Fecha suscripciÃ³n',
 	'expiry_date' => 'Caducidad'	
 	
 ];

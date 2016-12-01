@@ -2,15 +2,15 @@
 
 return [
 	'dashboard' => 'Posts gestion',
-	'creation' => 'Creación',
+	'creation' => 'CreaciÃ³n',
 	'published' => 'Publicado',
-	'title' => 'Título',
+	'title' => 'TÃ­tulo',
 	'permalink' => 'Permalink :',
 	'summary' => 'Sumario',
 	'content' => 'Contenido',
 	'tags' => 'Tags',
 	'edition' => 'Editar',
-	'add' => 'Añadir post',
+	'add' => 'AÃ±adir post',
 	'posts' => 'Posts',
 	'date' => 'Fecha',
 	'author' => 'Autor',
@@ -21,7 +21,7 @@ return [
 	'edit' => 'Editar',
 	'destroy' => 'Eliminar',
 	'destroy-warning' => 'Eliminar seguro?',
-	'fail' => 'Error actualización',
+	'fail' => 'Error actualizaciÃ³n',
 	'stored' => 'Guardado',
 	'updated' => 'Actualizado',
 	'destroyed' => 'Eliminado'

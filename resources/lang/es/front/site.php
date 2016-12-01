@@ -8,8 +8,8 @@ return [
 	'dashboard' => 'Dashboard',
 	'register' => 'Registro',
 	'forget-password' => 'Password perdido',
-	'connection' => 'Conexión',
-	'administration' => 'Administración',
-	'redaction' => 'Redacción',
+	'connection' => 'ConexiÃ³n',
+	'administration' => 'AdministraciÃ³n',
+	'redaction' => 'RedacciÃ³n',
 	'logout' => 'Salir'
 ];

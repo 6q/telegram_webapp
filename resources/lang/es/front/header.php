@@ -7,7 +7,8 @@ return [
 	'logout' => 'Salir',
 	'english' => 'English',
 	'french' => 'French',
-	'catalan' => 'Català',
+	'catalan' => 'CatalÃ ',
 	'spanish' => 'Castellano',
 	'password_change' => 'Modificar password',
+    'lan' => 'ES',
 ];

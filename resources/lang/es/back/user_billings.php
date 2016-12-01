@@ -2,10 +2,10 @@
 
 return [
 	'dashboard' => 'Pagos',
-	'address' => 'Dirección',
-	'country_id' => 'País',
+	'address' => 'DirecciÃ³n',
+	'country_id' => 'PaÃ­s',
 	'state_id' => 'Provincia',
 	'city' => 'Ciudad',
-	'zipcode' => 'Código Postal'	
+	'zipcode' => 'CÃ³digo Postal'	
 	
 ];

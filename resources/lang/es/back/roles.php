@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'dashboard' => 'Permisos gestión',
+	'dashboard' => 'Permisos gestiÃ³n',
 	'roles' => 'Permisos',
 	'admin' => 'Administratores',
 	'redac' => 'Redactores',

@@ -7,6 +7,6 @@ return [
 	'no_record' => 'Mensaje no encontrado',
 	'message' => 'Mensaje',
 	'summary' => 'Sumario',
-	'add_new_bot_chanel' => 'Añadir Bot & Canal',
+	'add_new_bot_chanel' => 'AÃ±adir Bot & Canal',
 	'reply' => 'Responder',
 ];

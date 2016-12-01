@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'dashboard' => 'GestiÛn Mensajes',
+	'dashboard' => 'Gesti√≥n Mensajes',
 	'messages' => 'Mensajes',
 	'name' => 'Nombre',
 	'email' => 'E-mail',		
@@ -9,5 +9,5 @@ return [
 	'seen' => 'Visto',
 	'destroy' => 'Eliminar',
 	'destroy-warning' => 'Eliminar seguro?',
-	'fail' => 'Error actualizaciÛn.'	
+	'fail' => 'Error actualizaci√≥n.'	
 ];

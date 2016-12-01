@@ -1,14 +1,14 @@
 <?php
 
 return [
-	'dashboard' => 'GestiÛn comentarios',
+	'dashboard' => 'Gesti√≥n comentarios',
 	'comments' => 'Comentarios',
 	'author' => 'Autor',		
 	'date' => 'Fecha',
 	'post' => 'Post',
-	'valid' => 'v·lido',
+	'valid' => 'v√°lido',
 	'seen' => 'visto',
 	'destroy' => 'Eliminar',
 	'destroy-warning' => 'Eliminar seguro?',
-	'fail' => 'Error actualizaciÛn.'	
+	'fail' => 'Error actualizaci√≥n.'	
 ];

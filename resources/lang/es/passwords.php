@@ -13,11 +13,11 @@ return [
 	|
 	*/
 
-	"password" => "Password debe tener mínimo 6 carácteres.",
+	"password" => "Password debe tener mÃ­nimo 6 carÃ¡cteres.",
 
-	"user" => "No reconocemos ningún usuari@ con este E-mail.",
+	"user" => "No reconocemos ningÃºn usuari@ con este E-mail.",
 
-	"token" => "Este código Token no es valido.",
+	"token" => "Este cÃ³digo Token no es valido.",
 
 	"sent" => "Enviar recordatorio de Password!",
 

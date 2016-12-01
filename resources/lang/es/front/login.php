@@ -9,11 +9,11 @@ return [
 	'email' => 'E-mail',
 	'password' => 'Password',
 	'remind' => 'Recordarme',
-	'forget' => 'OlvidÈ password',
-	'register' => 'No est· registrad@?',
+	'forget' => 'Olvid√© password',
+	'register' => 'No est√° registrad@?',
 	'register-info' => 'Registrarme ahora!',
-	'registering' => 'Clicar aquÌ para registrarme',
+	'registering' => 'Clicar aqu√≠ para registrarme',
 	'credentials' => 'Estos datos no son correctos.',
 	'log' => 'E-mail',
-	'maxattempt' => 'Ha alcanzado el m·ximo de intentos posibles para acceder. VuÈlvalo a probar mas tarde.'
+	'maxattempt' => 'Ha alcanzado el m√°ximo de intentos posibles para acceder. Vu√©lvalo a probar mas tarde.'
 ];
