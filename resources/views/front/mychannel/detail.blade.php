@@ -41,10 +41,10 @@
     @include('front.top')
 
 	<div class="my_account col-user">
-		<div class="col-lg-3">
+		<div class="col-lg-2">
 			<img src="{{URL::asset('img/front/channel.png')}}">
 		</div>
-		<div class="col-lg-9">
+		<div class="col-lg-10">
 			<ul>
 				<li style="font-size:20px"><h4>{!! $chanels[0]->name !!}</h4></li>
 				<li><b>{{ trans('front/MyChannel.description') }}:</b> {!! $chanels[0]->description !!}</li>
