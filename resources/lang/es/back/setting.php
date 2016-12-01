@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'dashboard' => 'User Billings',
-	'view_site_setting' => 'View Site Setting & update',
-	'created' => 'Setting update successfully'
+	'dashboard' => 'Pagos',
+	'view_site_setting' => 'Ver estado',
+	'created' => 'Actualizado correctamente'
 ];

@@ -1,10 +1,10 @@
 <?php
 
 return [
-	'dashboard' => 'User Transactions',
+	'dashboard' => 'Transacciones',
 	'plan' => 'Plan',
-	'price' => 'Price',
-	'type' => 'Type',
-	'date' => 'Date'
+	'price' => 'Precio',
+	'type' => 'Tipo',
+	'date' => 'Fecha'
 	
 ];

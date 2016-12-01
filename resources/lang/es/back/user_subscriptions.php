@@ -1,11 +1,11 @@
 <?php
 
 return [
-	'dashboard' => 'User Subscriptions',
+	'dashboard' => 'Suscripciones',
 	'plan' => 'Plan',
-	'price' => 'Price',
-	'type' => 'Type',
-	'subscription_date' => 'Subscription Date',
-	'expiry_date' => 'Expiry Date'	
+	'price' => 'Precio',
+	'type' => 'Tipo',
+	'subscription_date' => 'Fecha suscripción',
+	'expiry_date' => 'Caducidad'	
 	
 ];

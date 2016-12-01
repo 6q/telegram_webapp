@@ -1,20 +1,20 @@
 <?php
 
 return [
-	'title' => 'Password forgotten',
-	'info'  => 'You have forgotten your password, dont mind ! You can create a new one. But for your own security we want to be sure of your identity. So send us your email by filling this form. You will get a message with instruction to create your new password.',
-	'email' => 'Your email',
-	'send' => 'Submit',
-	'title-reset' => 'Password creation',
-	'reset-info' => 'To create a new password please fill this form :',
-	'password' => 'Your password',
-	'confirm-password' => 'Confirm your password',
-	'warning' => 'Warning',
-	'warning-password' => 'At least 8 characters',
-	'reset' => 'Password reminder',
-	'email-title' => 'Password reminder',
-	'email-intro'=> 'To reset your password ',
-	'email-link' => 'click on this link',
-	'email-expire' => 'This link will expire in ',
-	'minutes' => ' minutes'
+	'title' => 'Password perdido',
+	'info'  => 'Ha perdido o no recuerda su password, podemos crear una pasword nueva. Para su seguridad, antes debemos validar su identidad. Indíquenos su e-mail de registro. Recebirá un mensaje con las instrucciones para crear una nueva password para su cuenta.',
+	'email' => 'E-mail',
+	'send' => 'Enviar',
+	'title-reset' => 'Password creación',
+	'reset-info' => 'Para crear una nueva password envíe el siguiente formulario:',
+	'password' => 'Su password',
+	'confirm-password' => 'Confirmar password',
+	'warning' => 'Atención',
+	'warning-password' => 'Mínimo 8 carácteres',
+	'reset' => 'Password resetear',
+	'email-title' => 'Password recordar',
+	'email-intro'=> 'Para resetear su password ',
+	'email-link' => 'clique en el siguiente enlace',
+	'email-expire' => 'Este enlace expirará: ',
+	'minutes' => ' minutos'
 ];

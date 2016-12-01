@@ -1,12 +1,12 @@
 <?php
 
 return [
-	'bot_user' => 'Bot User',
-	'created' => 'Created',
-	'text' => 'Text',
-	'no_record' => 'No Message Found',
-	'message' => 'Message',
-	'summary' => 'Summary',
-	'add_new_bot_chanel' => 'Add a new Bot & Channel',
-	'reply' => 'Reply',
+	'bot_user' => 'Usuari@ Bot',
+	'created' => 'Creado',
+	'text' => 'Siguiente',
+	'no_record' => 'Mensaje no encontrado',
+	'message' => 'Mensaje',
+	'summary' => 'Sumario',
+	'add_new_bot_chanel' => 'Añadir Bot & Canal',
+	'reply' => 'Responder',
 ];

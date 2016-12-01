@@ -1,13 +1,13 @@
 <?php
 
 return [
-	'logs' => 'Recent activity',
-	'my_account' => 'My account',
-	'messages' => 'Messages',
-	'logout' => 'Logout',
+	'logs' => 'Actividad reciente',
+	'my_account' => 'Mi Cuenta',
+	'messages' => 'Mensajes',
+	'logout' => 'Salir',
 	'english' => 'English',
 	'french' => 'French',
-	'catalan' => 'Catalan',
-	'spanish' => 'Spanish',
-	'password_change' => 'Change password',
+	'catalan' => 'Català',
+	'spanish' => 'Castellano',
+	'password_change' => 'Modificar password',
 ];
