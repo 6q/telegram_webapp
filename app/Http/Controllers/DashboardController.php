@@ -22,6 +22,7 @@ class DashboardController extends Controller {
      * @return void
      */
     public function __construct() {
+		parent::login_check();
         $this->nbrPages = 2;
 
         $this->middleware('user');
@@ -117,20 +118,10 @@ class DashboardController extends Controller {
         $startDateTime = date('Y-m-d h:i:s', strtotime('today - 30 days'));
         $endDateTime = date('Y-m-d h:i:s');
         
-         
-        /* BOTS */
-        if(!empty($search)){
-            $bots = DB::table('bots')
-            ->where('user_id', '=', $userId)
-            ->where('username', 'LIKE', '%'.$search.'%')
-            ->get();
-        }
-        else{
-            $bots = DB::table('bots')
+		$bots = DB::table('bots')
             ->where('user_id', '=', $userId)
             ->get();
-        }
-        
+			
         if(!empty($bots)){
             foreach($bots as $k1 => $v1){
                 $msg = DB::table('bot_messages')
@@ -230,12 +221,37 @@ class DashboardController extends Controller {
 	                        ->limit(10)
                             ->get();    
         }
-	    $rec_usrs = DB::table('bot_users')
+	    
+		/*
+		$rec_usrs = DB::table('bot_users')
 		    ->whereIn('bot_id',$botId)
 		    ->leftJoin('bots', 'bot_users.bot_id', '=', 'bots.id')
 		    ->orderBy('bot_users.id','desc')
 		    ->limit(10)
 		    ->get();
+		*/
+		
+		/* Recent Activity */
+		if(!empty($search)){
+			$rec_usrs = DB::table('bot_users')
+				->whereIn('bot_users.bot_id',$botId)
+				->Where('bots.username', 'LIKE', '%'.$search.'%')
+				->orWhere('bot_users.first_name', 'LIKE', $search)
+				->join('bots', 'bot_users.bot_id', '=', 'bots.id')
+				->select('bot_users.*', 'bots.id as bot_id','bots.username as bot_username')
+				->orderBy('bot_users.id','desc')
+				->limit(10)
+				->get();
+		}
+		else{
+			$rec_usrs = DB::table('bot_users')
+				->whereIn('bot_id',$botId)
+				->join('bots', 'bot_users.bot_id', '=', 'bots.id')
+				->select('bot_users.*', 'bots.id as bot_id','bots.username as bot_username')
+				->orderBy('bot_users.id','desc')
+				->limit(10)
+				->get();
+		}
 
 
 

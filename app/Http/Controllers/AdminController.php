@@ -22,6 +22,7 @@ class AdminController extends Controller {
      */
     public function __construct(UserRepository $user_gestion)
     {
+		parent::login_check();
 		$this->user_gestion = $user_gestion;
     }
 

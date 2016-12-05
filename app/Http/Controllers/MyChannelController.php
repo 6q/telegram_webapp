@@ -19,6 +19,7 @@ use App\Models\UserTransaction;
 class MyChannelController extends Controller {
     
     public function __construct() {
+		parent::login_check();
         parent::getTotalbot_chanel();
         
     }

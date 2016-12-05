@@ -18,6 +18,7 @@ use App\Models\FrontUser;
 class RecentActivityController extends Controller
 {
      public function __construct() {
+		parent::login_check();
         parent::getTotalbot_chanel();
         
     }

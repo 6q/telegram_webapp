@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+	public function __construct() {
+		 parent::login_check();
+    }
 
 	/**
 	 * Display the home page.

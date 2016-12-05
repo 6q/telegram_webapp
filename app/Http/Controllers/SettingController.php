@@ -14,6 +14,10 @@ use App\Http\Controllers\Auth\AuthController;
 
 class SettingController extends Controller
 {
+	public function __construct() {
+		 parent::login_check();
+    }
+	
     public function index(){
         $setting = DB::table('site_settings')->get();
 		return view('back.setting.index', compact('setting'));	

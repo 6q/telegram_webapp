@@ -12,6 +12,10 @@ use App\Models\Plan;
 
 class PlanController extends Controller
 {
+	public function __construct() {
+		 parent::login_check();
+    }
+	
     /**
      * Display a listing of the resource.
      *

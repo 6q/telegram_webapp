@@ -35,7 +35,7 @@ class AuthController extends Controller
 		
 		$actionname = Route::getCurrentRoute()->getActionName();
 		$dd = explode('@',$actionname);
-		
+	
 		if (Auth::check() && $dd[1] == 'getLogin'){
 			//redirect('/dashboard');
 			header('Location: dashboard');

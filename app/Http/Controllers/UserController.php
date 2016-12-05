@@ -45,6 +45,8 @@ class UserController extends Controller {
 		UserBillingRepository $userbilling_gestion)
 	{
 	
+		parent::login_check();
+		
 		$this->user_gestion = $user_gestion;
 		$this->role_gestion = $role_gestion;
 		$this->userbilling_gestion = $userbilling_gestion;

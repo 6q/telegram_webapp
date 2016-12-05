@@ -20,6 +20,7 @@ class WelcomeController extends Controller {
 	 */
 	public function __construct()
 	{
+		parent::login_check();
 		$this->middleware('guest');
 	}
 

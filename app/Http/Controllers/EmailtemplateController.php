@@ -16,6 +16,10 @@ use App\Models\Emailtemplate;
 
 class EmailtemplateController extends Controller
 {
+	public function __construct() {
+		parent::login_check();
+    }
+	
     public function index(){
         $templates = Emailtemplate::latest()->paginate(20);
 		$links = $templates->render();

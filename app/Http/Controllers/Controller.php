@@ -19,7 +19,7 @@ abstract class Controller extends BaseController
     
     public $botsTOTAL;
     public $chanelTOTAL;
-    
+
     public function getTotalbot_chanel(){
         if (Auth::check()){
             $userId = Auth::user()->id;
@@ -35,4 +35,13 @@ abstract class Controller extends BaseController
             }
         }        
     }
+	
+	public function login_check(){
+		if (Auth::check()){
+		}
+		else{
+			header('Location: /');
+			die();
+		}
+	}
 }

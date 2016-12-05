@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Validator;
 class CommandController extends Controller
 {
 	public function __construct() {
+		parent::login_check();
         parent::getTotalbot_chanel();
         
     }
