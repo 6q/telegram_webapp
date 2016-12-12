@@ -50,5 +50,6 @@ return [
 	'enter_message' => 'Escriu el missatge',
 	'send' => 'Enviar',
 	'search_here' => 'Cercar',
-	'select_bot' => 'Seleccionar un bot que estigui assignat com administrador del canal'
+	'select_bot' => 'Seleccionar un bot que estigui assignat com administrador del canal',
+    'manage' => 'Gestionar',
 ];
