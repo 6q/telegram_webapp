@@ -3,14 +3,14 @@
 return [
 	'dashboard' => 'Panell de control',
 	'logs' => 'Activitat recent',
-	'my_account' => 'La meva compta',
+	'my_account' => 'Meu Compte',
 	'messages' => 'Missatges',
 	'logout' => 'Sortir',
 	'english' => 'English',
 	'french' => 'French',
 	'catalan' => 'Català',
-	'spanish' => 'Spanish',
-	'password_change' => 'Cambiar contrasenya',
+	'spanish' => 'Castellano',
+	'password_change' => 'Canviar password',
 	'lan' => 'CAT',
 	'change_language' => 'Canviar d\'idioma',
 	'close' => 'Tancar'

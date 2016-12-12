@@ -1,10 +1,10 @@
 <?php
 
 return [
-	'dashboard' => 'Roles gestion',
-	'roles' => 'Roles',
-	'admin' => 'Title for administrators',
-	'redac' => 'Title fro redactors',
-	'user' => 'Title for users',
-	'ok' => 'Roles updated.'
+	'dashboard' => 'Gestió Permisos',
+	'roles' => 'Permisos',
+	'admin' => 'Títol administradors',
+	'redac' => 'Títol redactors',
+	'user' => 'Títol usuaris',
+	'ok' => 'Permisos actualitzats.'
 ];

@@ -1,11 +1,11 @@
 <?php
 
 return [
-	'dashboard' => 'User Billings',
-	'address' => 'Address',
-	'country_id' => 'Country',
-	'state_id' => 'State',
-	'city' => 'City',
-	'zipcode' => 'Zipcode'	
+	'dashboard' => 'Pagaments Usuaris',
+	'address' => 'Adreça',
+	'country_id' => 'País',
+	'state_id' => 'Província',
+	'city' => 'Ciutat',
+	'zipcode' => 'Codi Postal'	
 	
 ];

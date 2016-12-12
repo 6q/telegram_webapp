@@ -13,14 +13,14 @@ return [
 	|
 	*/
 
-	"password" => "Passwords must be at least six characters and match the confirmation.",
+	"password" => "Password ha de tenir mínim 6 caràcters.",
 
-	"user" => "We can't find a user with that e-mail address.",
+	"user" => "No hem trobat cap usuari@ amb aquest E-mail.",
 
-	"token" => "This password reset token is invalid.",
+	"token" => "Aquest password no es correcte.",
 
-	"sent" => "Password reminder sent!",
+	"sent" => "Enviar recordatori Password.",
 
-	"reset" => "Password has been reset!",
+	"reset" => "El Password ha sigut resetejat!",
 
 ];

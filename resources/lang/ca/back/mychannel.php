@@ -1,13 +1,13 @@
 <?php
 return [
-	'name' => 'Name',
-	'created_at' => 'Created at',
-	'actions' => 'Actions',
-	'mychannel_detail' => 'Channel detail',
-	'stripe_customer_id' => 'Stripe customer id',
-	'no_record' => 'No Record found',
-	'messages' => 'Send Messages',
-	'users' => 'Channels',
-	'dashboard' => 'Channels',
-	'back' => 'Back'
+	'name' => 'Nom',
+	'created_at' => 'Creat',
+	'actions' => 'Accions',
+	'mychannel_detail' => 'Canal detalls',
+	'stripe_customer_id' => 'Stripe ID',
+	'no_record' => 'No trobat',
+	'messages' => 'Missatges enviats',
+	'users' => 'Canals',
+	'dashboard' => 'Canals',
+	'back' => 'Tornar'
 ];

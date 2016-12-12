@@ -1,14 +1,14 @@
 <?php
 
 return [
-	'email-title' => 'Email verification',
-	'email-intro'=> 'To validate your email ',
-	'email-link' => 'click on this link',
-	'message' => 'Thanks for signing up! You can now login.',
-	'success' => 'You have successfully verified your account! You can now login.',
-	'again' => 'You must verify your email before you can access the site. ' .
-                '<br>If you have not received the confirmation email check your spam folder.'.
-                '<br>To get a new confirmation email please <a href="' . url('auth/resend') . '" class="alert-link">clic here</a>.', 
-    'resend' => 'A confirmation message has been sent. Please check your email.'
+	'email-title' => 'Email verificació',
+	'email-intro'=> 'Per a validar E-mail',
+	'email-link' => 'clicar al següent enllaç',
+	'message' => 'Gràcies per registrar-se! Ja pot accedir a Citymes.',
+	'success' => 'Ha verificat el seu compte correctament! Ja pot accedir a Citymes.',
+	'again' => 'Ha de verificar el seu E-mail abans d\'accedir a Citymes.' .
+                '<br>Si no ha rebut E-mail de confirmació revisi que no l\'hagi filtrat com a spam.'.
+                '<br>Per a enviar nova confirmació per E-mail, si us plau <a href="' . url('auth/resend') . '" class="alert-link">clicar aquí</a>.', 
+    'resend' => 'Li hem enviat un missatge per a confirmar. Si us plau, revisi el seu E-mail. Gràcies!'
 ];
 

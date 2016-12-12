@@ -3,13 +3,13 @@
 return [
 	'title' => 'Citymes',
 	'sub-title' => 'Instant Messaging Management Platform',
-	'home' => 'Home',
-	'contact' => 'Contact',
-	'dashboard' => 'Dashboard',
-	'register' => 'Register',
-	'forget-password' => 'Forgotten password',
-	'connection' => 'Connection',
-	'administration' => 'Administration',
-	'redaction' => 'Redaction',
-	'logout' => 'Logout'
+	'home' => 'Inici',
+	'contact' => 'Contactar',
+	'dashboard' => 'Panell de Control',
+	'register' => 'Registrar',
+	'forget-password' => 'Password oblidat',
+	'connection' => 'Connexió',
+	'administration' => 'Administració',
+	'redaction' => 'Redacció',
+	'logout' => 'Sortir'
 ];

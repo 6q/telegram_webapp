@@ -1,15 +1,15 @@
 <?php
 return [
-	'summary' => 'summary',
+	'summary' => 'Sumari',
 	'bots' => 'Bots',
-	'channels' => 'Channels',
-	'add_new_bot_chanel' => 'Add new Bot & Chanel',
-	'create_bot_command' => 'Crea un nou botó/comanda al Bot',
-	'update_bot_command' => 'Actualitza el botó',
+	'channels' => 'Canals',
+	'add_new_bot_chanel' => 'Afegir Bot & Chanel',
+	'create_bot_command' => 'Crear un nou botó al Bot',
+	'update_bot_command' => 'Actualitzar el botó',
 	'telegram' => 'Telegram',
 	'select_type' => 'Selecciona el típus de botó que vols crear',
 	'autoresponse' => 'Autoresposta',
-	'contact_form' => 'Formulari de contacte',
+	'contact_form' => 'Contactar',
 	'galleries' => 'Galeria',
 	'channels' => 'Canal',
 	'submenu_heading_text' => 'Nom del botó',
@@ -24,11 +24,11 @@ return [
 	'error' => 'Hi ha hagut un error',
 	'created' => 'Botó creat correctament',
 	'or' => 'O enviar una imatge',
-	'browse' => 'cercar',
-	'upload_image' => 'Puja una imatge',
-	'upload' => 'Carrega',
+	'browse' => 'Cercar',
+	'upload_image' => 'Pujar una imatge',
+	'upload' => 'Carregar',
 	'up_grade' => 'Necessites ampliar el teu tipus de subscripció.',
 	'updated' => 'Actualitzat correctament',
-	'email' => 'Correu electrònic',
-	'deleted' => 'Command deleted' 
+	'email' => 'E-mail',
+	'deleted' => 'Eliminat' 
 ];
