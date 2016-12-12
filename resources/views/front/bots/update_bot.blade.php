@@ -107,7 +107,7 @@
         <p><?php echo $nickName[0]->content;?></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{!! trans('front/bots.close') !!}</button>
       </div>
     </div>
 
@@ -117,10 +117,10 @@
 <script>
 	$(document).ready(function(e) {
 		$('.chat_box').css('display','block');
-		$('#auto_resp').html('<?php echo $bot->autoresponse; ?>');
-		$('#conntact_fbutton').html('<?php echo $bot->contact_form; ?>');
-		$('#gallery_imgs').html('<?php echo $bot->galleries; ?>');
-		$('#chnl_btn').html('<?php echo $bot->channels; ?>');
+		$('#auto_resp').html("<?php echo $bot->autoresponse; ?>");
+		$('#conntact_fbutton').html("<?php echo $bot->contact_form; ?>");
+		$('#gallery_imgs').html("<?php echo $bot->galleries; ?>");
+		$('#chnl_btn').html("<?php echo $bot->channels; ?>");
 		
         $('#autoresponse').keyup(function(e) {
             $('#auto_resp').html($('#autoresponse').val());

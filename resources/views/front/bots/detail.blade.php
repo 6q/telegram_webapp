@@ -625,10 +625,10 @@
 <script>
     $(document).ready(function(e) {
         $('.chat_box').css('display','block');
-        $('#auto_resp').html('<?php echo $bots[0]->autoresponse; ?>');
-        $('#conntact_fbutton').html('<?php echo $bots[0]->contact_form; ?>');
-        $('#gallery_imgs').html('<?php echo $bots[0]->galleries; ?>');
-        $('#chnl_btn').html('<?php echo $bots[0]->channels; ?>');
+        $('#auto_resp').html("<?php echo $bots[0]->autoresponse; ?>");
+        $('#conntact_fbutton').html("<?php echo $bots[0]->contact_form; ?>");
+        $('#gallery_imgs').html("<?php echo $bots[0]->galleries; ?>");
+        $('#chnl_btn').html("<?php echo $bots[0]->channels; ?>");
 
 
     });
