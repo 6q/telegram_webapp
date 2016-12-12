@@ -34,7 +34,7 @@
 		chart.draw(data, options_fullStacked);
 	}
 </script>
-    
+
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
      
@@ -115,7 +115,7 @@
       
       <div class="col-lg-12">
         <div class="col-plan col-lg-6">
-          <h2>{{ trans('front/bots.autoresponse') }}</h2>
+          <h2><?php echo $bots[0]->autoresponse; ?> ({{ trans('front/bots.autoresponses') }})</h2>
           <table id="botAutoresponse">
             <thead>
               <tr>
@@ -152,7 +152,7 @@
         </div>
         
         <div class="col-plan col-lg-6">
-          <h2>{{ trans('front/bots.contact_form') }}</h2>
+          <h2><?php echo $bots[0]->contact_form; ?> ({{ trans('front/bots.contact_form') }})</h2>
           <table id="botContactForm">
             <thead>
               <tr>
@@ -188,7 +188,7 @@
         </div>
         <div style="clear:both"></div>
         <div class="col-plan col-lg-6">
-          <h2>{{ trans('front/bots.galleries') }}</h2>
+          <h2><?php echo $bots[0]->galleries; ?> ({{ trans('front/bots.galleries') }})</h2>
           <table id="botGallery">
             <thead>
               <tr>
@@ -225,7 +225,7 @@
         </div>
         
         <div class="col-plan col-lg-6">
-          <h2>{{ trans('front/bots.channels') }}</h2>
+          <h2><?php echo $bots[0]->channels; ?> ({{ trans('front/bots.channels') }})</h2>
           <table id="botChannels">
             <thead>
               <tr>
@@ -622,7 +622,18 @@
 			});
         });
   </script>
-  
+<script>
+    $(document).ready(function(e) {
+        $('.chat_box').css('display','block');
+        $('#auto_resp').html('<?php echo $bots[0]->autoresponse; ?>');
+        $('#conntact_fbutton').html('<?php echo $bots[0]->contact_form; ?>');
+        $('#gallery_imgs').html('<?php echo $bots[0]->galleries; ?>');
+        $('#chnl_btn').html('<?php echo $bots[0]->channels; ?>');
+
+
+    });
+
+</script>
 
 <style>
   .thumb {
