@@ -25,6 +25,11 @@
                       <label>{!! Form::control('text', 0, 'nick_name', $errors,'',$bot->nick_name) !!}</label>
                     </li>
                     
+                    <li>
+                      <span>{{ trans('front/bots.bot_error_msg') }}</span>
+                      <label id="aError_msg">{!! Form::control('text', 0, 'error_msg', $errors,'',$bot->error_msg) !!}</label>
+                    </li>
+                    
                     <!--<li>
                       <span>{{ trans('front/bots.bot_image') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control('file', 0, 'bot_image', $errors) !!}<span>{{ trans('front/bots.browse') }}</span></label>

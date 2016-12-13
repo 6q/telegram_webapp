@@ -83,5 +83,6 @@ return [
 	'replay_message' => 'Resposta',
 	'date' => 'Data',
 	'messages_activity' => 'Missatges / Activitat',
-	'delete_command' => 'Delete'
+	'delete_command' => 'Delete',
+	'bot_error_msg' => 'Bot error message'
 ];

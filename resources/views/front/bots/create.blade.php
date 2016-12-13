@@ -197,6 +197,11 @@
                       <label id="aToken">{!! Form::control('text', 0, 'bot_token', $errors) !!}</label>
                     </li>
                     
+                    <li>
+                      <span>{{ trans('front/bots.bot_error_msg') }}</span>
+                      <label id="aError_msg">{!! Form::control('text', 0, 'error_msg', $errors) !!}</label>
+                    </li>
+                    
                    <!-- <li>
                       <span>{{ trans('front/bots.bot_image') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control('file', 0, 'bot_image', $errors) !!}<span>{{ trans('front/bots.browse') }}</span></label>
@@ -469,11 +474,16 @@
                   <span>{{ trans('front/bots.bot_access_token') }}</span>
                   <label id="bot_acces_tkn"></label>
                 </li>
-
+                
                 <li>
+                  <span>{{ trans('front/bots.bot_error_msg') }}</span>
+                  <label id="bot_error_msg"></label>
+                </li>
+
+                <!--<li>
                   <span>{{ trans('front/bots.description') }}</span>
                   <label id="description"></label>
-                </li>
+                </li>-->
 
                 <li>
                   <span>{{ trans('front/bots.start_message') }}</span>
@@ -676,7 +686,7 @@
       var bot_access_token = $('#bot_token').val();
       //var bot_description = $('#bot_description').val();
       var bot_start_msg = $('#start_message').val();
-      
+      var bot_error_msg = $('#error_msg').val();
       var bot_name_of_a_btn = $('#autoresponse').val();
       var bot_name_of_c_btn = $('#contact_form').val();
       var bot_name_of_g_btn = $('#galleries').val();
@@ -700,6 +710,14 @@
       else{
         $('#aToken .form-group').removeClass('has-error');
       }
+	  
+	  if(bot_error_msg == ''){
+        $('#aError_msg .form-group').addClass('has-error');
+        chk = 0;
+      }
+      else{
+        $('#aError_msg .form-group').removeClass('has-error');
+      }
       
       if(chk == 0){
         $(window).scrollTop(300);
@@ -708,6 +726,7 @@
       
       $('#bot_usname').html(bot_uname);
       $('#bot_acces_tkn').html(bot_access_token);
+	  $('#bot_error_msg').html(bot_error_msg);
      // $('#description').html(bot_description);
       $('#start_messages').html(bot_start_msg);
       
