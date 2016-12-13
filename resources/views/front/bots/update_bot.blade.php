@@ -20,34 +20,11 @@
               <div class="create_bot">
                 <div class="crete_bot_form">
                   <ul>
-                    <li>
-                      <span>{{ trans('front/bots.bot_nick_name') }} <a href="javascript:void(0);" onclick="mypopupinfo('nickNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
-                      <label>{!! Form::control('text', 0, 'nick_name', $errors,'',$bot->nick_name) !!}</label>
-                    </li>
-                    
-                    <!--<li>
-                      <span>{{ trans('front/bots.bot_image') }} {!! HTML::image('img/front/icon.png') !!}</span>
-                      <label>{!! Form::control('file', 0, 'bot_image', $errors) !!}<span>{{ trans('front/bots.browse') }}</span></label>
-                      <span>
-                        <?php
-                          if(isset($bot->bot_image) && !empty($bot->bot_image)){
-                          ?>
-                            {!! HTML::image('uploads/'.$bot->bot_image) !!}
-                          <?php
-                          }
-                        ?>
-                      </span>
-                    </li>
-                    
-                    <li>
-                      <span>{{ trans('front/bots.description') }} {!! HTML::image('img/front/icon.png') !!}</span>
-                      <label>{!! Form::control('textarea', 0, 'bot_description', $errors,'',$bot->bot_description) !!}</label>
-                    </li>
-                    -->
                     
                     <li>
                       <span>{{ trans('front/bots.start_message') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control('textarea', 0, 'start_message', $errors,'',$bot->start_message) !!}</label>
+
                     </li>
                   
                   </ul>
@@ -58,7 +35,7 @@
                   <ul>
                     <li class="example_information">
                       <span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'autoresponse', $errors, '',$bot->autoresponse) !!}</label>
+                      <label>{!! Form::control('text', 0, 'autoresponse', $errors,'',$bot->autoresponse) !!}</label>
                     </li>
 
                     <li class="example_contact">
@@ -144,5 +121,5 @@
     $('#'+id).modal();
   }
 </script>
- 
+
 @stop

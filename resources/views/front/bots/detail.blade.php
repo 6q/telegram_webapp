@@ -349,7 +349,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="text-align:center">
                     {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'send_msg_bot']) !!}
 
                     <input type="hidden" name="b_bot_id" id="b_bot_id" />
@@ -358,7 +358,7 @@
 
                     <br>
                     
-                    <label> OR </label>
+                    <label> {{ trans('front/dashboard.and_or_attach_an_image') }} </label>
                     
                     <input type="file" name="bot_image" id="bot_image" accept="image/*"  />
                     <br />
