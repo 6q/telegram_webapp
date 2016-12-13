@@ -83,5 +83,6 @@ return [
 	'replay_message' => 'Responder Mensaje',
 	'date' => 'Fecha',
 	'messages_activity' => 'Mensajes/actividad',
-	'delete_command' => 'Eliminar'
+	'delete_command' => 'Eliminar',
+	'bot_error_msg' => 'Bot error message'
 ];

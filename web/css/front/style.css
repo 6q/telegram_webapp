@@ -1361,6 +1361,7 @@ img {
 .col-dashboard {
   float:left;
   margin-top:15px;
+  width:100%;
 }
 .col-lg-3.side_dashboard_content.col-right_tab {
   display: block;

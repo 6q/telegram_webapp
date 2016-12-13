@@ -20,6 +20,16 @@
               <div class="create_bot">
                 <div class="crete_bot_form">
                   <ul>
+
+                    <li>
+                      <span>{{ trans('front/bots.bot_nick_name') }} <a href="javascript:void(0);" onclick="mypopupinfo('nickNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
+                    </li>
+                    
+                    <li>
+                      <span>{{ trans('front/bots.bot_error_msg') }}</span>
+                      <label id="aError_msg">{!! Form::control('text', 0, 'error_msg', $errors,'',$bot->error_msg) !!}</label>
+                    </li>
+
                     
                     <li>
                       <span>{{ trans('front/bots.start_message') }} {!! HTML::image('img/front/icon.png') !!}</span>
