@@ -52,4 +52,6 @@ return [
 	'search_here' => 'Cercar',
 	'select_bot' => 'Seleccionar un bot que estigui assignat com administrador del canal',
     'manage' => 'Gestionar',
+    'and_or_attach_an_image' => 'També pots enviar una imatge (sola o amb el text):',
+    'send' => 'Enviar',
 ];

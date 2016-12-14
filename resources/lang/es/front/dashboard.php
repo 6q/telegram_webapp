@@ -39,4 +39,6 @@ return [
     'ninety_days' => 'Últimos 90 días',
     'manage' => 'Gestionar',
     'search' => 'Buscar',
+    'and_or_attach_an_image' => 'También puedes enviar una imagen (sola o con el texto):',
+    'send' => 'Enviar'
 ];
