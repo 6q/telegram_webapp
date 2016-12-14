@@ -1499,7 +1499,10 @@ img {
   margin:5px 0 0 10px;
 
 }
-
+body .emoji-wysiwyg-editor.textarea-control {
+  min-height: 7em;
+  resize: vertical;
+}
 @media (max-width:1620px){
   .col_top .col-lg-2 h3 {
     font-size: 16px;

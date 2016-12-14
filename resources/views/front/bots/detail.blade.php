@@ -353,8 +353,10 @@
                     {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => '','id' =>'send_msg_bot']) !!}
 
                     <input type="hidden" name="b_bot_id" id="b_bot_id" />
+                    <p class="lead emoji-picker-container">
+                        <textarea id="bot_msg" class="form-control textarea-control" name="bot_msg" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}" data-emojiable="true"></textarea>
+                    </p>
 
-                    <textarea id="bot_msg" class="form-control" name="bot_msg" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
 
                     <br>
                     
