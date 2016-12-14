@@ -9,8 +9,6 @@
 @if(session()->has('error'))
 	@include('partials/error', ['type' => 'danger', 'message' => session('error')])
 @endif
-<h2>{{ trans('front/password.title') }}</h2>
-<p>{{ trans('front/password.info') }}</p>
 </div>
 
 <div class="col-sm-6 col-sm-offset-3">
@@ -19,31 +17,6 @@
 <img class="register_logo"  src="{{asset("img/login_logo.png")}}"  />
 <h3>{{ trans('front/password.title') }}</h3>
 <p>{{ trans('front/password.reset-info') }}</p>
-<div class="col-laguage">
-	<?php 
-		$currLang = Config::get('app.locale');
-		$select1 = '';
-		if($currLang == 'en'){
-			$select1 = 'selected="selected"';
-		}
-	
-		$select2 = '';
-		if($currLang == 'fr'){
-			$select2 = 'selected="selected"';
-		}
-	?>
-	<select name="select_lang" onchange="changeLang();" id="select_lang">
-		<option <?php echo $select1;?> value="{!! URL::to('/language/en') !!}">{!! trans('front/header.english') !!}</option>
-		<option <?php echo $select2;?> value="{!! URL::to('/language/fr') !!}">{!! trans('front/header.french') !!}</option>
-	</select>
-	
-	<script>
-		function changeLang(){
-			var url = $('#select_lang').val();
-			window.location.href = url;
-		}
-	</script>	
-</div>
 </div>
 {!! Form::open(['url' => 'password/email', 'method' => 'post', 'role' => 'form']) !!}	
 <ul>

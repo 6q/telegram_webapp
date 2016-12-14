@@ -27,12 +27,64 @@
                 {!! HTML::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') !!}
         <![endif]-->
 
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
 
 
     </head>
 
     <body>
+    <div class="header">
+        <div class="fussion-row">
+            <div class="logotip">
+                <a class="fusion-logo-link" href="http://www.citymes.com">
+                    <img src="//www.citymes.com/wp-content/uploads/2016/05/logo-citymes.png" alt="Citymes" class="fusion-logo-link img">
+                </a>
+            </div>
 
+		<div class="fusion-main-menu" style="">
+            <ul id="menu-main-menu-catalan" class="fusion-menu">
+                <li id="menu-item-687" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-687"><a href="http://www.citymes.com/#sobre-citymes"><span class="menu-text">Sobre Citymes</span></a></li>
+                <li id="menu-item-688" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-688 current-menu-item"><a href="http://www.citymes.com/#plataforma"><span class="menu-text">Plataforma</span></a></li>
+                <li id="menu-item-690" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-690"><a href="http://www.citymes.com/#partners"><span class="menu-text">Partners</span></a></li>
+                <li id="menu-item-691" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-691"><a href="http://www.citymes.com/#contactar"><span class="menu-text">Contactar</span></a></li>
+                <li id="menu-item-692" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-692 fusion-menu-item-button fusion-last-menu-item"><a href="https://app.citymes.com"><span class="menu-text fusion-button button-default button-medium">ACCÉS PLATAFORMA</span></a></li>
+                <li style="padding-right:0px;">
+                    <div class="col-laguage">
+                        <?php
+                        $currLang = Config::get('app.locale');
+                        $select1 = '';
+                        if($currLang == 'en'){
+                            $select1 = 'selected="selected"';
+                        }
+
+                        $select2 = '';
+                        if($currLang == 'es'){
+                            $select2 = 'selected="selected"';
+                        }
+                        $select3 = '';
+                        if($currLang == 'ca'){
+                            $select3 = 'selected="selected"';
+                        }
+                        ?>
+                        <select name="select_lang" onchange="changeLang();" id="select_lang">
+                            <option <?php echo $select3;?> value="{!! URL::to('/language/ca') !!}">{!! trans('front/header.catalan') !!}</option>
+                            <option <?php echo $select2;?> value="{!! URL::to('/language/es') !!}">{!! trans('front/header.spanish') !!}</option>
+                            <option <?php echo $select1;?> value="{!! URL::to('/language/en') !!}">{!! trans('front/header.english') !!}</option>
+                        </select>
+
+                        <script>
+                            function changeLang(){
+                                var url = $('#select_lang').val();
+                                window.location.href = url;
+                            }
+                        </script>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
         <!--[if lt IE 8]>
                 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -46,87 +98,11 @@
                 @endif
                 @yield('main')
 
-                <?php /* ?>	<header role="banner">
 
-                  <div class="brand">{{ trans('front/site.title') }}</div>
-                  <div class="address-bar">{{ trans('front/site.sub-title') }}</div>
-                  <div id="flags" class="text-center"></div>
-                  <nav class="navbar navbar-default" role="navigation">
-                  <div class="container">
-                  <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="index.html">{{ trans('front/site.title') }}</a>
-                  </div>
-                  <div class="collapse navbar-collapse">
-                  <ul class="nav navbar-nav">
-
-
-                  @if(Request::is('auth/register'))
-                  <li class="active">
-                  {!! link_to('auth/register', trans('front/site.register')) !!}
-                  </li>
-                  @elseif(Request::is('password/email'))
-                  <li class="active">
-                  {!! link_to('password/email', trans('front/site.forget-password')) !!}
-                  </li>
-                  @else
-                  @if(session('statut') == 'visitor')
-                  <li class="active">
-                  {!! link_to('auth/register', trans('front/site.register')) !!}
-                  </li>
-                  @else
-                  @if(session('statut') == 'admin')
-                  <li>
-                  {!! link_to_route('admin', trans('front/site.administration')) !!}
-                  </li>
-                  @elseif(session('statut') == 'user')
-                  <li>
-                  {!! link_to('dashboard', trans('front/site.dashboard')) !!}
-                  </li>
-                  @endif
-                  <li>
-                  {!! link_to('auth/logout', trans('front/site.logout')) !!}
-                  </li>
-                  @endif
-                  @endif
-                  <li class="dropdown">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#"><img width="32" height="32" alt="{{ session('locale') }}"  src="{!! asset('img/' . session('locale') . '-flag.png') !!}" />&nbsp; <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                  @foreach ( config('app.languages') as $user)
-                  @if($user !== config('app.locale'))
-                  <li><a href="{!! url('language') !!}/{{ $user }}"><img width="32" height="32" alt="{{ $user }}" src="{!! asset('img/' . $user . '-flag.png') !!}"></a></li>
-                  @endif
-                  @endforeach
-                  </ul>
-                  </li>
-                  </ul>
-                  </div>
-                  </div>
-                  </nav>
-                  @yield('header')
-                  </header>
-
-                  <main role="main" class="container">
-                  @if(session()->has('ok'))
-                  @include('partials/error', ['type' => 'success', 'message' => session('ok')])
-                  @endif
-                  @if(isset($info))
-                  @include('partials/error', ['type' => 'info', 'message' => $info])
-                  @endif
-                  @yield('main')
-                  </main>
-
-                  <footer role="contentinfo">
-                  @yield('footer')
-                  <p class="text-center"><small>Copyright &copy; Citymess</small></p>
-                  </footer><?php */ ?>
             </div>
-
+            <div class="footer-copyright">
+                © Copyright 2016 – Tots els drets reservats&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/ca/avis-legal/">Avís Legal</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.citymes.com">Citymes.com</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.gestinet.com/es/mantenimiento-informatico">Mantenimiento informático</a>
+            </div>
         </section>
         {!! HTML::script('js/jquery1.12.4.js') !!}
         {!! HTML::script('js/bootstrap.js') !!}

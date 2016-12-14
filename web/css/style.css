@@ -1,10 +1,150 @@
 @charset "utf-8";
 /* CSS Document */
+.logotip {
+  margin-top: 21px;
+  margin-right: 0px;
+  margin-bottom: 21px;
+  margin-left: 0px;
+  display: block;
+  float: left;
+  max-width: 100%;
+  zoom: 1;
+}
+.fusion-logo-link {
+  display: block;
+  max-width: 100%;
+}
 
+.fusion-logo-link img {
+  border-style: none;
+  vertical-align: top;
+  max-width: 100%;
+  height: auto;
+  width: 158px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  margin: 0;
+  height: 110px;
+  padding-left: 30px;
+  padding-right: 30px;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 3px;
+  z-index:9;
+  font-family: 'Open Sans';
+}
+.fussion-row {
+  max-width: 1170px;
+  margin:0 auto;
+  position:relative;
+  padding-left: 2%;
+  padding-right: 2%;
+}
 .login_register {
-  background-image: url("../img/background_img.jpg");
+  margin-top:110px;
+}
+.footer-copyright {
+  width: 100%;
+  background-color: rgba(0,0,0,0.7);
+  text-align: center;
+  color: white;
+  font-weight: 400;
+  bottom: 0;
+  position: absolute;
+  height: 80px;
+  line-height: 80px;
+  font-size: 19px;
+  position:absolute;
+  bottom:0;
+  font-family: 'Open Sans';
+}
+.footer-copyright a {
+  color: #0192c6;
+}
+.fusion-main-menu {
+  float: right;
+  position: relative;
+  z-index: 200;
+  overflow: hidden;
+  margin-right: 30px;
+  margin-top: 23px;
+}
+.fusion-main-menu > ul > li > a, .side-nav li a {
+
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0px;
+}
+.fusion-main-menu > ul > li > a {
+  border-top: 3px solid transparent;
+  height: 83px;
+  line-height: 83px;
+}
+.fusion-menu-item-button .menu-text {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.fusion-menu-item-button .menu-text {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.fusion-menu-item-button .menu-text {
+  border-color: #ffffff;
+}
+.button-default {
+  background: #0192C6 !important;
+  padding: 8px 23px;
+  line-height: 16px;
+  color:#fff;
+  border-radius:2px;
+
+}
+.fusion-main-menu li {
+  float: left;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+}
+.fusion-main-menu ul {
+  list-style: none;
+}
+.fusion-main-menu > ul > li {
+  padding-right: 39px;
+}
+.fusion-main-menu > ul > li > a {
+  color: #515b69;
+  border-top: 3px solid transparent;
+  height: 83px;
+  line-height: 83px;
+  text-decoration: none;
+  display: block;
+  box-sizing: content-box;
+}
+.fusion-main-menu > ul > li > a:hover {
+  border-color: #0192c6;
+  color: #0192c6;
+}
+.fusion-menu-item-button a:hover {
+  border-color: #fff!important;
+  color: #fff!important;
+
+}
+.login_register {
+  background-image: url("http://www.citymes.com/wp-content/uploads/2016/05/SliderCitymes2.jpg");
   background-size: cover;
-  padding:8.5% 0;
+  padding:11% 0 17%;
+  position:relative;
+}
+.login,.sigup {
+  -webkit-box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.79);
+  -moz-box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.79);
+  box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.79);
+
 }
 .login_register ul {
   display: inline-block;
@@ -43,15 +183,14 @@
   -moz-appearance: none;
 	-web-appearance:none;
 	appearance:none;
-  background-color: #2ca2c4;
+  background-color: #fff;
   background-image: url("../img/down_arrow.png");
   background-position: 96% center;
   background-repeat: no-repeat;
   background-size: 12px auto;
-  border: medium none;
-  border-radius: 3px;
-  color: #000;
-  padding: 6px 20px 6px 8px;
+  border: 1px solid gainsboro;
+  color: #515b69;
+  padding: 6px 30px 6px 8px;
   position: relative;
 }
 .content h3 {
@@ -75,12 +214,12 @@
   width: 80%;
 }
 .col-laguage {
-  bottom: 8px;
-  left: 0;
+
   padding: 0 8px;
-  position: absolute;
+margin-top:25px;
   text-align: right;
   width: 100%;
+  color:#515b69;
 }
 
 .content p {
@@ -303,10 +442,18 @@ h1.logo {
 }
 
 @media (max-width:767px){
-.login_register .content {
-  margin-bottom: 15px;
+  .login_register .content {
+    margin-bottom: 15px;
+
+
+  }
+  .header,.footer-copyright {
+    display:none;
+  }
+  .login_register {
+    margin-top:0;
+  }
 }
-	}
 	
 	@media (max-width:480px){
 .content h3 {
