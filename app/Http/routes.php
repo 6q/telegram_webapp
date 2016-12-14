@@ -478,7 +478,6 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     ->where('type_id', '=', $dbBotId)
                     ->where('gallery_submenu_heading_text', 'LIKE', '%'.$messageText.'%')
                     ->get();
-
                 
                 $tbl_chanels = DB::table('chanels')
                     ->where('type_id', '=', $dbBotId)
@@ -668,17 +667,17 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     /* ContactForms */
                 }
                 else if(isset($tbl_galleries[0]) && !empty($tbl_galleries[0])){
-					DB::table('tmp_mytable')->truncate();
-					DB::table('tmp_mytable')->truncate();
-                    /* Gallery */
-                    $db_galleries = DB::table('galleries')->where('type_id', '=', $dbBotId)->get();
-            
-                    $arr = '';
-                    $Back = "\xE2\x97\x80";
+                    DB::table('tmp_mytable')->truncate();
+					$gallery_ID = $tbl_galleries[0]->id;
+					
+					$g_images = DB::table('gallery_images')->where('gallery_id','=',$gallery_ID)->orderBy('sort_order', 'asc')->get();
+
+					$arr = '';
+					$Back = "\xE2\x97\x80";
                     $i = 0;
-                    if(isset($db_galleries) && !empty($db_galleries)){
-                        foreach($db_galleries as $gk1 => $gv1){
-                            $arr[$i]['text'] = $gv1->gallery_submenu_heading_text;
+					if(isset($g_images) && !empty($g_images)){
+                        foreach($g_images as $gk1 => $gv1){
+                            $arr[$i]['text'] = $gv1->title;
                             $arr[$i]['callback_data'] = $gv1->id;
                             $i++;
                         }
@@ -689,83 +688,17 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     $arr = array_chunk($arr,2);
 
                     $keyboard = $arr;
-                    
-                    $gallery_ID = $tbl_galleries[0]->id;
-                    $g_limit = 1;
+					$msg = $tbl_galleries[0]->introduction_headline;
+					
+					$g_limit = 1;
                     $offset = 0;
-                    
-                    $g_images = DB::table('tmp_img')
-                        ->where('gallery_id', '=', $gallery_ID)
-                        ->orderBy('id', 'desc')
-                        ->get();
-                    
-                    if(isset($g_images[0]->data_limit) && count($g_images[0]->data_limit) != 0){
-                        $offset = $g_images[0]->data_limit+1;
-                    }
-                    
-                    $gallery_images = DB::table('gallery_images')
-                        ->where('gallery_id', '=', $gallery_ID)
-                        ->limit($g_limit)
-                        ->offset($offset)
-                        ->get();
-                    
-                   // file_put_contents(public_path().'/result.txt',$gallery_ID);
-                    
-                    $msg = '';
-                    $img_url = '';
-                    $image_name = '';
-                    if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){
-                        $img_url = public_path().'/uploads/'.$gallery_images[0]->image; 
-                        $image_name = $gallery_images[0]->image;
-                        
-                        DB::table('tmp_img')->insert(
-                            [
-                                'gallery_id' => $gallery_ID,
-                                'data_limit' => $offset
-                            ]
-                        );
-                    }
-                    else{
-						DB::table('tmp_mytable')->truncate();
-                        DB::table('tmp_img')->truncate();
-                        
-                        $gallery_ID = $tbl_galleries[0]->id;
-                        $g_limit = 1;
-                        $offset = 0;
-
-                        $g_images = DB::table('tmp_img')
-                            ->where('gallery_id', '=', $gallery_ID)
-                            ->orderBy('id', 'desc')
-                            ->get();
-
-                        if(isset($g_images[0]->data_limit) && count($g_images[0]->data_limit) != 0){
-                            $offset = $g_images[0]->data_limit+1;
-                        }
-
-                        $gallery_images = DB::table('gallery_images')
-                            ->where('gallery_id', '=', $gallery_ID)
-                            ->limit($g_limit)
-                            ->offset($offset)
-                            ->get();
-
-                       // file_put_contents(public_path().'/result.txt',$gallery_ID);
-
-                        $msg = '';
-                        $img_url = '';
-                        $image_name = '';
-                        if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){
-                            $img_url = public_path().'/uploads/'.$gallery_images[0]->image; 
-                            $image_name = $gallery_images[0]->image;
-
-                            DB::table('tmp_img')->insert(
-                                [
-                                    'gallery_id' => $gallery_ID,
-                                    'data_limit' => $offset
-                                ]
-                            );
-                        }
-                    }
-                    /* Gallery */
+					
+					DB::table('tmp_img')->insert(
+						[
+							'gallery_id' => $gallery_ID,
+							'data_limit' => $offset
+						]
+					);
                 }
                 else if(isset($tbl_chanels[0]) && !empty($tbl_chanels[0])){
 					DB::table('tmp_mytable')->truncate();
@@ -933,7 +866,27 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						
 							DB::table('tmp_ques_ans')->truncate();
 						}
-					}					
+					}	
+					
+					
+					
+					$g_images = DB::table('tmp_img')
+                        ->orderBy('id', 'desc')
+                        ->get();	
+						
+					$galleryID = $g_images[0]->gallery_id;
+					$gallery_images = DB::table('gallery_images')
+                        ->where('gallery_id', '=', $galleryID)
+						->where('title', 'LIKE', '%'.$messageText.'%')
+                        ->get();	
+					
+					$msg = '';
+                    $img_url = '';
+                    $image_name = '';
+                    if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){
+                        $img_url = public_path().'/uploads/'.$gallery_images[0]->image; 
+                        $image_name = $gallery_images[0]->image;
+                    }				
 					
                     /*
                     $keyboard = [
