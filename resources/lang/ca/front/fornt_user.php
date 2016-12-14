@@ -32,7 +32,7 @@ return [
 	'status' => 'Estat',
 	'none' => 'Cap',
 	'no_record' => 'Sense dades',
-	'billing_transactions' => 'Transaccions completades (Bots)',
+	'billing_transactions' => 'Transaccions completades',
 	'chanel_billing_transactions' => 'Transaccions completades (Canals)',
 	'transaction_date' => 'Data',
 	'description' => 'Descripció',

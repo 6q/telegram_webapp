@@ -54,4 +54,6 @@ return [
     'manage' => 'Gestionar',
     'and_or_attach_an_image' => 'També pots enviar una imatge (sola o amb el text):',
     'send' => 'Enviar',
+    'bot' => 'Bot',
+    'channel' => 'Canal',
 ];

@@ -45,12 +45,6 @@
 					<li>
                       <span>{{ trans('front/fornt_user.email') }} {!! HTML::image('img/front/icon.png') !!}</span>
                       <label>{!! Form::control_stripe_email('text', 0, 'email', $errors,'',$email) !!}</label>
-                    </li>  
-                    
-					  
-                    <li>
-                      <span>{{ trans('front/fornt_user.user_image') }} {!! HTML::image('img/front/icon.png') !!}</span>
-                      <label>{!! Form::control('file', 0, 'image', $errors) !!}<span>{{ trans('front/fornt_user.browse') }}</span></label>
                     </li>
 					  
 					<li>

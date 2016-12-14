@@ -171,7 +171,7 @@ class FrontUserController extends Controller
         }
         
 		        
-        $ut_conditions = ['user_id' => $user_id,'types' => 'bot'];
+        $ut_conditions = ['user_id' => $user_id];
         $transactions = DB::table('user_transactions')->where($ut_conditions)->get();
         
         /******************  Bot Section  **********************************/
