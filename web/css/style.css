@@ -135,10 +135,13 @@
 
 }
 .login_register {
-  background-image: url("http://www.citymes.com/wp-content/uploads/2016/05/SliderCitymes2.jpg");
+  background: url("../img/SliderCitymes2.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  padding:11% 0 17%;
-  position:relative;
+  padding: 11% 0 17%;
+  position: relative;
 }
 .login,.sigup {
   -webkit-box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.79);

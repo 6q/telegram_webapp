@@ -38,7 +38,7 @@
         <div class="fussion-row">
             <div class="logotip">
                 <a class="fusion-logo-link" href="http://www.citymes.com">
-                    <img src="//www.citymes.com/wp-content/uploads/2016/05/logo-citymes.png" alt="Citymes" class="fusion-logo-link img">
+                    <img src="/img/logo-citymes.png" alt="Citymes" class="fusion-logo-link img">
                 </a>
             </div>
 
