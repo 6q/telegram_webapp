@@ -161,9 +161,11 @@
                     <br>
 					-->
 
-                    <textarea id="channel_msg" name="channel_msg" class="form-control" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}"></textarea>
-                    
-                    <label> OR </label>
+					<p class="lead emoji-picker-container">
+						<textarea id="bot_msg" class="form-control textarea-control" name="channel_msg" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}" data-emojiable="true"></textarea>
+					</p>
+
+                    <label> {{ trans('front/dashboard.and_or_attach_an_image') }} </label>
                     
                     <input type="file" name="channel_image" id="channel_image" accept="image/*"  />
                     <br />
