@@ -115,7 +115,9 @@
       
       <div class="col-lg-12">
         <div class="col-plan col-lg-6">
-          <h2><?php echo $bots[0]->autoresponse; ?> ({{ trans('front/bots.autoresponses') }})</h2>
+          <h2 class="h2_information"><?php echo $bots[0]->autoresponse; ?>                     <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a></h2>
           <table id="botAutoresponse">
             <thead>
               <tr>
@@ -152,7 +154,9 @@
         </div>
         
         <div class="col-plan col-lg-6">
-          <h2><?php echo $bots[0]->contact_form; ?> ({{ trans('front/bots.contact_form') }})</h2>
+          <h2 class="h2_contact"><?php echo $bots[0]->contact_form; ?>                     <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a></h2>
           <table id="botContactForm">
             <thead>
               <tr>
@@ -188,7 +192,12 @@
         </div>
         <div style="clear:both"></div>
         <div class="col-plan col-lg-6">
-          <h2><?php echo $bots[0]->galleries; ?> ({{ trans('front/bots.galleries') }})</h2>
+            <h2 class="h2_photos">
+                <?php echo $bots[0]->galleries; ?>
+                    <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+            </h2>
           <table id="botGallery">
             <thead>
               <tr>
@@ -225,7 +234,9 @@
         </div>
         
         <div class="col-plan col-lg-6">
-          <h2><?php echo $bots[0]->channels; ?> ({{ trans('front/bots.channels') }})</h2>
+          <h2 class="h2_channels"><?php echo $bots[0]->channels; ?>                     <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a></h2>
           <table id="botChannels">
             <thead>
               <tr>

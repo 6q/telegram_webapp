@@ -20,7 +20,7 @@ return [
 	'service_and_features' => 'Característiques',
 	'custom_message_welcome' => 'Missatge Benvinguda Canal',
 	'custom_not_allowed_message_response' => 'Missatge resposta text no entendible',
-	'buy' => 'Configurar',
+	'buy' => 'Contractar',
 	'summary' => 'Resum',
 	'how_to_create' => 'Com crear un Canal a Telegram, si us plau clicar al següent botó',
 	'click_here' => 'clicar aquí',

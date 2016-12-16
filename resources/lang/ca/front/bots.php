@@ -27,7 +27,7 @@ return [
 	'custom_image_and_description' => 'Custom image and description',
 	'custom_message_welcome' => 'Custom message welcome',
 	'custom_not_allowed_message_response' => 'Missatge automàtic',
-	'buy' => 'Configurar',
+	'buy' => 'Contractar',
 	'summary' => 'Summary',
 	'how_to_create' => 'Per poder configurar el teu bot de Telegram amb Citymes, primer l\'has de tenir creat. Clica el següent botó i t\'explicarem pas a pas com fer-ho',
 	'click_here' => 'Com crear un bot de Telegram',

@@ -5,7 +5,6 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-  font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -1082,7 +1081,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
@@ -2963,10 +2962,6 @@ select[multiple].input-lg {
 .form-horizontal .radio,
 .form-horizontal .checkbox {
   min-height: 27px;
-}
-.form-horizontal .form-group {
-  margin-right: -15px;
-  margin-left: -15px;
 }
 @media (min-width: 768px) {
   .form-horizontal .control-label {

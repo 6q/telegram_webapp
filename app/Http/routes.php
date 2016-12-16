@@ -339,7 +339,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 			$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
 		}
 		else{
-			$msg = (isset($bot_data[0]->error_msg) && !empty($bot_data[0]->error_msg))?$bot_data[0]->error_msg:'Exigency to valid bot command.';
+			$msg = (isset($bot_data[0]->error_msg) && !empty($bot_data[0]->error_msg))?$bot_data[0]->error_msg:'No hem entès el missatge.';
 		}
 		
         

@@ -6,6 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		@yield('head')
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
 		{!! HTML::style('css/front/style.css') !!}
 		{!! HTML::style('css/front/bootstrap.css') !!}
 		{!! HTML::style('css/front/datepicker.css') !!}
@@ -15,9 +18,6 @@
 		{!! HTML::script('js/front/jquery1.12.4.js') !!}
 		{!! HTML::script('js/front/bootstrap-datepicker.js') !!}
 		{!! HTML::script('js/front/bootstrap.js') !!}
-
-
-
 
 	</head>
 	
@@ -53,6 +53,7 @@
 		{!! HTML::script('lib/js/util.js') !!}
 		{!! HTML::script('lib/js/jquery.emojiarea.js') !!}
 		{!! HTML::script('lib/js/emoji-picker.js') !!}
+		{!! HTML::script('js/jQueryEmoji.js') !!}
 	</body>
 </html>
    
@@ -79,6 +80,11 @@
         // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
         // It can be called as many times as necessary; previously converted input fields will not be converted again
         window.emojiPicker.discover();
+    });
+    $(function(){
+        $('body').Emoji({
+            path:'https://app.citymes.com/img/apple40/'
+		});
     });
 </script>
 @yield('scripts')

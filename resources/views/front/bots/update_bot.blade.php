@@ -20,16 +20,11 @@
               <div class="create_bot">
                 <div class="crete_bot_form">
                   <ul>
-
-                    <li>
-                      <span>{{ trans('front/bots.bot_nick_name') }} <a href="javascript:void(0);" onclick="mypopupinfo('nickNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
-                    </li>
                     
                     <li>
                       <span>{{ trans('front/bots.bot_error_msg') }}</span>
                       <label id="aError_msg">{!! Form::control('text', 0, 'error_msg', $errors,'',$bot->error_msg) !!}</label>
                     </li>
-
                     
                     <li>
                       <span>{{ trans('front/bots.start_message') }} {!! HTML::image('img/front/icon.png') !!}</span>
@@ -41,24 +36,24 @@
                 
                 </div>
                 
-                <div class="crete_bot_form">
+                <div class="crete_bot_form" id="main_buttons">
                   <ul>
-                    <li class="example_information">
+                    <li class="example_information col-sm-6">
                       <span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
                       <label>{!! Form::control('text', 0, 'autoresponse', $errors,'',$bot->autoresponse) !!}</label>
                     </li>
 
-                    <li class="example_contact">
+                    <li class="example_contact col-sm-6">
                       <span>{{ trans('front/bots.name_of_contact_forms_button') }}</span>
                       <label>{!! Form::control('text', 0, 'contact_form', $errors,'',$bot->contact_form) !!}</label>
                     </li>
                     
-                    <li class="example_our_photos">
+                    <li class="example_our_photos col-sm-6">
                       <span>{{ trans('front/bots.name_of_galleries_button') }}</span>
                       <label>{!! Form::control('text', 0, 'galleries', $errors,'',$bot->galleries) !!}</label>
                     </li>
                     
-                    <li class="example_our_channels">
+                    <li class="example_our_channels col-sm-6">
                       <span>{{ trans('front/bots.name_of_channels_button') }} </span>
                       <label>{!! Form::control('text', 0, 'channels', $errors,'',$bot->channels) !!}</label>
                     </li>
