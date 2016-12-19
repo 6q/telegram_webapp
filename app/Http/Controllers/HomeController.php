@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 	public function __construct() {
-		 parent::login_check();
+		// parent::login_check();
     }
 
 	/**
@@ -28,7 +28,7 @@ class HomeController extends Controller
 	 * @param  String $lang
 	 * @return Response
 	 */
-	public function language( $lang,ChangeLocale $changeLocale)
+	public function language($lang,ChangeLocale $changeLocale)
 	{	
 		$lang = in_array($lang, config('app.languages')) ? $lang : config('app.fallback_locale');
 		$changeLocale->lang = $lang;

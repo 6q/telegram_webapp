@@ -225,10 +225,20 @@
                       <span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
                       <label>{!! Form::control('text', 0, 'autoresponse', $errors) !!}</label>
                     </li>
+                    
+                    <li class="example_information col-sm-6">
+                      <span>{{ trans('front/bots.intortext_of_autoresponses_button') }}</span>
+                      <label>{!! Form::control('text', 0, 'intro_autoresponses', $errors) !!}</label>
+                    </li>
 
                     <li class="example_contact col-sm-6">
                       <span>{{ trans('front/bots.name_of_contact_forms_button') }}</span>
                       <label>{!! Form::control('text', 0, 'contact_form', $errors) !!}</label>
+                    </li>
+                    
+                    <li class="example_contact col-sm-6">
+                      <span>{{ trans('front/bots.intortext_of_contact_forms_button') }}</span>
+                      <label>{!! Form::control('text', 0, 'intro_contact_form', $errors) !!}</label>
                     </li>
                     
                     <li class="example_our_photos col-sm-6">
@@ -236,9 +246,19 @@
                       <label>{!! Form::control('text', 0, 'galleries', $errors) !!}</label>
                     </li>
                     
+                    <li class="example_our_photos col-sm-6">
+                      <span>{{ trans('front/bots.introtext_of_galleries_button') }}</span>
+                      <label>{!! Form::control('text', 0, 'intro_galleries', $errors) !!}</label>
+                    </li>
+                    
                     <li class="example_our_channels col-sm-6">
                       <span>{{ trans('front/bots.name_of_channels_button') }} </span>
                       <label>{!! Form::control('text', 0, 'channels', $errors) !!}</label>
+                    </li>
+                    
+                    <li class="example_our_channels col-sm-6">
+                      <span>{{ trans('front/bots.introtext_of_channels_button') }} </span>
+                      <label>{!! Form::control('text', 0, 'intro_channels', $errors) !!}</label>
                     </li>
                   </ul>
                 </div>

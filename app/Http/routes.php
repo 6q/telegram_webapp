@@ -339,7 +339,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 			$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
 		}
 		else{
-			$msg = (isset($bot_data[0]->error_msg) && !empty($bot_data[0]->error_msg))?$bot_data[0]->error_msg:'No hem entès el missatge.';
+			$msg = (isset($bot_data[0]->error_msg) && !empty($bot_data[0]->error_msg))?$bot_data[0]->error_msg:'Exigency to valid bot command.';
 		}
 		
         
@@ -353,6 +353,14 @@ Route::post('/{bottoken}/webhook', function ($token) {
         
         if(!empty($messageText) && $messageText == $autoresponse){
             
+			$w_autoresponse = DB::table('bots')->where('id', '=', $dbBotId)->get();
+			if(isset($w_autoresponse[0]->intro_autoresponses) && !empty($w_autoresponse[0]->intro_autoresponses)){
+				$msg = $w_autoresponse[0]->intro_autoresponses;
+			}
+			else{
+				$msg = "\xE2\x9E\xA1 ".$autoresponse;
+			}
+			
             $db_autoresponse = DB::table('autoresponses')->where('type_id', '=', $dbBotId)->get();
             
             $arr = '';
@@ -379,12 +387,18 @@ Route::post('/{bottoken}/webhook', function ($token) {
             );
             */
           
-            $msg = "\xE2\x9E\xA1 ".$autoresponse;
-            
             
         }
         else if(!empty($messageText) && $messageText == $contact_form){
             $db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
+			
+			$w_contact_form = DB::table('bots')->where('id', '=', $dbBotId)->get();
+			if(isset($w_contact_form[0]->intro_contact_form) && !empty($w_contact_form[0]->intro_contact_form)){
+				$msg = $w_contact_form[0]->intro_contact_form;
+			}
+			else{
+				$msg = "\xE2\x9E\xA1 ".$contact_form;
+			}
             
             $arr = '';
             $Back = "\xE2\x97\x80";
@@ -403,10 +417,18 @@ Route::post('/{bottoken}/webhook', function ($token) {
 
             $keyboard = $arr;
             
-            $msg = "\xE2\x9E\xA1 ".$contact_form;
+            
         }
         else if(!empty($messageText) && $messageText == $galleries){
             $db_galleries = DB::table('galleries')->where('type_id', '=', $dbBotId)->get();
+			
+			$w_galleries = DB::table('bots')->where('id', '=', $dbBotId)->get();
+			if(isset($w_galleries[0]->intro_galleries) && !empty($w_galleries[0]->intro_galleries)){
+				$msg = $w_galleries[0]->intro_galleries;
+			}
+			else{
+				$msg = "\xE2\x9E\xA1 ".$galleries;
+			}
             
             $arr = '';
             $Back = "\xE2\x97\x80";
@@ -424,11 +446,17 @@ Route::post('/{bottoken}/webhook', function ($token) {
             $arr = array_chunk($arr,2);
 
             $keyboard = $arr;
-            
-            $msg = "\xE2\x9E\xA1 ".$galleries;
         }
         else if(!empty($messageText) && $messageText == $channels){
             $db_chanels = DB::table('chanels')->where('type_id', '=', $dbBotId)->get();
+			
+			$w_chanels = DB::table('bots')->where('id', '=', $dbBotId)->get();
+			if(isset($w_chanels[0]->intro_channels) && !empty($w_chanels[0]->intro_channels)){
+				$msg = $w_chanels[0]->intro_channels;
+			}
+			else{
+				$msg = "\xE2\x9E\xA1 ".$channels;
+			}
             
             $arr = '';
             $Back = "\xE2\x97\x80";
@@ -454,7 +482,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             );
             */
           
-            $msg = "\xE2\x9E\xA1 ".$channels;
+            
         }
         else{
             if(!empty($messageText) && $messageText != "\xE2\x97\x80")

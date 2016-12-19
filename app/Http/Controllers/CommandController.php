@@ -609,13 +609,31 @@ class CommandController extends Controller
 			$bot_id = $request->get('bot_id');
 			$id = $request->get('id');
 			
-			 $rules = array(
-					'gallery_submenu_heading_text' => 'required|unique:galleries,gallery_submenu_heading_text,'.$id
-				);
+			$error = 'false';
+			$gallery_submenu_heading_text = $request->get('gallery_submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')->where('chanel_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$rules = array(
+				'gallery_submenu_heading_text' => 'required|unique:galleries,gallery_submenu_heading_text,'.$id
+			);
 	
 				$v = Validator::make($request->all(), $rules);
 				
-				if($v->passes())
+				if($error == 'false' && $v->passes())
 				{
 					$gallery = Gallery::find($request->get('id'));
 					$gallery->id = $request->get('id');
@@ -643,13 +661,18 @@ class CommandController extends Controller
 							}
 						}
 					}	
+					return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 				}
-				
-				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
-			}
-			else{
-				$messages = $v->messages();
-				return redirect('command/gallery_edit/'.$id)->withErrors($v);
+				else{
+					if($error == 'true'){
+						$messages = 'The gallery submenu heading text has already been taken.';
+						return redirect('command/gallery_edit/'.$id)->withErrors($messages);
+					}
+					else{
+						$messages = $v->messages();
+						return redirect('command/gallery_edit/'.$id)->withErrors($v);
+					}
+				}
 			}
 			
 	}

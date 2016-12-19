@@ -151,6 +151,11 @@ class BotController extends Controller
 		$bot->galleries = $request->get('galleries');
 		$bot->channels = $request->get('channels');
 		
+		$bot->intro_autoresponses = $request->get('intro_autoresponses');
+		$bot->intro_contact_form = $request->get('intro_contact_form');
+		$bot->intro_galleries = $request->get('intro_galleries');
+		$bot->intro_channels = $request->get('intro_channels');
+		
         
         if($request->hasFile('bot_image'))
 		{
@@ -619,6 +624,11 @@ class BotController extends Controller
           $bot->contact_form = $request->get('contact_form');
           $bot->galleries = $request->get('galleries');
           $bot->channels = $request->get('channels');
+		  
+		  $bot->intro_autoresponses = $request->get('intro_autoresponses');
+		  $bot->intro_contact_form = $request->get('intro_contact_form');
+		  $bot->intro_galleries = $request->get('intro_galleries');
+		  $bot->intro_channels = $request->get('intro_channels');
           
           if($bot->save()){
             return redirect('bot/detail/'.$id)->with('ok', trans('front/bots.updated'));

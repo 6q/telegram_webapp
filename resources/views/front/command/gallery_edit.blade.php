@@ -28,7 +28,7 @@
       </div>
 
 	<div class="bot_command">        
-        <div class="bot_command_content">
+        <div class="bot_command_content">        
         @if ($errors->has())
                 <div class="alert alert-danger">
                     @foreach ($errors->all() as $error)

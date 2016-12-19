@@ -81,5 +81,9 @@ return [
 	'date' => 'Data',
 	'messages_activity' => 'Missatges / Activitat',
 	'delete_command' => 'Delete',
-	'bot_error_msg' => 'Bot error message'
+	'bot_error_msg' => 'Bot error message',
+	'intortext_of_autoresponses_button' => 'Intro text of Autoresponse',
+	'intortext_of_contact_forms_button' => 'Intro text of Contact Forms Button',
+	'introtext_of_galleries_button' => 'Intro text of Galleries Button',
+	'introtext_of_channels_button' => 'Intro text of Channels Button'
 ];
