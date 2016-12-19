@@ -52,10 +52,10 @@ class FormBuilder extends \Collective\Html\FormBuilder {
 	{
 		if(!empty($attr)){
 			if($type == 'textarea' && $nom == 'description' || $nom == 'content'){
-				$attributes = ['class' => 'form-control ckeditor', 'id' => $nom ,'placeholder' => $placeholder,'data-emojiable' => $attr];
+				$attributes = ['class' => 'form-control ckeditor', 'id' => $nom ,'placeholder' => $placeholder,$attr];
 			}
 			else{
-				$attributes = ['class' => 'form-control', 'id' => $nom ,'placeholder' => $placeholder,'data-emojiable' => $attr];
+				$attributes = ['class' => 'form-control', 'id' => $nom ,'placeholder' => $placeholder,$attr];
 			}
 		}
 		else{
