@@ -23,13 +23,23 @@ class FormBuilder extends \Collective\Html\FormBuilder {
 		return parent::submit($text, ['class' => 'btn btn-danger btn-block ' . ($class? $class:''), 'onclick' => 'return confirm(\'' . $message . '\')']);
 	}
 
-	public function control($type, $colonnes, $nom, $errors, $label = null, $valeur = null, $pop = null, $placeholder = '')
+	public function control($type, $colonnes, $nom, $errors, $label = null, $valeur = null, $attr = null, $pop = null, $placeholder = '')
 	{
-		if($type == 'textarea' && $nom == 'description' || $nom == 'content'){
-			$attributes = ['class' => 'form-control ckeditor', 'id' => $nom ,'placeholder' => $placeholder];
+		if(!empty($attr)){
+			if($type == 'textarea' && $nom == 'description' || $nom == 'content'){
+				$attributes = ['class' => 'form-control ckeditor', 'id' => $nom ,$attr];
+			}
+			else{
+				$attributes = ['class' => 'form-control', 'id' => $nom ,$attr];
+			}		
 		}
 		else{
-			$attributes = ['class' => 'form-control', 'id' => $nom ,'placeholder' => $placeholder];
+			if($type == 'textarea' && $nom == 'description' || $nom == 'content'){
+				$attributes = ['class' => 'form-control ckeditor', 'id' => $nom ,'placeholder' => $placeholder];
+			}
+			else{
+				$attributes = ['class' => 'form-control', 'id' => $nom ,'placeholder' => $placeholder];
+			}
 		}
 		
 		return sprintf('
