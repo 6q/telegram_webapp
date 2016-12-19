@@ -4,7 +4,6 @@
 {!! HTML::style('css/front/simplePagination.css') !!}
 {!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
 
@@ -653,4 +652,5 @@
     width: 20%;
   }
 </style>
+
 @stop

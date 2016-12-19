@@ -1,8 +1,6 @@
 @extends('front.template')
 @section('main')
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="https://use.fontawesome.com/f73f310856.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
         function drawChart(data_arr) {

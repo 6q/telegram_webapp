@@ -23,13 +23,16 @@
                     
                     <li>
                       <span>{{ trans('front/bots.bot_error_msg') }}</span>
-                      <label id="aError_msg">{!! Form::control('text', 0, 'error_msg', $errors,'',$bot->error_msg) !!}</label>
+                      <label id="aError_msg"  class="lead emoji-picker-container">
+                        {!! Form::control('text', 0, 'error_msg', $errors,'',$bot->error_msg,"data-emojiable='true' placeholder='No hem entès el missatge.' maxlength='50'") !!}
+                      </label>
                     </li>
                     
                     <li>
-                      <span>{{ trans('front/bots.start_message') }} {!! HTML::image('img/front/icon.png') !!}</span>
-                      <label>{!! Form::control('textarea', 0, 'start_message', $errors,'',$bot->start_message) !!}</label>
-
+                      <span>{{ trans('front/bots.start_message') }}</span>
+                      <label class="lead emoji-picker-container text-area">
+                        {!! Form::control('textarea', 0, 'start_message', $errors,'',$bot->start_message,"data-emojiable='true' placeholder='Benvingut al nostre bot, aquí pots trobar informació i contactar amb nosaltres.' maxlength='100'") !!}
+                      </label>
                     </li>
                   
                   </ul>
@@ -40,42 +43,58 @@
                   <ul>
                     <li class="example_information col-sm-6">
                       <span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'autoresponse', $errors,'',$bot->autoresponse) !!}</label>
+                      <label  class="lead emoji-picker-container" id="boto_autorespostes">
+                        {!! Form::control('text', 0, 'autoresponse', $errors,'',$bot->autoresponse,"data-emojiable='true' placeholder='Informació' maxlength='12'") !!}
+                      </label>
                     </li>
                     
                      <li class="example_information col-sm-6">
                       <span>{{ trans('front/bots.intortext_of_autoresponses_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'intro_autoresponses', $errors,'',$bot->intro_autoresponses) !!}</label>
+                       <label  class="lead emoji-picker-container">
+                         {!! Form::control('text', 0, 'intro_autoresponses', $errors,'',$bot->intro_autoresponses,"data-emojiable='true' placeholder='Selecciona la informació que desitgis' maxlength='30'") !!}
+                       </label>
                     </li>
 
                     <li class="example_contact col-sm-6">
                       <span>{{ trans('front/bots.name_of_contact_forms_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'contact_form', $errors,'',$bot->contact_form) !!}</label>
+                      <label  class="lead emoji-picker-container" id="boto_formularis">
+                        {!! Form::control('text', 0, 'contact_form', $errors,'',$bot->contact_form,"data-emojiable='true' placeholder='Contactar' maxlength='12'") !!}
+                      </label>
                     </li>
                     
                     <li class="example_contact col-sm-6">
                       <span>{{ trans('front/bots.intortext_of_contact_forms_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'intro_contact_form', $errors,'',$bot->intro_contact_form) !!}</label>
+                      <label  class="lead emoji-picker-container">
+                        {!! Form::control('text', 0, 'intro_contact_form', $errors,'',$bot->intro_contact_form,"data-emojiable='true' placeholder='Escull amb qui desitges contactar' maxlength='30'") !!}
+                      </label>
                     </li>
                     
                     <li class="example_our_photos col-sm-6">
                       <span>{{ trans('front/bots.name_of_galleries_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'galleries', $errors,'',$bot->galleries) !!}</label>
+                      <label  class="lead emoji-picker-container" id="boto_galeries">
+                        {!! Form::control('text', 0, 'galleries', $errors,'',$bot->galleries,"data-emojiable='true' placeholder='Fotografies' maxlength='12'") !!}
+                      </label>
                     </li>
                     
                     <li class="example_our_photos col-sm-6">
                       <span>{{ trans('front/bots.introtext_of_galleries_button') }}</span>
-                      <label>{!! Form::control('text', 0, 'intro_galleries', $errors,'',$bot->intro_galleries) !!}</label>
+                      <label  class="lead emoji-picker-container">
+                        {!! Form::control('text', 0, 'intro_galleries', $errors,'',$bot->intro_galleries,"data-emojiable='true' placeholder='Escull una galeria de fotografies' maxlength='30'") !!}
+                      </label>
                     </li>
                     
                     <li class="example_our_channels col-sm-6">
                       <span>{{ trans('front/bots.name_of_channels_button') }} </span>
-                      <label>{!! Form::control('text', 0, 'channels', $errors,'',$bot->channels) !!}</label>
+                      <label  class="lead emoji-picker-container"id="boto_canals">
+                        {!! Form::control('text', 0, 'channels', $errors,'',$bot->channels,"data-emojiable='true' placeholder='Canals' maxlength='12'") !!}
+                      </label>
                     </li>
                     
                     <li class="example_our_channels col-sm-6">
                       <span>{{ trans('front/bots.introtext_of_channels_button') }} </span>
-                      <label>{!! Form::control('text', 0, 'intro_channels', $errors,'',$bot->intro_channels) !!}</label>
+                      <label  class="lead emoji-picker-container">
+                        {!! Form::control('text', 0, 'intro_channels', $errors,'',$bot->intro_channels,"data-emojiable='true' placeholder='Escull un dels nostres canals' maxlength='30'") !!}
+                      </label>
                     </li>
                   </ul>
                 </div>
@@ -117,28 +136,44 @@
 </div>
 
 <script>
+    jQuery(document).ready(function() {
+        // Initializes and creates emoji set from sprite sheet
+        window.emojiPicker = new EmojiPicker({
+            emojiable_selector: '[data-emojiable=true]',
+            assetsPath: '/lib/img',
+            popupButtonClasses: 'fa fa-smile-o'
+        });
+        // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+        // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+        // It can be called as many times as necessary; previously converted input fields will not be converted again
+        window.emojiPicker.discover();
+    });
 	$(document).ready(function(e) {
+
+
 		$('.chat_box').css('display','block');
 		$('#auto_resp').html("<?php echo $bot->autoresponse; ?>");
 		$('#conntact_fbutton').html("<?php echo $bot->contact_form; ?>");
 		$('#gallery_imgs').html("<?php echo $bot->galleries; ?>");
 		$('#chnl_btn').html("<?php echo $bot->channels; ?>");
-		
-        $('#autoresponse').keyup(function(e) {
-            $('#auto_resp').html($('#autoresponse').val());
+
+
+        $('#boto_autorespostes').find('div.emoji-wysiwyg-editor').keyup(function(e) {
+            $('#auto_resp').html($('#boto_autorespostes').find('div.emoji-wysiwyg-editor').html());
         });
-		
-		$('#contact_form').keyup(function(e) {
-            $('#conntact_fbutton').html($('#contact_form').val());
+
+        $('#boto_formularis').find('div.emoji-wysiwyg-editor').keyup(function(e) {
+            $('#conntact_fbutton').html($('#boto_formularis').find('div.emoji-wysiwyg-editor').html());
         });
-		
-		$('#galleries').keyup(function(e) {
-            $('#gallery_imgs').html($('#galleries').val());
+
+        $('#boto_galeries').find('div.emoji-wysiwyg-editor').keyup(function(e) {
+            $('#gallery_imgs').html($('#boto_galeries').find('div.emoji-wysiwyg-editor').html());
         });
-		
-		$('#channels').keyup(function(e) {
-            $('#chnl_btn').html($('#channels').val());
+
+        $('#boto_canals').find('div.emoji-wysiwyg-editor').keyup(function(e) {
+            $('#chnl_btn').html($('#boto_canals').find('div.emoji-wysiwyg-editor').html());
         });
+
 		
     });
 	

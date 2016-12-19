@@ -5,7 +5,7 @@
 		<title>{{ trans('front/site.title') }}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		@yield('head')
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<script src="https://use.fontawesome.com/f73f310856.js"></script>
 
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
@@ -18,6 +18,11 @@
 		{!! HTML::script('js/front/jquery1.12.4.js') !!}
 		{!! HTML::script('js/front/bootstrap-datepicker.js') !!}
 		{!! HTML::script('js/front/bootstrap.js') !!}
+
+
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
 
 	</head>
 	
@@ -54,37 +59,39 @@
 		{!! HTML::script('lib/js/jquery.emojiarea.js') !!}
 		{!! HTML::script('lib/js/emoji-picker.js') !!}
 		{!! HTML::script('js/jQueryEmoji.js') !!}
+		<script>
+            jQuery(document).ready(function () {
+                //alert('hello');
+                jQuery(function () {
+                    jQuery(".datepicker").datepicker();
+                });
+            });
+            jQuery(document).ready(function(){
+                jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottomreat el"});
+            });
+
+            jQuery(document).ready(function() {
+                // Initializes and creates emoji set from sprite sheet
+                window.emojiPicker = new EmojiPicker({
+                    emojiable_selector: '[data-emojiable=true]',
+                    assetsPath: '/lib/img',
+                    popupButtonClasses: 'fa fa-smile-o'
+                });
+                // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+                // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+                // It can be called as many times as necessary; previously converted input fields will not be converted again
+                window.emojiPicker.discover();
+            });
+            /*
+            jQuery(document).ready(function(){
+                $('body').Emoji({
+                    path:'https://app.citymes.com/img/apple40/'
+                });
+            });
+            */
+		</script>
+
+		@yield('scripts')
 	</body>
 </html>
    
-<script>
-  jQuery(document).ready(function () {
-        //alert('hello');
-        jQuery(function () {
-            jQuery(".datepicker").datepicker();
-        });
-    });
-  jQuery(document).ready(function(){
-	  jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottomreat el"});
-	});
-</script>
-<script>
-    $(function() {
-        // Initializes and creates emoji set from sprite sheet
-        window.emojiPicker = new EmojiPicker({
-            emojiable_selector: '[data-emojiable=true]',
-            assetsPath: '/lib/img',
-            popupButtonClasses: 'fa fa-smile-o'
-        });
-        // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
-        // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
-        // It can be called as many times as necessary; previously converted input fields will not be converted again
-        window.emojiPicker.discover();
-    });
-    $(function(){
-        $('body').Emoji({
-            path:'https://app.citymes.com/img/apple40/'
-		});
-    });
-</script>
-@yield('scripts')
