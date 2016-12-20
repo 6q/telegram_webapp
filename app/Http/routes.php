@@ -209,6 +209,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
     $data = json_decode($update,true);
     $messageText = (isset($data['message']['text']) && !empty($data['message']['text']))?$data['message']['text']:'';
 	$messageTextImg = (isset($data['message']['document']['file_name']) && !empty($data['message']['document']['file_name']))?$data['message']['document']['file_name']:'';
+	$messageTextPhoto = (isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id']))?$data['message']['photo'][0]['file_id']:'';
 	
 	
     file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
@@ -234,6 +235,17 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		$arr = json_decode(json_encode($file_response));
 		$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
 		$messageText = $path;
+	}
+	
+	if(empty($messageText) && !empty($messageTextPhoto)){
+		file_put_contents(public_path().'/result.txt',json_encode($data['message']['photo'][0]['file_id']));		
+		if(isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id'])){
+			$file_id = $data['message']['photo'][0]['file_id'];
+			$file_response = $telegram->getFile(['file_id' => $file_id]);
+			$arr = json_decode(json_encode($file_response));
+			$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
+			$messageText = $path;
+		}
 	}
 	
     
@@ -493,23 +505,23 @@ Route::post('/{bottoken}/webhook', function ($token) {
                 
                 $tbl_autoresponse = DB::table('autoresponses')
                     ->where('type_id', '=', $dbBotId)
-                    ->where('submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->where('submenu_heading_text', 'LIKE', $messageText)
                     ->get();
             
             
                 $tbl_contact_forms = DB::table('contact_forms')
                     ->where('type_id', '=', $dbBotId)
-                    ->where('submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->where('submenu_heading_text', 'LIKE', $messageText)
                     ->get();
                 
                 $tbl_galleries = DB::table('galleries')
                     ->where('type_id', '=', $dbBotId)
-                    ->where('gallery_submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->where('gallery_submenu_heading_text', 'LIKE', $messageText)
                     ->get();
                 
                 $tbl_chanels = DB::table('chanels')
                     ->where('type_id', '=', $dbBotId)
-                    ->where('chanel_submenu_heading_text', 'LIKE', '%'.$messageText.'%')
+                    ->where('chanel_submenu_heading_text', 'LIKE', $messageText)
                     ->get();
             
                 /*

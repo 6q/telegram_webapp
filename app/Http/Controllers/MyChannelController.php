@@ -97,17 +97,16 @@ class MyChannelController extends Controller {
         $stripeToken = $request->get('stripeToken');
 
 
-        // echo '<pre>';print_r($request->all());die;
-
         $chanel = new MyChannel;
 
         $chanel->user_id = $user_id;
         $chanel->name = $request->get('name');
-		$channel->bot_id = $request->get('botID');
+		$chanel->bot_id = $request->get('botID');
         $chanel->description = $request->get('description');
         $chanel->share_link = $request->get('share_link');
 
         $chanel->created_at = date('Y-m-d h:i:s');
+
 
 
         if ($chanel->save()) {
