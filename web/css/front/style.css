@@ -1045,6 +1045,8 @@ p.h2 > img {
   background-repeat: no-repeat;
   background-size: 42px auto;
   padding-left:55px;
+  position:relative;
+
 }
 .example_contact input {
   background-image: url("../../img/front/exmaple_contact.png");
@@ -1060,6 +1062,7 @@ p.h2 > img {
   background-repeat: no-repeat;
   background-size: 42px auto;
   padding-left:55px;
+  position:relative;
 
 }
 .example_our_photos input {
@@ -1076,6 +1079,7 @@ p.h2 > img {
   background-repeat: no-repeat;
   background-size: 42px auto;
   padding-left:55px;
+  position:relative;
 
 }
 .example_our_channels input {
@@ -1092,12 +1096,21 @@ p.h2 > img {
   background-repeat: no-repeat;
   background-size: 42px auto;
   padding-left:55px;
+  position:relative;
 
 }
 .light-theme .current {
   background:#3F6280!important;
   border-color:#263B4D!important;
 }
+
+#bot_main_buttons h2 i {
+  position:absolute;
+  right:10px;
+  color:#DEE1E6;
+  font-size:14px;
+}
+
 .chat > img {
   display: block;
   margin: 0 auto;
@@ -2061,4 +2074,13 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
   background-color: rgba(50,50,50, .01);
   font-weight:600;
   text-shadow: 0px 1px 0px rgba(250,250,250, .75);
+}
+
+.alert {
+  position: fixed;
+  bottom: 5%;
+  left: 5%;
+  width: 90%;
+  z-index: 9999;
+  margin: 0 auto;
 }
