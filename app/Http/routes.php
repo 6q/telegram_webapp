@@ -902,19 +902,22 @@ Route::post('/{bottoken}/webhook', function ($token) {
                         ->orderBy('id', 'desc')
                         ->get();	
 						
-					$galleryID = $g_images[0]->gallery_id;
-					$gallery_images = DB::table('gallery_images')
-                        ->where('gallery_id', '=', $galleryID)
-						->where('title', 'LIKE', '%'.$messageText.'%')
-                        ->get();	
-					
-					$msg = '';
-                    $img_url = '';
-                    $image_name = '';
-                    if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){
-                        $img_url = public_path().'/uploads/'.$gallery_images[0]->image; 
-                        $image_name = $gallery_images[0]->image;
-                    }				
+					$galleryID = (isset($g_images[0]->gallery_id) && !empty($g_images[0]->gallery_id))?$g_images[0]->gallery_id:'';
+					if(!empty($galleryID)){
+						$gallery_images = DB::table('gallery_images')
+							->where('gallery_id', '=', $galleryID)
+							->where('title', 'LIKE', '%'.$messageText.'%')
+							->get();	
+						
+						$msg = '';
+						$img_url = '';
+						$image_name = '';
+						if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){
+							$img_url = public_path().'/uploads/'.$gallery_images[0]->image; 
+							$image_name = $gallery_images[0]->image;
+						}	
+					}
+								
 					
                     /*
                     $keyboard = [
