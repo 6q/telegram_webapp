@@ -663,7 +663,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						  }
 						
 						$emailFindReplace = array(
-							'##SITE_LOGO##' => asset('/img/front/logo.png'),
+							'##SITE_LOGO##' => asset('/img/logo.png'),
 							'##SITE_LINK##' => asset('/'),
 							'##SITE_NAME##' => 'Citymes',
 							'##USERNAME##' => $userNAME,
@@ -682,8 +682,8 @@ Route::post('/{bottoken}/webhook', function ($token) {
 									'text' => $html
 								), function($message) use ($to_email)
 							{
-								$message->from('admin@admin.com');
-								$message->to($to_email, 'Admin')->subject('Contact form Creation');
+								$message->from('help@citymes.com');
+								$message->to($to_email, 'Citymes')->subject('[Citymes] Resposta a formulari de contacte');
 							});
 						}
 					
@@ -868,7 +868,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							  }
 							
 							$emailFindReplace = array(
-								'##SITE_LOGO##' => asset('/img/front/logo.png'),
+								'##SITE_LOGO##' => asset('/img/logo.png'),
 								'##SITE_LINK##' => asset('/'),
 								'##SITE_NAME##' => 'Citymes',
 								'##USERNAME##' => $userNAME,
@@ -887,8 +887,8 @@ Route::post('/{bottoken}/webhook', function ($token) {
 										'text' => $html
 									), function($message) use ($to_email)
 								{
-									$message->from('admin@admin.com');
-									$message->to($to_email, 'Admin')->subject('Contact form Creation');
+									$message->from('help@citymes.com');
+									$message->to($to_email, 'Citymes')->subject('[Citymes] Creació de formulari de contacte');
 								});
 							}
 						
@@ -1082,7 +1082,7 @@ Route::post('stripe/stripe_webhook', function (){
 			$template = $email_template[0]->description;
 			
 			$emailFindReplace = array(
-				'##SITE_LOGO##' => asset('/img/front/logo.png'),
+				'##SITE_LOGO##' => asset('/img/logo.png'),
 				'##SITE_LINK##' => asset('/'),
 				'##SITE_NAME##' => 'Citymes',
 				'##MESSAGE##' => $message
@@ -1095,8 +1095,8 @@ Route::post('stripe/stripe_webhook', function (){
 					'text' => $html
 				), function($message) use ($to_email)
 			{
-				$message->from('admin@admin.com');
-				$message->to($to_email, 'Admin')->subject('Subscription Renovation');
+				$message->from('help@citymes.com');
+				$message->to($to_email, 'Citymes')->subject('[Citymes] Renovació de la subscipció');
 			});
 		}
 	}
