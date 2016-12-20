@@ -572,7 +572,7 @@ function myFunctionShow(id){
 	function validateContactForm(){
 		var chk = 1;
 		var email = $('#email').val();
-		var contact_submenu_heading_text = $('#submenu_heading_text').val();
+		var contact_submenu_heading_text = $('#contact #submenu_heading_text').val();
 		var headline = $('#headline').val();
 		
 		if(email == ''){
