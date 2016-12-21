@@ -308,7 +308,7 @@ class BotController extends Controller
 				
 		
 				$emailFindReplace = array(
-					'##SITE_LOGO##' => asset('/img/logo.png'),
+					'##SITE_LOGO##' => asset('/img/front/logo.png'),
 					'##SITE_LINK##' => asset('/'),
 					'##SITE_NAME##' => 'Citymes',
 					'##PLAN_USERNAME##' => $planName,
@@ -346,8 +346,8 @@ class BotController extends Controller
 						'text' => $html
 					), function($message) use ($to_email)
 				{
-					$message->from('help@citymes.com');
-					$message->to($to_email, 'Citymes')->subject('[Citymes] Nou bot creat');
+					$message->from('admin@admin.com');
+					$message->to($to_email, 'Admin')->subject('Bot Creation');
 				});
 		
                 
@@ -672,7 +672,7 @@ class BotController extends Controller
 						$MESSAGE = '<b>Bot "'.$bot[0]->username.'"</b>';
 						
 						$emailFindReplace = array(
-							'##SITE_LOGO##' => asset('/img/logo.png'),
+							'##SITE_LOGO##' => asset('/img/front/logo.png'),
 							'##SITE_LINK##' => asset('/'),
 							'##SITE_NAME##' => 'Citymes',
 							'##MESSAGE##' => $MESSAGE
@@ -685,7 +685,7 @@ class BotController extends Controller
 							), function($message) use ($to_email)
 						{
 							$message->from('help@citymes.com');
-							$message->to($to_email, 'Citymes')->subject('[Citymes] Nou bot');
+							$message->to($to_email, 'Citymes')->subject('[Citymes] Nou b');
 						});
 			
 						if(isset($subscription['id']) && !empty($subscription['id']))

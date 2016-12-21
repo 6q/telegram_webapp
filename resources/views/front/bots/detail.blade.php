@@ -156,11 +156,13 @@
 						<?php
 						}
 						?>
+						<tfoot>
 						<tr>
 							<td colspan="5">
 								<a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
 							</td>
 						</tr>
+						</tfoot>
 						</tbody>
 					</table>
 					<div id="botAutoresponseNavPosition"></div>
