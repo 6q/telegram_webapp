@@ -83,6 +83,7 @@ class FrontUserController extends Controller
                 $data[$b1]['bot']['contact_form'] = $v1->contact_form;
                 $data[$b1]['bot']['galleries'] = $v1->galleries;
                 $data[$b1]['bot']['channels'] = $v1->channels;
+				$data[$b1]['bot']['is_subscribe'] = $v1->is_subscribe;
                 $data[$b1]['bot']['created_at'] = $v1->created_at;
                 $data[$b1]['bot']['updated_at'] = $v1->updated_at;
                 
@@ -187,6 +188,7 @@ class FrontUserController extends Controller
                 $chanel_data[$c1]['channel']['name'] = $c_v1->name;
                 $chanel_data[$c1]['channel']['description'] = $c_v1->description;
                 $chanel_data[$c1]['channel']['share_link'] = $c_v1->share_link;
+				$chanel_data[$c1]['channel']['is_subscribe'] = $c_v1->is_subscribe;
                 $chanel_data[$c1]['channel']['created_at'] = $c_v1->created_at;
                 $chanel_data[$c1]['channel']['updated_at'] = $c_v1->updated_at;
                 

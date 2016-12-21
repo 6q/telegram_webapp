@@ -516,6 +516,7 @@ class MyChannelController extends Controller {
 					if($sv1['id'] == $stripe_subscription_id)
 					{
 						$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+						DB::table('my_channels')->where('id', $channelID)->update(['is_subscribe' => 1]);
 						
 						$contactFormEmail = DB::table('site_settings')
 							->where('name','=','contact_form_email')

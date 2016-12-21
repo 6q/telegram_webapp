@@ -36,7 +36,18 @@
 						<tr>
 							<td style="text-align:left;padding:0 20px 20px">
 								<h3 style="font-size:16px; font-weight:bold;">
-									<a href="{!! URL::to('/bot/detail/'.$dv1['bot']['id']) !!}"><?php echo $dv1['bot']['username'];?></a>
+                                	<?php
+                                    	if($dv1['bot']['is_subscribe'] == 1){
+										?>
+                                        	<a href="javascript:void(0);"><?php echo $dv1['bot']['username'];?></a>
+                                        <?php
+										}
+										else{
+										?>
+                                        	<a href="{!! URL::to('/bot/detail/'.$dv1['bot']['id']) !!}"><?php echo $dv1['bot']['username'];?></a> 
+                                        <?php
+										}
+									?>
 								</h3>
 								<ul>
 									<li>
@@ -53,8 +64,19 @@
 								</ul>
 							</td>
                             <td>
-                                <a href="{!! URL::to('/bot/bot_subscription_cancel/'.$dv1['bot']['id']) !!}"
-                                   onclick="return confirm('Segur que vols cancelar la subscripció? No hi ha volta enrere');" data-toggle="tooltip" title="" data-original-title="Cancelar Subscripció"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>
+                            	<?php
+                                	if($dv1['bot']['is_subscribe'] == 1){
+										?>
+                                        	<a href="javascript:void(0);" title=""><i class="fa fa-toggle-off" aria-hidden="true"></i></a>
+                                        <?php
+									}
+									else{
+									?>
+                                  		<a href="{!! URL::to('/bot/bot_subscription_cancel/'.$dv1['bot']['id']) !!}"
+                                   onclick="return confirm('Segur que vols cancelar la subscripció? No hi ha volta enrere');" data-toggle="tooltip" title="" data-original-title="Cancelar Subscripció"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>  	
+                                    <?php
+									}
+								?>
                                 <a  href="{!! URL::to('/bot/bot_delete/'.$dv1['bot']['id']) !!}"
                                    onclick="return confirm('Segur que el vols eliminar? No hi ha volta enrere.');" data-toggle="tooltip" title="" data-original-title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
@@ -102,8 +124,18 @@
 								</ul>
 							</td>
                             <td>
-                                <a href="{!! URL::to('/my_channel/channel_subscription_cancel/'.$cv1['channel']['id']) !!}"
-                                   onclick="return confirm('Segur que vols cancelar la subscripció? No hi ha volta enrere');" data-toggle="tooltip" title="" data-original-title="Cancelar Subscripció"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>
+                            	<?php
+                                	if($cv1['channel']['is_subscribe'] == 1){
+										?>
+                                        	<a href="javascript:void(0);"><i class="fa fa-toggle-off" aria-hidden="true"></i></a>
+                                        <?php
+									}
+									else{
+										?>
+                                        	<a href="{!! URL::to('/my_channel/channel_subscription_cancel/'.$cv1['channel']['id']) !!}" onclick="return confirm('Segur que vols cancelar la subscripció? No hi ha volta enrere');" data-toggle="tooltip" title="" data-original-title="Cancelar Subscripció"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>      	
+                                        <?php	
+									}
+								?>
                                 <a href="{!! URL::to('/my_channel/channel_delete/'.$cv1['channel']['id']) !!}"
                                    onclick="return confirm('Segur que el vols eliminar? No hi ha volta enrere.');" data-toggle="tooltip" title="" data-original-title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
