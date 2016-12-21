@@ -86,7 +86,7 @@
 					jQuery(function($) {
 						var pageParts = $("#message_tbl_<?php echo $i;?> tbody tr");
 						var numPages = pageParts.length;
-						var perPage = 5;
+						var perPage = 20;
 						pageParts.slice(perPage).hide();
 						
 						$("#MessgNavPosition_<?php echo $i;?>").pagination({

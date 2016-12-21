@@ -938,7 +938,14 @@ p.h2 > img {
   text-align: center;
   width: 100%;
 }
-
+.pills_bot {
+  display:inline-block !important;
+  border:none !important;
+  margin-left:4px!important;
+}
+.pills_bot li a {
+  padding: 6px 12px !important;
+}
 .how-to-create {
   background-color: #efefef;
   border-radius: 8px;
@@ -1021,6 +1028,10 @@ p.h2 > img {
 }
 .crete_bot_form span > img {
   margin-left: 10px;
+}
+#bot_statistics #status_dropdown {
+  right:10px;
+  top:10px;
 }
 .submit > input {
   background: rgba(0, 0, 0, 0) linear-gradient(0deg, #426670, #3f6280) repeat scroll 0 0;
@@ -1110,7 +1121,9 @@ p.h2 > img {
   color:#DEE1E6;
   font-size:14px;
 }
-
+.dashboard_example {
+  width:100%;
+}
 .chat > img {
   display: block;
   margin: 0 auto;
