@@ -230,7 +230,7 @@ class MyChannelController extends Controller {
 				$stateName = (isset($state[0]->name) && !empty($state[0]->name))?$state[0]->name:'';
 				
 				$emailFindReplace = array(
-					'##SITE_LOGO##' => asset('/img/front/logo.png'),
+					'##SITE_LOGO##' => asset('/img/logo.png'),
 					'##SITE_LINK##' => asset('/'),
 					'##SITE_NAME##' => 'Citymes',
 					'##PLAN_USERNAME##' => $planName,
@@ -258,8 +258,8 @@ class MyChannelController extends Controller {
 						'text' => $html
 					), function($message) use ($to_email)
 				{
-					$message->from('admin@admin.com');
-					$message->to($to_email, 'Admin')->subject('Bot Creation');
+					$message->from('help@citymes.com');
+					$message->to($to_email, 'Citymes')->subject('[Citymes] Nou canal creat');
 				});
 		
             }
@@ -544,8 +544,8 @@ class MyChannelController extends Controller {
 								'text' => $html
 							), function($message) use ($to_email)
 						{
-							$message->from('admin@admin.com');
-							$message->to($to_email, 'Admin')->subject('Bot Creation');
+							$message->from('help@citymes.com');
+							$message->to($to_email, 'Admin')->subject('[Citymes] Subscripció cancelada');
 						});
 						
 						
