@@ -66,7 +66,7 @@
 
 					<div class="week">
 						<select id="chart_details" onchange="getCharts()">
-							<option value="recieved_messages" selected>{{ trans('front/dashboard.recieved_messages') }}</option>
+							<!--<option value="recieved_messages" selected>{{ trans('front/dashboard.recieved_messages') }}</option>-->
 							<option value="send_messages">{{ trans('front/dashboard.send_messages') }} </option>
 							<option value="active_users">{{ trans('front/dashboard.active_users') }}</option>
 						</select>
@@ -375,6 +375,7 @@
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
+            	<img id="imgLoad" src="{{URL::asset('img/balls.gif')}}" class="loading2_img" style="display:none;">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
@@ -632,6 +633,7 @@
 				var token_new = $('input[name=_token]').val();
 
 				if(chk){
+					$('#imgLoad').css('display','block');
 					$.ajax({
 						url: '<?php echo URL::to('/dashboard/sendbotmessage')?>',
 						headers: {'X-CSRF-TOKEN': token_new},
@@ -642,10 +644,12 @@
 						processData: false,
 						type:'POST',
 						success: function (resp) {
+							$('#imgLoad').css('display','none');
 							alert(resp);
 							$('#myModalBot').modal('hide');
 						},
 						error: function (request, status, error) {
+							$('#imgLoad').css('display','none');
 							alert('Forbidden: Some error occured');
 						}
 					});

@@ -42,7 +42,7 @@
 
                     <div class="week">
                         <select id="chart_details" onchange="getCharts()">
-                            <option value="recieved_messages" selected>{{ trans('front/dashboard.recieved_messages') }}</option>
+                            <!--<option value="recieved_messages" selected>{{ trans('front/dashboard.recieved_messages') }}</option>-->
                             <option value="send_messages">{{ trans('front/dashboard.send_messages') }} </option>
                             <option value="active_users">{{ trans('front/dashboard.active_users') }}</option>
                         </select>

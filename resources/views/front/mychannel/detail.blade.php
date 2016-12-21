@@ -133,6 +133,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
+            	<img id="imgLoad" src="{{URL::asset('img/balls.gif')}}" class="loading2_img" style="display:none;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">{{ trans('front/dashboard.send_a_message') }}</h4>
@@ -317,6 +318,7 @@
 				var token_new = $('input[name=_token]').val();
 				
 				if(chk){
+					$('#imgLoad').css('display','block');
 					$.ajax({
 						url: '<?php echo URL::to('/dashboard/sendmessage')?>',
 						headers: {'X-CSRF-TOKEN': token_new},
@@ -327,10 +329,12 @@
 						processData: false,
 						type:'POST',
 						success: function (resp) {
+							$('#imgLoad').css('display','none');
 							alert(resp);
 							$('#myModal').modal('hide');
 						},
 						error: function (request, status, error) {
+							$('#imgLoad').css('display','none');
 							alert('Forbidden: Some error occured');
 						}
 					});
