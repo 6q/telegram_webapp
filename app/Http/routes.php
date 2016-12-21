@@ -226,68 +226,9 @@ Route::post('/{bottoken}/webhook', function ($token) {
     $chatId = $data['message']['chat']['id'];
     $message_id = $data['message']['message_id'];
     
-    $bot_data = DB::table('bots')->where('bot_token', 'LIKE', '%'.$token.'%')->get();
+    $bot_data = DB::table('bots')->where('bot_token', 'LIKE', '%'.$token.'%')->where('is_subscribe','=','0')->get();
     $dbBotId = (isset($bot_data[0]->id) && $bot_data[0]->id!='')?$bot_data[0]->id:'';
-	
-	if(empty($messageText) && !empty($messageTextImg)){
-		$file_id = $data['message']['document']['thumb']['file_id'];	
-		$file_response = $telegram->getFile(['file_id' => $file_id]);
-		$arr = json_decode(json_encode($file_response));
-		$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
-		$messageText = $path;
-	}
-	
-	if(empty($messageText) && !empty($messageTextPhoto)){
-		file_put_contents(public_path().'/result.txt',json_encode($data['message']['photo'][0]['file_id']));		
-		if(isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id'])){
-			$file_id = $data['message']['photo'][0]['file_id'];
-			$file_response = $telegram->getFile(['file_id' => $file_id]);
-			$arr = json_decode(json_encode($file_response));
-			$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
-			$messageText = $path;
-		}
-	}
-	
-    
-    /* Add bot user */
-    $from_id = $data['message']['from']['id'];
-    $first_name = isset($data['message']['from']['first_name'])?$data['message']['from']['first_name']:'';
-    $last_name = isset($data['message']['from']['last_name'])?$data['message']['from']['last_name']:'';
-    
-    $bot_user = DB::table('bot_users')
-                    ->where('bot_id', '=', $dbBotId)
-                    ->where('first_name', 'LIKE', $first_name)
-                    ->get();
-    
-    $bot_user_id = '';
-    if(isset($bot_user[0]->id) && !empty($bot_user[0]->id)){
-        $bot_user_id = $bot_user[0]->id;
-    }
-    else{
-        $bot_user_id = DB::table('bot_users')->insertGetId(
-                ['bot_id' => $dbBotId, 'first_name' => $first_name, 'last_name' => $last_name, 'username' => '', 'fromid' => $from_id, 'created_at' => date('Y-m-d h:i:s'), 'modified_at' => date('Y-m-d h:i:s')]
-            );
-        
-        //file_put_contents(public_path().'/result.txt',$bot_user_id);
-    }
-    /*******************************************************/
-    
-    
-    
-    /* Bot Message */
-    if(!empty($bot_user_id)){
-        
-        //$date = $data['message']['date'];
-        $bot_msg_date = date('Y-m-d h:i:s');
-        
-        $bot_messages_id = DB::table('bot_messages')->insertGetId(
-                ['bot_id' => $dbBotId,'bot_user_id' => $bot_user_id,'date' => $bot_msg_date,'forward_from' => $from_id, 'forward_from_chat' => $chatId, 'forward_date' => $bot_msg_date, 'reply_to_chat' => '', 'reply_to_message' => '', 'text' => $messageText]
-            );
-    }    
-    /*******************************************************/
-    
-    
-    
+
     /*
     DB::table('tmp_bots')->insert(
         ['data_value' => serialize($bot_data)]
@@ -297,7 +238,66 @@ Route::post('/{bottoken}/webhook', function ($token) {
     
     
     
-    if(!empty($dbBotId)){
+    if(!empty($dbBotId))
+	{
+		//file_put_contents(public_path().'/result.txt',serialize($data));
+		if(empty($messageText) && !empty($messageTextImg)){
+			$file_id = $data['message']['document']['thumb']['file_id'];
+			$file_response = $telegram->getFile(['file_id' => $file_id]);
+			$arr = json_decode(json_encode($file_response));
+			$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
+			$messageText = $path;
+		}
+		
+		if(empty($messageText) && !empty($messageTextPhoto)){
+			file_put_contents(public_path().'/result.txt',json_encode($data['message']['photo'][0]['file_id']));		
+			if(isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id'])){
+				$file_id = $data['message']['photo'][0]['file_id'];
+				$file_response = $telegram->getFile(['file_id' => $file_id]);
+				$arr = json_decode(json_encode($file_response));
+				$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
+				$messageText = $path;
+			}
+		}
+		
+		
+		/* Add bot user */
+		$from_id = $data['message']['from']['id'];
+		$first_name = isset($data['message']['from']['first_name'])?$data['message']['from']['first_name']:'';
+		$last_name = isset($data['message']['from']['last_name'])?$data['message']['from']['last_name']:'';
+		
+		$bot_user = DB::table('bot_users')
+						->where('bot_id', '=', $dbBotId)
+						->where('first_name', 'LIKE', $first_name)
+						->get();
+		
+		$bot_user_id = '';
+		if(isset($bot_user[0]->id) && !empty($bot_user[0]->id)){
+			$bot_user_id = $bot_user[0]->id;
+		}
+		else{
+			$bot_user_id = DB::table('bot_users')->insertGetId(
+					['bot_id' => $dbBotId, 'first_name' => $first_name, 'last_name' => $last_name, 'username' => '', 'fromid' => $from_id, 'created_at' => date('Y-m-d h:i:s'), 'modified_at' => date('Y-m-d h:i:s')]
+				);
+			
+			//file_put_contents(public_path().'/result.txt',$bot_user_id);
+		}
+		/*******************************************************/
+		
+		
+		
+		/* Bot Message */
+		if(!empty($bot_user_id)){
+			
+			//$date = $data['message']['date'];
+			$bot_msg_date = date('Y-m-d h:i:s');
+			
+			$bot_messages_id = DB::table('bot_messages')->insertGetId(
+					['bot_id' => $dbBotId,'bot_user_id' => $bot_user_id,'date' => $bot_msg_date,'forward_from' => $from_id, 'forward_from_chat' => $chatId, 'forward_date' => $bot_msg_date, 'reply_to_chat' => '', 'reply_to_message' => '', 'text' => $messageText]
+				);
+		}    
+		/*******************************************************/
+		
 		
 		if($messageText != "\xE2\x97\x80"){
 			$quesRowId = DB::table('tmp_ques')
@@ -675,7 +675,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						  }
 						
 						$emailFindReplace = array(
-							'##SITE_LOGO##' => asset('/img/logo.png'),
+							'##SITE_LOGO##' => asset('/img/front/logo.png'),
 							'##SITE_LINK##' => asset('/'),
 							'##SITE_NAME##' => 'Citymes',
 							'##USERNAME##' => $userNAME,
@@ -694,8 +694,8 @@ Route::post('/{bottoken}/webhook', function ($token) {
 									'text' => $html
 								), function($message) use ($to_email)
 							{
-								$message->from('help@citymes.com');
-								$message->to($to_email, 'Citymes')->subject('[Citymes] Resposta a formulari de contacte');
+								$message->from('admin@admin.com');
+								$message->to($to_email, 'Admin')->subject('Contact form Creation');
 							});
 						}
 					
@@ -880,7 +880,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							  }
 							
 							$emailFindReplace = array(
-								'##SITE_LOGO##' => asset('/img/logo.png'),
+								'##SITE_LOGO##' => asset('/img/front/logo.png'),
 								'##SITE_LINK##' => asset('/'),
 								'##SITE_NAME##' => 'Citymes',
 								'##USERNAME##' => $userNAME,
@@ -899,8 +899,8 @@ Route::post('/{bottoken}/webhook', function ($token) {
 										'text' => $html
 									), function($message) use ($to_email)
 								{
-									$message->from('help@citymes.com');
-									$message->to($to_email, 'Citymes')->subject('[Citymes] Creació de formulari de contacte');
+									$message->from('admin@admin.com');
+									$message->to($to_email, 'Admin')->subject('Contact form Creation');
 								});
 							}
 						
@@ -1094,7 +1094,7 @@ Route::post('stripe/stripe_webhook', function (){
 			$template = $email_template[0]->description;
 			
 			$emailFindReplace = array(
-				'##SITE_LOGO##' => asset('/img/logo.png'),
+				'##SITE_LOGO##' => asset('/img/front/logo.png'),
 				'##SITE_LINK##' => asset('/'),
 				'##SITE_NAME##' => 'Citymes',
 				'##MESSAGE##' => $message
@@ -1107,8 +1107,8 @@ Route::post('stripe/stripe_webhook', function (){
 					'text' => $html
 				), function($message) use ($to_email)
 			{
-				$message->from('help@citymes.com');
-				$message->to($to_email, 'Citymes')->subject('[Citymes] Renovació de la subscipció');
+				$message->from('admin@admin.com');
+				$message->to($to_email, 'Admin')->subject('Subscription Renovation');
 			});
 		}
 	}
