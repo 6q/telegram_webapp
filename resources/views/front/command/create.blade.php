@@ -207,7 +207,7 @@
 					</label>
 				  </li>
 
-				  <li class="type_response">
+				  <!--<li class="type_response">
 					<span> {!! trans('front/command.type_of_response_expected') !!} </span>  
 					<div class="box">
 					  <select id="selectBox" name="type_response[0]">
@@ -215,7 +215,7 @@
 						<option value="image">Image</option>
 					  </select>
 					</div>	
-				  </li>
+				  </li>-->
 				
 				<li id="res"></li>	
 			
@@ -527,7 +527,10 @@ function myFunctionShow(id){
 		var i = $('#add_more').attr('data-rel');
 		i = parseInt(i)+1;
 		
+		var html = '<ul><li><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"></div></label></li></ul>';
+		/*
 		var html = '<ul><li><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"></div></label></li><li class="type_response"><span> {!! trans("front/command.type_of_response_expected") !!} </span><div class="box"><select name="type_response['+i+']" id="selectBox'+i+'"><option value="text">Text</option><option value="image">Image</option></select></div></li></ul>';
+		*/
 		
 		$('#add_more').attr('data-rel',i);
 		$('#res').append(html);

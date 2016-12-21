@@ -148,7 +148,7 @@ class CommandController extends Controller
 						$contact_form_ques = new ContactFormQuestion;
 						$contact_form_ques->contact_form_id = $contact_form_id;
 						$contact_form_ques->ques_heading = $v1;
-						$contact_form_ques->response_type = $request->get('type_response')[$k1];
+						//$contact_form_ques->response_type = $request->get('type_response')[$k1];
 						
 						$contact_form_ques->save();
 						$chk = 1;
@@ -520,7 +520,7 @@ class CommandController extends Controller
 				$contact_form = ContactForm::find($request->get('id'));
 				$contact_form->id = $request->get('id');
 				$contact_form->email = $request->get('email');
-				$contact_form->submenu_heading_text = $request->get('contact_submenu_heading_text');
+				$contact_form->submenu_heading_text = $request->get('submenu_heading_text');
 				$contact_form->headline = $request->get('headline');
 	
 				$contact_form->save();
@@ -533,7 +533,7 @@ class CommandController extends Controller
 						$contact_form_ques = new ContactFormQuestion;
 						$contact_form_ques->contact_form_id = $contact_form_id;
 						$contact_form_ques->ques_heading = $v1;
-						$contact_form_ques->response_type = $request->get('type_response')[$k1];
+						//$contact_form_ques->response_type = $request->get('type_response')[$k1];
 						$contact_form_ques->save();
 					}
 				}

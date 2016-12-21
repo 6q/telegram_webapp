@@ -1,8 +1,6 @@
 @extends('front.template')
 @section('main')
 
-
-
 	<div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
 		@include('front.top')
 
@@ -10,7 +8,7 @@
 			<div class="col-lg-9 col-dash">
 
 				<?php if(isset($total_bots) && !empty($total_bots)){ ?>
-                    <script type="text/javascript">
+					<script type="text/javascript">
                         google.charts.load('current', {'packages':['corechart']});
                         function drawChart(data_arr) {
                             var data = google.visualization.arrayToDataTable(data_arr);
@@ -36,27 +34,27 @@
                             var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
                             chart.draw(data, options_fullStacked);
                         }
-                    </script>
-                    <div class="status">
-                        <h4>{{ trans('front/dashboard.global_statistics') }}</h4>
+					</script>
+					<div class="status">
+						<h4>{{ trans('front/dashboard.global_statistics') }}</h4>
 
-                        {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}
+						{!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}
 
-                        <div class="week">
-                            <select id="chart_details" onchange="getCharts()">
-                                <option value="recieved_messages" selected>{{ trans('front/dashboard.recieved_messages') }}</option>
-                                <option value="send_messages">{{ trans('front/dashboard.send_messages') }} </option>
-                                <option value="active_users">{{ trans('front/dashboard.active_users') }}</option>
-                            </select>
-                        </div>
+						<div class="week">
+							<select id="chart_details" onchange="getCharts()">
+							<!--<option value="recieved_messages" selected>{{ trans('front/dashboard.recieved_messages') }}</option>-->
+								<option value="send_messages">{{ trans('front/dashboard.send_messages') }} </option>
+								<option value="active_users">{{ trans('front/dashboard.active_users') }}</option>
+							</select>
+						</div>
 
-                        <div class="week">
-                            <select id="chart_time" onchange="getCharts()">
-                                <option value="10_days" selected>{{ trans('front/dashboard.ten_days') }}</option>
-                                <option value="30_days">{{ trans('front/dashboard.thirty_days') }}</option>
-                                <option value="90_days">{{ trans('front/dashboard.ninety_days') }}</option>
-                            </select>
-                        </div>
+						<div class="week">
+							<select id="chart_time" onchange="getCharts()">
+								<option value="10_days" selected>{{ trans('front/dashboard.ten_days') }}</option>
+								<option value="30_days">{{ trans('front/dashboard.thirty_days') }}</option>
+								<option value="90_days">{{ trans('front/dashboard.ninety_days') }}</option>
+							</select>
+						</div>
 
                         <div class="week">
                             <select id="chart_bots" onchange="getCharts()">
