@@ -94,6 +94,11 @@
       </div>
 </div>
 
+<div id="alertMsg" style="display:none;">
+    <div id="resp" class="alert-new alert-success-new alert-dismissible" role="alert">
+    </div>
+</div>
+
 
 
 <style>
@@ -160,7 +165,9 @@ $(document).ready(function()
 		returnType: "json",
 		onSelect : function(e, data) {
             if(e.length > totalUpImg){
-				alert('Image upload limit is '+totalUpImg);
+				$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Image upload limit is '+totalUpImg);
+				$('.alert-new').css('display','block');
+				$('#alertMsg').css('display','block');
 				return false;
 			}
         },

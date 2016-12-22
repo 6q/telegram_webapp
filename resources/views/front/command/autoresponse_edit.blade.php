@@ -95,7 +95,10 @@
 </div>
 
 
-
+<div id="alertMsg" style="display:none;">
+    <div id="resp" class="alert-new alert-success-new alert-dismissible" role="alert">
+    </div>
+</div>
 
 
 <script>
@@ -115,7 +118,9 @@
 				image_holder.show();
 				reader.readAsDataURL($(this)[0].files[0]);
 			} else {
-				alert("This browser does not support FileReader.");
+				$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>This browser does not support FileReader.');
+				$('.alert-new').css('display','block');
+				$('#alertMsg').css('display','block');
 			}
 		});
     });

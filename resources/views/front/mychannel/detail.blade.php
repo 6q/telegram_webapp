@@ -128,6 +128,11 @@
 
 </div>
 
+<div id="alertMsg" style="display:none;">
+    <div id="resp" class="alert-new alert-success-new alert-dismissible" role="alert">
+    </div>
+</div>
+
 <div id="myModal" class="modal fade" role="dialog" style="display:none;">
         <div class="modal-dialog">
 
@@ -330,12 +335,15 @@
 						type:'POST',
 						success: function (resp) {
 							$('#imgLoad').css('display','none');
-							alert(resp);
+							$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'+resp);
+							$('.alert-new').css('display','block');
+							$('#alertMsg').css('display','block');
 							$('#myModal').modal('hide');
 						},
 						error: function (request, status, error) {
 							$('#imgLoad').css('display','none');
-							alert('Forbidden: Some error occured');
+							$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Forbidden: Some error occured');
+							$('.alert-new').css('display','block');
 						}
 					});
 				}				

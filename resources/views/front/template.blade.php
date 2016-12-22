@@ -91,9 +91,13 @@
             */
 			
 			$(function() {
-				setTimeout(function() {
+				setInterval(function() {
 					$(".alert").hide()
 				}, 5000);
+				
+				setInterval(function() {
+					$("#alertMsg").hide()
+				}, 8000);
 			});
 		</script>
 

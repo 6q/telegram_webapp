@@ -602,6 +602,11 @@
 
 	</div>
 
+<div id="alertMsg" style="display:none;">
+    <div id="resp" class="alert-new alert-success-new alert-dismissible" role="alert">
+    </div>
+</div>
+
 
 	<!-- Modal -->
 	<div id="nickNameModal" class="modal fade" role="dialog" style="display:none";>
@@ -776,12 +781,16 @@
 						muFunction(id);
 					}
 					else{
-						alert('Some error occured. Please check bot token and username');
+						$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Some error occured. Please check bot token and username');
+						$('.alert-new').css('display','block');
+						$('#alertMsg').css('display','block');
 						return false;
 					}
 				},
 				error: function (request, status, error) {
-					alert('Some error occured. Please check bot token and username');
+					$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Some error occured. Please check bot token and username');
+					$('.alert-new').css('display','block');
+					$('#alertMsg').css('display','block');
 					return false;
 				}
 			});
