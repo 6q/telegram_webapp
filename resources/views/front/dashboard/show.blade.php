@@ -79,6 +79,11 @@
 
 </div>
 
+<div id="alertMsg" style="display:none;">
+    <div id="resp" class="alert-new alert-success-new alert-dismissible" role="alert">
+    </div>
+</div>
+
 @stop
 
 @section('scripts')
@@ -182,7 +187,9 @@
 						$('#comment' + data.id).parents('.commentitem').remove();
 					})
 					.fail(function() {
-						alert('{{ trans('front/blog.fail-delete') }}');
+						$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>{{ trans('front/blog.fail-delete') }}');
+						$('.alert-new').css('display','block');
+						$('#alertMsg').css('display','block');
 					});					
 				});
 

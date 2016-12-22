@@ -657,6 +657,7 @@ class BotController extends Controller
 					if($sv1['id'] == $stripe_subscription_id)
 					{
 						$subscription = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+						DB::table('bots')->where('id', $botID)->update(['is_subscribe' => 1]);
 						
 						$contactFormEmail = DB::table('site_settings')
 							->where('name','=','contact_form_email')
