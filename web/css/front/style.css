@@ -300,7 +300,7 @@ h1.logo {
   border-bottom: 1px solid #EFEFEF;
   display: inline-block;
   margin-bottom: 30px;
-  padding: 20px;
+  padding: 20px 20px 0;
   width: 100%;
 }
 .my_account h4 {
@@ -1457,7 +1457,12 @@ img {
   position: absolute;
   top: 46px;
   width: 100%;
+}
+.bots .days_preparing p.h2 > a span {
   color:#28B1D3;
+}
+.canals .days_preparing p.h2 > a span {
+  color:#55BBB5;
 }
 #menu .languages {
   position: absolute;

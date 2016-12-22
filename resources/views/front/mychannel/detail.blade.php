@@ -5,41 +5,60 @@
 {!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-	google.charts.load('current', {'packages':['corechart']});
-	function drawChart(data_arr) {
-		var data = google.visualization.arrayToDataTable(data_arr);
 
-		var options_fullStacked = {
-            title: '',
-            chartArea:{left:40,top:5,bottom:60,width:"100%",height:"100%"},
-            curveType: 'function',
-            tooltip: {
-                isHtml: true
-            },
-            vAxis: {
-                viewWindow: {
-                    min:0
-                }
-            },
-            lineWidth: 5,
-            pointSize: 10,
-            colors: ['#00B09E'],
-            legend: { position: 'bottom' }
-        };
-
-
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-		chart.draw(data, options_fullStacked);
-	}
-</script>
 
 
 <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
 
     @include('front.top')
+	<div id="bot_statistics">
+		<script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            function drawChart(data_arr) {
+                var data = google.visualization.arrayToDataTable(data_arr);
 
+                var options_fullStacked = {
+                    title: '',
+                    chartArea:{left:0,top:0,bottom:10,width:"100%",height:"100%",background:"#000"},
+                    curveType: 'function',
+                    tooltip: {
+                        isHtml: true
+                    },
+                    vAxis: {
+                        viewWindow: {
+                            min:0
+                        }
+                    },
+                    lineWidth: 5,
+                    pointSize: 10,
+                    colors: ['#00B09E'],
+                    legend: { position: 'bottom' },
+
+                };
+
+
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                chart.draw(data, options_fullStacked);
+            }
+		</script>
+		<div class="status">
+
+			{!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}
+			<div class="week">
+				<select id="chart_time" onchange="getCharts()">
+					<option value="10_days" selected>{{ trans('front/dashboard.ten_days') }}</option>
+					<option value="30_days">{{ trans('front/dashboard.thirty_days') }}</option>
+					<option value="90_days">{{ trans('front/dashboard.ninety_days') }}</option>
+				</select>
+			</div>
+			{!! Form::close() !!}
+
+		</div>
+		<div class="graph botDetail">
+			<img src="{{URL::asset('img/balls.gif')}}" class="loading_img">
+			<div id="chart_div" style="height: 300px;"></div>
+		</div>
+	</div>
 	<div class="my_account col-user">
 		<div class="col-lg-2">
 			<img src="{{URL::asset('img/front/channel.png')}}">
@@ -47,7 +66,6 @@
 		<div class="col-lg-10">
 			<ul>
 				<li style="font-size:20px"><h4>{!! $chanels[0]->name !!}</h4></li>
-				<li><b>{{ trans('front/MyChannel.description') }}:</b> {!! $chanels[0]->description !!}</li>
 				<li>
 					<b>{{ trans('front/MyChannel.share_link') }}:</b> <a href="{!! $chanels[0]->share_link !!}" target="_blank">{!! $chanels[0]->share_link !!}</a>
 				</li>
@@ -57,34 +75,13 @@
 			</ul>
 			<br>
 			<p>
-				<a href="{!! URL::to('/my_channel/update_channel/'.$chanels[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.edit_channel') !!}</a>
-				<a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $chanels[0]->id;?>');">{{ trans('front/dashboard.send_message') }}</a>
+				<a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $chanels[0]->id;?>');"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ trans('front/dashboard.send_message') }}</a>
+				<a href="{!! URL::to('/my_channel/update_channel/'.$chanels[0]->id) !!}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> {!! trans('front/dashboard.edit_channel') !!}</a>
 			</p>
 		</div>
 	</div>
 
-    
-    <div class="my_account">
-      	<div class="col-lg-12 col-dash">
-      		<div class="status">
-        
-                {!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}        
-                <div class="week">
-                    <select id="chart_time" onchange="getCharts()">
-                        <option value="10_days" selected>{{ trans('front/dashboard.ten_days') }}</option>
-                        <option value="30_days">{{ trans('front/dashboard.thirty_days') }}</option>
-                        <option value="90_days">{{ trans('front/dashboard.ninety_days') }}</option>
-                    </select>
-                </div>
-                {!! Form::close() !!}
-        
-            </div>
-     		<div class="graph botDetail">
-                <img src="{{URL::asset('img/balls.gif')}}" class="loading_img">
-                <div id="chart_div" style="height: 300px;"></div>
-              </div>
-      	</div>
-      </div>
+
 
     
     <div class="col-lg-12">

@@ -25,7 +25,7 @@ return [
 	'send_messages' => 'Mensajes enviados',
 	'active_users' => 'Usuari@s activos',
 	'error' => 'Error',
-	'send_message' => 'Mensajes enviados',
+	'send_message' => 'Enviar mensaje',
 	'edit_bot' => 'Editar Bot',
 	'edit_channel' => 'Editar Canal',
     'about' => 'Hace',
@@ -40,5 +40,6 @@ return [
     'manage' => 'Gestionar',
     'search' => 'Buscar',
     'and_or_attach_an_image' => 'También puedes enviar una imagen (sola o con el texto):',
-    'send' => 'Enviar'
+    'send' => 'Enviar',
+    'create_command' => 'Nuevo submenú',
 ];
