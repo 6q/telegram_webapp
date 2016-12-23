@@ -3,10 +3,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{{ trans('front/site.title') }}</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
 		@yield('head')
 		<script src="https://use.fontawesome.com/f73f310856.js"></script>
-
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 		{!! HTML::style('css/front/style.css') !!}
@@ -66,8 +65,13 @@
                     jQuery(".datepicker").datepicker();
                 });
             });
+            function isTouchDevice(){
+                return true == ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch);
+            }
             jQuery(document).ready(function(){
-                jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottomreat el"});
+                if(isTouchDevice()===false) {
+                    jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottomreat el"});
+                }
             });
 
             jQuery(document).ready(function() {
@@ -82,13 +86,19 @@
                 // It can be called as many times as necessary; previously converted input fields will not be converted again
                 window.emojiPicker.discover();
             });
-            /*
+
             jQuery(document).ready(function(){
-                $('body').Emoji({
+                $('.chat_tab').Emoji({
+                    path:'https://app.citymes.com/img/apple40/'
+                });
+                $('h2').Emoji({
+                    path:'https://app.citymes.com/img/apple40/'
+                });
+                $('td').Emoji({
                     path:'https://app.citymes.com/img/apple40/'
                 });
             });
-            */
+
 			
 			$(function() {
 				setInterval(function() {

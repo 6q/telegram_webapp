@@ -39,7 +39,7 @@
                 @endif
           <h2>{!! trans('front/command.select_type') !!}</h2>
           <ul class="row select_type">
-            <li class="col-xs-6 col-sm-3">
+            <li class="col-xs-3 col-sm-3">
               <?php
                if(isset($plan[0]->autoresponses) && count($totalAutoresponses) >= $plan[0]->autoresponses){
                 ?>
@@ -66,7 +66,7 @@
               ?>
             </li>
             
-            <li class="col-xs-6 col-sm-3">
+            <li class="col-xs-3 col-sm-3">
 			<?php
 				if(isset($plan[0]->contact_forms) && count($totalContact_forms) >= $plan[0]->contact_forms){
 				?>
@@ -91,7 +91,7 @@
 				<?php }?>
             </li>
             
-            <li class="col-xs-6 col-sm-3">
+            <li class="col-xs-3 col-sm-3">
 				<?php
 					if(isset($plan[0]->image_gallery) && count($totalGallery) >= $plan[0]->image_gallery){
 					?>
@@ -118,7 +118,7 @@
 				?>
             </li>
             
-            <li class="col-xs-6 col-sm-3">
+            <li class="col-xs-3 col-sm-3">
               <a class="tab_section" id="tab_4" href="javascript:void(0);" onclick="myFunctionShow(4);"> 
                 <span>
                   {!! HTML::image('img/front/s4.png','',array('class' => 'select')) !!}

@@ -7,7 +7,7 @@ return [
 	'last' => 'Últimos',
 	'days' => 'Días',
 	'recieved_message' => 'Mensaje Recibido',
-	'global_statistics' => 'Estadísticas Totales',
+	'global_statistics' => 'Estadísticas de los bots',
 	'this_week' => 'Esta semana',
 	'this_month' => 'Este mes',
 	'this_year' => 'Este año',

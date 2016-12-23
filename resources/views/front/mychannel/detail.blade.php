@@ -69,7 +69,6 @@
 				<li>
 					<b>{{ trans('front/MyChannel.share_link') }}:</b> <a href="{!! $chanels[0]->share_link !!}" target="_blank">{!! $chanels[0]->share_link !!}</a>
 				</li>
-
 				<li>
 				</li>
 			</ul>

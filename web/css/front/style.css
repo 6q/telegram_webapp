@@ -297,7 +297,6 @@ h1.logo {
   color: #727575;
 }
 .my_account {
-  border-bottom: 1px solid #EFEFEF;
   display: inline-block;
   margin-bottom: 30px;
   padding: 20px 20px 0;
@@ -610,7 +609,10 @@ div.buying_table {
   float:left;
 }
 .bot_command_content {
-  border-bottom: 1px solid #e8e8e8;
+  margin-bottom:40px;
+}
+.nav-tabs {
+  border:0 !important;
 }
 .week {
   float: right;
@@ -939,12 +941,12 @@ p.h2 > img {
   width: 100%;
 }
 .pills_bot {
-  display:inline-block !important;
-  border:none !important;
-  margin-left:4px!important;
+  display:inline-block;
+  border:none;
+  margin-left:4px;
 }
 .pills_bot li a {
-  padding: 6px 12px !important;
+  padding: 5.5px 12px !important;
 }
 .how-to-create {
   background-color: #efefef;
@@ -1130,7 +1132,10 @@ p.h2 > img {
   max-width: 100%;
 }
 .bot_command {
-  padding: 20px;
+  padding: 0 20px 20px;
+}
+.my_account.telegram {
+  margin-bottom:0;
 }
 .submenu > h4 {
   margin: 0;
@@ -1730,6 +1735,32 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
   }
 }
 @media (max-width:767px){
+  #sidebar .col-content_tab {
+    display:none;
+  }
+  .status {
+    display:none;
+  }
+  .graph {
+    display:none;
+  }
+  .btn {
+    width:100%;
+    margin:10px 0;
+  }
+  .nav-pills > li {
+    width:100%;
+    margin:10px 0;
+  }
+  .nav-pills > li > a {
+    width:100%;
+    margin:0;
+  }
+  ul.pills_bot {
+    width:100%;
+    margin:0;
+    padding:0;
+  }
   section.col_top {
     padding-bottom:100px
   }
@@ -1799,9 +1830,6 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
   h1.logo {
     margin: 0 0 20px;
   }
-  #sidebar {
-    padding-bottom: 20px;
-  }
   .col-about {
     display: block;
     float: none;
@@ -1839,7 +1867,7 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
   }
   #sidebar {
     margin-top: 70px;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
   }
 }
 
@@ -1874,14 +1902,12 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
   .modify_icon > a {
     padding: 4px 12px;
   }
-  .select_type li {
-    display: block;
-    float: none;
-    margin-bottom: 20px;
-    width: 100%;
+  .select_type li h4 {
+    font-size:10px
   }
 }
-@media (max-width:420px){.logo img {
+@media (max-width:420px){
+  .logo img {
   max-width: none;
 }
   .buing_row {

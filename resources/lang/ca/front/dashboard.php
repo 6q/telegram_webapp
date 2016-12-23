@@ -9,7 +9,7 @@ return [
 	'active_users' => 'Usuaris actius',
 	'activity_last_days' => 'Activitat dels últims 30 dies',
 	'recieved_message' => 'Missatges rebuts',
-	'global_statistics' => 'Estadístiques Totals',
+	'global_statistics' => 'Estadístiques dels bots',
 	'ten_days' => 'Últims 10 dies',
 	'thirty_days' => 'Últims 30 dies',
 	'ninety_days' => 'Últims 90 dies',
