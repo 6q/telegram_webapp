@@ -23,6 +23,11 @@ footer {
   bottom: 0;
 
 }
+.loading_ajax_img {
+  position: absolute;
+  vertical-align: top;
+  width: 52px;
+}
 footer a {
   color:#fff;
   font-weight:bold;

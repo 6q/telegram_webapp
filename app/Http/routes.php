@@ -71,6 +71,21 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('bot/setweb_hook', 'BotController@setweb_hook');
     Route::get('bot/update_bot/{bot_id?}', 'BotController@edit_bot');
     Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
+	
+	Route::post('bot/get_autoresponse/{bot_id?}', 'BotController@paginate_autoresponse');
+	Route::post('bot/get_contact_form/{bot_id?}', 'BotController@paginate_contact_form');
+	Route::post('bot/get_bot_message/{bot_id?}', 'BotController@paginate_bot_message');
+	Route::post('bot/get_gallery/{bot_id?}', 'BotController@paginate_gallery');
+	Route::post('bot/get_channel/{bot_id?}', 'BotController@paginate_channel');
+	Route::post('bot/get_bot_active_user/{bot_id?}', 'BotController@paginate_active_user');
+	
+	Route::post('my_channel/get_channel_msg/{channelId?}', 'MyChannelController@paginate_channel_msg');
+	Route::post('front_user/get_bots/{channelId?}', 'FrontUserController@paginate_bots');
+	Route::post('front_user/get_chanel/{channelId?}', 'FrontUserController@paginate_get_chanel');
+	Route::post('front_user/get_bot_transaction/{channelId?}', 'FrontUserController@paginate_bot_transaction');
+	
+	Route::post('messages/get_messages/{botId?}', 'MessageController@paginate_bot_message');
+	
 	Route::get('bot/bot_delete/{bot_id?}', 'BotController@bot_delete');
 	Route::get('bot/bot_subscription_cancel/{bot_id?}', 'BotController@bot_subscription_cancel');
    

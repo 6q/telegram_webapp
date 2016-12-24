@@ -21,6 +21,9 @@ class MyChannelController extends Controller {
     public function __construct() {
 		parent::login_check();
         parent::getTotalbot_chanel();
+		
+		define('PAGE_DATA_LIMIT','10');
+		define('PAGE_ADJACENTS','3');
         
     }
 
@@ -278,17 +281,45 @@ class MyChannelController extends Controller {
        	$search = '';
        	if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
             $search = $_REQUEST['search'];
-       	}
-        
+       	}		
+		
+		$limit = PAGE_DATA_LIMIT; 
+        $page = 1;
+		$adjacents = PAGE_ADJACENTS;
+		
         if (!empty($botid)) {
             $chanels = DB::table('my_channels')->where('id', '=', $botid)->get();
             
-            $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $botid)->orderby('id','desc')->get();
+			$Total_chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $botid)->get();
+			$total_pages = count($Total_chanelMesg);
+		
+            $chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $botid)->orderby('id','desc')->limit($limit)->get();
            // echo '<pre>';print_r($chanels);die;
 
-            return view('front.mychannel.detail', compact('chanels','total_bots','total_chanels','Form_action','search','chanelMesg','bots'));
+            return view('front.mychannel.detail', compact('chanels','total_bots','total_chanels','Form_action','search','chanelMesg','bots','total_pages','limit','page','adjacents'));
         }
     }
+	
+	public function paginate_channel_msg(Request $request){
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_DATA_LIMIT;
+		$channelId = $request->get('channelId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$Total_chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $channelId)->get();
+		$total_pages = count($Total_chanelMesg);
+		
+		$chanelMesg = DB::table('channel_send_message')->where('channel_id', '=', $channelId)->limit($limit)->offset($start)->get();
+		
+		return view('front.mychannel.paginnate_channel_message', compact('chanelMesg','total_pages','limit','channelId','current_page','adjacents'));
+	}
 	
 	
 	public function getchannelcharts(Request $request){
