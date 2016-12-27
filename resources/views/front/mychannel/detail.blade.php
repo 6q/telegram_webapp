@@ -86,7 +86,8 @@
     <div class="col-lg-12">
          <div class="col-plan">
           <h2>{{ trans('front/MyChannel.messages_activity') }}</h2>
-          <table id="channelMessages">
+          <div id="a_autoResp">
+	          <table id="channelMessages">
             <thead>
               <tr>
                 <th>{{ trans('front/MyChannel.channel_name') }}</th>
@@ -117,7 +118,102 @@
               ?>
             </tbody>
           </table>
-          <div id="channelMessagesNavPosition"></div>
+    	      <div id="channelMessagesNavPosition" class="light-theme simple-pagination">
+          	<?php
+				$lastpage = 0;
+				if($total_pages > 0)
+				{
+					$prev = $page - 1;
+					$next = $page + 1;
+					$lastpage = ceil($total_pages/$limit);
+					$lpm1 = $lastpage - 1;
+				}	
+	
+				$pagination = '';
+				if($lastpage >= 1)
+				{
+					$pagination = '<ul>';
+					
+					if ($page > 1) 
+						$pagination.= '<li><a href="javascript:void(0)" class="page-link" onclick="changePagination('."'0','first','".$bots[0]->id."'".')")">&lt;</a>';
+					else
+						$pagination.= '<li class="disabled"><span class="current prev">&lt;</span></li>';	
+						
+						
+					if ($lastpage < 7 + ($adjacents * 2))
+					{	
+						for ($counter = 1; $counter <= $lastpage; $counter++)
+						{
+							if ($counter == $page)
+								$pagination.= '<li class="active"><span class="current">'.$counter.'</span></li>';
+							else
+								$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$counter.'</a></li>';					
+						}
+					}	
+					elseif($lastpage > 5 + ($adjacents * 2))
+					{
+						if($page < 1 + ($adjacents * 2))		
+						{
+							for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
+							{
+								if ($counter == $page)
+									$pagination.= '<li class="active"><span class="current">'.$counter.'</span>';
+								else
+									$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$counter.'</a></li>';				
+							}
+							$pagination.= '<li><span class="ellipse clickable">...</span></li>';
+							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lpm1."','".$lpm1."_no', '".$bots[0]->id."'".')">'.$lpm1.'</a></li>';
+							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lastpage."','".$lastpage."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';	
+						}
+						elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
+						{
+							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'1','1_no', '".$bots[0]->id."'".')">1</a></li>';
+							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
+							$pagination.= '<li><span class="ellipse clickable">...</span></li>';
+							for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
+							{
+								if ($counter == $page)
+									$pagination.= '<li class="active"><span class="current">'.$counter.'</span>';
+								else
+									$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';					
+							}
+							$pagination.= '<li><span class="ellipse clickable">...</span></li>';
+							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lpm1."','".$lpm1."_no','".$bots[0]->id."'".')">'.$lpm1.'</a></li>';
+								$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lastpage."','".$lastpage."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';		
+						}
+						else
+						{
+							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'1','1_no','".$bots[0]->id."'".')">1</a></li>';
+							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
+							$pagination.= '<li><span class="ellipse clickable">...</span></li>';
+							for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
+							{
+								if ($counter == $page)
+									$pagination.= '<li class="active"><span class="current">'.$counter.'</span>';
+								else
+									$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$counter.'</a></li>';					
+							}
+						}
+					}
+					
+					if ($page < $counter - 1) 
+					{
+						$pagination.= '<li><a class="page-link next" href="javascript:void(0)" onclick="changePagination('."'".$next."','".$next."_no', '".$bots[0]->id."'".')">&gt;</a></li>';
+					}
+					else
+					{
+						$pagination.= '<li class="active"><span class="current next">&gt;</span>';
+					}
+	
+					$pagination .= '</ul>';
+				}
+				
+				echo $pagination;
+			?>
+				<img id="imgLoadAjax" src="{{URL::asset('img/balls.gif')}}" class="loading_ajax_img" style="display:none;">
+          </div>
+          </div>            
+			          </div>
         </div>
     </div>
 
@@ -212,23 +308,21 @@
 	}
 	
 	
-	jQuery(function($) {
-		var pageParts = $("#channelMessages tbody tr");
-		var numPages = pageParts.length;
-		var perPage = 10;
-		pageParts.slice(perPage).hide();
-		
-		$("#channelMessagesNavPosition").pagination({
-			items: numPages,
-			itemsOnPage: perPage,
-			cssStyle: "light-theme",
-			onPageClick: function(pageNum) {
-				var start = perPage * (pageNum - 1);
-				var end = start + perPage;
-				pageParts.hide().slice(start, end).show();
+	function changePagination(pageId,liId,channelId)
+	{
+		$('#imgLoadAjax').css('display','inline-block');
+		var token = $('input[name=_token]').val();
+		$.ajax({
+			url: '<?php echo URL::to('/my_channel/get_channel_msg')?>/'+channelId,
+			headers: {'X-CSRF-TOKEN': token},
+			data: {pageId: pageId,channelId:channelId},
+			type:'POST',
+			success: function (resp) {
+				$('#imgLoadAjax').css('display','none');
+				$('#a_autoResp').html(resp);
 			}
 		});
-	});
+	}
 	
 	
 	 function mypopupfunction(channel_id){

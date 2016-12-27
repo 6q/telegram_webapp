@@ -29,6 +29,11 @@ class BotController extends Controller
     public function __construct() {
 		parent::login_check();
         parent::getTotalbot_chanel();
+		
+		define('PAGE_DATA_LIMIT','1');
+		define('PAGE_DATA_LIMIT_MESSAGE','10');
+		define('PAGE_DATA_LIMIT_USER','5');
+		define('PAGE_ADJACENTS','3');
     }
     
          
@@ -363,7 +368,7 @@ class BotController extends Controller
     public function detail($botid = NULL){
         $total_bots = $this->botsTOTAL;
         $total_chanels = $this->chanelTOTAL;
-        
+		        
         $Form_action = 'bot/detail/'.$botid;
         
         $search = '';
@@ -371,6 +376,34 @@ class BotController extends Controller
             $search = $_REQUEST['search'];
         }
         
+		$Total_autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->get();
+		$total_pages = count($Total_autoResponse);
+		
+		$Total_contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->get();
+		$total_pages_contatc_form = count($Total_contactForm);
+		
+		$Total_galleries = DB::table('galleries')->where('type_id', '=', $botid)->get();
+		$total_pages_gallery = count($Total_galleries);
+		
+		$Total_chanels = DB::table('chanels')->where('type_id', '=', $botid)->get();
+		$total_pages_chanels = count($Total_chanels);
+		
+		$Total_activeUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
+		$total_pages_activeUser = count($Total_activeUser);
+		
+		$Total_message = DB::table('bot_messages')
+                                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                                ->where('bot_messages.bot_id', '=', $botid)
+	                            ->orderby('bot_messages.id','DESC')
+	                            ->get();
+		$total_pages_message = count($Total_message);
+		
+		$limit = PAGE_DATA_LIMIT; 
+		$limitMessage = PAGE_DATA_LIMIT_MESSAGE;
+		$limitUser = PAGE_DATA_LIMIT_USER;
+		$adjacents = PAGE_ADJACENTS;
+		$page = 1;
+				
         if(!empty($botid)){
             $bots = DB::table('bots')->where('id', '=', $botid)->get();
 		    //echo '<pre>';print_r($bots);die;
@@ -379,21 +412,25 @@ class BotController extends Controller
                 $autoResponse = DB::table('autoresponses')
                                     ->where('type_id', '=', $botid)
                                     ->where('submenu_heading_text', 'LIKE', '%'.$search.'%')
+									->limit($limit)
                                     ->get();
                 
                 $contactForm = DB::table('contact_forms')
                                     ->where('type_id', '=', $botid)
                                     ->where('submenu_heading_text', 'LIKE', '%'.$search.'%')
+									->limit($limit)
                                     ->get();
                 
                 $gallery = DB::table('galleries')
                                     ->where('type_id', '=', $botid)
                                     ->where('gallery_submenu_heading_text', 'LIKE', '%'.$search.'%')
+									->limit($limit)
                                     ->get();
                 
                 $chanels = DB::table('chanels')
                                     ->where('type_id', '=', $botid)
                                     ->where('chanel_submenu_heading_text', 'LIKE', '%'.$search.'%')
+									->limit($limit)
                                     ->get();
                 
                 $activeUser = '';
@@ -401,23 +438,169 @@ class BotController extends Controller
                 
             }
             else{
-                $autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->get();
-                $contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->get();
-                $gallery = DB::table('galleries')->where('type_id', '=', $botid)->get();
-                $chanels = DB::table('chanels')->where('type_id', '=', $botid)->get();
+                $autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->limit($limit)->get();
+                $contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->limit($limit)->get();
+                $gallery = DB::table('galleries')->where('type_id', '=', $botid)->limit($limit)->get();
+                $chanels = DB::table('chanels')->where('type_id', '=', $botid)->limit($limit)->get();
                 
-                $activeUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
+                $activeUser = DB::table('bot_users')->where('bot_id', '=', $botid)->limit($limitUser)->get();
                 
                 $botMessages = DB::table('bot_messages')
                                 ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
                                 ->where('bot_messages.bot_id', '=', $botid)
 	                            ->orderby('bot_messages.id','DESC')
+								->limit($limitMessage)
 	                            ->get();
+								
+								
             }
-            
-            return view('front.bots.detail', compact('bots','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages'));	
+
+            return view('front.bots.detail', compact('bots','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages','','total_pages','limit','limitMessage','adjacents','page','total_pages_contatc_form','total_pages_message','total_pages_gallery','total_pages_chanels','limitUser','total_pages_activeUser'));	
         }
     }
+	
+	
+	
+	public function paginate_autoresponse(Request $request)
+	{
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_DATA_LIMIT;
+		$botid = $request->get('botId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$Total_autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->get();
+		$total_pages = count($Total_autoResponse);
+		
+		$autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		
+		return view('front.bots.paginnate_autoresponse', compact('autoResponse','total_pages','limit','botid','current_page'));
+	}
+	
+	public function paginate_contact_form(Request $request){
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_DATA_LIMIT;
+		$botid = $request->get('botId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$Total_contact_forms = DB::table('contact_forms')->where('type_id', '=', $botid)->get();
+		$total_pages_contatc_form = count($Total_contact_forms);
+		
+		$contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		
+		return view('front.bots.paginnate_contact_form', compact('contactForm','total_pages_contatc_form','limit','botid','current_page','adjacents'));
+	}
+	
+	public function paginate_gallery(Request $request){
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_DATA_LIMIT;
+		$botid = $request->get('botId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$Total_galleries = DB::table('galleries')->where('type_id', '=', $botid)->get();
+		$total_pages_gallery = count($Total_galleries);
+		
+		$gallery = DB::table('galleries')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		
+		return view('front.bots.paginnate_gallery', compact('gallery','total_pages_gallery','limit','botid','current_page','adjacents'));
+	}
+	
+	public function paginate_channel(Request $request){
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_DATA_LIMIT;
+		$botid = $request->get('botId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$Total_chanels = DB::table('chanels')->where('type_id', '=', $botid)->get();
+		$total_pages_chanels = count($Total_chanels);
+		
+		$chanels = DB::table('chanels')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		
+		return view('front.bots.paginnate_chanel', compact('chanels','total_pages_chanels','limit','botid','current_page','adjacents'));
+	}
+	
+	public function paginate_active_user(Request $request){
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_DATA_LIMIT_USER;
+		$botid = $request->get('botId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$Total_bot_users = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
+		$total_pages_activeUser = count($Total_bot_users);
+		
+		$activeUser = DB::table('bot_users')->where('bot_id', '=', $botid)->limit($limit)->offset($start)->get();
+		
+		return view('front.bots.paginnate_activeUser', compact('activeUser','total_pages_activeUser','limit','botid','current_page','adjacents'));
+	}
+	
+	
+	public function paginate_bot_message(Request $request){
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_DATA_LIMIT_MESSAGE;
+		$botid = $request->get('botId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$Total_message = DB::table('bot_messages')
+                                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                                ->where('bot_messages.bot_id', '=', $botid)
+	                            ->orderby('bot_messages.id','DESC')
+	                            ->get();
+		$total_pages_message = count($Total_message);
+		
+		$botMessages = DB::table('bot_messages')
+                                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                                ->where('bot_messages.bot_id', '=', $botid)
+	                            ->orderby('bot_messages.id','DESC')
+								->limit($limit)
+								->offset($start)
+	                            ->get();
+										
+		return view('front.bots.paginnate_bot_message', compact('botMessages','total_pages_message','limit','botid','current_page','adjacents'));
+	}
+	
+	
+
     
     
 
