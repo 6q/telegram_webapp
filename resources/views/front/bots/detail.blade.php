@@ -95,7 +95,7 @@
 			<div class="col-lg-10">
 				<ul>
 					<li style="font-size:20px"><h4>{!! $bots[0]->username !!}</h4></li>
-					<li><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
+					<li class="token_bot"><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
 				</ul>
 				<br>
 				<div style="display:inline-block;float:left">

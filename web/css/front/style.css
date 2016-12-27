@@ -1735,6 +1735,30 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
   }
 }
 @media (max-width:767px){
+  .my_account.col-user .col-lg-2 {
+    text-align:center;
+    margin-bottom:15px;
+  }
+  .token_bot {
+    display: none;
+  }
+  .my_account.col-user img {
+    width:60%;
+  }
+  #channelMessages thead{
+    display:none;
+  }
+  #channelMessages td{
+    float:left;
+    width:100%;
+  }
+  #bot_messages thead{
+    display:none;
+  }
+  #bot_messages td{
+    float:left;
+    width:100%;
+  }
   #sidebar .col-content_tab {
     display:none;
   }
