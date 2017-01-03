@@ -99,9 +99,10 @@
                   </ul>
                 </div>
                 
-               <div class="submit">
-                  {!! Form::submit_new(trans('front/bots.update')) !!}
-                </div>
+                <div class="submit buy_now">
+						<a href="{!! URL::to('/bot/detail/'.$bot->id) !!}">{{ trans('front/bots.back') }}</a>
+						{!! Form::submit_new(trans('front/bots.update')) !!}
+					</div>
                 
             </div>
         </div>
