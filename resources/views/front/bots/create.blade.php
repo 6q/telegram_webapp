@@ -61,9 +61,6 @@
 
 					<div class="row_1 heading">
 
-
-
-
 									<?php
 									if(isset($plans) && !empty($plans)){
 									foreach($plans as $p1 => $pv1){

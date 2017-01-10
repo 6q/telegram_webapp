@@ -32,7 +32,7 @@
                     lineWidth: 5,
                     pointSize: 10,
                     colors: ['#00B09E'],
-                    legend: { position: 'bottom' },
+                    legend: { position: 'bottom' },ed
 
                 };
 
@@ -179,7 +179,7 @@
 							}
 							$pagination.= '<li><span class="ellipse clickable">...</span></li>';
 							$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lpm1."','".$lpm1."_no','".$bots[0]->id."'".')">'.$lpm1.'</a></li>';
-								$pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lastpage."','".$lastpage."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';		
+								 $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lastpage."','".$lastpage."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';
 						}
 						else
 						{

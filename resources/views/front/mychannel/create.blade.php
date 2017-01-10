@@ -59,30 +59,6 @@
                 <?php // echo '<pre>';print_r($plans);echo '</pre>'; ?>
 
                 <div class="row_1 heading">
-                    <div class="col-lg-2">
-                        <div class="buing_row">
-                            <h3>{{ trans('front/MyChannel.service_and_features') }}</h3>
-                        </div>
-                        
-                        <!--
-                        <div class="buing_row">{{ trans('front/MyChannel.autoresponses') }}</div>
-                        <div class="buing_row">{{ trans('front/MyChannel.contact_from') }}</div>
-                        <div class="buing_row">{{ trans('front/MyChannel.image_galleries') }}</div>
-                        -->
-                        
-                        <div class="buing_row"> {{ trans('front/MyChannel.manual_message_per_day') }} </div>
-                       
-                       <!--
-                        <div class="buing_row">{{ trans('front/MyChannel.custom_message_welcome') }}</div>
-                        <div class="buing_row">{{ trans('front/MyChannel.custom_not_allowed_message_response') }}</div>
-                        -->
-                        <div class="buing_row last_child">
-                            <h3></h3>
-                        </div>
-                        <div class="buing_row last_child">
-                            <h3></h3>
-                        </div>
-                    </div>
 
                     <?php
                     if (isset($plans) && !empty($plans)) {
@@ -96,62 +72,41 @@
                             $contact_forms = $pv1->contact_forms;
                             $image_gallery = $pv1->image_gallery;
                             ?>
-                            <div class="col-lg-2">
-                                <div class="buing_row">
-                                    <h3><?php echo $pv1->name; ?></h3>
+
+                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <!-- PRICE ITEM -->
+                            <div class="panel price panel-blue">
+                                <div class="panel-heading  text-center">
+                                    <h3><?php echo $pv1->name;?></h3>
                                 </div>
-                                
-                                <div class="buing_row"><span class="heading_content">{{ trans('front/MyChannel.manual_message_per_day') }}</span><?php echo $pv1->manual_message; ?></div>
-                                
-                                <!--
-                                
-                                <div class="buing_row">
-                                    <span class="heading_content">{{ trans('front/MyChannel.autoresponses') }}</span><?php echo $pv1->autoresponses; ?>
+                                <div class="panel-body text-center">
+                                    <p class="lead" style="font-size:16px">
+                                        <strong>
+                                            <span><?php echo $pv1->price;?>€</span>
+                                            <small>
+                                                <?php
+                                                if($pv1->duration == 3){
+                                                echo ' cada trimestre';
+                                                }
+                                                else{
+                                                echo ' cada '.$pv1->duration.' mesos';
+                                                }
+                                                ?>
+                                            </small>
+                                        </strong>
+                                    </p>
                                 </div>
-                                <div class="buing_row">
-                                    <span class="heading_content">{{ trans('front/MyChannel.contact_from') }}</span>
-                                    <?php
-                                    if ($pv1->contact_forms == 0) {
-                                        echo 'NO';
-                                    } else {
-                                        echo $pv1->contact_forms;
-                                    }
-                                    ?>
-                                </div>
-                                <div class="buing_row">
-                                    <span class="heading_content">{{ trans('front/MyChannel.image_galleries') }}</span><?php echo $pv1->image_gallery . ' de ' . $pv1->gallery_images . ' imgs'; ?>
-                                </div>
-                                <div class="buing_row"><span class="heading_content">{{ trans('front/MyChannel.manual_message_per_day') }}</span><?php echo $pv1->manual_message; ?></div>
-                                <div class="buing_row"><span class="heading_content">{{ trans('front/MyChannel.custom_message_welcome') }}</span>
-                                    <?php if ($pv1->custom_welcome_message == 1) { ?>
-                                        {!! HTML::image('img/front/right_icon.png') !!}
-                                    <?php } ?>
-                                </div>
-                                <div class="buing_row"><span class="heading_content">{{ trans('front/MyChannel.custom_not_allowed_message_response') }}</span>
-                                    <?php if ($pv1->custom_not_allowed_message == 1) { ?>
-                                        {!! HTML::image('img/front/right_icon.png') !!}
-                                    <?php } ?>
-                                </div>
-                                -->
-                                
-                                <div class="buing_row last_child">
-                                    <h3 style="line-height: normal">
-                                        <span><?php echo $pv1->price; ?> $</span>
-                                        <?php
-                                        if ($pv1->duration == 3) {
-                                            echo 'Per quarter';
-                                        } else {
-                                            echo 'Per ' . $pv1->duration . ' month';
-                                        }
-                                        ?>
-                                    </h3>
-                                </div>
-                                <div class="buing_row last_child">
-                                    <h3 style="line-height: normal">
-                                        <a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId; ?>', '<?php echo $planName; ?>', '<?php echo $planPrice; ?>', '<?php echo $planTimePeriod; ?>', '2');" class="btn btn-default">{{ trans('front/MyChannel.buy') }}</a>
-                                    </h3>
+                                <ul class="list-group list-group-flush text-center">
+                                    <li class="list-group-item">
+                                        <b><?php echo $pv1->manual_message; ?></b> {{ trans('front/MyChannel.manual_message_per_day') }}
+                                    </li>
+                                </ul>
+                                <div class="panel-footer">
+                                    <a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success">Escojer</a>
                                 </div>
                             </div>
+                            <!-- /PRICE ITEM -->
+                        </div>
                             <?php
                         }
                     }
