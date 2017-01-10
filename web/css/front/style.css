@@ -1040,7 +1040,8 @@ p.h2 > img {
   right:10px;
   top:10px;
 }
-.submit > input {
+
+/*.submit > input {
   background: rgba(0, 0, 0, 0) linear-gradient(0deg, #426670, #3f6280) repeat scroll 0 0;
   border: medium none;
   border-radius: 5px;
@@ -1049,6 +1050,17 @@ p.h2 > img {
   font-size: 18px;
   margin: 25px auto;
   padding: 12px 40px;
+}
+*/
+.submit > input {
+  background: rgba(0, 0, 0, 0) linear-gradient(0deg, #426670, #3f6280) repeat scroll 0 0;
+  border: medium none;
+  border-radius: 5px;
+  color: #fff;
+  display: inline-block;
+  font-size: 22px;
+  margin: 0 auto;
+  padding: 6px 50px;
 }
 .example_information input {
   background-image: url("../../img/front/example_setting.png");
