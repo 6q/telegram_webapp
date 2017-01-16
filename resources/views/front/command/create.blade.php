@@ -139,15 +139,15 @@
             <ul class="show_hide_ul" id="row_1">
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
-                <label id="auto">
-                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors) !!}
+                <label id="auto" class="lead emoji-picker-container">
+                  {!! Form::control('text', 0, 'submenu_heading_text', $errors, '','',"data-emojiable='true' required") !!}
                 </label>
               </li>
               
               <li> 
                 <span>{!! trans('front/command.autoresponse_msg') !!}</span>
-                <label id="msg">
-                  {!! Form::control_new('textarea', 0, 'autoresponse_msg', $errors) !!}
+                <label id="msg" class="lead emoji-picker-container text-area">
+                  {!! Form::control('textarea', 0, 'autoresponse_msg', $errors, '','',"data-emojiable='true' required") !!}
                 </label>
                 
                 <label>
@@ -178,21 +178,21 @@
                 <li> 
                 	<span>{!! trans('front/command.email') !!}</span>
                 	<label id="email_err">
-                  		{!! Form::control_new('text', 0, 'email', $errors) !!}
+                  		{!! Form::control('text', 0, 'email', $errors) !!}
                 	</label>
               	</li>
               
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
-                <label id="contact">
-                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors) !!}
+                <label id="contact" class="lead emoji-picker-container">
+                  {!! Form::control('text', 0, 'submenu_heading_text', $errors, '','',"data-emojiable='true' required") !!}
                 </label>
               </li>
               
               <li> 
                 <span>{!! trans('front/command.introduction_headline') !!}</span>
-                <label id="head_line">
-					{!! Form::control_new('text', 0, 'headline', $errors) !!}
+                <label id="head_line" class="lead emoji-picker-container">
+					{!! Form::control('text', 0, 'headline', $errors, '','',"data-emojiable='true' required") !!}
                 </label>
               </li>
               
@@ -237,15 +237,15 @@
             	<ul class="show_hide_ul" id="row_3">
 					<li> 
 					<span>{!! trans('front/command.submenu_heading_text') !!}</span>
-					<label id="galery_heading">
-					  {!! Form::control_new('text', 0, 'gallery_submenu_heading_text', $errors) !!}
+					<label id="galery_heading" class="lead emoji-picker-container">
+					  {!! Form::control('text', 0, 'gallery_submenu_heading_text', $errors, '','',"data-emojiable='true' required") !!}
 					</label>
 				  </li>
 					
 				  <li> 
 						<span>{!! trans('front/command.introduction_headline') !!}</span>
-						<label id="intro_heading">
-						  {!! Form::control_new('text', 0, 'introduction_headline', $errors) !!}
+						<label id="intro_heading" class="lead emoji-picker-container">
+						  {!! Form::control('text', 0, 'introduction_headline', $errors, '','',"data-emojiable='true' required") !!}
 						</label>
 				 </li>
 					
@@ -277,15 +277,15 @@
             <ul class="show_hide_ul" id="row_4">
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
-                <label id="ch_heading">
-                  {!! Form::control_new('text', 0, 'chanel_submenu_heading_text', $errors) !!}
+                <label id="ch_heading" class="lead emoji-picker-container">
+                  {!! Form::control('text', 0, 'chanel_submenu_heading_text', $errors, '','',"data-emojiable='true' required") !!}
                 </label>
               </li>
               
               <li> 
                 <span>{!! trans('front/command.chanel_msg') !!}</span>
-                <label id="ch_msg">
-                  {!! Form::control_new('textarea', 0, 'chanel_msg', $errors) !!}
+                <label id="ch_msg" class="lead emoji-picker-container text-area">
+                  {!! Form::control('textarea', 0, 'chanel_msg', $errors, '','',"data-emojiable='true' required") !!}
                 </label>
                 
                 <label>

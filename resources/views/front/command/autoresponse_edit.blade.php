@@ -49,15 +49,15 @@
             <ul class="show_hide_ul">
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
-                <label id="auto">
-                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors,'',$autoresponses[0]->submenu_heading_text) !!}
+                <label id="auto" class="lead emoji-picker-container">
+                  {!! Form::control('text', 0, 'submenu_heading_text', $errors,'',$autoresponses[0]->submenu_heading_text,"data-emojiable='true' required") !!}
                 </label>
               </li>
               
               <li> 
                 <span>{!! trans('front/command.autoresponse_msg') !!}</span>
-                <label id="msg">
-                  {!! Form::control_new('textarea', 0, 'autoresponse_msg', $errors,'',$autoresponses[0]->autoresponse_msg) !!}
+                <label id="msg" class="lead emoji-picker-container text-area">
+                  {!! Form::control('textarea', 0, 'autoresponse_msg', $errors,'',$autoresponses[0]->autoresponse_msg,"data-emojiable='true' required") !!}
                 </label>
                 
                 <label>
@@ -102,6 +102,8 @@
 
 
 <script>
+
+
 	$(document).ready(function(e) {
         $("#image").on('change', function () {
 			if (typeof (FileReader) != "undefined") {

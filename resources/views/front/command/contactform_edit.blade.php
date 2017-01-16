@@ -49,22 +49,22 @@
             	<ul class="show_hide_ul">
                 <li> 
                 	<span>{!! trans('front/command.email') !!}</span>
-                	<label id="email_err">
-                  		{!! Form::control_new('text', 0, 'email', $errors,'',$contact_forms[0]->email) !!}
+                	<label id="email_err"  class="lead">
+                  		{!! Form::control('text', 0, 'email', $errors,'',$contact_forms[0]->email) !!}
                 	</label>
               	</li>
                 
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
-                <label id="contact">
-                  {!! Form::control_new('text', 0, 'submenu_heading_text', $errors,'',$contact_forms[0]->submenu_heading_text) !!}
+                <label id="contact"  class="lead emoji-picker-container">
+                  {!! Form::control('text', 0, 'submenu_heading_text', $errors,'',$contact_forms[0]->submenu_heading_text,"data-emojiable='true' required") !!}
                 </label>
               </li>
               
               <li> 
                 <span>{!! trans('front/command.introduction_headline') !!}</span>
-                <label id="head_line">
-					{!! Form::control_new('text', 0, 'headline', $errors,'',$contact_forms[0]->headline) !!}
+                <label id="head_line"  class="lead emoji-picker-container text-area">
+					{!! Form::control('text', 0, 'headline', $errors,'',$contact_forms[0]->headline,"data-emojiable='true' required") !!}
                 </label>
               </li>
               

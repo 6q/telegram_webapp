@@ -50,15 +50,15 @@
             	<ul class="show_hide_ul">
 					<li> 
 					<span>{!! trans('front/command.submenu_heading_text') !!}</span>
-					<label id="galery_heading">
-					  {!! Form::control_new('text', 0, 'gallery_submenu_heading_text', $errors,'',$gallery[0]->gallery_submenu_heading_text) !!}
+					<label id="galery_heading" class="lead emoji-picker-container">
+					  {!! Form::control('text', 0, 'gallery_submenu_heading_text', $errors,'',$gallery[0]->gallery_submenu_heading_text,"data-emojiable='true' required") !!}
 					</label>
 				  </li>
 					
 				  <li> 
 						<span>{!! trans('front/command.introduction_headline') !!}</span>
-						<label id="intro_heading">
-						  {!! Form::control_new('text', 0, 'introduction_headline', $errors,'',$gallery[0]->gallery_submenu_heading_text) !!}
+						<label id="intro_heading" class="lead emoji-picker-container text-area">
+						  {!! Form::control('text', 0, 'introduction_headline', $errors,'',$gallery[0]->gallery_submenu_heading_text,"data-emojiable='true' required") !!}
 						</label>
 				 </li>
 					

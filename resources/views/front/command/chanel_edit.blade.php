@@ -50,15 +50,15 @@
             <ul class="show_hide_ul">
               <li> 
                 <span>{!! trans('front/command.submenu_heading_text') !!}</span>
-                <label id="ch_heading">
-                  {!! Form::control_new('text', 0, 'chanel_submenu_heading_text', $errors,'',$chanel[0]->chanel_submenu_heading_text) !!}
+                <label id="ch_heading" class="lead emoji-picker-container">
+                  {!! Form::control('text', 0, 'chanel_submenu_heading_text', $errors,'',$chanel[0]->chanel_submenu_heading_text,"data-emojiable='true' required") !!}
                 </label>
               </li>
               
               <li> 
                 <span>{!! trans('front/command.chanel_msg') !!}</span>
-                <label id="ch_msg">
-                  {!! Form::control_new('textarea', 0, 'chanel_msg', $errors,'',$chanel[0]->chanel_msg) !!}
+                <label id="ch_msg" class="lead emoji-picker-container text-area">
+                  {!! Form::control('textarea', 0, 'chanel_msg', $errors,'',$chanel[0]->chanel_msg,"data-emojiable='true' required") !!}
                 </label>
                 
                 <label>
