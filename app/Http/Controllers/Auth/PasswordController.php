@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -44,17 +44,18 @@ class PasswordController extends Controller
 	 * @param  Illuminate\View\Factory $view
 	 * @return Response
 	 */
-	public function postEmail(
-		EmailPasswordLinkRequest $request,
-		Factory $view)
+	public function postEmail(EmailPasswordLinkRequest $request,Factory $view)
 	{
-		$view->composer('emails.auth.password', function($view) {
+		$to_email = $request->get('email');
+		
+		$view->composer('emails.auth.password', function($view) use ($to_email) {
             $view->with([
                 'title'   => trans('front/password.email-title'),
                 'intro'   => trans('front/password.email-intro'),
                 'link'    => trans('front/password.email-link'),
                 'expire'  => trans('front/password.email-expire'),
                 'minutes' => trans('front/password.minutes'),
+				'to_email' => $to_email
             ]);
         });
 

@@ -22,7 +22,7 @@
 {!! Form::hidden('token', $token) !!}
 <ul>
 <li>{!! Form::control('email', 6, 'email', $errors, trans('front/password.email')) !!}</li>
-<li>{!! Form::control('password', 6, 'password', $errors, trans('front/password.password'), null, [trans('front/password.warning'), trans('front/password.warning-password')]) !!}</li>
+<li>{!! Form::control('password', 6, 'password', $errors, trans('front/password.password'), null, '',[trans('front/password.warning'), trans('front/password.warning-password')]) !!}</li>
 <li>{!! Form::control('password', 6, 'password_confirmation', $errors, trans('front/password.confirm-password')) !!}</li>
 <li>{!! Form::submit(trans('front/password.send')) !!}</li>
 <li>

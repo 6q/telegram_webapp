@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="utf-8">
-	</head>
-	<body>
-		<h2>{{ $title }}</h2>
+<?php 
+$email_check = DB::table('users')->where('email','LIKE',$to_email)->get();
+$email_template = DB::table('email_templates')->where('title','LIKE','forgot_password')->get();										
+$template = $email_template[0]->description;	
 
-		<div>
-			{!! $intro . link_to('password/reset/' . $token, $link) !!}.<br>
-			{{ $expire . config('auth.reminder.expire', 60) . $minutes}}.
-		</div>
-	</body>
-</html>
+		$emailFindReplace = array(
+			'##SITE_LOGO##' => asset('/img/front/logo.png'),
+			'##SITE_LINK##' => asset('/'),
+			'##SITE_NAME##' => 'Citymes',
+			'##USERNAME##' => $email_check[0]->first_name.' '.$email_check[0]->last_name,
+			'##URL##' => asset('/password/reset/'.$token),
+			'##CONTACT_URL##' => asset('/'),
+		);
+		
+		$html = strtr($template, $emailFindReplace);
+		echo $html;
+?>
