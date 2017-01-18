@@ -14,8 +14,35 @@
     ?>
     <tr>
         <td><?php echo $bmv1->first_name.' '.$bmv1->last_name;?></td>
-        <td><?php echo $bmv1->text;?></td>
-        <td><?php echo $bmv1->reply_message;?></td>
+        <td>
+            <?php
+            if(file_exists(public_path().'/uploads/'.$bmv1->text) && !empty($bmv1->text)){
+            ?>
+            <button href="#" id="link<?php echo $bmv1->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$bmv1->text?>" class="imatge">
+                Imatge
+            </button>
+
+            <?php
+            }
+            else{
+                echo $bmv1->text;
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            if(file_exists(public_path().'/uploads/'.$bmv1->reply_message) && !empty($bmv1->reply_message)){
+            ?>
+            <button href="#" id="link<?php echo $bmv1->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$bmv1->reply_message?>" class="imatge">
+                Imatge
+            </button>
+            <?php
+            }
+            else{
+                echo $bmv1->reply_message;
+            }
+            ?>
+        </td>
         <td><?php echo $bmv1->date;?></td>
     </tr>
     <?php

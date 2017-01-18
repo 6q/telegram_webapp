@@ -837,8 +837,35 @@
 					?>
 					<tr>
 						<td><?php echo $bmv1->first_name.' '.$bmv1->last_name;?></td>
-						<td><?php echo $bmv1->text;?></td>
-						<td><?php echo $bmv1->reply_message;?></td>
+						<td>
+                            <?php
+                            if(file_exists(public_path().'/uploads/'.$bmv1->text) && !empty($bmv1->text)){
+                            ?>
+								<button href="#" id="link<?php echo $bmv1->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$bmv1->text?>" class="imatge">
+									Imatge
+								</button>
+
+                            <?php
+                            }
+                            else{
+                                echo $bmv1->text;
+                            }
+                            ?>
+						</td>
+						<td>
+                            <?php
+                            if(file_exists(public_path().'/uploads/'.$bmv1->reply_message) && !empty($bmv1->reply_message)){
+                            ?>
+								<button href="#" id="link<?php echo $bmv1->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$bmv1->reply_message?>" class="imatge">
+									Imatge
+								</button>
+                        <?php
+                        }
+                        else{
+                            echo $bmv1->reply_message;
+                        }
+                        ?>
+						</td>
 						<td><?php echo $bmv1->date;?></td>
 					</tr>
 					<?php
@@ -1241,6 +1268,14 @@
 	</script>
 	<script>
 		$(document).ready(function(e) {
+            $('#bot_messages').on('click','.imatge', function() {
+                //alert($(this).attr("src"));
+                $("#showImg").empty();
+                var image = $(this).attr("src");
+
+                $("#showImg").append("<img class='img-responsive' src='" + image + "' />");
+
+            });
 			$('.chat_box').css('display','block');
 			$('#auto_resp').html("<?php echo $bots[0]->autoresponse; ?>");
 			$('#conntact_fbutton').html("<?php echo $bots[0]->contact_form; ?>");
@@ -1258,4 +1293,36 @@
 		}
 	</style>
 
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body" id="showImg">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">X</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<style type="text/css">
+		.my-img a {
+			display: inline-block;
+			margin: 10px;
+			border: 2px solid #CCC;
+		}
+		.my-img a:hover {
+			border: 2px solid #45AFFF;
+		}
+		.modal-lg {
+			width: 86%;
+		}
+		.modal-body {
+			overflow: auto;
+			max-height: auto;
+		}
+	</style>
 @stop
