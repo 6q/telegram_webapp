@@ -406,7 +406,7 @@ class BotController extends Controller
 				
         if(!empty($botid)){
             $bots = DB::table('bots')->where('id', '=', $botid)->get();
-		    //echo '<pre>';print_r($bots);die;
+		    /*echo '<pre>';print_r($bots);die;*/
             
             if(!empty($search)){
                 $autoResponse = DB::table('autoresponses')
