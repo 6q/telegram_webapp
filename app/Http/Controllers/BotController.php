@@ -403,11 +403,21 @@ class BotController extends Controller
 		$limitUser = PAGE_DATA_LIMIT_USER;
 		$adjacents = PAGE_ADJACENTS;
 		$page = 1;
+		$planDetails = '';
 				
         if(!empty($botid)){
             $bots = DB::table('bots')->where('id', '=', $botid)->get();
 		    /*echo '<pre>';print_r($bots);die;*/
-            
+			
+			$subscription = DB::table('user_subscriptions')
+								->where('type_id', '=',$botid)
+								->where('types', '=','bot')
+								->get();
+								
+			if(isset($subscription[0]->plan_id) && !empty($subscription[0]->plan_id)){
+				$planDetails = DB::table('plans')->where('id','=',$subscription[0]->plan_id)->get();
+			}					
+				        
             if(!empty($search)){
                 $autoResponse = DB::table('autoresponses')
                                     ->where('type_id', '=', $botid)
@@ -455,9 +465,53 @@ class BotController extends Controller
 								
             }
 
-            return view('front.bots.detail', compact('bots','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages','','total_pages','limit','limitMessage','adjacents','page','total_pages_contatc_form','total_pages_message','total_pages_gallery','total_pages_chanels','limitUser','total_pages_activeUser'));	
+            return view('front.bots.detail', compact('bots','planDetails','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages','','total_pages','limit','limitMessage','adjacents','page','total_pages_contatc_form','total_pages_message','total_pages_gallery','total_pages_chanels','limitUser','total_pages_activeUser'));	
         }
     }
+	
+	
+	public function download_user($botid = NULL)
+	{
+		$botUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
+
+		header( "Content-Type: application/vnd.ms-excel" );
+		header( "Content-disposition: attachment; filename=BotUsersList.xls" );
+		
+		echo 'S No.' . "\t" .'First Name' . "\t" . 'Last Name' . "\t" . 'Created' . "\n";	
+		if(!empty($botUser))
+		{
+			$i = 1;
+			foreach($botUser as $k1 => $v1){
+				echo $i ."\t". $v1->first_name ."\t". $v1->last_name ."\t". $v1->created_at . "\n";
+				$i++;
+			}
+		}
+		exit();
+	}
+	
+	
+	public function download_log($botid = NULL)
+	{
+		$botMessages = DB::table('bot_messages')
+                                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                                ->where('bot_messages.bot_id', '=', $botid)
+	                            ->orderby('bot_messages.id','DESC')
+	                            ->get();
+
+		header( "Content-Type: application/vnd.ms-excel" );
+		header( "Content-disposition: attachment; filename=BotLog.xls" );
+		
+		echo 'S No.' . "\t" .'User' . "\t" . 'Message' . "\t" . 'Reply Message' . "\t". 'Date' . "\n";	
+		if(!empty($botMessages))
+		{
+			$i = 1;
+			foreach($botMessages as $bmk1 => $bmv1){
+				echo $i ."\t". $bmv1->first_name.' '.$bmv1->last_name ."\t". $bmv1->text ."\t". $bmv1->reply_message ."\t". $bmv1->date . "\n";
+				$i++;
+			}
+		}
+		exit();	
+	}
 	
 	
 	

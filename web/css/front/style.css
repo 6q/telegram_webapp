@@ -1041,6 +1041,16 @@ p.h2 > img {
   top:10px;
 }
 
+/* 21-01-2017 */
+.info_test{
+	width: 7%; 
+	top: 8px; 
+	position: relative; 
+	left: 34px; 
+	float: left;
+}
+/******************/
+
 /*.submit > input {
   background: rgba(0, 0, 0, 0) linear-gradient(0deg, #426670, #3f6280) repeat scroll 0 0;
   border: medium none;

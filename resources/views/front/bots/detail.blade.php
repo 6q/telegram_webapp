@@ -94,7 +94,7 @@
 			</div>
 			<div class="col-lg-10">
 				<ul>
-					<li style="font-size:20px"><h4>{!! $bots[0]->username !!}</h4></li>
+					<li style="font-size:20px"><h4>{!! $bots[0]->username !!}</h4> <?php if(isset($planDetails[0]->name) && !empty($planDetails[0]->name)){ echo $planDetails[0]->name; } ?> </li>
 					<li class="token_bot"><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
 				</ul>
 				<br>
@@ -160,7 +160,10 @@
                             <tfoot>
                             <tr>
                                 <td colspan="5">
-                                    <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                	<?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses)){ 
+										echo '<span class="info_test"> '.count($autoResponse).' / '.$planDetails[0]->autoresponses.' </span>';
+									 } ?>
+                                    <a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=autoresponses') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
                                 </td>
                             </tr>
                             </tfoot>
@@ -300,7 +303,11 @@
                             ?>
                             <tr>
                                 <td colspan="5">
-                                    <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                	<?php if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms)){ 
+										echo '<span class="info_test"> '.count($contactForm).' / '.$planDetails[0]->contact_forms.' </span>';
+									 } ?>
+                                     
+                                    <a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -443,7 +450,11 @@
 						?>
 						<tr>
 							<td colspan="5">
-								<a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                            	<?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery)){ 
+										echo '<span class="info_test"> '.count($gallery).' / '.$planDetails[0]->image_gallery.' </span>';
+									 } ?>
+                                     
+								<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
 							</td>
 						</tr>
 						</tbody>
@@ -583,7 +594,7 @@
                                 ?>
                                 <tr>
                                     <td colspan="5">
-                                        <a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                        <a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=chanel') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -688,6 +699,7 @@
 			</div>
 
 			<div class="col-plan tab-pane fade" id="bot_users">
+            	<p><a class="btn btn-primary" href="{!! URL::to('/bot/download_user/'.$bots[0]->id) !!}">{{ trans('front/bots.user_download') }}</a></p>
 				<h2>{{ trans('front/bots.active_user') }}</h2>
                 <div id="u_autoResp">
                 	<table id="activeUser">
@@ -819,6 +831,7 @@
 			</div>
 
 			<div class="col-plan tab-pane fade" id="bot_messages">
+            	<p><a class="btn btn-primary" href="{!! URL::to('/bot/download_log/'.$bots[0]->id) !!}">{{ trans('front/bots.log_download') }}</a></p>
 				<h2>{{ trans('front/bots.messages_activity') }}</h2>
 				<div id="m_autoResp">
 	                <table id="message_activity">

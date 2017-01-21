@@ -85,5 +85,7 @@ return [
 	'intortext_of_autoresponses_button' => 'Intro text of Autoresponse',
 	'intortext_of_contact_forms_button' => 'Intro text of Contact Forms Button',
 	'introtext_of_galleries_button' => 'Intro text of Galleries Button',
-	'introtext_of_channels_button' => 'Intro text of Channels Button'
+	'introtext_of_channels_button' => 'Intro text of Channels Button',
+	'user_download' => 'User List excel download',
+	'log_download' => 'Bot log excel download',
 ];

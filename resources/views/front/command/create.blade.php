@@ -12,12 +12,16 @@
 {!! HTML::script('js/jquery-ui.js') !!}
 
 
+<?php
+	$type = (isset($_REQUEST['type']) && !empty($_REQUEST['type']))?$_REQUEST['type']:'';
+?>
+
+
 <script>
 	$(document).ready(function(){
 		$('#selectBox').niceSelect();
 	});
 </script>
-
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
      
@@ -465,7 +469,34 @@ $(function(){
 </style>
 
 <?php
-  if(isset($plan[0]->autoresponses) && count($totalAutoresponses) >= $plan[0]->autoresponses){
+  if(!empty($type)){
+	?>
+    	<script>
+			$(document).ready(function(){
+				$('#selectBox').niceSelect();
+				
+				var type = '<?php echo $type; ?>';
+				if(type == 'autoresponses'){
+					myFunctionShowAlert(1);
+				}
+				
+				if(type == 'contactforms'){
+					myFunctionShowAlert(2);
+				}
+				
+				if(type == 'galleries'){
+					myFunctionShowAlert(3);
+				}
+				
+				if(type == 'chanel'){
+					myFunctionShowAlert(4);
+				}
+				
+			});
+		</script>
+    <?php 
+  }
+  else if(isset($plan[0]->autoresponses) && count($totalAutoresponses) >= $plan[0]->autoresponses){
 	?>
       <script>
          $(document).ready(function(){
@@ -480,6 +511,7 @@ $(function(){
          $(document).ready(function(){
           myFunctionShow(1);
         });
+		
       </script>  
         <?php
   }

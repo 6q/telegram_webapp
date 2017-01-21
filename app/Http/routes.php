@@ -71,6 +71,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('bot/setweb_hook', 'BotController@setweb_hook');
     Route::get('bot/update_bot/{bot_id?}', 'BotController@edit_bot');
     Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
+	Route::get('bot/download_user/{bot_id?}', 'BotController@download_user');
+	Route::get('bot/download_log/{bot_id?}', 'BotController@download_log');
 	
 	Route::post('bot/get_autoresponse/{bot_id?}', 'BotController@paginate_autoresponse');
 	Route::post('bot/get_contact_form/{bot_id?}', 'BotController@paginate_contact_form');
