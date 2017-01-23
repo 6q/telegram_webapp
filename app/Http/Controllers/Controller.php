@@ -13,6 +13,8 @@ use Illuminate\Contracts\Auth\User;
 use Auth;
 use App\Http\Controllers\Auth\AuthController;
 
+use Illuminate\Support\Facades\Route;
+
 abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -37,7 +39,9 @@ abstract class Controller extends BaseController
     }
 	
 	public function login_check(){
-		if (Auth::check()){
+		$actionname = Route::getCurrentRoute()->getActionName();
+		$dd = explode('@',$actionname);
+		if (isset($dd[1]) && $dd[1] == 'delete_log' || Auth::check()){
 		}
 		else{
 			header('Location: /');
