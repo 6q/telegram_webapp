@@ -942,5 +942,22 @@ class BotController extends Controller
 
 		}
 	}
+	
+	
+	public function delete_log(){
+		$last_date = date('Y-m-d', strtotime('-3 month'));
+		$botMessages = DB::table('bot_messages')
+                                ->where('bot_messages.date', '<', $last_date)
+	                            ->orderby('bot_messages.id','DESC')
+	                            ->get();
+		//echo '<pre>';print_r($botMessages);die;		
+		if(!empty($botMessages)){
+			foreach($botMessages as $k1 => $v1)
+			{
+				DB::table('bot_messages')->where('id', '=', $v1->id)->delete();
+			}
+		}
+		exit();
+	}
     
 }

@@ -74,6 +74,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('bot/download_user/{bot_id?}', 'BotController@download_user');
 	Route::get('bot/download_log/{bot_id?}', 'BotController@download_log');
 	
+	Route::get('delete/log', 'BotController@delete_log');
+	
 	Route::post('bot/get_autoresponse/{bot_id?}', 'BotController@paginate_autoresponse');
 	Route::post('bot/get_contact_form/{bot_id?}', 'BotController@paginate_contact_form');
 	Route::post('bot/get_bot_message/{bot_id?}', 'BotController@paginate_bot_message');
