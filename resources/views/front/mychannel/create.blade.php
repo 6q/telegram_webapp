@@ -138,12 +138,14 @@
 
                 <div class="crete_bot_form">
                     <ul>
-                    	<li>
+                    	{!! Form::control('hidden',0,'botID',$errors,'',$bots[0]->id) !!}
+                    	<!--<li>
                         	<label id="bName">
                             <div class="form-group">
                                 <select id="botID" name="botID" class="form-control">
                                     <option value="">Select bot</option>
                                     <?php
+									/*
                                     if (isset($bots) && !empty($bots)) {
                                     foreach ($bots as $b1 => $bv1) {
                                     ?>
@@ -151,11 +153,12 @@
                                     <?php
                                     }
                                     }
+									*/
                                     ?>
                                 </select>
                                </div> 
                     	</label>
-                        </li>
+                        </li>-->
                         <li>
                             <span>{{ trans('front/MyChannel.name') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
                             <label id="uName">{!! Form::control('text', 0, 'name', $errors) !!}</label>
