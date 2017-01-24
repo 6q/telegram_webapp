@@ -76,6 +76,9 @@ Route::group(['middleware' => ['web']], function () {
 	
 	Route::get('delete/log', 'BotController@delete_log');
 	
+	Route::get('bot/bot_command/{bot_id?}', 'BotController@add_bot_command');
+	Route::post('bot/bot_command/{bot_id?}', 'BotController@addbot_command');
+	
 	Route::post('bot/get_autoresponse/{bot_id?}', 'BotController@paginate_autoresponse');
 	Route::post('bot/get_contact_form/{bot_id?}', 'BotController@paginate_contact_form');
 	Route::post('bot/get_bot_message/{bot_id?}', 'BotController@paginate_bot_message');
@@ -328,6 +331,14 @@ Route::post('/{bottoken}/webhook', function ($token) {
 				 DB::table('tmp_ques_ans')->where('tmp_ques_id', $quesRowId[0]->id)->update(['ans' => $messageText]);
 			}
 		}
+		
+		$bot_commands_title = '';
+		$bot_commands = DB::table('bot_commands')->where('bot_id','=',$dbBotId)->get();
+		if(!empty($bot_commands)){
+			foreach($bot_commands as $key1 => $val1){
+				$bot_commands_title[] = $val1->title;
+			}
+		}
         
         $autoresponse = '';
         if(isset($bot_data[0]->autoresponse) && !empty($bot_data[0]->autoresponse)){
@@ -368,6 +379,31 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		
 		if($messageText == '/start'){
 			$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
+			$msg .= chr(10).'Use keyword "/getappcommands" to get this bot commands.'; 
+		}
+		else if($messageText == '/getappcommands')
+		{
+			$commands  = DB::table('bot_commands')->where('bot_id','=',$dbBotId)->get();
+			file_put_contents(public_path().'/result_command.txt',json_encode($commands));
+			$msg = '';
+			if(!empty($commands))
+			{
+				$msg .= 'Available bot commands are :-'.chr(10);
+				foreach($commands as $bck1 => $bcv1)
+				{
+					$msg .= $bcv1->title.chr(10);
+				}
+			}
+			//file_put_contents(public_path().'/result_command.txt',json_encode($msg));
+		}
+		else if(in_array($messageText,$bot_commands_title)){
+			$bot_cmd_msg = DB::table('bot_commands')
+							->where('bot_id','=',$dbBotId)
+							->where('title','LIKE','%'.$messageText.'%')
+							->get();
+			if(!empty($bot_cmd_msg)){
+				$msg = $bot_cmd_msg[0]->command_description;
+			}
 		}
 		else{
 			$msg = (isset($bot_data[0]->error_msg) && !empty($bot_data[0]->error_msg))?$bot_data[0]->error_msg:'Exigency to valid bot command.';

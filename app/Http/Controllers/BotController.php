@@ -18,11 +18,15 @@ use App\Http\Requests\BotCreateRequest;
 use App\Repositories\UserRepository;
 
 use App\Models\Bot;
+use App\Models\BotCommand;
 use App\Models\UserBilling;
 use App\Models\UserSubscription;
 use App\Models\UserTransaction;
 
 use Telegram\Bot\Api;
+
+use Illuminate\Support\Facades\Validator;
+
 
 class BotController extends Controller
 {
@@ -760,6 +764,7 @@ class BotController extends Controller
         $chanels = '';
         $messages = '';
         $bot_uesers = '';
+		$botCommands = '';
         
         if(!empty($bot_id)){
             $bots = DB::table('bots')->where('id', '=', $bot_id)->get();
@@ -770,10 +775,12 @@ class BotController extends Controller
             
             $messages = DB::table('bot_messages')->where('bot_id', '=', $bot_id)->get();
             $bot_uesers = DB::table('bot_users')->where('bot_id', '=', $bot_id)->get();
+			
+			$botCommands = DB::table('bot_commands')->where('bot_id','=',$bot_id)->get();
             
         }
         
-        return view('back.bots.bot_details', compact('bots', 'autoResponse','contactForm','gallery','chanels','messages','bot_uesers'));
+        return view('back.bots.bot_details', compact('bots', 'autoResponse','contactForm','gallery','chanels','messages','bot_uesers','botCommands'));
     }
     
     
@@ -958,6 +965,78 @@ class BotController extends Controller
 			}
 		}
 		exit();
+	}
+	
+	
+	public function add_bot_command($bot_id)
+	{
+		/*
+		$rules = array(
+			'title' => 'required|unique:title'.$id,
+			'command_description' => 'required',
+		);
+
+		$v = Validator::make($request->all(), $rules);
+
+		if( $v->passes() ) 
+		{
+			
+		}
+		*/
+			
+		 return view('back.bots.add_bot_command',compact('bot_id'));
+	}
+	
+	public function addbot_command(Request $request)
+	{
+		if(!empty($request->get('bot_id')))
+		{
+			$bot_id = $request->get('bot_id');
+			$title = $request->get('title');
+			$command_description = $request->get('command_description');
+			
+			$error = 'false';
+			
+			$chkCommand = DB::table('bot_commands')
+							->where('title','LIKE','%'.$title.'%')
+							->where('bot_id','=',$bot_id)
+							->get();
+			if($error == 'false' && isset($chkCommand[0]->title) && !empty($chkCommand[0]->title)){
+				$error = 'true';
+			}
+			
+			
+			$rules = array(
+				'title' => 'required',
+				'command_description' => 'required',
+			);
+	
+			$v = Validator::make($request->all(), $rules);
+	
+			if($error == 'false' && $v->passes()) 
+			{
+				$bot_command = new BotCommand;
+				
+				$bot_command->bot_id = $bot_id;
+				$bot_command->title = $title;
+				$bot_command->command_description = $command_description;
+				
+				if($bot_command->save()){
+					return redirect('bot/bot_command/'.$bot_id)->with('ok', trans('back/bot.command_created'));
+				}
+			}
+			else{
+				if($error == 'true'){
+					$messages = trans('back/bot.command_created_err');
+					return redirect('bot/bot_command/'.$bot_id)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('bot/bot_command/'.$bot_id)->withErrors($v);
+				}
+			}
+		
+		}
 	}
     
 }

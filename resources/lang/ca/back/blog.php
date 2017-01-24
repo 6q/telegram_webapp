@@ -24,5 +24,6 @@ return [
 	'fail' => 'Error actualització.',
 	'stored' => 'Post guardat.',
 	'updated' => 'Post actualitzat.',
-	'destroyed' => 'Post eliminat.'
+	'destroyed' => 'Post eliminat.',
+	'bot_add_command' => 'Add command'
 ];

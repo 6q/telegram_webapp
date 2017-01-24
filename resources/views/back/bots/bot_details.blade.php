@@ -79,6 +79,33 @@
 				</tr>
 		</table>
 	</div>
+    
+	
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li class="active">{!! trans('back/bot.bot_command') !!}</li>
+            </ol>
+        </div>
+	</div>
+    
+    <div class="table-responsive">
+        <table class="table">
+			<?php
+        if(!empty($botCommands)){
+          foreach($botCommands as $bck1 => $bcv1){
+          ?>
+            <tr>
+              <th><?php echo $bcv1->title ?> </th>
+              <td><?php echo $bcv1->command_description;?></td>
+            </tr>
+          <?php
+          }
+        }
+      ?>	
+		</table>
+	</div>
+    
 
 <div class="row">
 	<div class="col-lg-12">
