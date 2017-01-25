@@ -14,6 +14,7 @@
 
 <?php
 	$type = (isset($_REQUEST['type']) && !empty($_REQUEST['type']))?$_REQUEST['type']:'';
+	$act = (isset($_REQUEST['act']) && !empty($_REQUEST['act']))?$_REQUEST['act']:'';
 ?>
 
 
@@ -476,20 +477,38 @@ $(function(){
 				$('#selectBox').niceSelect();
 				
 				var type = '<?php echo $type; ?>';
-				if(type == 'autoresponses'){
+				var act = '<?php echo $act; ?>';
+				
+				if(type == 'autoresponses' && act == 1){
 					myFunctionShowAlert(1);
 				}
 				
-				if(type == 'contactforms'){
+				if(type == 'autoresponses' && act == ''){
+					myFunctionShow(1);
+				}
+				
+				if(type == 'contactforms' && act == 1){
 					myFunctionShowAlert(2);
 				}
 				
-				if(type == 'galleries'){
+				if(type == 'contactforms' && act == ''){
+					myFunctionShow(2);
+				}
+				
+				if(type == 'galleries' && act == 1){
 					myFunctionShowAlert(3);
 				}
 				
-				if(type == 'chanel'){
+				if(type == 'galleries' && act == ''){
+					myFunctionShow(3);
+				}
+				
+				if(type == 'chanel' && act == 1){
 					myFunctionShowAlert(4);
+				}
+				
+				if(type == 'chanel' && act == ''){
+					myFunctionShow(4);
 				}
 				
 			});

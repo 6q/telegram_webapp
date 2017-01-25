@@ -163,7 +163,19 @@
                                 	<?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses)){ 
 										echo '<span class="info_test"> '.count($autoResponse).' / '.$planDetails[0]->autoresponses.' </span>';
 									 } ?>
-                                    <a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=autoresponses') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                     
+                                     <?php 
+									 	if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses) && count($autoResponse) < $planDetails[0]->autoresponses){
+										?>
+                                        	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=autoresponses') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                        <?php
+										}
+										else{
+											?>
+                                            <a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=autoresponses&act=1') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                            <?php
+										}
+									 ?>
                                 </td>
                             </tr>
                             </tfoot>
@@ -307,7 +319,19 @@
 										echo '<span class="info_test"> '.count($contactForm).' / '.$planDetails[0]->contact_forms.' </span>';
 									 } ?>
                                      
-                                    <a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                     <?php 
+									 	if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && count($contactForm) < $planDetails[0]->contact_forms)
+										{ 
+									 ?>
+                                     		<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                     <?php 
+										}
+										else{
+										?>
+                                        	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms&act=1') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                        <?php
+										}
+										?>
                                 </td>
                             </tr>
                             </tbody>
@@ -453,8 +477,20 @@
                             	<?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery)){ 
 										echo '<span class="info_test"> '.count($gallery).' / '.$planDetails[0]->image_gallery.' </span>';
 									 } ?>
-                                     
-								<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                  
+                                 <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && count($gallery) < $planDetails[0]->image_gallery){ 
+								 ?>
+                                 	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                 <?php
+									 } 
+									 else{
+									?>
+                                    	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries&act=1') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+                                    <?php	
+									 }
+								 ?>
+                                         
+								
 							</td>
 						</tr>
 						</tbody>
