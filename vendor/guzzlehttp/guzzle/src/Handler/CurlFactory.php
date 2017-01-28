@@ -194,7 +194,7 @@ class CurlFactory implements CurlFactoryInterface
         $conf = [
             '_headers'             => $easy->request->getHeaders(),
             CURLOPT_CUSTOMREQUEST  => $easy->request->getMethod(),
-            CURLOPT_URL            => (string) $easy->request->getUri(),
+            CURLOPT_URL            => (string) $easy->request->getUri()->withFragment(''),
             CURLOPT_RETURNTRANSFER => false,
             CURLOPT_HEADER         => false,
             CURLOPT_CONNECTTIMEOUT => 150,
@@ -324,7 +324,7 @@ class CurlFactory implements CurlFactoryInterface
                 $conf[CURLOPT_SSL_VERIFYPEER] = false;
             } else {
                 $conf[CURLOPT_SSL_VERIFYHOST] = 2;
-                $conf[CURLOPT_SSL_VERIFYPEER] = false;
+                $conf[CURLOPT_SSL_VERIFYPEER] = true;
                 if (is_string($options['verify'])) {
                     $conf[CURLOPT_CAINFO] = $options['verify'];
                     if (!file_exists($options['verify'])) {
@@ -495,12 +495,14 @@ class CurlFactory implements CurlFactoryInterface
 
     private function createHeaderFn(EasyHandle $easy)
     {
-        if (!isset($easy->options['on_headers'])) {
-            $onHeaders = null;
-        } elseif (!is_callable($easy->options['on_headers'])) {
-            throw new \InvalidArgumentException('on_headers must be callable');
-        } else {
+        if (isset($easy->options['on_headers'])) {
             $onHeaders = $easy->options['on_headers'];
+
+            if (!is_callable($onHeaders)) {
+                throw new \InvalidArgumentException('on_headers must be callable');
+            }
+        } else {
+            $onHeaders = null;
         }
 
         return function ($ch, $h) use (
@@ -512,7 +514,7 @@ class CurlFactory implements CurlFactoryInterface
             if ($value === '') {
                 $startingResponse = true;
                 $easy->createResponse();
-                if ($onHeaders) {
+                if ($onHeaders !== null) {
                     try {
                         $onHeaders($easy->response);
                     } catch (\Exception $e) {

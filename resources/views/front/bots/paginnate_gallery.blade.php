@@ -30,7 +30,21 @@
     ?>
     <tr>
         <td colspan="5">
-            <a href="{!! URL::to('/command/create/'.$botid) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+            <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery)){ 
+					echo '<span class="info_test"> '.$total_pages_gallery.' / '.$planDetails[0]->image_gallery.' </span>';
+				 } ?>
+			  
+			 <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $total_pages_gallery < $planDetails[0]->image_gallery){ 
+			 ?>
+				<a href="{!! URL::to('/command/create/'.$botid.'?type=galleries') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+			 <?php
+				 } 
+				 else{
+				?>
+					<a href="{!! URL::to('/command/create/'.$botid.'?type=galleries&act=1') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+				<?php	
+				 }
+			 ?>
         </td>
     </tr>
     </tbody>

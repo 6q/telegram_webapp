@@ -15,8 +15,6 @@
 			<td>{{ $bot->created_at }}</td>
 			<td>
             	<a class="btn btn-success btn-block btn" href="{!! URL::to('bot/bot_detail/'.$bot->id) !!}">{!! trans('back/bot.bot_detail') !!}</a>
-                
-				<a class="btn btn-success btn-block btn" href="{!! URL::to('bot/bot_command/'.$bot->id) !!}">{!! trans('back/bot.bot_add_command') !!}</a>
 			</td>
 		</tr>
 	@endforeach

@@ -111,6 +111,7 @@
 						<a data-toggle="tab" href="#bot_users"><i class="fa fa-user" aria-hidden="true"></i> Usuaris</a>
 					</li>
 					<li><a data-toggle="tab" href="#bot_messages"><i class="fa fa-line-chart" aria-hidden="true"></i> Log</a></li>
+                    <li><a href="{!! URL::to('bot/bot_command/'.$bots[0]->id) !!}">{!! trans('front/bots.bot_add_command') !!}</a></li>
 				</ul>
 
 			</div>
@@ -161,11 +162,11 @@
                             <tr>
                                 <td colspan="5">
                                 	<?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses)){ 
-										echo '<span class="info_test"> '.count($autoResponse).' / '.$planDetails[0]->autoresponses.' </span>';
+										echo '<span class="info_test"> '.$total_pages.' / '.$planDetails[0]->autoresponses.' </span>';
 									 } ?>
                                      
                                      <?php 
-									 	if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses) && count($autoResponse) < $planDetails[0]->autoresponses){
+									 	if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses) && $total_pages < $planDetails[0]->autoresponses){
 										?>
                                         	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=autoresponses') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
                                         <?php
@@ -316,11 +317,11 @@
                             <tr>
                                 <td colspan="5">
                                 	<?php if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms)){ 
-										echo '<span class="info_test"> '.count($contactForm).' / '.$planDetails[0]->contact_forms.' </span>';
+										echo '<span class="info_test"> '.$total_pages_contatc_form.' / '.$planDetails[0]->contact_forms.' </span>';
 									 } ?>
                                      
                                      <?php 
-									 	if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && count($contactForm) < $planDetails[0]->contact_forms)
+									 	if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && $total_pages_contatc_form < $planDetails[0]->contact_forms)
 										{ 
 									 ?>
                                      		<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
@@ -434,7 +435,8 @@
                     </div>    
 				</div>
 				<div style="clear:both"></div>
-				<div class="col-plan col-lg-6">
+				
+                <div class="col-plan col-lg-6">
 					<h2 class="h2_photos">
 						<?php echo $bots[0]->galleries; ?>
 						<a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
@@ -475,10 +477,10 @@
 						<tr>
 							<td colspan="5">
                             	<?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery)){ 
-										echo '<span class="info_test"> '.count($gallery).' / '.$planDetails[0]->image_gallery.' </span>';
+										echo '<span class="info_test"> '.$total_pages_gallery.' / '.$planDetails[0]->image_gallery.' </span>';
 									 } ?>
                                   
-                                 <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && count($gallery) < $planDetails[0]->image_gallery){ 
+                                 <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $total_pages_gallery < $planDetails[0]->image_gallery){ 
 								 ?>
                                  	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
                                  <?php
@@ -732,10 +734,50 @@
                    		</div> 
 				</div>
 				<div style="clear:both"></div>
+                
+                <div class="col-plan col-lg-6">
+					<h2 class="h2_channels">{!! trans('front/bots.bot_command') !!}</h2>
+                        
+                        <div id="ch_autoResp">
+							<table id="botChannels">
+                                <thead>
+                                <tr>
+                                    <th>{!! trans('front/bots.bot_command') !!}</th>
+                                    <th>{!! trans('front/bots.command_description') !!}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                if(!empty($botCommands)){
+                                foreach($botCommands as $d6 => $v6){
+                                ?>
+                                <tr>
+                                    <td><?php echo $v6->title;?></td>
+                                    <td><?php echo $v6->command_description;?></td>
+                                </tr>
+                                <?php
+                                }
+                                }
+                                else{
+                                ?>
+                                <tr>
+                                    <td colspan="5">{{ trans('front/bots.no_record_command') }}</td>
+                                </tr>
+                                <?php
+                                }
+                                ?>
+                                
+                                </tbody>
+                            </table>
+                   		</div> 
+				</div>
 			</div>
 
 			<div class="col-plan tab-pane fade" id="bot_users">
-            	<p><a class="btn btn-primary" href="{!! URL::to('/bot/download_user/'.$bots[0]->id) !!}">{{ trans('front/bots.user_download') }}</a></p>
+            	<p>
+                	<a class="btn btn-primary" href="{!! URL::to('/bot/download_user/'.$bots[0]->id) !!}">{{ trans('front/bots.user_download') }}</a>
+                    <a class="btn btn-primary" href="{!! URL::to('/bot/pdf_download/'.$bots[0]->id) !!}">{{ trans('front/bots.pdf_user_download') }}</a>
+               </p>
 				<h2>{{ trans('front/bots.active_user') }}</h2>
                 <div id="u_autoResp">
                 	<table id="activeUser">
@@ -867,7 +909,10 @@
 			</div>
 
 			<div class="col-plan tab-pane fade" id="bot_messages">
-            	<p><a class="btn btn-primary" href="{!! URL::to('/bot/download_log/'.$bots[0]->id) !!}">{{ trans('front/bots.log_download') }}</a></p>
+            	<p>
+                	<a class="btn btn-primary" href="{!! URL::to('/bot/download_log/'.$bots[0]->id) !!}">{{ trans('front/bots.log_download') }}</a>
+                    <a class="btn btn-primary" href="{!! URL::to('/bot/log_pdf_download/'.$bots[0]->id) !!}">{{ trans('front/bots.pdf_log_download') }}</a>
+                </p>
 				<h2>{{ trans('front/bots.messages_activity') }}</h2>
 				<div id="m_autoResp">
 	                <table id="message_activity">

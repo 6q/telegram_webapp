@@ -31,7 +31,22 @@
     <tfoot>
     <tr>
         <td colspan="5">
-            <a href="{!! URL::to('/command/create/'.$botid) !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+        	<?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses)){ 
+				echo '<span class="info_test"> '.$total_pages.' / '.$planDetails[0]->autoresponses.' </span>';
+			 } ?>
+            
+            <?php 
+				if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses) && $total_pages < $planDetails[0]->autoresponses){
+				?>
+					<a href="{!! URL::to('/command/create/'.$botid.'?type=autoresponses') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+				<?php
+				}
+				else{
+					?>
+					<a href="{!! URL::to('/command/create/'.$botid.'?type=autoresponses&act=1') !!}" class="btn btn-primary">{!! trans('front/dashboard.create_command') !!}</a>
+					<?php
+				}
+			 ?>
         </td>
     </tr>
     </tfoot>

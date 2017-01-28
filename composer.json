@@ -12,7 +12,8 @@
 		"intervention/image": "^2.3",
 		"intervention/imagecache": "^2.3",
 		"irazasyed/telegram-bot-sdk": "^2.0",
-		"cartalyst/stripe-laravel": "4.0.*"
+		"cartalyst/stripe-laravel": "4.0.*",
+		"elibyy/tcpdf-laravel": "5.2.*"
     
     },
     "require-dev": {

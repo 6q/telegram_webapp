@@ -172,6 +172,7 @@ return [
 		Bestmomo\Filemanager\FilemanagerServiceProvider::class,
 		Telegram\Bot\Laravel\TelegramServiceProvider::class,
 		Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
+		Elibyy\TCPDF\ServiceProvider::class,
 
 	],
 
@@ -224,7 +225,8 @@ return [
 		'HTML'		=> Collective\Html\HtmlFacade::class,
 		'Image'     => Intervention\Image\Facades\Image::class,
 		'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class,
-		'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class
+		'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
+		'PDF' => Elibyy\TCPDF\Facades\TCPDF::class
 
 	],
 

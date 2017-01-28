@@ -100,7 +100,6 @@ class GuzzleHttpClient implements HttpClientInterface
         $options = $this->getOptions($headers, $body, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
         try {
-		
             $response = $this->getClient()->requestAsync($method, $url, $options);
 
             if ($isAsyncRequest) {

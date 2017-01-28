@@ -27,6 +27,8 @@ use Telegram\Bot\Api;
 
 use Illuminate\Support\Facades\Validator;
 
+use PDF;
+
 
 class BotController extends Controller
 {
@@ -384,7 +386,7 @@ class BotController extends Controller
         
 		$Total_autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->get();
 		$total_pages = count($Total_autoResponse);
-		
+
 		$Total_contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->get();
 		$total_pages_contatc_form = count($Total_contactForm);
 		
@@ -410,6 +412,7 @@ class BotController extends Controller
 		$adjacents = PAGE_ADJACENTS;
 		$page = 1;
 		$planDetails = '';
+		
 				
         if(!empty($botid)){
             $bots = DB::table('bots')->where('id', '=', $botid)->get();
@@ -451,6 +454,8 @@ class BotController extends Controller
                 
                 $activeUser = '';
                 $botMessages = '';
+				
+				$botCommands = '';
                 
             }
             else{
@@ -467,11 +472,13 @@ class BotController extends Controller
 	                            ->orderby('bot_messages.id','DESC')
 								->limit($limitMessage)
 	                            ->get();
+				
+				$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->get();
 								
 								
             }
 
-            return view('front.bots.detail', compact('bots','planDetails','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages','','total_pages','limit','limitMessage','adjacents','page','total_pages_contatc_form','total_pages_message','total_pages_gallery','total_pages_chanels','limitUser','total_pages_activeUser'));	
+            return view('front.bots.detail', compact('bots','planDetails','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages','','total_pages','limit','limitMessage','adjacents','page','total_pages_contatc_form','total_pages_message','total_pages_gallery','total_pages_chanels','limitUser','total_pages_activeUser','botCommands'));	
         }
     }
 	
@@ -493,6 +500,40 @@ class BotController extends Controller
 			}
 		}
 		exit();
+	}
+	
+	public function pdf_download_user($botid = NULL){
+		$botUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
+		
+		$html = '<table>';
+			$html .= '<tr>';
+				$html .= '<th>S No.</th>';
+				$html .= '<th>First Name</th>';
+				$html .= '<th>Last Name</th>';
+				$html .= '<th>Created</th>';
+			$html .= '</tr>';
+			
+			if(!empty($botUser))
+			{
+				$i = 1;
+				foreach($botUser as $k1 => $v1){
+					$html .= '<tr>';
+						$html .= '<td>'.$i.'</td>';
+						$html .= '<td>'.$v1->first_name.'</td>';
+						$html .= '<td>'.$v1->last_name.'</td>';
+						$html .= '<td>'.$v1->created_at.'</td>';
+					$html .= '</tr>';
+					$i++;
+				}
+			}
+			
+		$html .= '</table>';
+		
+		PDF::SetTitle('Bot User Log');
+		PDF::AddPage();
+		PDF::writeHTML($html, true, false, true, false, '');
+		PDF::Output('userLog.pdf','D');
+		
 	}
 	
 	
@@ -520,12 +561,54 @@ class BotController extends Controller
 	}
 	
 	
+	public function log_pdf_download($botid = NULL){
+		$botMessages = DB::table('bot_messages')
+							->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+							->where('bot_messages.bot_id', '=', $botid)
+							->orderby('bot_messages.id','DESC')
+							->get();
+		$html = '<table>';
+			$html .= '<tr>';
+				$html .= '<th>S No.</th>';
+				$html .= '<th>User</th>';
+				$html .= '<th>Message</th>';
+				$html .= '<th>Reply Message</th>';
+				$html .= '<th>Date</th>';
+			$html .= '</tr>';					
+		
+		if(!empty($botMessages))
+		{
+			$i = 1;
+			foreach($botMessages as $bmk1 => $bmv1){
+				$html .= '<tr>';
+						$html .= '<td>'.$i.'</td>';
+						$html .= '<td>'.$bmv1->first_name.'</td>';
+						$html .= '<td>'.$bmv1->last_name.'</td>';
+						$html .= '<td>'.$bmv1->text.'</td>';
+						$html .= '<td>'.$bmv1->reply_message.'</td>';
+						$html .= '<td>'.$bmv1->date.'</td>';
+					$html .= '</tr>';
+					$i++;
+				$i++;
+			}
+		}	
+		
+		$html .= '</table>';
+		
+		PDF::SetTitle('Bot Log');
+		PDF::AddPage();
+		PDF::writeHTML($html, true, false, true, false, '');
+		PDF::Output('botLog.pdf','D');				
+	}
+	
+	
 	
 	public function paginate_autoresponse(Request $request)
 	{
 		$adjacents = PAGE_ADJACENTS;
 		$limit = PAGE_DATA_LIMIT;
 		$botid = $request->get('botId');
+		$planDetails = '';
 		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
 		if($current_page){
 			$start = ($current_page - 1) * $limit;
@@ -538,9 +621,18 @@ class BotController extends Controller
 		$Total_autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->get();
 		$total_pages = count($Total_autoResponse);
 		
+		$subscription = DB::table('user_subscriptions')
+							->where('type_id', '=',$botid)
+							->where('types', '=','bot')
+							->get();
+							
+		if(isset($subscription[0]->plan_id) && !empty($subscription[0]->plan_id)){
+			$planDetails = DB::table('plans')->where('id','=',$subscription[0]->plan_id)->get();
+		}
+		
 		$autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
 		
-		return view('front.bots.paginnate_autoresponse', compact('autoResponse','total_pages','limit','botid','current_page'));
+		return view('front.bots.paginnate_autoresponse', compact('planDetails','autoResponse','total_pages','limit','botid','current_page'));
 	}
 	
 	public function paginate_contact_form(Request $request){
@@ -559,9 +651,19 @@ class BotController extends Controller
 		$Total_contact_forms = DB::table('contact_forms')->where('type_id', '=', $botid)->get();
 		$total_pages_contatc_form = count($Total_contact_forms);
 		
+		$planDetails = '';
+		$subscription = DB::table('user_subscriptions')
+							->where('type_id', '=',$botid)
+							->where('types', '=','bot')
+							->get();
+							
+		if(isset($subscription[0]->plan_id) && !empty($subscription[0]->plan_id)){
+			$planDetails = DB::table('plans')->where('id','=',$subscription[0]->plan_id)->get();
+		}
+		
 		$contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
 		
-		return view('front.bots.paginnate_contact_form', compact('contactForm','total_pages_contatc_form','limit','botid','current_page','adjacents'));
+		return view('front.bots.paginnate_contact_form', compact('contactForm','planDetails','total_pages_contatc_form','limit','botid','current_page','adjacents'));
 	}
 	
 	public function paginate_gallery(Request $request){
@@ -580,9 +682,19 @@ class BotController extends Controller
 		$Total_galleries = DB::table('galleries')->where('type_id', '=', $botid)->get();
 		$total_pages_gallery = count($Total_galleries);
 		
+		$planDetails = '';
+		$subscription = DB::table('user_subscriptions')
+							->where('type_id', '=',$botid)
+							->where('types', '=','bot')
+							->get();
+							
+		if(isset($subscription[0]->plan_id) && !empty($subscription[0]->plan_id)){
+			$planDetails = DB::table('plans')->where('id','=',$subscription[0]->plan_id)->get();
+		}
+		
 		$gallery = DB::table('galleries')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
 		
-		return view('front.bots.paginnate_gallery', compact('gallery','total_pages_gallery','limit','botid','current_page','adjacents'));
+		return view('front.bots.paginnate_gallery', compact('planDetails','gallery','total_pages_gallery','limit','botid','current_page','adjacents'));
 	}
 	
 	public function paginate_channel(Request $request){
@@ -972,21 +1084,13 @@ class BotController extends Controller
 	
 	public function add_bot_command($bot_id)
 	{
-		/*
-		$rules = array(
-			'title' => 'required|unique:title'.$id,
-			'command_description' => 'required',
-		);
-
-		$v = Validator::make($request->all(), $rules);
-
-		if( $v->passes() ) 
-		{
-			
-		}
-		*/
-			
-		 return view('back.bots.add_bot_command',compact('bot_id'));
+		$total_bots = $this->botsTOTAL;
+        $total_chanels = $this->chanelTOTAL;
+        
+        $Form_action = 'bot/create';
+        
+        $search = '';
+		 return view('front.bots.add_bot_command',compact('Form_action','total_bots','total_chanels','search','bot_id'));
 	}
 	
 	public function addbot_command(Request $request)
@@ -1024,7 +1128,7 @@ class BotController extends Controller
 				$bot_command->command_description = $command_description;
 				
 				if($bot_command->save()){
-					return redirect('bot/bot_command/'.$bot_id)->with('ok', trans('back/bot.command_created'));
+					return redirect('bot/detail/'.$bot_id)->with('ok', trans('back/bot.command_created'));
 				}
 			}
 			else{

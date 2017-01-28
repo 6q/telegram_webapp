@@ -28,9 +28,4 @@ return [
 	'ques' => 'Question',
 	'view_img' => 'View Image',
 	'img_title' => 'Title',
-	'bot_add_command' => 'Add command',
-	'bot_command' => 'Bot Command',
-	'command_description' => 'Command description',
-	'command_created' => 'Bot coomand was successfully created',
-	'command_created_err' =>'This command has already been taken.',
 ];

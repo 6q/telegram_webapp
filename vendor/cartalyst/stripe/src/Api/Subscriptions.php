@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.0.5
+ * @version    2.0.7
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2016, Cartalyst LLC
@@ -129,6 +129,8 @@ class Subscriptions extends Api
      */
     public function all($customerId, array $parameters = [])
     {
-        return $this->_get("customers/{$customerId}/subscriptions", $parameters);
+        return $this->_get('subscriptions', array_merge($parameters, [
+            'customer' => $customerId
+        ]));
     }
 }

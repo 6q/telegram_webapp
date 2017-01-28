@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.0.5
+ * @version    2.0.7
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2016, Cartalyst LLC
@@ -185,12 +185,17 @@ abstract class Api implements ApiInterface
         $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
             $config = $this->config;
 
-            return $request
-                ->withHeader('Stripe-Version', $config->getApiVersion())
-                ->withHeader('Idempotency-Key', $config->getIdempotencyKey())
-                ->withHeader('User-Agent', 'Cartalyst-Stripe/'.$config->getVersion())
-                ->withHeader('Authorization', 'Basic '.base64_encode($config->getApiKey()))
-            ;
+            if ($idempotencykey = $config->getIdempotencyKey()) {
+                $request = $request->withHeader('Idempotency-Key', $idempotencykey);
+            }
+
+            $request = $request->withHeader('Stripe-Version', $config->getApiVersion());
+
+            $request = $request->withHeader('User-Agent', 'Cartalyst-Stripe/'.$config->getVersion());
+
+            $request = $request->withHeader('Authorization', 'Basic '.base64_encode($config->getApiKey()));
+
+            return $request;
         }));
 
         $stack->push(Middleware::retry(function ($retries, RequestInterface $request, ResponseInterface $response = null, TransferException $exception = null) {
