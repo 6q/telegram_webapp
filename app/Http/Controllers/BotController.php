@@ -40,6 +40,7 @@ class BotController extends Controller
 		define('PAGE_DATA_LIMIT_MESSAGE','10');
 		define('PAGE_DATA_LIMIT_USER','10');
 		define('PAGE_ADJACENTS','3');
+		define('PAGE_BOT_COMMAND','2');
     }
     
          
@@ -406,10 +407,14 @@ class BotController extends Controller
 	                            ->get();
 		$total_pages_message = count($Total_message);
 		
+		$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->get();
+		$total_bot_commands = count($botCommands);
+		
 		$limit = PAGE_DATA_LIMIT; 
 		$limitMessage = PAGE_DATA_LIMIT_MESSAGE;
 		$limitUser = PAGE_DATA_LIMIT_USER;
 		$adjacents = PAGE_ADJACENTS;
+		$bot_commands_limit = PAGE_BOT_COMMAND;
 		$page = 1;
 		$planDetails = '';
 		
@@ -473,12 +478,12 @@ class BotController extends Controller
 								->limit($limitMessage)
 	                            ->get();
 				
-				$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->get();
+				$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->limit($bot_commands_limit)->get();
 								
 								
             }
 
-            return view('front.bots.detail', compact('bots','planDetails','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages','','total_pages','limit','limitMessage','adjacents','page','total_pages_contatc_form','total_pages_message','total_pages_gallery','total_pages_chanels','limitUser','total_pages_activeUser','botCommands'));	
+            return view('front.bots.detail', compact('bots','planDetails','autoResponse','contactForm','gallery','chanels','total_bots','total_chanels','Form_action','search','activeUser','botMessages','','total_pages','limit','limitMessage','adjacents','page','total_pages_contatc_form','total_pages_message','total_pages_gallery','total_pages_chanels','limitUser','total_pages_activeUser','botCommands','total_bot_commands','bot_commands_limit'));
         }
     }
 	
@@ -772,6 +777,107 @@ class BotController extends Controller
 	}
 	
 	
+	public function paginate_bot_command(Request $request){
+		$adjacents = PAGE_ADJACENTS;
+		$limit = PAGE_BOT_COMMAND;
+		$botid = $request->get('botId');
+		$current_page = ($request->get('pageId') && !empty($request->get('pageId')))?$request->get('pageId'):1;
+		if($current_page){
+			$start = ($current_page - 1) * $limit;
+		}
+		else
+		{
+			$start = 0;	
+		}
+		
+		$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->get();
+		$total_bot_commands = count($botCommands);
+		
+		$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->limit($limit)->offset($start)->get();
+		
+		return view('front.bots.paginnate_bot_command', compact('botCommands','total_bot_commands','limit','botid','current_page','adjacents'));
+	}
+	
+	public function bot_command_delete($botId = NULL,$commandID = NULL){
+		if(!empty($botId) && !empty($commandID)){
+			DB::table('bot_commands')->where('id', '=', $commandID)->delete();
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/bots.command_deleted'));
+		}
+		else{
+			return redirect('bot/detail/'.$botId)->with('ok', trans('front/bots.command_error'));
+		}
+	}
+	
+	public function bot_command_edit($id = NULL){
+		if(!empty($id)){
+			$total_bots = $this->botsTOTAL;
+			$total_chanels = $this->chanelTOTAL;
+
+			$userId = Auth::user()->id;
+
+			$Form_action = '';
+			$search = '';
+			if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
+				$search = $_REQUEST['search'];
+			}
+			
+
+			$botCommands = DB::table('bot_commands')->where('id','=',$id)->get();					
+			return view('front.bots.bot_command_edit',compact('total_bots','total_chanels','Form_action','search','botCommands'));
+		}
+		else{
+			return redirect('dashboard')->with('ok', trans('front/dashboard.error'));
+		}
+	}
+	
+	public function bot_command_update(Request $request)
+	{
+		if(!empty($request->get('id'))){
+			$id = $request->get('id');
+			$bot_id = $request->get('bot_id');
+			$rules = array(
+				'title' => 'required|unique:bot_commands,title,'.$id,
+			);
+
+			$v = Validator::make($request->all(), $rules);
+
+			if($v->passes())
+			{
+				$bot_command = BotCommand::find($request->get('id'));
+				$bot_command->id = $request->get('id');
+				$bot_command->title = $request->get('title');
+				$bot_command->command_description = $request->get('command_description');
+				
+				$img_name_s = $request->get('old_img');
+				if($request->hasFile('image'))
+				{
+					$error_img = $_FILES["image"]["error"];
+					$img_name = $_FILES["image"]["name"];
+	
+					if($error_img == '0' && $img_name != '' )
+					{
+					   $img_path = $_FILES["image"]["tmp_name"];
+					   //$img_name_s = time()."_".$img_name;
+					   $ext = pathinfo($img_name);
+					   $img_name_s = time().'.'.$ext['extension'];
+					   $upload_img = public_path().'/uploads/'.$img_name_s;
+	
+					   move_uploaded_file($img_path,$upload_img);
+					}
+				}
+	
+				$bot_command->image = $img_name_s;
+	
+				$bot_command->save();
+	
+				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
+			}
+			else{
+				$messages = $v->messages();
+				return redirect('bot/bot_command_edit/'.$id)->withErrors($v);
+			}
+		}
+	}
 
     
     
@@ -1094,7 +1200,7 @@ class BotController extends Controller
 	}
 	
 	public function addbot_command(Request $request)
-	{
+	{		
 		if(!empty($request->get('bot_id')))
 		{
 			$bot_id = $request->get('bot_id');
@@ -1126,6 +1232,26 @@ class BotController extends Controller
 				$bot_command->bot_id = $bot_id;
 				$bot_command->title = $title;
 				$bot_command->command_description = $command_description;
+				
+				$img_name_s = '';
+				if($request->hasFile('image'))
+				{
+					$error_img = $_FILES["image"]["error"];
+					$img_name = $_FILES["image"]["name"];
+	
+					if($error_img == '0' && $img_name != '' )
+					{
+					   $img_path = $_FILES["image"]["tmp_name"];
+					   //$img_name_s = time()."_".$img_name;
+					   $ext = pathinfo($img_name);
+					   $img_name_s = time().'.'.$ext['extension'];
+					   $upload_img = public_path().'/uploads/'.$img_name_s;
+	
+					   move_uploaded_file($img_path,$upload_img);
+					}
+				}
+				
+				$bot_command->image = $img_name_s;
 				
 				if($bot_command->save()){
 					return redirect('bot/detail/'.$bot_id)->with('ok', trans('back/bot.command_created'));

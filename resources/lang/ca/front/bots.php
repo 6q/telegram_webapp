@@ -95,4 +95,6 @@ return [
 	'command_description' => 'Command description',
 	'command_created' => 'Bot coomand was successfully created',
 	'command_created_err' =>'This command has already been taken.',
+	'command_deleted' => 'Bot command deleted successfully',
+	'command_error' => 'Some error occurred',
 ];

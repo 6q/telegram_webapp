@@ -88,6 +88,11 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('bot/get_gallery/{bot_id?}', 'BotController@paginate_gallery');
 	Route::post('bot/get_channel/{bot_id?}', 'BotController@paginate_channel');
 	Route::post('bot/get_bot_active_user/{bot_id?}', 'BotController@paginate_active_user');
+	Route::post('bot/get_bot_command/{bot_id?}', 'BotController@paginate_bot_command');
+	
+	Route::get('bot/bot_command_delete/{bot_id?}/{command_id?}', 'BotController@bot_command_delete');
+	Route::get('bot/bot_command_edit/{bot_id?}', 'BotController@bot_command_edit');
+	Route::post('bot/bot_command_edit/{bot_id?}', 'BotController@bot_command_update');
 	
 	Route::post('my_channel/get_channel_msg/{channelId?}', 'MyChannelController@paginate_channel_msg');
 	Route::post('front_user/get_bots/{channelId?}', 'FrontUserController@paginate_bots');
@@ -237,7 +242,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 	$messageTextPhoto = (isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id']))?$data['message']['photo'][0]['file_id']:'';
 	
 	
-    file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
+    //file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
     
     $telegram = new Api($token);
 	
@@ -275,7 +280,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		}
 		
 		if(empty($messageText) && !empty($messageTextPhoto)){
-			file_put_contents(public_path().'/result.txt',json_encode($data['message']['photo'][0]['file_id']));		
+			//file_put_contents(public_path().'/result.txt',json_encode($data['message']['photo'][0]['file_id']));		
 			if(isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id'])){
 				$file_id = $data['message']['photo'][0]['file_id'];
 				$file_response = $telegram->getFile(['file_id' => $file_id]);
@@ -387,7 +392,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		else if($messageText == '/getappcommands')
 		{
 			$commands  = DB::table('bot_commands')->where('bot_id','=',$dbBotId)->get();
-			file_put_contents(public_path().'/result_command.txt',json_encode($commands));
+			//file_put_contents(public_path().'/result_command.txt',json_encode($commands));
 			$msg = '';
 			if(!empty($commands))
 			{
@@ -405,7 +410,12 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							->where('title','LIKE','%'.$messageText.'%')
 							->get();
 			if(!empty($bot_cmd_msg)){
-				$msg = $bot_cmd_msg[0]->command_description;
+				$msg = (isset($bot_cmd_msg[0]->command_description) && !empty($bot_cmd_msg[0]->command_description)?$bot_cmd_msg[0]->command_description:'');
+				
+				if(isset($bot_cmd_msg[0]->image) && !empty($bot_cmd_msg[0]->image)){
+					$img_url = public_path().'/uploads/'.$bot_cmd_msg[0]->image;
+	                $image_name = $bot_cmd_msg[0]->image;
+				}
 			}
 		}
 		else{

@@ -28,34 +28,52 @@
 
             <div id="ul_form" class="bot_command_form">
  
-                {!! Form::open(['url' => 'bot/bot_command/'.$bot_id, 'method' => 'post', 'class' => 'form-horizontal panel','enctype'=>"multipart/form-data",'onsubmit' =>'return validate();']) !!}
+                {!! Form::open(['url' => 'bot/bot_command_edit/'.$botCommands[0]->id, 'method' => 'post', 'class' => 'form-horizontal panel','enctype'=>"multipart/form-data",'onsubmit' =>'return validate();']) !!}
 
-                {!! Form::control('hidden', 0, 'bot_id', $errors, '',$bot_id) !!}
+                {!! Form::hidden('id', $botCommands[0]->id, array('id' => 'chanel')) !!}
+                 {!! Form::hidden('bot_id', $botCommands[0]->bot_id, array('id' => '')) !!}
 
                 <ul class="show_hide_ul">
                     <li>
                         <span>{!! trans('front/bots.bot_command') !!}</span>
                         <label id="bc_title" class="lead emoji-picker-container">
-                            {!! Form::control('text', 0, 'title', $errors, '','',"data-emojiable='false' required placeholder='/command'") !!}
+                            {!! Form::control('text', 0, 'title', $errors, '',$botCommands[0]->title,"data-emojiable='false' required") !!}
                         </label>
                     </li>
 
                     <li>
                         <span>{!! trans('front/bots.command_description') !!}</span>
                         <label id="ch_msg" class="lead emoji-picker-container text-area">
-                            {!! Form::control('textarea', 0, 'command_description', $errors,'','',"data-emojiable='false' required") !!}
+                            {!! Form::control('textarea', 0, 'command_description', $errors,'',$botCommands[0]->command_description,"data-emojiable='false' required") !!}
                         </label>
                         
                         <label>
                           {!! trans('front/command.or') !!}
                         </label>
-                
+                        
                     </li>
                     
                     <li class="browse_content"> 
-                        <label><input type="file" name="image" id="image"><span>{{ trans('front/command.browse') }}</span></label>
-                        <div id="image-holder"> </div>    
+                        <label>
+                        	<input type="file" name="image" id="image"><span>{{ trans('front/command.browse') }}</span>
+                            
+                            <input type="hidden" name="old_img" id="old_img" value="{!! $botCommands[0]->image !!}" />
+					
+							<?php
+                                if(isset($botCommands[0]->image) && !empty($botCommands[0]->image)){
+                                    ?>
+                                        <div id="image-holder">{!! HTML::image('uploads/'.$botCommands[0]->image) !!}</div>
+                                    <?php
+                                }
+                                else{
+                                ?>
+                                    <div id="image-holder"> </div>
+                                <?php
+                                }
+                            ?>
+                        </label>
                     </li>
+
 
                     <li class="input_submit"><input type="submit" value="{!! trans('front/command.submit') !!}"></li>
 
@@ -136,7 +154,6 @@
 			});
         });
 		
-		
     	function validate(){
 			var title = $('#title').val();
 			if(title != ''){
@@ -157,5 +174,6 @@
 			return false;
 		}
     </script>
+
 
 @stop        
