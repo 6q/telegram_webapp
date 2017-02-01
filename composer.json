@@ -13,7 +13,8 @@
 		"intervention/imagecache": "^2.3",
 		"irazasyed/telegram-bot-sdk": "^2.0",
 		"cartalyst/stripe-laravel": "4.0.*",
-		"elibyy/tcpdf-laravel": "5.2.*"
+		"elibyy/tcpdf-laravel": "5.2.*",
+		"maatwebsite/excel": "~2.1.0"
     
     },
     "require-dev": {

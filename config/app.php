@@ -173,6 +173,7 @@ return [
 		Telegram\Bot\Laravel\TelegramServiceProvider::class,
 		Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
 		Elibyy\TCPDF\ServiceProvider::class,
+		Maatwebsite\Excel\ExcelServiceProvider::class,
 
 	],
 
@@ -226,7 +227,8 @@ return [
 		'Image'     => Intervention\Image\Facades\Image::class,
 		'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class,
 		'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
-		'PDF' => Elibyy\TCPDF\Facades\TCPDF::class
+		'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
 	],
 

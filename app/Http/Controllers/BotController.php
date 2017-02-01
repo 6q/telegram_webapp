@@ -27,7 +27,8 @@ use Telegram\Bot\Api;
 
 use Illuminate\Support\Facades\Validator;
 
-use PDF;
+use Excel;
+use Elibyy\TCPDF\Facades\TCPDF;
 
 
 class BotController extends Controller
@@ -491,31 +492,48 @@ class BotController extends Controller
 	public function download_user($botid = NULL)
 	{
 		$botUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
-
-		header( "Content-Type: application/vnd.ms-excel" );
-		header( "Content-disposition: attachment; filename=BotUsersList.xls" );
 		
-		echo 'S No.' . "\t" .'First Name' . "\t" . 'Last Name' . "\t" . 'Created' . "\n";	
-		if(!empty($botUser))
-		{
-			$i = 1;
-			foreach($botUser as $k1 => $v1){
-				echo $i ."\t". $v1->first_name ."\t". $v1->last_name ."\t". $v1->created_at . "\n";
-				$i++;
+		Excel::create('BotUsersList', function($excel) use ($botUser) {
+            $excel->setTitle('BotUsersList');
+			$arr = array();		   
+		   	if(!empty($botUser))
+			{
+				$i = 1;
+				foreach($botUser as $k1 => $v1){
+					$arr[$k1]['S No.'] = $i;
+					$arr[$k1]['First Name'] = $v1->first_name;
+					$arr[$k1]['Last Name'] = $v1->last_name;
+					$arr[$k1]['Created'] = $v1->created_at;
+					$i++;
+				}
 			}
-		}
-		exit();
+		
+            $excel->sheet('Sheet 1', function ($sheet) use ($arr) {
+                $sheet->setOrientation('landscape');
+                $sheet->fromArray($arr, NULL, 'A3');
+            });
+
+        })->download('xlsx');
+		
 	}
 	
-	public function pdf_download_user($botid = NULL){
+	public function pdf_download_user($botid = NULL)
+	{
+		$botDetail = DB::table('bots')->where('id', '=', $botid)->get();
 		$botUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
 		
-		$html = '<table>';
+		$html = '<table border="0">';
+			$html .= '<tr><td  style="text-align:center" colspan="4"><img style="width:350px" src="'.asset('/img/front/logo.png').'" alt="Citymes" ></td></tr>';
+			$html .= '<tr><td colspan="4"></td></tr>';
+			$html .= '<tr><td colspan="4"><b>Name of Bot :- </b> '.$botDetail[0]->username.'</td></tr>';
+			$html .= '<tr><td colspan="4"></td></tr>';
+		$html .= '</table>';
+		$html .= '<table border="1">';
 			$html .= '<tr>';
-				$html .= '<th>S No.</th>';
-				$html .= '<th>First Name</th>';
-				$html .= '<th>Last Name</th>';
-				$html .= '<th>Created</th>';
+				$html .= '<th style="text-align:center"><b>S No.</b></th>';
+				$html .= '<th style="text-align:center"><b>First Name</b></th>';
+				$html .= '<th style="text-align:center"><b>Last Name</b></th>';
+				$html .= '<th style="text-align:center"><b>Created</b></th>';
 			$html .= '</tr>';
 			
 			if(!empty($botUser))
@@ -523,21 +541,21 @@ class BotController extends Controller
 				$i = 1;
 				foreach($botUser as $k1 => $v1){
 					$html .= '<tr>';
-						$html .= '<td>'.$i.'</td>';
-						$html .= '<td>'.$v1->first_name.'</td>';
-						$html .= '<td>'.$v1->last_name.'</td>';
-						$html .= '<td>'.$v1->created_at.'</td>';
+						$html .= '<td style="text-align:center">'.$i.'</td>';
+						$html .= '<td style="text-align:center">'.$v1->first_name.'</td>';
+						$html .= '<td style="text-align:center">'.$v1->last_name.'</td>';
+						$html .= '<td style="text-align:center">'.$v1->created_at.'</td>';
 					$html .= '</tr>';
 					$i++;
 				}
 			}
 			
-		$html .= '</table>';
-		
-		PDF::SetTitle('Bot User Log');
-		PDF::AddPage();
-		PDF::writeHTML($html, true, false, true, false, '');
-		PDF::Output('userLog.pdf','D');
+		$html .= '</table>';	
+		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);		
+		$pdf::SetTitle('Bot User Log');
+		$pdf::AddPage();
+		$pdf::writeHTML($html, true, false, true, false, '');
+		$pdf::Output('userLog.pdf','D');
 		
 	}
 	
@@ -549,61 +567,88 @@ class BotController extends Controller
                                 ->where('bot_messages.bot_id', '=', $botid)
 	                            ->orderby('bot_messages.id','DESC')
 	                            ->get();
-
-		header( "Content-Type: application/vnd.ms-excel" );
-		header( "Content-disposition: attachment; filename=BotLog.xls" );
+	
 		
-		echo 'S No.' . "\t" .'User' . "\t" . 'Message' . "\t" . 'Reply Message' . "\t". 'Date' . "\n";	
-		if(!empty($botMessages))
-		{
-			$i = 1;
-			foreach($botMessages as $bmk1 => $bmv1){
-				echo $i ."\t". $bmv1->first_name.' '.$bmv1->last_name ."\t". $bmv1->text ."\t". $bmv1->reply_message ."\t". $bmv1->date . "\n";
-				$i++;
+		Excel::create('BotLog', function($excel) use ($botMessages) {
+            $excel->setTitle('BotLog');
+			$arr = array();		   
+		   	if(!empty($botMessages))
+			{
+				$i = 1;
+				foreach($botMessages as $bmk1 => $bmv1){
+					$arr[$bmk1]['S No.'] = $i;
+					$arr[$bmk1]['User'] = $bmv1->first_name.' '.$bmv1->last_name;
+					$arr[$bmk1]['Message'] = $bmv1->text;
+					$arr[$bmk1]['Reply Message'] = $bmv1->reply_message;
+					$arr[$bmk1]['Date'] = $bmv1->date;
+					$i++;
+				}
 			}
-		}
-		exit();	
+		
+            $excel->sheet('Sheet 1', function ($sheet) use ($arr) {
+                $sheet->setOrientation('landscape');
+                $sheet->fromArray($arr, NULL, 'A3');
+            });
+
+        })->download('xlsx');
 	}
 	
 	
 	public function log_pdf_download($botid = NULL){
+		$botDetail = DB::table('bots')->where('id', '=', $botid)->get();
 		$botMessages = DB::table('bot_messages')
 							->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
 							->where('bot_messages.bot_id', '=', $botid)
 							->orderby('bot_messages.id','DESC')
+							->limit(200)
 							->get();
-		$html = '<table>';
+							
+		$html = '<table border="0" style="width: 100%; float: left;">';
+			$html .= '<tr><td  style="text-align:center" colspan="5"><img style="width:350px" src="'.asset('/img/front/logo.png').'" alt="Citymes" ></td></tr>';
+			$html .= '<tr><td colspan="5"></td></tr>';
+			$html .= '<tr><td colspan="5"><b>Name of Bot :- </b> '.$botDetail[0]->username.'</td></tr>';
+			$html .= '<tr><td colspan="5"></td></tr>';
+		$html .= '</table>';
+		$html .= '<table border="1" style="width: 100%; float: left;">';
 			$html .= '<tr>';
-				$html .= '<th>S No.</th>';
-				$html .= '<th>User</th>';
-				$html .= '<th>Message</th>';
-				$html .= '<th>Reply Message</th>';
-				$html .= '<th>Date</th>';
+				$html .= '<th style="text-align:center"><b>S No.</b></th>';
+				$html .= '<th style="text-align:center"><b>User</b></th>';
+				$html .= '<th style="text-align:center"><b>Message</b></th>';
+				$html .= '<th style="text-align:center"><b>Reply Message</b></th>';
+				$html .= '<th style="text-align:center"><b>Date</b></th>';
 			$html .= '</tr>';					
 		
 		if(!empty($botMessages))
 		{
-			$i = 1;
-			foreach($botMessages as $bmk1 => $bmv1){
+			$j = 1;
+			foreach($botMessages as $bmk1 => $bmv1)
+			{
 				$html .= '<tr>';
-						$html .= '<td>'.$i.'</td>';
-						$html .= '<td>'.$bmv1->first_name.'</td>';
-						$html .= '<td>'.$bmv1->last_name.'</td>';
-						$html .= '<td>'.$bmv1->text.'</td>';
-						$html .= '<td>'.$bmv1->reply_message.'</td>';
-						$html .= '<td>'.$bmv1->date.'</td>';
-					$html .= '</tr>';
-					$i++;
-				$i++;
+					$html .= '<td style="text-align:center;">'.$j.'</td>';
+					$html .= '<td style="text-align:center;">'.$bmv1->first_name.' '.$bmv1->last_name.'</td>';
+					$html .= '<td style="text-align:center;">'.$bmv1->text.'</td>';
+					$html .= '<td style="text-align:center;">'.$bmv1->reply_message.'</td>';
+					$html .= '<td style="text-align:center;">'.$bmv1->date.'</td>';
+				$html .= '</tr>';
+				$j++;
 			}
 		}	
 		
 		$html .= '</table>';
-		
+	//echo $html;die;	
+		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf::SetTitle('Bot Log');
+		$pdf::AddPage();
+		$pdf::writeHTML(utf8_encode($html), true, false, true, false, '');
+		$pdf::Output('botLog.pdf','D');	
+		//$pdf::Output('botLog.pdf','I');	
+		/*
 		PDF::SetTitle('Bot Log');
+		PDF::SetAutoPageBreak(TRUE);
 		PDF::AddPage();
 		PDF::writeHTML($html, true, false, true, false, '');
 		PDF::Output('botLog.pdf','D');				
+		*/
 	}
 	
 	
