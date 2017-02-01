@@ -587,6 +587,45 @@ div.buying_table {
   color: #697a83;
   font-size: 35px;
 }
+.col-plan td.paginacio {
+  background:#EFEFEF;
+  padding:5px 0px 5px 5px;
+}
+.paginacio .info_test {
+  width:auto;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  border: 1px solid #2e6da4;
+  min-width: 14px;
+  padding: 0 7px;
+  margin: 0 5px 0 0;
+  border-radius: 4px;
+  color:#fff;
+  font-size: 14px;
+  line-height: 24px;
+  top:0;
+  position:unset;
+}
+.paginacio .simple-pagination {
+  float:right;
+  padding:0;
+}
+.paginacio .simple-pagination ul {
+  margin-top:0;
+}
+.paginacio .botonou {
+
+  float:left;
+  display:block;
+}
+.paginacio .botonou .btn {
+  font-size: 14px;
+  line-height: 24px;
+  padding: 0 7px;
+  margin: 0 5px 0 0;
+  float:left;
+}
+
 .status h4 span {
   display: block;
   color:#537385;
