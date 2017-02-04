@@ -54,9 +54,11 @@
                     </ul>
                 </div>
                 
-                <div class="submit">
-                  {!! Form::submit_new(trans('front/form.send')) !!}
-                </div>
+                <div class="submit buy_now">
+                    <a href="{!! URL::to('/my_channel/detail/'.$channel->id) !!}">{{ trans('front/bots.back') }}</a>
+                    {!! Form::submit_new(trans('front/form.send')) !!}
+                </div>  
+               
             </div>
         </div>
     </div>

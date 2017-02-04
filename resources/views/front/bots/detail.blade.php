@@ -111,6 +111,7 @@
 						<a data-toggle="tab" href="#bot_users"><i class="fa fa-user" aria-hidden="true"></i> Usuaris</a>
 					</li>
 					<li><a data-toggle="tab" href="#bot_messages"><i class="fa fa-line-chart" aria-hidden="true"></i> Log</a></li>
+                    <li><a href="{!! URL::to('/bot/upgradeplan/'.$bots[0]->id) !!}"><i class="fa fa-tag" aria-hidden="true"></i> {!! trans('front/bots.upgrade_plan') !!}</a></li>
 				</ul>
 
 			</div>
@@ -799,7 +800,16 @@
 								<tr>
 									<td colspan="5" class="paginacio">
 										<div class="botonou">
-											<a href="{!! URL::to('bot/bot_command/'.$bots[0]->id) !!}"  class="btn btn-success">{!! trans('front/bots.bot_add_command') !!}</a>
+                                            <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands) && $total_bot_commands < $planDetails[0]->bot_commands){
+									 ?>
+										<a href="{!! URL::to('bot/bot_command/'.$bots[0]->id) !!}"  class="btn btn-success">{!! trans('front/bots.bot_add_command') !!}</a>
+									 <?php
+										 }
+									 ?>
+                                            
+                                             <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands)){
+												echo '<div class="info_test"> '.$total_bot_commands.' / '.$planDetails[0]->bot_commands.' </div>';
+											} ?>
 										</div>
 
 										<div id="botCommandNavPosition" class="light-theme simple-pagination">

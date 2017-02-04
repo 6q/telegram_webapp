@@ -52,8 +52,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 @if(session('statut') == 'admin')
-                    {!! link_to_route_img('admin',HTML::image('img/login_logo.png'),'', ['class' => 'admin_logo']) !!}
-				
+                    <a href="{!! URL::to('/admin') !!}" class="admin_logo">{!! HTML::image('img/login_logo.png') !!}</a>
+                    
 					{!! link_to_route('admin', trans(''), [], ['class' => 'navbar-brand']) !!}
                 @else
                     {!! link_to_route('blog.index', trans('back/admin.redaction'), [], ['class' => 'navbar-brand']) !!}

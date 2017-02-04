@@ -17,6 +17,7 @@
 	<p>{{ trans('back/plans.contact_forms') . ' : ' .  $plan->contact_forms }}</p>
 	<p>{{ trans('back/plans.image_gallery') . ' : ' .  $plan->image_gallery }}</p>
 	<p>{{ trans('back/plans.gallery_images') . ' : ' .  $plan->gallery_images }}</p>
+    <p>{{ trans('back/plans.bot_commands') . ' : ' .  $plan->bot_commands }}</p>
 	
 	
 	<p>

@@ -1396,6 +1396,18 @@ span.selectOption:hover
   width: auto;
   margin-top:30px;
 }
+.bot_command_form .input_submit.buy_now input[type="submit"] {
+  background: rgba(0, 0, 0, 0) linear-gradient(0deg, #42666f, #3f6280) repeat scroll 0 0;
+  border: medium none;
+  color: #fff;
+  display: inline-block;
+  font-size: 18px;
+  margin-top: 0;
+  padding: 9.2px 40px;
+  text-transform: uppercase;
+  vertical-align: top;
+  width: auto;
+}
 .bot_command_form li.input_submit {
   text-align: center;
 }

@@ -98,7 +98,10 @@ class BotController extends Controller
                         ->get();
         }
         else{
-            $plans = DB::table('plans')->where('plan_type','=','1')->get();
+            $plans = DB::table('plans')
+						->where('plan_type','=','1')
+						->where('status','=','1')
+						->get();
         }
         
         
@@ -286,6 +289,7 @@ class BotController extends Controller
 			   $contactFormEmail = DB::table('site_settings')
 								->where('name','=','contact_form_email')
 								->get();
+			   $from_email = $contactFormEmail[0]->value;				
 		
 				//$to_email = $contactFormEmail[0]->value;//$request->get('email');
 				$to_email = $request->get('email');
@@ -293,6 +297,7 @@ class BotController extends Controller
 				$email_template = DB::table('email_templates')
 										->where('title','LIKE','email_bot')
 										->get();
+				$email_subject = $email_template[0]->subject;						
 				$template = $email_template[0]->description;
 				
 				
@@ -323,9 +328,6 @@ class BotController extends Controller
 				
 		
 				$emailFindReplace = array(
-					'##SITE_LOGO##' => asset('/img/front/logo.png'),
-					'##SITE_LINK##' => asset('/'),
-					'##SITE_NAME##' => 'Citymes',
 					'##PLAN_USERNAME##' => $planName,
 					'##PRICE##' => $request->get('plan_price'),
 					'##NO_AUTORESPONSE##' => $NO_AUTORESPONSE,
@@ -356,13 +358,18 @@ class BotController extends Controller
 				
 				$html = strtr($template, $emailFindReplace);
 				
+				$email_arr = array();
+				$email_arr['to_email'] = $to_email;
+				$email_arr['subject'] = $email_subject;
+				$email_arr['from'] = $from_email;
+				
 				\Mail::send(['html' => 'front.bots.email_bot_template'],
 					array(
 						'text' => $html
-					), function($message) use ($to_email)
+					), function($message) use ($email_arr)
 				{
-					$message->from('admin@admin.com');
-					$message->to($to_email, 'Admin')->subject('Bot Creation');
+					$message->from($email_arr['to_email']);
+					$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 				});
 		
                 
@@ -493,7 +500,25 @@ class BotController extends Controller
 	{
 		$botUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
 		
-		Excel::create('BotUsersList', function($excel) use ($botUser) {
+	
+		header("Content-Type:   application/vnd.ms-excel;");
+		header("Content-type:   application/x-msexcel; charset=utf-8");
+		header("Content-Disposition : attachment; filename=botUsersList.xls");		
+		
+		echo 'S No.' . "\t" .'First Name' . "\t" . 'Last Name' . "\t" . 'Created' . "\n";    
+        if(!empty($botUser))
+        {
+            $i = 1;
+            foreach($botUser as $k1 => $v1){
+                echo $i ."\t". $v1->first_name ."\t". $v1->last_name ."\t". $v1->created_at . "\n";
+                $i++;
+			}
+		}
+		
+		exit();
+		
+		/*
+		Excel::create('botUsersList', function($excel) use ($botUser) {
             $excel->setTitle('BotUsersList');
 			$arr = array();		   
 		   	if(!empty($botUser))
@@ -507,13 +532,14 @@ class BotController extends Controller
 					$i++;
 				}
 			}
-		
+
             $excel->sheet('Sheet 1', function ($sheet) use ($arr) {
                 $sheet->setOrientation('landscape');
                 $sheet->fromArray($arr, NULL, 'A3');
             });
 
         })->download('xlsx');
+		*/
 		
 	}
 	
@@ -567,8 +593,22 @@ class BotController extends Controller
                                 ->where('bot_messages.bot_id', '=', $botid)
 	                            ->orderby('bot_messages.id','DESC')
 	                            ->get();
-	
 		
+		header( "Content-Type: application/vnd.ms-excel" );
+        header( "Content-disposition: attachment; filename=botlog.xls" );
+    
+        
+        echo 'S No.' . "\t" .'User' . "\t" . 'Message' . "\t" . 'Reply Message' . "\t". 'Date' . "\n";    
+        if(!empty($botMessages))
+        {
+            $i = 1;
+            foreach($botMessages as $bmk1 => $bmv1){
+                echo $i ."\t". $bmv1->first_name.' '.$bmv1->last_name ."\t". $bmv1->text ."\t". $bmv1->reply_message ."\t". $bmv1->date . "\n";
+                $i++;
+			}
+		}
+	
+		/*
 		Excel::create('BotLog', function($excel) use ($botMessages) {
             $excel->setTitle('BotLog');
 			$arr = array();		   
@@ -584,13 +624,14 @@ class BotController extends Controller
 					$i++;
 				}
 			}
-		
+
             $excel->sheet('Sheet 1', function ($sheet) use ($arr) {
                 $sheet->setOrientation('landscape');
                 $sheet->fromArray($arr, NULL, 'A3');
             });
 
         })->download('xlsx');
+		*/
 	}
 	
 	
@@ -600,7 +641,6 @@ class BotController extends Controller
 							->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
 							->where('bot_messages.bot_id', '=', $botid)
 							->orderby('bot_messages.id','DESC')
-							->limit(200)
 							->get();
 							
 		$html = '<table border="0" style="width: 100%; float: left;">';
@@ -609,7 +649,7 @@ class BotController extends Controller
 			$html .= '<tr><td colspan="5"><b>Name of Bot :- </b> '.$botDetail[0]->username.'</td></tr>';
 			$html .= '<tr><td colspan="5"></td></tr>';
 		$html .= '</table>';
-		$html .= '<table border="1" style="width: 100%; float: left;">';
+		$html .= '<table border="1" style="width: 100%; float: left;font-size:12px;">';
 			$html .= '<tr>';
 				$html .= '<th style="text-align:center"><b>S No.</b></th>';
 				$html .= '<th style="text-align:center"><b>User</b></th>';
@@ -624,22 +664,22 @@ class BotController extends Controller
 			foreach($botMessages as $bmk1 => $bmv1)
 			{
 				$html .= '<tr>';
-					$html .= '<td style="text-align:center;">'.$j.'</td>';
-					$html .= '<td style="text-align:center;">'.$bmv1->first_name.' '.$bmv1->last_name.'</td>';
-					$html .= '<td style="text-align:center;">'.$bmv1->text.'</td>';
-					$html .= '<td style="text-align:center;">'.$bmv1->reply_message.'</td>';
-					$html .= '<td style="text-align:center;">'.$bmv1->date.'</td>';
+					$html .= '<td style="text-align:center;font-size:12px;">'.$j.'</td>';
+					$html .= '<td style="text-align:center;font-size:12px;">'.$bmv1->first_name.' '.$bmv1->last_name.'</td>';
+					$html .= '<td style="text-align:center;font-size:12px;">'.$bmv1->text.'</td>';
+					$html .= '<td style="text-align:center;font-size:12px;">'.$bmv1->reply_message.'</td>';
+					$html .= '<td style="text-align:center;font-size:12px;">'.$bmv1->date.'</td>';
 				$html .= '</tr>';
 				$j++;
 			}
 		}	
 		
 		$html .= '</table>';
-	//echo $html;die;	
+
 		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf::SetTitle('Bot Log');
 		$pdf::AddPage();
-		$pdf::writeHTML(utf8_encode($html), true, false, true, false, '');
+		$pdf::writeHTML($html, true, false, true, false, '');
 		$pdf::Output('botLog.pdf','D');	
 		//$pdf::Output('botLog.pdf','I');	
 		/*
@@ -1171,31 +1211,36 @@ class BotController extends Controller
 						$contactFormEmail = DB::table('site_settings')
 							->where('name','=','contact_form_email')
 							->get();
+					   	$from_email = $contactFormEmail[0]->value;	
 							
 						//$to_email = $contactFormEmail[0]->value;//$request->get('email');
 						$to_email = Auth::user()->email;	
 						$email_template = DB::table('email_templates')
 											->where('title','LIKE','subscription_cancellation')
 											->get();
-											
+						$email_subject = $email_template[0]->subject;						
 						$template = $email_template[0]->description;
+						
 						$MESSAGE = '<b>Bot "'.$bot[0]->username.'"</b>';
 						
 						$emailFindReplace = array(
-							'##SITE_LOGO##' => asset('/img/front/logo.png'),
-							'##SITE_LINK##' => asset('/'),
-							'##SITE_NAME##' => 'Citymes',
 							'##MESSAGE##' => $MESSAGE
 						);
 						
 						$html = strtr($template, $emailFindReplace);
+						
+						$email_arr = array();
+						$email_arr['to_email'] = $to_email;
+						$email_arr['subject'] = $email_subject;
+						$email_arr['from'] = $from_email;
+				
 						\Mail::send(['html' => 'front.bots.email_bot_template'],
 							array(
 								'text' => $html
-							), function($message) use ($to_email)
+							), function($message) use ($email_arr)
 						{
-							$message->from('help@citymes.com');
-							$message->to($to_email, 'Citymes')->subject('[Citymes] Nou b');
+							$message->from($email_arr['from']);
+							$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 						});
 			
 						if(isset($subscription['id']) && !empty($subscription['id']))
@@ -1241,7 +1286,7 @@ class BotController extends Controller
         $Form_action = 'bot/create';
         
         $search = '';
-		 return view('front.bots.add_bot_command',compact('Form_action','total_bots','total_chanels','search','bot_id'));
+		return view('front.bots.add_bot_command',compact('Form_action','total_bots','total_chanels','search','bot_id'));
 	}
 	
 	public function addbot_command(Request $request)
@@ -1314,6 +1359,83 @@ class BotController extends Controller
 			}
 		
 		}
+	}
+	
+	
+	public function upgradeplan($bot_id = NULL)
+	{
+		$subscriptions = '';
+		$total_bots = $this->botsTOTAL;
+        $total_chanels = $this->chanelTOTAL;
+        
+        $Form_action = 'bot/create';
+        
+        $search = '';
+		
+		$plans = DB::table('plans')->where('status','=','1')->where('plan_type','=','1')->where('price','!=','0')->get();
+				
+		if(!empty($bot_id))
+		{
+			$botData = DB::table('bots')->where('id','=',$bot_id)->get();
+			$userID = (isset($botData[0]->user_id) && !empty($botData[0]->user_id))?$botData[0]->user_id:'';
+			
+			if(!empty($userID) && !empty($bot_id)){
+				$subscriptions = DB::table('user_subscriptions')
+								->where('types','LIKE','bot')
+								->where('type_id','=',$bot_id)
+								->where('user_id','=',$userID)
+								->get();
+			}
+		}
+		
+		return view('front.bots.upgradeplan',compact('Form_action','total_bots','total_chanels','search','bot_id','subscriptions','plans'));
+	}
+	
+	public function upgrade_plan(Request $request)
+	{
+		$stripe = Stripe::make(env('STRIPE_APP_KEY'));
+            
+        $plans = DB::table('plans')->where('id', '=', $request->get('plan_id'))->get();
+        $stripe_plan_id = $plans[0]->stripeplanid;
+		$price = $plans[0]->price;
+		
+		$botData = DB::table('bots')->where('id','=',$request->get('bot_id'))->get();
+		$user_id = $botData[0]->user_id;
+		$stripe_subscription_id = $botData[0]->stripe_subscription_id;
+		$stripe_customer_id = $botData[0]->stripe_customer_id;
+		
+		if(!empty($user_id) && !empty($request->get('bot_id'))){
+				$subscriptions = DB::table('user_subscriptions')
+								->where('types','LIKE','bot')
+								->where('type_id','=',$request->get('bot_id'))
+								->where('user_id','=',$user_id)
+								->get();
+			}
+			
+		$subscriptionsID = $subscriptions[0]->id;				
+		$subscription = $stripe->subscriptions()->update($stripe_customer_id, $stripe_subscription_id, ['plan' => $stripe_plan_id]);
+				
+		if(isset($subscription) && !empty($subscription) && !empty($subscriptionsID))
+		{
+			$user_subscription = UserSubscription::find($subscriptionsID);
+
+			$user_subscription->user_id = $user_id;
+			$user_subscription->plan_id = $stripe_plan_id;
+			$user_subscription->types = 'bot';
+			$user_subscription->type_id = $request->get('bot_id');
+			$user_subscription->price = $price;
+			$user_subscription->subscription_date = date('Y-m-d',$subscription['current_period_start']);
+			$user_subscription->expiry_date = date('Y-m-d',$subscription['current_period_end']);
+			$user_subscription->last_billed = date('Y-m-d');
+			$user_subscription->status = 'Completed';
+			$user_subscription->created_at = date('Y-m-d h:i:s');
+			$user_subscription->updated_at = date('Y-m-d h:i:s');
+
+			$user_subscription->save();
+			
+			return redirect('bot/detail/'.$request->get('bot_id'))->with('ok', trans('back/bot.plan_update'));
+		}
+		
 	}
     
 }

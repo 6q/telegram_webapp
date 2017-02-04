@@ -13,7 +13,15 @@
 		<div class="my_account">
 			<h4>{!! trans('front/fornt_user.my_account') !!}</h4>
 			<div class="modify_icon">
-				{!! link_to_route_img('front_user.edit', "<span>".trans('front/fornt_user.modify_account')."</span>".HTML::image('img/front/modify_icon.png'), [Auth::user()->id], ['class' => '']) !!}
+            	<?php
+                	$ur = '/front_user/'.Auth::user()->id.'/edit';
+				?>
+				<a href="{!! URL::to($ur) !!}" class="">
+                	<span>{!! trans('front/fornt_user.modify_account') !!}</span>
+                    {!! HTML::image('img/front/modify_icon.png') !!}
+                </a>
+                
+                
 			</div>
 		</div>
 

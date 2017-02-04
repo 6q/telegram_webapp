@@ -203,12 +203,14 @@ class MyChannelController extends Controller {
 				$contactFormEmail = DB::table('site_settings')
 								->where('name','=','contact_form_email')
 								->get();
+				$from_email = $contactFormEmail[0]->value;					
 								
 				//$to_email = $contactFormEmail[0]->value;//$request->get('email');
 				$to_email = $request->get('email');	
 				$email_template = DB::table('email_templates')
 												->where('title','LIKE','channel_email')
 												->get();
+				$email_subject = $email_template[0]->subject;									
 				$template = $email_template[0]->description;	
 				
 				$planDetail = DB::table('plans')
@@ -232,9 +234,6 @@ class MyChannelController extends Controller {
 				$stateName = (isset($state[0]->name) && !empty($state[0]->name))?$state[0]->name:'';
 				
 				$emailFindReplace = array(
-					'##SITE_LOGO##' => asset('/img/logo.png'),
-					'##SITE_LINK##' => asset('/'),
-					'##SITE_NAME##' => 'Citymes',
 					'##PLAN_USERNAME##' => $planName,
 					'##PRICE##' => $request->get('plan_price'),
 					'##NO_MESSAGE_PER_DAY##' => $NO_MESSAGE_PER_DAY,
@@ -255,13 +254,18 @@ class MyChannelController extends Controller {
 				
 				$html = strtr($template, $emailFindReplace);
 				
+				$email_arr = array();
+				$email_arr['to_email'] = $to_email;
+				$email_arr['subject'] = $email_subject;
+				$email_arr['from'] = $from_email;
+						
 				\Mail::send(['html' => 'front.bots.email_bot_template'],
 					array(
 						'text' => $html
-					), function($message) use ($to_email)
+					), function($message) use ($email_arr)
 				{
-					$message->from('help@citymes.com');
-					$message->to($to_email, 'Citymes')->subject('[Citymes] Nou canal creat');
+					$message->from($email_arr['from']);
+					$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 				});
 		
             }
@@ -553,30 +557,35 @@ class MyChannelController extends Controller {
 							->where('name','=','contact_form_email')
 							->get();
 							
+					   	$from_email = $contactFormEmail[0]->value;	
+							
 						//$to_email = $contactFormEmail[0]->value;//$request->get('email');
 						$to_email = Auth::user()->email;	
 						$email_template = DB::table('email_templates')
 											->where('title','LIKE','subscription_cancellation')
 											->get();
-											
+						$email_subject = $email_template[0]->subject;					
 						$template = $email_template[0]->description;
 						$MESSAGE = '<b>Channel "'.$my_channels[0]->name.'"</b>';
 						
 						$emailFindReplace = array(
-							'##SITE_LOGO##' => asset('/img/front/logo.png'),
-							'##SITE_LINK##' => asset('/'),
-							'##SITE_NAME##' => 'Citymes',
 							'##MESSAGE##' => $MESSAGE
 						);
 						
 						$html = strtr($template, $emailFindReplace);
+						
+						$email_arr = array();
+						$email_arr['to_email'] = $to_email;
+						$email_arr['subject'] = $email_subject;
+						$email_arr['from'] = $from_email;
+				
 						\Mail::send(['html' => 'front.bots.email_bot_template'],
 							array(
 								'text' => $html
-							), function($message) use ($to_email)
+							), function($message) use ($email_arr)
 						{
-							$message->from('help@citymes.com');
-							$message->to($to_email, 'Admin')->subject('[Citymes] Subscripció cancelada');
+							$message->from($email_arr['from']);
+							$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 						});
 						
 						

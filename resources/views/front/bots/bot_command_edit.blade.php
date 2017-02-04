@@ -75,7 +75,10 @@
                     </li>
 
 
-                    <li class="input_submit"><input type="submit" value="{!! trans('front/command.submit') !!}"></li>
+                    <li class="input_submit buy_now">
+                    <a href="{!! URL::to('/bot/detail/'.$botCommands[0]->bot_id) !!}">{{ trans('front/bots.back') }}</a>
+                    {!! Form::submit_new(trans('front/command.submit')) !!}
+                  </li>
 
                 </ul>
 

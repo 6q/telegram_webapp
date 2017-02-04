@@ -93,8 +93,10 @@
                 
                 </div>
                 
-               <div class="submit">
-                  {!! Form::submit_new(trans('front/form.send')) !!}
+              
+                <div class="submit buy_now">
+                    <a href="{!! URL::to('/front_user') !!}">{{ trans('front/bots.back') }}</a>
+                    {!! Form::submit_new(trans('front/form.send')) !!}
                 </div>
                 
             </div>
