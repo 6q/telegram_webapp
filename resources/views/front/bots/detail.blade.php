@@ -179,7 +179,7 @@
                                         }
                                         ?>
 									</div>
-                                    <?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses)){
+                                    <?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses) && $planDetails[0]->autoresponses<999){
                                         echo '<div class="info_test"> '.$total_pages.' / '.$planDetails[0]->autoresponses.' </div>';
                                     } ?>
 
@@ -338,10 +338,9 @@
                                         }
                                         ?>
 									</div>
-                                     
 
-                                    <?php if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms)){
-                                        echo '<div class="info_test"> '.$total_pages_contatc_form.' / '.$planDetails[0]->contact_forms.' </div>';
+                                    <?php if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && $planDetails[0]->contact_forms<999){
+                                        echo '<div class="info_test"> '.$total_pages.' / '.$planDetails[0]->contact_forms.' </div>';
                                     } ?>
 
 									<div id="botContactFormNavPosition" class="light-theme simple-pagination">
@@ -501,7 +500,7 @@
 									 ?>
 								</div>
 
-                                <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery)){
+                                <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $planDetails[0]->image_gallery<999){
                                     echo '<div class="info_test"> '.$total_pages_gallery.' / '.$planDetails[0]->image_gallery.' </div>';
                                 } ?>
 
