@@ -112,7 +112,18 @@
 															<li class="list-group-item">Missatge d'error editable <i class="icon-ok text-success"></i></li>
 														</ul>
 														<div class="panel-footer">
-															<a href="javascript:void(0);" onclick="PlanUpgrade('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success">Escojer</a>
+                                                        	<?php 
+																if($planPrice > 0){
+															?>
+																	<a href="javascript:void(0);" onclick="PlanUpgrade('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success">Escojer</a>
+                                                            <?php
+																}
+																else{
+																?>
+                                                                	<a href="javascript:void(0);" onclick="PlanUpgradeFree('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success">Escojer</a>	
+                                                                <?php
+																}
+															?>        
 														</div>
 													</div>
 													<!-- /PRICE ITEM -->
@@ -192,6 +203,15 @@
     	function PlanUpgrade(planID){
 			var input = $("<input>").attr("type", "hidden").attr("name", "plan_id").val(planID);
 			$('#plan_upgrade_form').append($(input));
+			$('#plan_upgrade_form').submit();
+		}
+		
+		function PlanUpgradeFree(planID){
+			var input = $("<input>").attr("type", "hidden").attr("name", "plan_id").val(planID);
+			$('#plan_upgrade_form').append($(input));
+			
+			var input_free = $("<input>").attr("type", "hidden").attr("name", "plan_free").val('free');
+			$('#plan_upgrade_form').append($(input_free));
 			$('#plan_upgrade_form').submit();
 		}
     </script>

@@ -58,9 +58,24 @@ class PasswordController extends Controller
 				'to_email' => $to_email
             ]);
         });
-
-        $response = Password::sendResetLink($request->only('email'), function (Message $message) {
-            $message->subject(trans('front/password.reset'));
+		
+		$contactFormEmail = DB::table('site_settings')
+								->where('name','=','contact_form_email')
+								->get();
+		$from_email = $contactFormEmail[0]->value;
+		
+		$email_template = DB::table('email_templates')->where('title','LIKE','forgot_password')->get();										
+		$email_subject = $email_template[0]->subject;	
+			   
+		
+		$email_arr = array();
+		$email_arr['email_subject'] = $email_subject;
+		$email_arr['from_email'] = $from_email;
+		
+		
+        $response = Password::sendResetLink($request->only('email'), function (Message $message) use($email_arr) {
+            $message->subject($email_arr['email_subject']);
+			$message->from($email_arr['from_email']);
         });
 
         switch ($response) {

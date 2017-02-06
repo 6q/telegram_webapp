@@ -1372,7 +1372,7 @@ class BotController extends Controller
         
         $search = '';
 		
-		$plans = DB::table('plans')->where('status','=','1')->where('plan_type','=','1')->where('price','!=','0')->get();
+		$plans = DB::table('plans')->where('status','=','1')->where('plan_type','=','1')->get();
 				
 		if(!empty($bot_id))
 		{
@@ -1394,8 +1394,11 @@ class BotController extends Controller
 	public function upgrade_plan(Request $request)
 	{
 		$stripe = Stripe::make(env('STRIPE_APP_KEY'));
+		
+		$free = ($request->get('plan_free') && !empty($request->get('plan_free')))?$request->get('plan_free'):'';
             
         $plans = DB::table('plans')->where('id', '=', $request->get('plan_id'))->get();
+
         $stripe_plan_id = $plans[0]->stripeplanid;
 		$price = $plans[0]->price;
 		
@@ -1411,21 +1414,99 @@ class BotController extends Controller
 								->where('user_id','=',$user_id)
 								->get();
 			}
-			
-		$subscriptionsID = $subscriptions[0]->id;				
-		$subscription = $stripe->subscriptions()->update($stripe_customer_id, $stripe_subscription_id, ['plan' => $stripe_plan_id]);
-				
-		if(isset($subscription) && !empty($subscription) && !empty($subscriptionsID))
+		
+		if(empty($free))
 		{
+			$subscriptionsID = $subscriptions[0]->id;				
+			$subscription = $stripe->subscriptions()->update($stripe_customer_id, $stripe_subscription_id, ['plan' => $stripe_plan_id]);
+					
+			if(isset($subscription) && !empty($subscription) && !empty($subscriptionsID))
+			{
+				$user_subscription = UserSubscription::find($subscriptionsID);
+	
+				$user_subscription->user_id = $user_id;
+				$user_subscription->plan_id = $stripe_plan_id;
+				$user_subscription->types = 'bot';
+				$user_subscription->type_id = $request->get('bot_id');
+				$user_subscription->price = $price;
+				$user_subscription->subscription_date = date('Y-m-d',$subscription['current_period_start']);
+				$user_subscription->expiry_date = date('Y-m-d',$subscription['current_period_end']);
+				$user_subscription->last_billed = date('Y-m-d');
+				$user_subscription->status = 'Completed';
+				$user_subscription->created_at = date('Y-m-d h:i:s');
+				$user_subscription->updated_at = date('Y-m-d h:i:s');
+	
+				$user_subscription->save();
+				
+				return redirect('bot/detail/'.$request->get('bot_id'))->with('ok', trans('back/bot.plan_update'));
+			}
+		}
+		else
+		{
+			$conditions = ['id' => $request->get('bot_id')];
+			$bot = DB::table('bots')->where($conditions)->get();
+			
+			$subscription_cancel = $stripe->subscriptions()->cancel($stripe_customer_id, $stripe_subscription_id,false);
+			DB::table('bots')->where('id', $request->get('bot_id'))->update(['is_subscribe' => 1]);
+			
+			$contactFormEmail = DB::table('site_settings')
+				->where('name','=','contact_form_email')
+				->get();
+			$from_email = $contactFormEmail[0]->value;	
+				
+			//$to_email = $contactFormEmail[0]->value;//$request->get('email');
+			$to_email = Auth::user()->email;	
+			$email_template = DB::table('email_templates')
+								->where('title','LIKE','subscription_cancellation')
+								->get();
+			$email_subject = $email_template[0]->subject;						
+			$template = $email_template[0]->description;
+			
+			$MESSAGE = '<b>Bot "'.$bot[0]->username.'"</b>';
+			
+			$emailFindReplace = array(
+				'##MESSAGE##' => $MESSAGE
+			);
+			
+			$html = strtr($template, $emailFindReplace);
+			
+			$email_arr = array();
+			$email_arr['to_email'] = $to_email;
+			$email_arr['subject'] = $email_subject;
+			$email_arr['from'] = $from_email;
+	
+			\Mail::send(['html' => 'front.bots.email_bot_template'],
+				array(
+					'text' => $html
+				), function($message) use ($email_arr)
+			{
+				$message->from($email_arr['from']);
+				$message->to($email_arr['to_email'])->subject($email_arr['subject']);
+			});
+						
+			
+			$subscriptionsID = $subscriptions[0]->id;	
+			$subscription = $stripe_plan_id;
+			
+			$subscription_date = date('Y-m-d');
+			$duration = $plans[0]->duration;
+			$expiry_date = date('Y-m-d',strtotime('+'.$duration.' month'));
+			
 			$user_subscription = UserSubscription::find($subscriptionsID);
-
+			
 			$user_subscription->user_id = $user_id;
-			$user_subscription->plan_id = $stripe_plan_id;
+			
+			if(empty($stripe_plan_id)){
+				$user_subscription->plan_id = $plans[0]->id;
+			}
+			else{
+				$user_subscription->plan_id = $stripe_plan_id;
+			}
 			$user_subscription->types = 'bot';
 			$user_subscription->type_id = $request->get('bot_id');
 			$user_subscription->price = $price;
-			$user_subscription->subscription_date = date('Y-m-d',$subscription['current_period_start']);
-			$user_subscription->expiry_date = date('Y-m-d',$subscription['current_period_end']);
+			$user_subscription->subscription_date = $subscription_date;
+			$user_subscription->expiry_date = $expiry_date;
 			$user_subscription->last_billed = date('Y-m-d');
 			$user_subscription->status = 'Completed';
 			$user_subscription->created_at = date('Y-m-d h:i:s');
@@ -1434,8 +1515,7 @@ class BotController extends Controller
 			$user_subscription->save();
 			
 			return redirect('bot/detail/'.$request->get('bot_id'))->with('ok', trans('back/bot.plan_update'));
-		}
-		
+		}		
 	}
     
 }
