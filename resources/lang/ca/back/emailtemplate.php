@@ -6,7 +6,7 @@ return [
 	'title' => 'Títol',
 	'subject' => 'Assumpte',
 	'status' => 'Estat',
-	'created' => 'Creat',
+	'created_date' => 'Creat',
 	'action' => 'Acció',
 	'see' => 'Veure',
 	'edit' => 'Editar',

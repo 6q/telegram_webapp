@@ -8,12 +8,13 @@ if (! function_exists('link_to')) {
      * @param string $title
      * @param array  $attributes
      * @param bool   $secure
+     * @param bool   $escape
      *
      * @return string
      */
-    function link_to($url, $title = null, $attributes = [], $secure = null)
+    function link_to($url, $title = null, $attributes = [], $secure = null, $escape = true)
     {
-        return app('html')->link($url, $title, $attributes, $secure);
+        return app('html')->link($url, $title, $attributes, $secure, $escape);
     }
 }
 
@@ -48,23 +49,6 @@ if (! function_exists('link_to_route')) {
     function link_to_route($name, $title = null, $parameters = [], $attributes = [])
     {
         return app('html')->linkRoute($name, $title, $parameters, $attributes);
-    }
-}
-
-if (! function_exists('link_to_route_img')) {
-    /**
-     * Generate a HTML link to a named route.
-     *
-     * @param string $name
-     * @param string $title
-     * @param array  $parameters
-     * @param array  $attributes
-     *
-     * @return string
-     */
-    function link_to_route_img($name, $title = null, $parameters = [], $attributes = [])
-    {
-        return app('html')->linkRouteImg($name, $title, $parameters, $attributes);
     }
 }
 

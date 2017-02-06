@@ -121,6 +121,9 @@
                                                 <li class="list-group-item">
                                                     <b><?php echo $pv1->gallery_images ?></b> imatges per galeria <i class="icon-ok text-info"></i>
                                                 </li>
+                                                <li class="list-group-item">
+                                                    <b><?php echo $pv1->bot_commands ?></b> bot commands <i class="icon-ok text-info"></i>
+                                                </li>
 												<li class="list-group-item">
                                                     <b><?php echo $pv1->manual_message;?></b> comunicats per dia <i class="icon-ok text-info"></i></li>
 												<li class="list-group-item">Benvinguda editable <i class="icon-ok text-success"></i></li>
@@ -776,8 +779,15 @@
 				data: {bot_uname: bot_uname, bot_access_token: bot_access_token},
 				type:'POST',
 				success: function (resp) {
-					if(resp == 1){
-						muFunction(id);
+					if(resp == 1)
+					{
+						var check_price = $('#plan_pricee').val();
+						if(check_price > 0){
+							muFunction(id);
+						}
+						else{
+							muFunction(4,2);
+						}
 					}
 					else{
 						$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Some error occured. Please check bot token and username');
@@ -944,7 +954,7 @@
 			}
 		}
 
-		function muFunction(id){
+		function muFunction(id,backId = ''){
 			if(id == 2){
 				$('.chat_box').css('display','block');
 			}
@@ -953,6 +963,11 @@
 			}
 			var last_id = parseInt(id)-1;
 			$('#row'+last_id).css('display','none');
+			
+			if(backId != ''){
+				$('#row'+backId).css('display','none');
+			}
+			
 			$('#row'+id).css('display','block');
 		}
 

@@ -71,6 +71,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('bot/setweb_hook', 'BotController@setweb_hook');
     Route::get('bot/update_bot/{bot_id?}', 'BotController@edit_bot');
     Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
+	Route::get('bot/upgradeplan/{bot_id?}', 'BotController@upgradeplan');
+	Route::post('bot/upgradeplan/{bot_id?}', 'BotController@upgrade_plan');
 	Route::get('bot/download_user/{bot_id?}', 'BotController@download_user');
 	Route::get('bot/download_log/{bot_id?}', 'BotController@download_log');
 	
@@ -712,9 +714,10 @@ Route::post('/{bottoken}/webhook', function ($token) {
 											->get();
 										
 						$email_template = DB::table('email_templates')
-									->where('title','LIKE','channel_create')
+									->where('title','LIKE','contact_form_email')
 									->get();
-									
+						
+						$email_subject = $email_template[0]->subject;
 						$template = $email_template[0]->description;
 						
 						$bot_name = DB::table('bots')
@@ -730,7 +733,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						$contactFormEmail = DB::table('site_settings')
 												->where('name','=','contact_form_email')
 												->get();
-						
+						$from_email = $contactFormEmail[0]->value;
 						//$to_email = $contactFormEmail[0]->value;
 						$to_email = (isset($contact_Form_Data[0]->email) && !empty($contact_Form_Data[0]->email))?$contact_Form_Data[0]->email:'';
 						
@@ -743,9 +746,6 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						  }
 						
 						$emailFindReplace = array(
-							'##SITE_LOGO##' => asset('/img/front/logo.png'),
-							'##SITE_LINK##' => asset('/'),
-							'##SITE_NAME##' => 'Citymes',
 							'##USERNAME##' => $userNAME,
 							'##BOT_NAME##' => $name,
 							'##SUBMENU_HEADING_TEXT##' => $contact_Form_Data[0]->submenu_heading_text,
@@ -754,16 +754,22 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						);
 							
 						$html = strtr($template, $emailFindReplace);
-						//file_put_contents(public_path().'/result.txt',json_encode($html));
+						//file_put_contents(public_path().'/result.txt',json_encode($email_subject));
 						
-						if(!empty($to_email)){
+						$email_arr = array();
+						if(!empty($to_email))
+						{
+							$email_arr['to_email'] = $to_email;
+							$email_arr['subject'] = $email_subject;
+							$email_arr['from'] = $from_email;
+							
 							\Mail::send(['html' => 'front.bots.email_bot_template'],
 								array(
 									'text' => $html
-								), function($message) use ($to_email)
+								), function($message) use ($email_arr)
 							{
-								$message->from('admin@admin.com');
-								$message->to($to_email, 'Admin')->subject('Contact form Creation');
+								$message->from($email_arr['from']);
+								$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 							});
 						}
 					
@@ -917,9 +923,11 @@ Route::post('/{bottoken}/webhook', function ($token) {
 												->get();
 											
 							$email_template = DB::table('email_templates')
-										->where('title','LIKE','channel_create')
+										->where('title','LIKE','contact_form_email')
 										->get();
-										
+							
+							$email_subject = $email_template[0]->subject;	
+
 							$template = $email_template[0]->description;
 							
 							$bot_name = DB::table('bots')
@@ -935,6 +943,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							$contactFormEmail = DB::table('site_settings')
 													->where('name','=','contact_form_email')
 													->get();
+							$from_email = $contactFormEmail[0]->value;						
 							
 							//$to_email = $contactFormEmail[0]->value;
 							$to_email = (isset($contact_Form_Data[0]->email) && !empty($contact_Form_Data[0]->email))?$contact_Form_Data[0]->email:'';
@@ -948,9 +957,6 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							  }
 							
 							$emailFindReplace = array(
-								'##SITE_LOGO##' => asset('/img/front/logo.png'),
-								'##SITE_LINK##' => asset('/'),
-								'##SITE_NAME##' => 'Citymes',
 								'##USERNAME##' => $userNAME,
 								'##BOT_NAME##' => $name,
 								'##SUBMENU_HEADING_TEXT##' => $contact_Form_Data[0]->submenu_heading_text,
@@ -960,15 +966,20 @@ Route::post('/{bottoken}/webhook', function ($token) {
 								
 							$html = strtr($template, $emailFindReplace);
 							//file_put_contents(public_path().'/result.txt',json_encode($html));
-							
-							if(!empty($to_email)){
+							$email_arr = array();
+							if(!empty($to_email))
+							{
+								$email_arr['to_email'] = $to_email;
+								$email_arr['subject'] = $email_subject;
+								$email_arr['from'] = $from_email;
+																
 								\Mail::send(['html' => 'front.bots.email_bot_template'],
 									array(
 										'text' => $html
-									), function($message) use ($to_email)
+									), function($message) use ($email_arr)
 								{
-									$message->from('admin@admin.com');
-									$message->to($to_email, 'Admin')->subject('Contact form Creation');
+									$message->from($email_arr['from']);
+									$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 								});
 							}
 						
@@ -1154,29 +1165,36 @@ Route::post('stripe/stripe_webhook', function (){
 							->where('id','=',$userID)
 							->get();
 							
-			$to_email =  $userDetail[0]->email;				
+			$to_email =  $userDetail[0]->email;	
+			$contactFormEmail = DB::table('site_settings')
+									->where('name','=','contact_form_email')
+									->get();
+			$from_email = $contactFormEmail[0]->value;			
 			
 			$email_template = DB::table('email_templates')
 								->where('title','LIKE','subscription_renu')
 								->get();
+			$email_subject = $email_template[0]->subject;					
 			$template = $email_template[0]->description;
 			
 			$emailFindReplace = array(
-				'##SITE_LOGO##' => asset('/img/front/logo.png'),
-				'##SITE_LINK##' => asset('/'),
-				'##SITE_NAME##' => 'Citymes',
 				'##MESSAGE##' => $message
 			);
 				
 			$html = strtr($template, $emailFindReplace);
 			
+			$email_arr = array();
+			$email_arr['to_email'] = $to_email;
+			$email_arr['subject'] = $email_subject;
+			$email_arr['from'] = $from_email;
+							
 			\Mail::send(['html' => 'front.bots.email_bot_template'],
 				array(
 					'text' => $html
-				), function($message) use ($to_email)
+				), function($message) use ($email_arr)
 			{
-				$message->from('admin@admin.com');
-				$message->to($to_email, 'Admin')->subject('Subscription Renovation');
+				$message->from($email_arr['from']);
+				$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 			});
 		}
 	}

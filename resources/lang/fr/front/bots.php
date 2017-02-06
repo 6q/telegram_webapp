@@ -100,4 +100,5 @@ return [
 	'command_created_err' =>'This command has already been taken.',
 	'command_deleted' => 'Bot command deleted successfully',
 	'command_error' => 'Some error occurred',
+	'upgrade_plan' => 'Upgrade Plan',
 ];

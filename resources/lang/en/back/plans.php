@@ -35,5 +35,6 @@ return [
 	'not-confirmed' => 'Not confirmed',
 	'type' => 'Plan type',
 	'plan_type_bot' => 'Bot',
-	'plan_type_channel' => 'Channel'
+	'plan_type_channel' => 'Channel',
+	'bot_commands' => 'No. of bot commands',
 ];

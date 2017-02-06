@@ -116,8 +116,10 @@
 
                 </div>
             </div>
-
-
+            
+            <div class="buy_now">
+	            <a href="{!! URL::to('/dashboard') !!}">{{ trans('front/bots.back') }}</a>
+            </div>    
         </div>  
     </div>
 

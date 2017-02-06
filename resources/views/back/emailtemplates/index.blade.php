@@ -30,7 +30,7 @@
 					<th>{{ trans('back/emailtemplate.title') }}</th>
 					<th>{{ trans('back/emailtemplate.subject') }}</th>
 					<th>{{ trans('back/emailtemplate.status') }}</th>
-					<th>{{ trans('back/emailtemplate.created') }}</th>
+					<th>{{ trans('back/emailtemplate.created_date') }}</th>
 					<th>{{ trans('back/emailtemplate.action') }}</th>
 					<th></th>
 					<th></th>

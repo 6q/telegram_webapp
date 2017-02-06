@@ -61,6 +61,7 @@ class PlanController extends Controller
 		$plan->contact_forms=$request->get('contact_forms');
 		$plan->image_gallery=$request->get('image_gallery');
 		$plan->gallery_images=$request->get('gallery_images');
+		$plan->bot_commands = $request->get('bot_commands');
 		$plan->manual_message=$request->get('manual_message');
 		
 		if($request->get('custom_image')!=''){
@@ -153,6 +154,7 @@ class PlanController extends Controller
 		$plan->contact_forms=$request->get('contact_forms');
 		$plan->image_gallery=$request->get('image_gallery');
 		$plan->gallery_images=$request->get('gallery_images');
+		$plan->bot_commands = $request->get('bot_commands');
 		$plan->manual_message=$request->get('manual_message');
 		
 		if($request->get('custom_image')!=''){

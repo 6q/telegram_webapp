@@ -481,10 +481,19 @@ class DashboardController extends Controller {
 				$telegram = new Api($bot_token);
 				$data = array();
 				
-				$data = [
-					'chat_id' => '@'.$channel_name,
-					'photo' => $img_url
-				];
+				if(!empty($message)){
+					$data = [
+						'chat_id' => '@'.$channel_name,
+						'photo' => $img_url,
+						'caption' => $message
+					];
+				}
+				else{
+					$data = [
+						'chat_id' => '@'.$channel_name,
+						'photo' => $img_url
+					];
+				}
 				
 				$result = $telegram->sendPhoto($data);
 				$response = json_decode(json_encode($result));
@@ -498,7 +507,7 @@ class DashboardController extends Controller {
 				echo 'Image sent succesfully' ;
 			}
 			
-			if(!empty($message)){
+			else if(!empty($message)){
 				$telegram = new Api($bot_token);
             
 				$data = [];
@@ -581,10 +590,20 @@ class DashboardController extends Controller {
 					
 					$BOTAPI = 'https://api.telegram.org/bot' . $BOT_TOKEN .'/';
 					$cfile = new \CURLFile($img_url, 'image/jpg'); 
-					$data = [
-						'chat_id' => $cv2 , 
-						'photo' => $cfile
-					];
+					
+					if(!empty($message)){
+						$data = [
+							'chat_id' => $cv2, 
+							'photo' => $cfile,
+							'caption' => $message
+						];
+					}
+					else{
+						$data = [
+							'chat_id' => $cv2, 
+							'photo' => $cfile
+						];
+					}
 			
 					$ch = curl_init($BOTAPI.'sendPhoto');
 					curl_setopt($ch, CURLOPT_HEADER, false);
@@ -596,7 +615,7 @@ class DashboardController extends Controller {
 					curl_close($ch);
 					$chk_img = true;
 				}
-				if(!empty($message)){
+				else if(!empty($message)){
 					$telegram = new Api($bot_token);
 					$data = [];
 					$data['chat_id'] = $cv2;

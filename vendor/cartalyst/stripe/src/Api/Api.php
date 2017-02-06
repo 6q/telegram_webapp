@@ -11,10 +11,10 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.0.7
+ * @version    2.0.8
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2016, Cartalyst LLC
+ * @copyright  (c) 2011-2017, Cartalyst LLC
  * @link       http://cartalyst.com
  */
 
@@ -188,6 +188,8 @@ abstract class Api implements ApiInterface
             if ($idempotencykey = $config->getIdempotencyKey()) {
                 $request = $request->withHeader('Idempotency-Key', $idempotencykey);
             }
+
+            $request = $request->withHeader('Stripe-Account', $config->getAccountId());
 
             $request = $request->withHeader('Stripe-Version', $config->getApiVersion());
 

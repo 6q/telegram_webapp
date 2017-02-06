@@ -28,6 +28,7 @@
                 {!! Form::control('text', 0, 'contact_forms', $errors, trans('back/plans.contact_forms')) !!}
                 {!! Form::control('text', 0, 'image_gallery', $errors, trans('back/plans.image_gallery')) !!}
                 {!! Form::control('text', 0, 'gallery_images', $errors, trans('back/plans.gallery_images')) !!}
+                {!! Form::control('text', 0, 'bot_commands', $errors, trans('back/plans.bot_commands')) !!}
             </div>
             
 			{!! Form::control('text', 0, 'manual_message', $errors, trans('back/plans.manual_message')) !!}

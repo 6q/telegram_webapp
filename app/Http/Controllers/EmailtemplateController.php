@@ -44,9 +44,6 @@ class EmailtemplateController extends Controller
             'title' => 'required',
 			'subject' => 'required',
             'description' => 'required',
-			'from' => 'required',
-			'reply_to_email' => 'required',
-			'is_html' => 'required',
             'status' => 'required'
         ]);
        
@@ -54,9 +51,11 @@ class EmailtemplateController extends Controller
         $email_template->title = $request->get('title');
 		$email_template->subject = $request->get('subject');
 		$email_template->description = $request->get('description');
+		/*
 		$email_template->from = $request->get('from');
 		$email_template->reply_to_email = $request->get('reply_to_email');
 		$email_template->is_html = $request->get('is_html');
+		*/
 		$email_template->status = $request->get('status');
 		$email_template->created_at = date('Y-m-d h:i:s');
 		$email_template->updated_at = date('Y-m-d h:i:s');
@@ -78,9 +77,6 @@ class EmailtemplateController extends Controller
             'title' => 'required',
 			'subject' => 'required',
             'description' => 'required',
-			'from' => 'required',
-			'reply_to_email' => 'required',
-			'is_html' => 'required',
             'status' => 'required'
         ]);
         
@@ -93,9 +89,11 @@ class EmailtemplateController extends Controller
         $emailtemplate->title = $request->get('title');
 		$emailtemplate->subject = $request->get('subject');
 		$emailtemplate->description = $request->get('description');
+		/*
 		$emailtemplate->from = $request->get('from');
 		$emailtemplate->reply_to_email = $request->get('reply_to_email');
 		$emailtemplate->is_html = $request->get('is_html');
+		*/
 		$emailtemplate->status = $request->get('status');
 		$emailtemplate->updated_at = date('Y-m-d h:i:s');
 
