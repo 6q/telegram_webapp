@@ -46,8 +46,13 @@
 		<tr>
 			<td colspan="5" class="paginacio">
 				<div class="botonou">
-					<a href="{!! URL::to('bot/bot_command/'.$bots[0]->id) !!}"  class="btn btn-success">{!! trans('front/bots.bot_add_command') !!}</a>
+					<a href="{!! URL::to('bot/bot_command/'.$bots[0]->id) !!}"  class="btn btn-success <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands) && $total_bot_commands == $planDetails[0]->bot_commands) echo "disabled"; ?>">{!! trans('front/bots.bot_add_command') !!}</a>
 				</div>
+
+
+                <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands)){
+                    echo '<div class="info_test"> '.$total_bot_commands.' / '.$planDetails[0]->bot_commands.' </div>';
+                } ?>
 
 				<div id="botCommandNavPosition" class="light-theme simple-pagination">
                     <?php

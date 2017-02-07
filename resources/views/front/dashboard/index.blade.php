@@ -79,7 +79,7 @@
                         <img src="{{URL::asset('img/balls.gif')}}" class="loading_img">
                         <div id="chart_div" style="height: 300px;"></div>
                     </div>
-                    <?php } else echo "<img src=".URL::asset('img/front/dashboard_example.jpg')." class='dashboard_example'>" ?>
+                    <?php } //else echo "<img src=".URL::asset('img/front/dashboard_example.jpg')." class='dashboard_example'>"; ?>
 
 				<div class="col-my-content">
 					<h3 id="my_bots">{{ trans('front/dashboard.my_bots') }}</h3>

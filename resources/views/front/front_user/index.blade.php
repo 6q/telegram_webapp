@@ -74,6 +74,7 @@
 								</ul>
 							</td>
                             <td>
+								<a href="{!! URL::to('/bot/upgradeplan/'.$dv1['bot']['id']) !!}"><i class="fa fa-tag" aria-hidden="true"></i> {!! trans('front/bots.upgrade_plan') !!}</a>
                             	<?php
                                 	if($dv1['bot']['is_subscribe'] == 1){
 										?>
@@ -89,6 +90,7 @@
 								?>
                                 <a  href="{!! URL::to('/bot/bot_delete/'.$dv1['bot']['id']) !!}"
                                    onclick="return confirm('Segur que el vols eliminar? No hi ha volta enrere.');" data-toggle="tooltip" title="" data-original-title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
                             </td>
 						</tr>
 						<?php

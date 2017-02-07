@@ -3,3 +3,4 @@
 [21-Dec-2016 09:16:29 UTC] PHP Parse error:  syntax error, unexpected ';' in /home/gestinet/www/citymes.app/storage/framework/views/ae9414a10d79bbb44d623ca61cc08345c85c3b5c.php on line 57
 [16-Jan-2017 15:13:06 UTC] PHP Parse error:  syntax error, unexpected 't' (T_STRING) in /home/gestinet/www/citymes.app/storage/framework/views/64187e18e80e118a2291a45e7bbd461f1e0b49ad.php on line 60
 [16-Jan-2017 15:20:02 UTC] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/gestinet/www/citymes.app/storage/framework/views/962ccae6e0b187bafbdd5c8ffd3517e4aceedd1f.php on line 171
+[07-Feb-2017 10:06:43 UTC] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 74 bytes) in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 16759
