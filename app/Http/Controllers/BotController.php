@@ -226,66 +226,200 @@ class BotController extends Controller
             $stripe = Stripe::make(env('STRIPE_APP_KEY'));
             
             $plans = DB::table('plans')->where('id', '=', $request->get('plan_id'))->get();
+			
             $stripe_plan_id = $plans[0]->id;
             
             
-            $customer = $stripe->customers()->create([
-                'source'  => $stripeToken,
-                'email' => $email,
-                //'plan' => $stripe_plan_id
-            ]);
-            
-            
-            if(!empty($customer)){
-                $customerID = $customer['id'];
+			if($plans[0]->price > 0){
+				$customer = $stripe->customers()->create([
+					'source'  => $stripeToken,
+					'email' => $email,
+					//'plan' => $stripe_plan_id
+				]);
 				
-				$bot_subscription = $stripe->subscriptions()->create($customerID, ['plan' => $stripe_plan_id]);
-                
-                $bot = Bot::find($lastInsertId);
-                $bot->stripe_customer_id = $customerID;
-				$bot->stripe_subscription_id = $bot_subscription['id'];
-                $bot->save();
-                                
-                /* user_subscriptions */
-                $user_subscription = new UserSubscription;
+				
+			   if(!empty($customer)){
+					$customerID = $customer['id'];
+					
+					$bot_subscription = $stripe->subscriptions()->create($customerID, ['plan' => $stripe_plan_id]);
+					
+					$bot = Bot::find($lastInsertId);
+					$bot->stripe_customer_id = $customerID;
+					$bot->stripe_subscription_id = $bot_subscription['id'];
+					$bot->save();
+									
+					/* user_subscriptions */
+					$user_subscription = new UserSubscription;
+	
+					$user_subscription->user_id = $user_id;
+					$user_subscription->plan_id = $stripe_plan_id;
+					$user_subscription->types = 'bot';
+					$user_subscription->type_id = $lastInsertId;
+					$user_subscription->price = $request->get('plan_price');
+					$user_subscription->subscription_date = date('Y-m-d',$bot_subscription['current_period_start']);
+					$user_subscription->expiry_date = date('Y-m-d',$bot_subscription['current_period_end']);
+					$user_subscription->last_billed = date('Y-m-d');
+					$user_subscription->status = 'Completed';
+					$user_subscription->created_at = date('Y-m-d h:i:s');
+					$user_subscription->updated_at = date('Y-m-d h:i:s');
+	
+					$user_subscription->save();
+					/* user_subscriptions */
+	
+	
+	
+	
+				   /* UserTransaction */
+	
+				   $user_transaction = new UserTransaction;
+				   $user_transaction->user_id = $user_id;
+				   $user_transaction->plan_id = $stripe_plan_id;
+				   $user_transaction->types = 'bot';
+				   $user_transaction->type_id = $lastInsertId;
+				   $user_transaction->amount = $request->get('plan_price');
+				   $user_transaction->Description = '';
+				   $user_transaction->created_at = date('Y-m-d h:i:s');
+				   $user_transaction->updated_at = date('Y-m-d h:i:s');
+	
+				   $user_transaction->save();
+				   /* UserTransaction */
+				   
+				   
+				   
+				   
+				   
+				   $contactFormEmail = DB::table('site_settings')
+									->where('name','=','contact_form_email')
+									->get();
+				   $from_email = $contactFormEmail[0]->value;				
+			
+					//$to_email = $contactFormEmail[0]->value;//$request->get('email');
+					$to_email = $request->get('email');
+					
+					$email_template = DB::table('email_templates')
+											->where('title','LIKE','email_bot')
+											->get();
+					$email_subject = $email_template[0]->subject;						
+					$template = $email_template[0]->description;
+					
+					
+					$planDetail = DB::table('plans')
+									->where('id','=',$request->get('plan_id'))
+									->get();
+									
+					$planName = (isset($planDetail[0]->name) && !empty($planDetail[0]->name))?$planDetail[0]->name:'';
+					$NO_AUTORESPONSE = (isset($planDetail[0]->autoresponses) && !empty($planDetail[0]->autoresponses))?$planDetail[0]->autoresponses:'';
+					$NO_CONTACT_FORM = (isset($planDetail[0]->contact_forms) && !empty($planDetail[0]->contact_forms))?$planDetail[0]->contact_forms:'';
+					$image_gallery = (isset($planDetail[0]->image_gallery) && !empty($planDetail[0]->image_gallery))?$planDetail[0]->image_gallery:'';
+					$gallery_images = (isset($planDetail[0]->gallery_images) && !empty($planDetail[0]->gallery_images))?$planDetail[0]->gallery_images:'';
+					$custom_welcome_message = (isset($planDetail[0]->custom_welcome_message) && !empty($planDetail[0]->custom_welcome_message))?$planDetail[0]->custom_welcome_message:'';
+					$custom_not_allowed_message = (isset($planDetail[0]->custom_not_allowed_message) && !empty($planDetail[0]->custom_not_allowed_message))?$planDetail[0]->custom_not_allowed_message:'';
+					
+					
+					
+					$country = DB::table('countries')
+									->where('id','=',$request->get('country'))
+									->get();
+					$countryName = (isset($country[0]->name) && !empty($country[0]->name))?$country[0]->name:'';				
+			
+					
+					$state = DB::table('states')
+									->where('id','=',$request->get('state'))
+									->get();
+					$stateName = (isset($state[0]->name) && !empty($state[0]->name))?$state[0]->name:'';
+					
+			
+					$emailFindReplace = array(
+						'##PLAN_USERNAME##' => $planName,
+						'##PRICE##' => $request->get('plan_price'),
+						'##NO_AUTORESPONSE##' => $NO_AUTORESPONSE,
+						'##NO_CONTACT_FORM##' => $NO_CONTACT_FORM,
+						'##NO_IMAGE_GALLERY##' => $image_gallery,
+						'##NO_MESSAGE_PER_DAY##' => $gallery_images,
+						'##NO_CUSTOM_WELCOME_MSG##' => $custom_welcome_message,
+						'##NO_CUSTOM_NOT_ALLOWED##' => $custom_not_allowed_message,
+						'##BOT_USERNAME##' => $request->get('username'),
+						'##NICK_NAME##' => $request->get('nick_name'),
+						'##BOT_ACCESS_TOKEN##' => $request->get('bot_token'),
+						'##START_MESSAGE##' => $request->get('start_message'),
+						'##AUTORESPONSE##' => $request->get('autoresponse'),
+						'##CONTACT_FORM##' => $request->get('contact_form'),
+						'##GALLERY_BUTTON##' => $request->get('galleries'),
+						'##CHANNELS_BUTTON##' => $request->get('channels'),
+						'##STREET##' => $request->get('street'),
+						'##COUNTRY##' => $countryName,
+						'##STATE##' => $stateName,
+						'##CITY##' => $request->get('city'),
+						'##POSTAL_CODE##' => $request->get('zip'),
+						'##EMAIL##' => $request->get('email'),
+						'##CARD_NAME##' => $request->get('cardholdername'),
+						'##NUMBER##' => $request->get('cardnumber'),
+						'##EXP_DATE##' => $request->get('card_exp'),
+						'##CVV##' => $request->get('cvv')
+					);
+					
+					$html = strtr($template, $emailFindReplace);
+					
+					$email_arr = array();
+					$email_arr['to_email'] = $to_email;
+					$email_arr['subject'] = $email_subject;
+					$email_arr['from'] = $from_email;
+					
+					\Mail::send(['html' => 'front.bots.email_bot_template'],
+						array(
+							'text' => $html
+						), function($message) use ($email_arr)
+					{
+						$message->from($email_arr['to_email']);
+						$message->to($email_arr['to_email'])->subject($email_arr['subject']);
+					});
+			
+					
+				}
+			}	
+			else
+			{
+				$duration = $plans[0]->duration;
+				$expiry_date = date('Y-m-d',strtotime('+'.$duration.' month'));
+				
+				$user_subscription = new UserSubscription;
+				$user_subscription->user_id = $user_id;
+				$user_subscription->plan_id = $stripe_plan_id;
+				$user_subscription->types = 'bot';
+				$user_subscription->type_id = $lastInsertId;
+				$user_subscription->price = $request->get('plan_price');
+				$user_subscription->subscription_date = date('Y-m-d');
+				$user_subscription->expiry_date = $expiry_date;
+				$user_subscription->last_billed = date('Y-m-d');
+				$user_subscription->status = 'Completed';
+				$user_subscription->created_at = date('Y-m-d h:i:s');
+				$user_subscription->updated_at = date('Y-m-d h:i:s');
 
-                $user_subscription->user_id = $user_id;
-                $user_subscription->plan_id = $stripe_plan_id;
-                $user_subscription->types = 'bot';
-                $user_subscription->type_id = $lastInsertId;
-                $user_subscription->price = $request->get('plan_price');
-                $user_subscription->subscription_date = date('Y-m-d',$bot_subscription['current_period_start']);
-                $user_subscription->expiry_date = date('Y-m-d',$bot_subscription['current_period_end']);
-                $user_subscription->last_billed = date('Y-m-d');
-                $user_subscription->status = 'Completed';
-                $user_subscription->created_at = date('Y-m-d h:i:s');
-                $user_subscription->updated_at = date('Y-m-d h:i:s');
+				$user_subscription->save();
+				/* user_subscriptions */
+	
+	
+	
+	
+			   /* UserTransaction */
 
-                $user_subscription->save();
-                /* user_subscriptions */
+			   $user_transaction = new UserTransaction;
+			   $user_transaction->user_id = $user_id;
+			   $user_transaction->plan_id = $stripe_plan_id;
+			   $user_transaction->types = 'bot';
+			   $user_transaction->type_id = $lastInsertId;
+			   $user_transaction->amount = $request->get('plan_price');
+			   $user_transaction->Description = '';
+			   $user_transaction->created_at = date('Y-m-d h:i:s');
+			   $user_transaction->updated_at = date('Y-m-d h:i:s');
 
-
-
-
-               /* UserTransaction */
-
-               $user_transaction = new UserTransaction;
-               $user_transaction->user_id = $user_id;
-               $user_transaction->plan_id = $stripe_plan_id;
-               $user_transaction->types = 'bot';
-               $user_transaction->type_id = $lastInsertId;
-               $user_transaction->amount = $request->get('plan_price');
-               $user_transaction->Description = '';
-               $user_transaction->created_at = date('Y-m-d h:i:s');
-               $user_transaction->updated_at = date('Y-m-d h:i:s');
-
-               $user_transaction->save();
-               /* UserTransaction */
-			   
-			   
-			   
-			   
-			   
+			   $user_transaction->save();
+			   /* UserTransaction */
+				   
+				   
+				   
+				   
+				   
 			   $contactFormEmail = DB::table('site_settings')
 								->where('name','=','contact_form_email')
 								->get();
@@ -371,9 +505,7 @@ class BotController extends Controller
 					$message->from($email_arr['to_email']);
 					$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 				});
-		
-                
-            }
+			}
            return redirect('dashboard')->with('ok', trans('front/bot.created'));
         }
         else{

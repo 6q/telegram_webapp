@@ -786,7 +786,8 @@
 							muFunction(id);
 						}
 						else{
-							muFunction(4,2);
+							$('#payment-form').submit();
+							//muFunction(4,2);
 						}
 					}
 					else{
