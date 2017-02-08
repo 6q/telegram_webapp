@@ -160,6 +160,7 @@ class BotController extends Controller
 		$bot->username = $request->get('username');
 		$bot->bot_token = $request->get('bot_token');
 		$bot->error_msg = $request->get('error_msg');
+		$bot->comanda = $request->get('comanda');
 		$bot->bot_description = $request->get('bot_description');
 		$bot->start_message = $request->get('start_message');
 		$bot->autoresponse = $request->get('autoresponse');
@@ -1299,6 +1300,7 @@ class BotController extends Controller
 		  $bot->id = $request->get('id');
           $bot->nick_name = $request->get('nick_name');
 		  $bot->error_msg = $request->get('error_msg');
+		  $bot->comanda = $request->get('comanda');
           $bot->bot_description = $request->get('bot_description');
           $bot->start_message = $request->get('start_message');
           $bot->autoresponse = $request->get('autoresponse');

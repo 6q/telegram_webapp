@@ -187,12 +187,6 @@
                     </div>
                     <div class="crete_bot_form">
                         <ul>
-							<li>
-								<span>{{ trans('front/bots.bot_error_msg') }}</span>
-								<label id="aError_msg"  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'error_msg', $errors,'','',"data-emojiable='true' placeholder='No hem entès el missatge.' maxlength='50' required") !!}
-                                </label>
-							</li>
 
 							<li>
 								<span>{{ trans('front/bots.start_message') }}</span>
@@ -200,7 +194,20 @@
                                     {!! Form::control('textarea', 0, 'start_message', $errors,'','',"data-emojiable='true' placeholder='Benvingut al nostre bot, aquí pots trobar informació i contactar amb nosaltres.' maxlength='250' required") !!}
                                 </label>
 							</li>
+							<li>
+								<span>Comanda per llistar totes les comandes</span>
+								<label  class="lead">
+									{!! Form::control('text', 0, 'comanda', $errors,'','', " placeholder='/llista' maxlength='50' required") !!}
+								</label>
 
+								<p><small>Aquesta comanda (/llista, /help, /ajuda...) s'utilitza per llistar totes les comandes ocultes del bot.</small></p>
+							</li>
+							<li>
+								<span>{{ trans('front/bots.bot_error_msg') }}</span>
+								<label id="aError_msg"  class="lead emoji-picker-container">
+									{!! Form::control('text', 0, 'error_msg', $errors,'','',"data-emojiable='true' placeholder='No hem entès el missatge.' maxlength='50' required") !!}
+								</label>
+							</li>
 						</ul>
 
 					</div>
@@ -1027,40 +1034,4 @@
 	</script>
 
 
-	<!-- Entête de page -->
-	<!--
-  <div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">
-			{{ trans('front/bots.create') }}
-			</h1>
-
-		</div>
-	</div>
-
-		{!! Form::open(['url' => 'bot', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
-			<div class="col-sm-12" id="bot_creation_form">
-
-					{!! Form::control('text', 0, 'username', $errors, trans('front/bots.name')) !!}
-	{!! Form::control('text', 0, 'bot_token', $errors, trans('front/bots.bot_token')) !!}
-	{!! Form::control('file', 0, 'bot_image', $errors, trans('front/bots.bot_image')) !!}
-	{!! Form::control('textarea', 0, 'bot_description', $errors, trans('front/bots.bot_description')) !!}
-	{!! Form::control('textarea', 0, 'start_message', $errors, trans('front/bots.start_message')) !!}
-
-			<h2>{{ trans('front/bots.menus_text') }}</h2>
-			
-			{!! Form::control('text', 0, 'autoresponse', $errors, trans('front/bots.autoresponse')) !!}
-	{!! Form::control('text', 0, 'contact_form', $errors, trans('front/bots.contact_form')) !!}
-	{!! Form::control('text', 0, 'galleries', $errors, trans('front/bots.galleries')) !!}
-	{!! Form::control('text', 0, 'channels', $errors, trans('front/bots.channels')) !!}
-
-	{!! Form::button(trans('front/form.send')) !!}
-			</div>
-
-			<div class="col-sm-12" id="bot_plan_form" style="display:none;">
-			</div>
-
-
-			{!! Form::close() !!}
-			-->
 @stop

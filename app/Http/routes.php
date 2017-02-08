@@ -389,16 +389,15 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		
 		if($messageText == '/start'){
 			$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
-			$msg .= chr(10).'Use keyword "/getappcommands" to get this bot commands.'; 
+			//$msg .= chr(10).'Use keyword "/getappcommands" to get this bot commands.';
 		}
-		else if($messageText == '/getappcommands')
+		else if(isset($bot_data[0]->comanda) && $messageText == $bot_data[0]->comanda)
 		{
 			$commands  = DB::table('bot_commands')->where('bot_id','=',$dbBotId)->get();
 			//file_put_contents(public_path().'/result_command.txt',json_encode($commands));
 			$msg = '';
 			if(!empty($commands))
 			{
-				$msg .= 'Available bot commands are :-'.chr(10);
 				foreach($commands as $bck1 => $bcv1)
 				{
 					$msg .= $bcv1->title.chr(10);
@@ -1057,17 +1056,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 	
 						
 		
-    if(!empty($msg)){
-        if(!empty($bot_messages_id)){
-            DB::table('bot_messages')->where('id', $bot_messages_id)->update(array('reply_message' => $msg));
-        } 
-        
-        $response = $telegram->sendMessage([
-          'chat_id' => $chatId, 
-          'text' => $msg, 
-		  'reply_markup' => $reply_markup
-        ]);
-    }
+
     
     if(!empty($img_url)){
         if(!empty($bot_messages_id)){
@@ -1079,12 +1068,21 @@ Route::post('/{bottoken}/webhook', function ($token) {
         
         $BOTAPI = 'https://api.telegram.org/bot' . $BOT_TOKEN .'/';
         
-        $cfile = new CURLFile($img_url, 'image/jpg'); 
-        
-        $data = [
-            'chat_id' => $chat_id , 
-            'photo' => $cfile
-        ];
+        $cfile = new CURLFile($img_url, 'image/jpg');
+
+        if(!empty($msg)){
+            $data = [
+                'chat_id' => $chat_id ,
+                'photo' => $cfile,
+                'caption' => $msg,
+            ];
+        }
+        else{
+            $data = [
+                'chat_id' => $chat_id,
+                'photo' => $cfile
+            ];
+        }
 
         $ch = curl_init($BOTAPI.'sendPhoto');
         curl_setopt($ch, CURLOPT_HEADER, false);
@@ -1094,6 +1092,16 @@ Route::post('/{bottoken}/webhook', function ($token) {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
         curl_close($ch);
+    } else if (!empty($msg)){
+        if(!empty($bot_messages_id)){
+            DB::table('bot_messages')->where('id', $bot_messages_id)->update(array('reply_message' => $msg));
+        }
+
+        $response = $telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => $msg,
+            'reply_markup' => $reply_markup
+        ]);
     }
 
     return 'ok';
