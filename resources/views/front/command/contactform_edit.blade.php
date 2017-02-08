@@ -70,7 +70,7 @@
               
               <?php
 				if(isset($contact_forms_ques) && !empty($contact_forms_ques)){
-					$i = 0;
+					$i = 0;http://192.168.1.4/intranet/home.php#tabsi-2
 					foreach($contact_forms_ques as $k1 => $v1){
 					?>                
 						<li> 
