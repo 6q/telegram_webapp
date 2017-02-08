@@ -220,6 +220,7 @@
                                     <h3 style="font-size:16px; font-weight:bold;">
                                         <?php echo $cv1['channel']['name'];?>
                                     </h3>
+                                    <?php if(isset($cv1['user_subscription']) && !empty($cv1['user_subscription'])){?>
                                     <ul>
                                         <li>
                                             <b>{{ trans('front/fornt_user.cost') }}</b>: <?php echo $cv1['user_subscription']['price'];?>€
@@ -228,6 +229,7 @@
                                             <b>{{ trans('front/fornt_user.automatic_renewal') }}</b>:<?php echo date('d/m/Y', strtotime($cv1['user_subscription']['expiry_date']));?>
                                         </li>
                                     </ul>
+                                    <?php }?>
                                 </td>
                                 <td>
                                     <?php
