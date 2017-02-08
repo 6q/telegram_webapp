@@ -790,7 +790,7 @@
                                 else{
                                 ?>
                                 <tr>
-                                    <td colspan="5">{{ trans('front/bots.no_record') }}</td>
+                                    <td colspan="5">{{ trans('front/fornt_user.no_record') }}</td>
                                 </tr>
                                 <?php
                                 }
