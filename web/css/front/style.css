@@ -1049,6 +1049,11 @@ p.h2 > img {
 }
 .crete_bot_form label {
   width: 100%;
+  margin-bottom:0px;
+}
+.create_bot_form small {
+  color: #aeaeae;
+  margin-left: 20px;
 }
 .crete_bot_form input[type="file"] {
   padding: 0;

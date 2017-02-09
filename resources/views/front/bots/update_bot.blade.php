@@ -26,7 +26,7 @@
                                 <label class="lead emoji-picker-container text-area">
                                     {!! Form::control('textarea', 0, 'start_message', $errors,'',$bot->start_message,"data-emojiable='true' placeholder='Benvingut al nostre bot, aquí pots trobar informació i contactar amb nosaltres.' maxlength='250' required") !!}
                                 </label>
-                                <p><small>No t'oblidis d'indicar als usuaris quina és la comanda per treure el llistat de comandes.</small></p>
+                                <p><small>* No t'oblidis d'indicar als usuaris quina és la comanda per treure el llistat de comandes.</small></p>
                             </li>
 
                             <li>
@@ -35,7 +35,7 @@
                                     {!! Form::control('text', 0, 'comanda', $errors,'',$bot->comanda, " placeholder='/llista' maxlength='50' required") !!}
                                 </label>
 
-                                <p><small>Aquesta comanda (/llista, /help, /ajuda...) s'utilitza per llistar totes les comandes ocultes del bot.</small></p>
+                                <p><small>* Aquesta comanda (/llista, /help, /ajuda...) s'utilitza per llistar totes les comandes ocultes del bot.</small></p>
                             </li>
 
                             <li>
@@ -43,6 +43,7 @@
                                 <label id="aError_msg"  class="lead emoji-picker-container">
                                     {!! Form::control('text', 0, 'error_msg', $errors,'',$bot->error_msg,"data-emojiable='true' placeholder='No hem entès el missatge.' maxlength='50' required") !!}
                                 </label>
+                                <p><small>* Aquest és el text que rep l'usuari quan introdueix un text que el bot no pot reconèixer.</small></p>
                             </li>
 
 
