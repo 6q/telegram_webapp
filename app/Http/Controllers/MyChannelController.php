@@ -74,7 +74,7 @@ class MyChannelController extends Controller {
 		
 		$userId = Auth::user()->id;
 		$bots = DB::table('bots')
-				->where('id', '=', '26')
+				->where('id', '=', '2')
 				->get();
 		
 		/* channelName popup */
@@ -474,7 +474,7 @@ class MyChannelController extends Controller {
         if(!empty($channel_id)){
 			$userId = Auth::user()->id;
 			$bots = DB::table('bots')
-				->where('id', '=', '26')
+				->where('id', '=', '2')
 				->get();
 			
             $total_bots = $this->botsTOTAL;
