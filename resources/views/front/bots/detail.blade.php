@@ -911,8 +911,35 @@
 
 			<div class="col-plan tab-pane fade" id="bot_users">
             	<p>
-                	<a class="btn btn-primary" href="{!! URL::to('/bot/download_user/'.$bots[0]->id) !!}">{{ trans('front/bots.user_download') }}</a>
-                    <a class="btn btn-primary" href="{!! URL::to('/bot/pdf_download/'.$bots[0]->id) !!}">{{ trans('front/bots.pdf_user_download') }}</a>
+					<style>
+						input.datepicker.entre {
+							position:relative;
+							height:auto;
+							width:100px;
+							opacity:1;
+							margin:0 10px;
+						}
+					</style>
+					de: <input class="datepicker entre" type="text" id="from_user" size="10">
+					a: <input class="datepicker entre" type="text" id="to_user" size="10">
+
+					<a class="btn btn-primary" id="user_excel" href="{!! URL::to('/bot/download_user/'.$bots[0]->id) !!}">{{ trans('front/bots.user_download') }}</a>
+                    <a class="btn btn-primary" id="user_pdf" href="{!! URL::to('/bot/pdf_download/'.$bots[0]->id) !!}">{{ trans('front/bots.pdf_user_download') }}</a>
+
+					<script>
+                        $("#user_excel").click(function(){
+                            var from = $('#from_user').val().replace(/\//g, "-");;
+                            var to = $('#to_user').val().replace(/\//g, "-");;
+                        	$('#user_excel').attr("href", "{!! URL::to('/bot/download_user/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                        	$('#user_pdf').attr("href", "{!! URL::to('/bot/pdf_download/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                        });
+                        $("#user_pdf").click(function(){
+                            var from = $('#from_user').val().replace(/\//g, "-");;
+                            var to = $('#to_user').val().replace(/\//g, "-");;
+                            $('#user_excel').attr("href", "{!! URL::to('/bot/download_user/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                            $('#user_pdf').attr("href", "{!! URL::to('/bot/pdf_download/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                        });
+					</script>
                </p>
 				<h2>{{ trans('front/bots.active_user') }}</h2>
                 <div id="u_autoResp">
@@ -1051,8 +1078,28 @@
 
 			<div class="col-plan tab-pane fade" id="bot_messages">
             	<p>
-                	<a class="btn btn-primary" href="{!! URL::to('/bot/download_log/'.$bots[0]->id) !!}">{{ trans('front/bots.log_download') }}</a>
-                    <a class="btn btn-primary" href="{!! URL::to('/bot/log_pdf_download/'.$bots[0]->id) !!}">{{ trans('front/bots.pdf_log_download') }}</a>
+
+					de: <input class="datepicker entre" type="text" id="from_log" size="10">
+					a: <input class="datepicker entre" type="text" id="to_log" size="10">
+
+					<a class="btn btn-primary" id="log_excel" href="{!! URL::to('/bot/download_log/'.$bots[0]->id) !!}">{{ trans('front/bots.log_download') }}</a>
+					<a class="btn btn-primary" id="log_pdf" href="{!! URL::to('/bot/log_pdf_download/'.$bots[0]->id) !!}">{{ trans('front/bots.pdf_log_download') }}</a>
+
+					<script>
+                        $("#log_excel").click(function(){
+                            var from = $('#from_log').val().replace(/\//g, "-");;
+                            var to = $('#to_log').val().replace(/\//g, "-");;
+                            $('#log_excel').attr("href", "{!! URL::to('/bot/download_log/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                            $('#log_pdf').attr("href", "{!! URL::to('/bot/log_pdf_download/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                        });
+                        $("#log_pdf").click(function(){
+                            var from = $('#from_log').val().replace(/\//g, "-");;
+                            var to = $('#to_log').val().replace(/\//g, "-");;
+                            $('#log_excel').attr("href", "{!! URL::to('/bot/download_log/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                            $('#log_pdf').attr("href", "{!! URL::to('/bot/log_pdf_download/'.$bots[0]->id) !!}"+"/"+from+"/"+to);
+                        });
+					</script>
+
                 </p>
 				<h2>{{ trans('front/bots.messages_activity') }}</h2>
 				<div id="m_autoResp">

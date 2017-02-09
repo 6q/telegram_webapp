@@ -73,11 +73,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('bot/update_bot/{bot_id?}', 'BotController@update_bot');
 	Route::get('bot/upgradeplan/{bot_id?}', 'BotController@upgradeplan');
 	Route::post('bot/upgradeplan/{bot_id?}', 'BotController@upgrade_plan');
-	Route::get('bot/download_user/{bot_id?}', 'BotController@download_user');
-	Route::get('bot/download_log/{bot_id?}', 'BotController@download_log');
+	Route::get('bot/download_user/{bot_id?}/{from?}/{to?}', 'BotController@download_user');
+	Route::get('bot/download_log/{bot_id?}/{from?}/{to?}', 'BotController@download_log');
 	
-	Route::get('bot/pdf_download/{bot_id?}', 'BotController@pdf_download_user');
-	Route::get('bot/log_pdf_download/{bot_id?}', 'BotController@log_pdf_download');
+	Route::get('bot/pdf_download/{bot_id?}/{from?}/{to?}', 'BotController@pdf_download_user');
+	Route::get('bot/log_pdf_download/{bot_id?}/{from?}/{to?}', 'BotController@log_pdf_download');
 	
 	Route::get('delete/log', 'BotController@delete_log');
 	

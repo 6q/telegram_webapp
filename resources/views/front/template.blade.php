@@ -59,12 +59,16 @@
 		{!! HTML::script('lib/js/emoji-picker.js') !!}
 		{!! HTML::script('js/jQueryEmoji.js') !!}
 		<script>
+
             jQuery(document).ready(function () {
                 //alert('hello');
                 jQuery(function () {
-                    jQuery(".datepicker").datepicker();
+                    jQuery(".datepicker").datepicker( {
+                        language: 'es',
+						format: 'dd/mm/yyyy'
+					});
                 });
-            });
+            });z
             function isTouchDevice(){
                 return true == ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch);
             }

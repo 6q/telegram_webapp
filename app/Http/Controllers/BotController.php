@@ -629,15 +629,31 @@ class BotController extends Controller
     }
 	
 	
-	public function download_user($botid = NULL)
+	public function download_user($botid = NULL,$from = NULL,$to = NULL)
 	{
-		$botUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
-		
-	
-		header("Content-Type:   application/vnd.ms-excel;");
+
+        if (isset($from)&&isset($to)) {
+            $date = explode("-", $from);
+            $from = $date[2]."-".$date[1]."-".$date[0];
+            $date = explode("-", $to);
+            $to = $date[2]."-".$date[1]."-".$date[0];
+            $start_date = date('Y-m-d h:i:s', strtotime($from));
+            $end_date = date('Y-m-d h:i:s', strtotime($to));
+            $botUser = DB::table('bot_users')
+                ->where('created_at', '>=', $start_date)
+                ->where('created_at', '<=', $end_date)
+                ->where('bot_id', '=', $botid)
+                ->get();
+        } else {
+            $botUser = DB::table('bot_users')
+                ->where('bot_id', '=', $botid)
+                ->get();
+        }
+
+        header("Content-Type:   application/vnd.ms-excel;");
 		header("Content-type:   application/x-msexcel; charset=utf-8");
-		header("Content-Disposition : attachment; filename=botUsersList.xls");		
-		
+		header("Content-Disposition : attachment; filename=botUsersList.xls");
+		//echo $start_date. "\t".$end_date. "\n";
 		echo 'S No.' . "\t" .'First Name' . "\t" . 'Last Name' . "\t" . 'Created' . "\n";    
         if(!empty($botUser))
         {
@@ -676,20 +692,37 @@ class BotController extends Controller
 		
 	}
 	
-	public function pdf_download_user($botid = NULL)
+	public function pdf_download_user($botid = NULL,$from = NULL,$to = NULL)
 	{
+        if (isset($from)&&isset($to)) {
+            $date = explode("-", $from);
+            $from = $date[2]."-".$date[1]."-".$date[0];
+            $date = explode("-", $to);
+            $to = $date[2]."-".$date[1]."-".$date[0];
+            $start_date = date('Y-m-d', strtotime($from));
+            $end_date = date('Y-m-d', strtotime($to));
+            $botUser = DB::table('bot_users')
+                ->where('created_at', '>=', $start_date)
+                ->where('created_at', '<=', $end_date)
+                ->where('bot_id', '=', $botid)
+                ->get();
+        } else {
+            $botUser = DB::table('bot_users')
+                ->where('bot_id', '=', $botid)
+                ->get();
+        }
 		$botDetail = DB::table('bots')->where('id', '=', $botid)->get();
-		$botUser = DB::table('bot_users')->where('bot_id', '=', $botid)->get();
-		
+
+
 		$html = '<table border="0">';
 			$html .= '<tr><td  style="text-align:center" colspan="4"><img style="width:350px" src="'.asset('/img/front/logo.png').'" alt="Citymes" ></td></tr>';
 			$html .= '<tr><td colspan="4"></td></tr>';
-			$html .= '<tr><td colspan="4"><b>Name of Bot :- </b> '.$botDetail[0]->username.'</td></tr>';
+			$html .= '<tr><td colspan="4"><b>Bot: </b> '.$botDetail[0]->username.'</td></tr>';
 			$html .= '<tr><td colspan="4"></td></tr>';
 		$html .= '</table>';
 		$html .= '<table border="1">';
 			$html .= '<tr>';
-				$html .= '<th style="text-align:center"><b>S No.</b></th>';
+				$html .= '<th style="text-align:center"><b>N.</b></th>';
 				$html .= '<th style="text-align:center"><b>First Name</b></th>';
 				$html .= '<th style="text-align:center"><b>Last Name</b></th>';
 				$html .= '<th style="text-align:center"><b>Created</b></th>';
@@ -719,13 +752,31 @@ class BotController extends Controller
 	}
 	
 	
-	public function download_log($botid = NULL)
+	public function download_log($botid = NULL,$from = NULL,$to = NULL)
 	{
-		$botMessages = DB::table('bot_messages')
-                                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
-                                ->where('bot_messages.bot_id', '=', $botid)
-	                            ->orderby('bot_messages.id','DESC')
-	                            ->get();
+        if (isset($from)&&isset($to)) {
+            $date = explode("-", $from);
+            $from = $date[2]."-".$date[1]."-".$date[0];
+            $date = explode("-", $to);
+            $to = $date[2]."-".$date[1]."-".$date[0];
+            $start_date = date('Y-m-d', strtotime($from));
+            $end_date = date('Y-m-d', strtotime($to));
+            $botMessages = DB::table('bot_messages')
+                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                ->where('created_at', '>=', $start_date)
+                ->where('created_at', '<=', $end_date)
+                ->where('bot_messages.bot_id', '=', $botid)
+                ->orderby('bot_messages.id','DESC')
+                ->get();
+        } else {
+            $botMessages = DB::table('bot_messages')
+                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                ->where('bot_messages.bot_id', '=', $botid)
+                ->orderby('bot_messages.id','DESC')
+                ->get();
+        }
+
+
 		
 		header( "Content-Type: application/vnd.ms-excel" );
         header( "Content-disposition: attachment; filename=botlog.xls" );
@@ -768,23 +819,39 @@ class BotController extends Controller
 	}
 	
 	
-	public function log_pdf_download($botid = NULL){
+	public function log_pdf_download($botid = NULL,$from = NULL,$to = NULL){
 		$botDetail = DB::table('bots')->where('id', '=', $botid)->get();
-		$botMessages = DB::table('bot_messages')
-							->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
-							->where('bot_messages.bot_id', '=', $botid)
-							->orderby('bot_messages.id','DESC')
-							->get();
-							
+
+        if (isset($from)&&isset($to)) {
+            $date = explode("-", $from);
+            $from = $date[2]."-".$date[1]."-".$date[0];
+            $date = explode("-", $to);
+            $to = $date[2]."-".$date[1]."-".$date[0];
+            $start_date = date('Y-m-d h:i:s', strtotime($from));
+            $end_date = date('Y-m-d h:i:s', strtotime($to));
+            $botMessages = DB::table('bot_messages')
+                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                ->where('created_at', '>=', $start_date)
+                ->where('created_at', '<=', $end_date)
+                ->where('bot_messages.bot_id', '=', $botid)
+                ->orderby('bot_messages.id','DESC')
+                ->get();
+        } else {
+            $botMessages = DB::table('bot_messages')
+                ->join('bot_users', 'bot_users.id', '=', 'bot_messages.bot_user_id')
+                ->where('bot_messages.bot_id', '=', $botid)
+                ->orderby('bot_messages.id','DESC')
+                ->get();
+        }
+
 		$html = '<table border="0" style="width: 100%; float: left;">';
 			$html .= '<tr><td  style="text-align:center" colspan="5"><img style="width:350px" src="'.asset('/img/front/logo.png').'" alt="Citymes" ></td></tr>';
 			$html .= '<tr><td colspan="5"></td></tr>';
-			$html .= '<tr><td colspan="5"><b>Name of Bot :- </b> '.$botDetail[0]->username.'</td></tr>';
+			$html .= '<tr><td colspan="5"><b>Bot: </b> '.$botDetail[0]->username.'</td></tr>';
 			$html .= '<tr><td colspan="5"></td></tr>';
 		$html .= '</table>';
 		$html .= '<table border="1" style="width: 100%; float: left;font-size:12px;">';
 			$html .= '<tr>';
-				$html .= '<th style="text-align:center"><b>S No.</b></th>';
 				$html .= '<th style="text-align:center"><b>User</b></th>';
 				$html .= '<th style="text-align:center"><b>Message</b></th>';
 				$html .= '<th style="text-align:center"><b>Reply Message</b></th>';
@@ -797,7 +864,6 @@ class BotController extends Controller
 			foreach($botMessages as $bmk1 => $bmv1)
 			{
 				$html .= '<tr>';
-					$html .= '<td style="text-align:center;font-size:12px;">'.$j.'</td>';
 					$html .= '<td style="text-align:center;font-size:12px;">'.$bmv1->first_name.' '.$bmv1->last_name.'</td>';
 					$html .= '<td style="text-align:center;font-size:12px;">'.$bmv1->text.'</td>';
 					$html .= '<td style="text-align:center;font-size:12px;">'.$bmv1->reply_message.'</td>';
