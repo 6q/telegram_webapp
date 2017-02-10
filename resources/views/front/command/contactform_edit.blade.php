@@ -70,14 +70,15 @@
               
               <?php
 				if(isset($contact_forms_ques) && !empty($contact_forms_ques)){
-					$i = 0;http://192.168.1.4/intranet/home.php#tabsi-2
+					$i = 0;//http://192.168.1.4/intranet/home.php#tabsi-2
 					foreach($contact_forms_ques as $k1 => $v1){
 					?>                
-						<li> 
+						<li id="<?php echo $i; ?>"> 
 							<span>{!! trans('front/command.question_heading') !!}</span>
 							<label id="ques">
 								<div class="">
 									<input type="text" class="ques_heading form-control" name="ques_heading[<?php echo $i;?>]" placeholder="" id="ques_heading" class="" value="<?php echo $v1->ques_heading; ?>">
+                                    <a href="javascript:void(0);" class="close_button" onclick="rmv('<?php echo $i; ?>')">X</a>
 								</div>
 							</label>
 						  </li>
@@ -119,6 +120,7 @@
 						<label id="ques">
 							<div class="">
 								<input type="text" class="ques_heading form-control" name="ques_heading[0]" placeholder="" id="ques_heading" class="">
+                                <a href="javascript:void(0);" class="close_button" onclick="rmv('<?php echo $i; ?>')">X</a>
 							</div>
 						</label>
 					  </li>
@@ -194,6 +196,21 @@
 	.form-control {
   height: auto;
 }
+a.close_button {
+  background-color: #d9d9d9;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  font-weight: bold;
+  left: auto;
+  padding: 0 6px;
+  position: absolute;
+  right: 9px;
+  top: 11px;
+}
+#ques > div {
+  position: relative;
+}
 </style>
 
 <script>
@@ -202,7 +219,7 @@
 		var i = $('#add_more').attr('data-rel');
 		i = parseInt(i)+1;
 		
-		var html = '<ul><li><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"></div></label></li></ul>';
+		var html = '<ul><li id='+i+'><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"><a href="javascript:void(0);" class="close_button" onclick="rmv('+i+')">X</a></div></label></li></ul>';
 		/*
 		var html = '<ul><li><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"></div></label></li><li class="type_response"><span> {!! trans("front/command.type_of_response_expected") !!} </span><div class="box"><select name="type_response['+i+']" id="selectBox'+i+'"><option value="text">Text</option><option value="image">Image</option></select></div></li></ul>';
 		*/
@@ -210,6 +227,10 @@
 		$('#add_more').attr('data-rel',i);
 		$('#res').append(html);
 		$('#selectBox'+i).niceSelect();
+	}
+	
+	function rmv(id){
+		$('#'+id).remove();
 	}
 	
 	

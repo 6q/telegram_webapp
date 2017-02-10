@@ -408,6 +408,10 @@ function rmv(id){
 	$('#preview #'+id).remove();
 }
 
+function rmv_ques(id){
+	$('#'+id).remove();
+}
+
 	
 $(function(){
 	$( "#preview" ).sortable({
@@ -466,6 +470,22 @@ $(function(){
 	
 	.form-control {
   height: auto;
+}
+
+a.close_button {
+  background-color: #d9d9d9;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  font-weight: bold;
+  left: auto;
+  padding: 0 6px;
+  position: absolute;
+  right: 9px;
+  top: 11px;
+}
+#ques > div {
+  position: relative;
 }
 </style>
 
@@ -589,7 +609,7 @@ function myFunctionShow(id){
 		var i = $('#add_more').attr('data-rel');
 		i = parseInt(i)+1;
 		
-		var html = '<ul><li><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"></div></label></li></ul>';
+		var html = '<ul><li id='+i+'><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"><a href="javascript:void(0);" class="close_button" onclick="rmv_ques('+i+')">X</a></div></label></li></ul>';
 		/*
 		var html = '<ul><li><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"></div></label></li><li class="type_response"><span> {!! trans("front/command.type_of_response_expected") !!} </span><div class="box"><select name="type_response['+i+']" id="selectBox'+i+'"><option value="text">Text</option><option value="image">Image</option></select></div></li></ul>';
 		*/
@@ -712,6 +732,18 @@ function myFunctionShow(id){
 		else{
 			$('#intro_heading div').removeClass('has-error');
 		}
+		
+		$("#preview li").each(function( i ) {
+			 var li_id = $(this).attr('id');
+			 var inp_name_img = $('#'+li_id+' input').val();
+			 if(inp_name_img == ''){
+				 $('#'+li_id+' input').css('border','1px solid #ff0000');
+				 chk = 0;
+			 }
+			 else{
+			 	$('#'+li_id+' input').css('border','1px solid #a6a6a6');
+			 }
+		 });
 		
 		if(chk){
 			return true;
