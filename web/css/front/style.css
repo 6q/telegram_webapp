@@ -2235,9 +2235,8 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
 
 .alert, .alert-new {
   position: fixed;
-  bottom: 5%;
-  left: 5%;
-  width: 90%;
+  bottom: 20px;
+  right: 20px;
   z-index: 9999;
   margin: 0 auto;
 }
