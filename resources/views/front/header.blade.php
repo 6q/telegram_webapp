@@ -15,7 +15,7 @@
 
 
 		<div class="languages">
-			<a data-toggle="modal" data-target="#languages">{!! trans('front/header.lan') !!}</a>
+			<a data-toggle="modal" data-target="#languages"><i class="fa fa-globe" aria-hidden="true" style="font-size:22px;"></i></a>
 		</div>
 		<div class="col_lock">
 			<a href="{!! URL::to('/auth/logout') !!}" data-toggle="tooltip" title="{!! trans('front/header.logout') !!}">{!! HTML::image('img/front/img3.png') !!}</a>

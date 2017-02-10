@@ -736,12 +736,11 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						//$to_email = $contactFormEmail[0]->value;
 						$to_email = (isset($contact_Form_Data[0]->email) && !empty($contact_Form_Data[0]->email))?$contact_Form_Data[0]->email:'';
 						
-						$ques_html = '';
+
 						 foreach($ques_ans_data as $k1 => $v1){
-							 $ques_html .= '<tr>';   
-							 $ques_html .= '<td>'.$v1->ques.'</td>';   
-							 $ques_html .= '<td>'.$v1->ans.'</td>';   
-							 $ques_html .= '</tr>';   
+							 $ques_html .= '<p><b>'.$v1->ques.'</b>: <br>';
+							 $ques_html .= $v1->ans;
+							 $ques_html .= '</p>';
 						  }
 						
 						$emailFindReplace = array(
@@ -949,10 +948,10 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							
 							$ques_html = '';
 							 foreach($ques_ans_data as $k1 => $v1){
-								 $ques_html .= '<tr>';   
-								 $ques_html .= '<td>'.$v1->ques.'</td>';   
-								 $ques_html .= '<td>'.$v1->ans.'</td>';   
-								 $ques_html .= '</tr>';   
+								 $ques_html .= '<p>';
+								 $ques_html .= '<b>'.$v1->ques.'</b>:<br>';
+								 $ques_html .= $v1->ans;
+								 $ques_html .= '<p>';
 							  }
 							
 							$emailFindReplace = array(

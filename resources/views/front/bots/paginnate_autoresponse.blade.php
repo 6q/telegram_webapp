@@ -46,7 +46,7 @@
                 ?>
             </div>
 
-            <?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses)){
+            <?php if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses) && $planDetails[0]->autoresponses<999){
                 echo '<div class="info_test"> '.$total_pages.' / '.$planDetails[0]->autoresponses.' </div>';
             } ?>
 

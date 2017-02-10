@@ -44,7 +44,7 @@
                 ?>
             </div>
 
-            <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery)){
+            <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $planDetails[0]->image_gallery<999){
                 echo '<div class="info_test"> '.$total_pages_gallery.' / '.$planDetails[0]->image_gallery.' </div>';
             } ?>
             <div id="botGalleryNavPosition" class="light-theme simple-pagination">

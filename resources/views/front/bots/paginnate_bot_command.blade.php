@@ -50,7 +50,7 @@
 				</div>
 
 
-                <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands)){
+                <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands) && $planDetails[0]->bot_commands<999){
                     echo '<div class="info_test"> '.$total_bot_commands.' / '.$planDetails[0]->bot_commands.' </div>';
                 } ?>
 

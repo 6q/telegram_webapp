@@ -795,7 +795,7 @@
         target: '[data-id="' + this.id + '"][data-type="picker"]',
         attachment: 'left center',
         targetAttachment: 'bottom left',
-        offset: '0 12px',
+        offset: '0px 12px',
         constraints: [
           {
             to: 'html',

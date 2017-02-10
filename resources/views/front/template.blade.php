@@ -16,6 +16,7 @@
 
 		{!! HTML::script('js/front/jquery1.12.4.js') !!}
 		{!! HTML::script('js/front/bootstrap-datepicker.js') !!}
+		{!! HTML::script('js/front/bootstrap-datepicker.es.js') !!}
 		{!! HTML::script('js/front/bootstrap.js') !!}
 
 
@@ -64,8 +65,10 @@
                 //alert('hello');
                 jQuery(function () {
                     jQuery(".datepicker").datepicker( {
-                        language: 'es',
-						format: 'dd/mm/yyyy'
+                        language: '{{Config::get('app.locale')}}',
+						format: 'dd/mm/yyyy',
+                        pickTime: false,
+                        autoclose: true,
 					});
                 });
             });
@@ -111,7 +114,7 @@
 				
 				setInterval(function() {
 					$("#alertMsg").hide()
-				}, 8000);
+				}, 5000);
 			});
 		</script>
 

@@ -13,7 +13,7 @@
         <div id="row2">
             <div class="my_account telegram">
                 <h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{{ trans('front/bots.telegram') }}</span></h4>
-                <h5>{{ trans('front/bots.create') }}</h5>
+                <h5>{{ trans('front/bots.edit') }}</h5>
             </div>
 
             <div class="buying">

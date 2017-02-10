@@ -41,7 +41,7 @@ class BotController extends Controller
 		define('PAGE_DATA_LIMIT_MESSAGE','10');
 		define('PAGE_DATA_LIMIT_USER','10');
 		define('PAGE_ADJACENTS','3');
-		define('PAGE_BOT_COMMAND','2');
+		define('PAGE_BOT_COMMAND','5');
     }
     
          
@@ -715,7 +715,7 @@ class BotController extends Controller
 
 
 		$html = '<table border="0">';
-			$html .= '<tr><td  style="text-align:center" colspan="4"><img style="width:350px" src="'.asset('/img/front/logo.png').'" alt="Citymes" ></td></tr>';
+			$html .= '<tr><td  style="text-align:center" colspan="4"><img style="width:250px" src="'.asset('/img/front/logo.png').'" alt="Citymes" ></td></tr>';
 			$html .= '<tr><td colspan="4"></td></tr>';
 			$html .= '<tr><td colspan="4"><b>Bot: </b> '.$botDetail[0]->username.'</td></tr>';
 			$html .= '<tr><td colspan="4"></td></tr>';
@@ -743,7 +743,8 @@ class BotController extends Controller
 			}
 			
 		$html .= '</table>';	
-		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);		
+		$html .= '<style>table td {font-size:10px;padding:4px 0}</style>';
+		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf::SetTitle('Bot User Log');
 		$pdf::AddPage();
 		$pdf::writeHTML($html, true, false, true, false, '');
@@ -874,7 +875,7 @@ class BotController extends Controller
 		}	
 		
 		$html .= '</table>';
-
+        $html .= '<style>table td {font-size:10px;padding:4px 0}</style>';
 		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf::SetTitle('Bot Log');
 		$pdf::AddPage();

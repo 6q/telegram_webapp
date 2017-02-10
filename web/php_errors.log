@@ -6,3 +6,9 @@
 [07-Feb-2017 10:06:43 UTC] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 74 bytes) in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 16759
 [08-Feb-2017 16:09:24 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 18278
 [08-Feb-2017 16:56:18 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 18278
+[10-Feb-2017 07:24:41 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/include/tcpdf_static.php on line 1222
+[10-Feb-2017 07:24:49 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/include/tcpdf_static.php on line 1226
+[10-Feb-2017 07:25:32 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 18278
+[10-Feb-2017 07:26:54 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 18278
+[10-Feb-2017 07:27:45 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 18278
+[10-Feb-2017 07:28:33 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/gestinet/www/citymes.app/vendor/tecnickcom/tcpdf/tcpdf.php on line 18278

@@ -1051,9 +1051,15 @@ p.h2 > img {
   width: 100%;
   margin-bottom:0;
 }
+.price.panel-blue > .panel-body .lead small {
+
+}
 small {
   color: #a0a0a0;
   margin-left: 20px;
+}
+.buying_table small {
+color:#fff;
 }
 .crete_bot_form input[type="file"] {
   padding: 0;
