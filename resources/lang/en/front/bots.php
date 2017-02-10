@@ -101,4 +101,34 @@ return [
 	'command_deleted' => 'Bot command deleted successfully',
 	'command_error' => 'Some error occurred',
 	'upgrade_plan' => 'Upgrade Plan',
+
+    /* Our Plans */
+    'every' => 'every',
+    'months' => 'months',
+    'each_quarter' => 'each quarter',
+    'contact_forms' => 'contact forms',
+    'photo_galleries' => 'photo galleries',
+    'images_per_gallery' => 'images per gallery',
+    'bot_commands' => 'bot commands',
+    'messages_per_day' => 'messages per day',
+    'editable_welcome_message' => 'Editable welcome message',
+    'editable_error_message' => 'Editable error message',
+    'choose' => 'Choose',
+
+    /* Bot Creation */
+    'list_command_help' => 'This command is used to list all the commands of the bot.',
+    'list_command' => '/list',
+    'welcome_default_message' => 'Welcome to our bot. Use /list to view all of our commands.',
+    'error_default_message' => "Sorry, there was an error.",
+    'default_information' => 'Information',
+    'default_information_description' => 'Select the information that you want',
+    'default_channels' => 'Channels',
+    'default_channels_description' => 'Our list of channels',
+    'default_contact' => 'Contact',
+    'default_contact_description' => 'Select a form to contact us',
+    'default_galleries' => 'Galleries',
+    'default_galleries_description' => 'Select a photo gallery',
+    'list_all_commands' => 'List all commands',
+
+
 ];

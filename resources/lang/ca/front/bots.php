@@ -98,4 +98,33 @@ return [
 	'command_deleted' => 'Comanda eliminada correctament',
 	'command_error' => 'Hi ha hagut un error',
 	'upgrade_plan' => 'Canviar el pla',
+
+    /* Our Plans */
+    'every' => 'cada',
+    'months' => 'mesos',
+    'each_quarter' => 'cada trimestre',
+    'contact_forms' => 'formularis de contacte',
+    'photo_galleries' => 'galeries de fotografies',
+    'images_per_gallery' => 'imatges per galeria',
+    'bot_commands' => 'comandes',
+    'messages_per_day' => 'missatges per dia',
+    'editable_welcome_message' => 'Benvinguda editable',
+    'editable_error_message' => 'Missatge d\'error editable',
+    'choose' => 'Escollir',
+
+    /* Bot Creation */
+    'list_command_help' => 'Aquesta comanda (/llista, /help, /ajuda...) és per llistar totes les comandes ocultes del bot.',
+    'list_command' => '/llista',
+    'welcome_default_message' => 'Benvingut al nostre bot, aquí pots trobar informació i contactar amb nosaltres. Utilitza /llista per veure totes les nostres comandes.',
+    'error_default_message' => 'Ho sentim, no hem entès el teu missatge.',
+    'default_information' => 'Informació',
+    'default_information_description' => 'Seleccioni la informació que necessita',
+    'default_channels' => 'Canals',
+    'default_channels_description' => 'La nostra llista de canals',
+    'default_contact' => 'Contactar',
+    'default_contact_description' => 'Seleccioni un formulari de contacte',
+    'default_galleries' => 'Galeries',
+    'default_galleries_description' => 'Seleccioni una galeria de fotografies',
+    'list_all_commands' => 'Llistar totes les comandes',
+
 ];

@@ -10,4 +10,6 @@ return [
 	'catalan' => 'Catalan',
 	'spanish' => 'Spanish',
 	'password_change' => 'Change password',
+    'change_language' => 'Change language',
+    'close' => 'Close'
 ];

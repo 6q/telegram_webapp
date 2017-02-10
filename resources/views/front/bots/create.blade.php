@@ -87,10 +87,10 @@
 														<small>
                                                             <?php
                                                             if($pv1->duration == 3){
-                                                            echo ' cada trimestre';
+                                                            echo trans('front/bots.each_quarter');
                                                             }
                                                             else{
-                                                            echo ' cada '.$pv1->duration.' mesos';
+                                                            echo ' '.trans('front/bots.every').' '.$pv1->duration.' '.trans('front/bots.months');
                                                             }
                                                             ?>
                                                         </small>
@@ -99,7 +99,7 @@
 											</div>
 											<ul class="list-group list-group-flush text-center">
                                                 <li class="list-group-item">
-                                                    <b><?php echo $pv1->autoresponses;?></b> autorespostes
+                                                    <b><?php echo $pv1->autoresponses;?></b> {{ trans('front/bots.autoresponses') }}
                                                     <i class="icon-ok text-info"></i>
                                                 </li>
 												<li class="list-group-item">
@@ -113,24 +113,24 @@
                                                         }
                                                         ?>
                                                     </b>
-													formularis de contacte <i class="icon-ok text-info"></i>
+													{{ trans('front/bots.contact_forms') }} <i class="icon-ok text-info"></i>
 												</li>
 												<li class="list-group-item">
-                                                    <b><?php echo $pv1->image_gallery ?></b> galeries de fotografies <i class="icon-ok text-info"></i>
+                                                    <b><?php echo $pv1->image_gallery ?></b> {{ trans('front/bots.photo_galleries') }} <i class="icon-ok text-info"></i>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <b><?php echo $pv1->gallery_images ?></b> imatges per galeria <i class="icon-ok text-info"></i>
+                                                    <b><?php echo $pv1->gallery_images ?></b> {{ trans('front/bots.images_per_gallery') }} <i class="icon-ok text-info"></i>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <b><?php echo $pv1->bot_commands ?></b> bot commands <i class="icon-ok text-info"></i>
+                                                    <b><?php echo $pv1->bot_commands ?></b> {{ trans('front/bots.bot_commands') }} <i class="icon-ok text-info"></i>
                                                 </li>
 												<li class="list-group-item">
-                                                    <b><?php echo $pv1->manual_message;?></b> comunicats per dia <i class="icon-ok text-info"></i></li>
-												<li class="list-group-item">Benvinguda editable <i class="icon-ok text-success"></i></li>
-												<li class="list-group-item">Missatge d'error editable <i class="icon-ok text-success"></i></li>
+                                                    <b><?php echo $pv1->manual_message;?></b> {{ trans('front/bots.messages_per_day') }} <i class="icon-ok text-info"></i></li>
+												<li class="list-group-item">{{ trans('front/bots.editable_welcome_message') }} <i class="icon-ok text-success"></i></li>
+												<li class="list-group-item">{{ trans('front/bots.editable_error_message') }} <i class="icon-ok text-success"></i></li>
 											</ul>
 											<div class="panel-footer">
-												<a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success">Escojer</a>
+												<a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success">{{ trans('front/bots.choose') }}</a>
 											</div>
 										</div>
 										<!-- /PRICE ITEM -->
@@ -191,21 +191,21 @@
 							<li>
 								<span>{{ trans('front/bots.start_message') }}</span>
 								<label class="lead emoji-picker-container text-area">
-                                    {!! Form::control('textarea', 0, 'start_message', $errors,'','',"data-emojiable='true' placeholder='Benvingut al nostre bot, aquí pots trobar informació i contactar amb nosaltres.' maxlength='250' required") !!}
+                                    {!! Form::control('textarea', 0, 'start_message', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.welcome_default_message')."' maxlength='250' required") !!}
                                 </label>
 							</li>
 							<li>
-								<span>Comanda per llistar totes les comandes</span>
+								<span>{{ trans('front/bots.list_all_commands') }}</span>
 								<label  class="lead">
-									{!! Form::control('text', 0, 'comanda', $errors,'','', " placeholder='/llista' maxlength='50' required") !!}
+									{!! Form::control('text', 0, 'comanda', $errors, '','', " placeholder='".trans('front/bots.list_command')."' maxlength='50' required") !!}
 								</label>
 
-								<p><small>Aquesta comanda (/llista, /help, /ajuda...) s'utilitza per llistar totes les comandes ocultes del bot.</small></p>
+								<p><small>* {{ trans('front/bots.list_command_help') }}</small></p>
 							</li>
 							<li>
 								<span>{{ trans('front/bots.bot_error_msg') }}</span>
 								<label id="aError_msg"  class="lead emoji-picker-container">
-									{!! Form::control('text', 0, 'error_msg', $errors,'','',"data-emojiable='true' placeholder='No hem entès el missatge.' maxlength='50' required") !!}
+									{!! Form::control('text', 0, 'error_msg', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.error_default_message')."' maxlength='50' required") !!}
 								</label>
 							</li>
 						</ul>
@@ -217,56 +217,56 @@
 							<li class="example_information col-sm-6">
 								<span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_autorespostes">
-                                    {!! Form::control('text', 0, 'autoresponse', $errors,'','',"data-emojiable='true' placeholder='Informació' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'autoresponse', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_information')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_information col-sm-6">
 								<span>{{ trans('front/bots.intortext_of_autoresponses_button') }}</span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_autoresponses', $errors,'','',"data-emojiable='true' placeholder='Selecciona la informació que desitgis' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_autoresponses', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_contact col-sm-6">
 								<span>{{ trans('front/bots.name_of_contact_forms_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_formularis">
-                                    {!! Form::control('text', 0, 'contact_form', $errors,'','',"data-emojiable='true' placeholder='Contactar' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'contact_form', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_contact')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_contact col-sm-6">
 								<span>{{ trans('front/bots.intortext_of_contact_forms_button') }}</span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_contact_form', $errors,'','',"data-emojiable='true' placeholder='Escull amb qui desitges contactar' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_contact_form', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_contact_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_photos col-sm-6">
 								<span>{{ trans('front/bots.name_of_galleries_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_galeries">
-                                    {!! Form::control('text', 0, 'galleries', $errors,'','',"data-emojiable='true' placeholder='Fotografies' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'galleries', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_galleries')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_photos col-sm-6">
 								<span>{{ trans('front/bots.introtext_of_galleries_button') }}</span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_galleries', $errors,'','',"data-emojiable='true' placeholder='Escull una galeria de fotografies' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_galleries', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_channels col-sm-6">
 								<span>{{ trans('front/bots.name_of_channels_button') }} </span>
                                 <label  class="lead emoji-picker-container"id="boto_canals">
-                                    {!! Form::control('text', 0, 'channels', $errors,'','',"data-emojiable='true' placeholder='Canals' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'channels', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_channels')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_channels col-sm-6">
 								<span>{{ trans('front/bots.introtext_of_channels_button') }} </span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_channels', $errors,'','',"data-emojiable='true' placeholder='Escull un dels nostres canals' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_channels', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_channels_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 						</ul>

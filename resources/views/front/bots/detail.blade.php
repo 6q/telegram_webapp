@@ -105,10 +105,10 @@
 				</div>
 				<ul class="nav nav-tabs nav-pills pills_bot" role="tablist">
 					<li class="active">
-						<a data-toggle="tab" href="#bot_main_buttons"><i class="fa fa-bars" aria-hidden="true"></i> Botons</a>
+						<a data-toggle="tab" href="#bot_main_buttons"><i class="fa fa-bars" aria-hidden="true"></i> {!! trans('front/dashboard.buttons') !!}</a>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#bot_users"><i class="fa fa-user" aria-hidden="true"></i> Usuaris</a>
+						<a data-toggle="tab" href="#bot_users"><i class="fa fa-user" aria-hidden="true"></i> {!! trans('front/dashboard.users') !!}</a>
 					</li>
 					<li><a data-toggle="tab" href="#bot_messages"><i class="fa fa-line-chart" aria-hidden="true"></i> Log</a></li>
 				</ul>
