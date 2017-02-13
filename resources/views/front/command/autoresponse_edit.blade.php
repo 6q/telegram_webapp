@@ -73,7 +73,7 @@
 					<?php
 						if(isset($autoresponses[0]->image) && !empty($autoresponses[0]->image)){
 							?>
-								<div id="image-holder">{!! HTML::image('uploads/'.$autoresponses[0]->image) !!}</div>
+								<div id="image-holder"><a href="javascript:void(0);" class="close_button" onclick="rmv('0')">X</a>{!! HTML::image('uploads/'.$autoresponses[0]->image) !!}</div>
 							<?php
 						}
 						else{
@@ -174,6 +174,13 @@
 			return false;
 		}
 	}
+	
+	
+	function rmv(){
+		$('#old_img').val('');
+		$('#image-holder img').remove();
+		$('.close_button').css('display','none');
+	}
   
 </script>
 
@@ -216,6 +223,20 @@
 	  text-transform: capitalize;
 	  width: auto;
 	}
+	
+	
+#image-holder a.close_button {
+  background-color: #d9d9d9;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0 6px;
+  position: absolute;
+  left: 28%;
+  top: -10px;
+}
+
 </style>
 
 @stop
