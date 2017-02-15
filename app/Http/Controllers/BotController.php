@@ -118,27 +118,27 @@ class BotController extends Controller
         $country = DB::table('countries')->get();
 
 
-        switch (Config::get('app.locale')) {
+        switch (config('app.locale')) {
             case "es":
                 /* nickName popup */
                 $nickName = DB::table('pages')
-                    ->where('id','=','13')
+                    ->where('id','=','17')
                     ->get();
 
                 /* botusername popup */
                 $botUserName = DB::table('pages')
-                    ->where('id','=','16')
+                    ->where('id','=','17')
                     ->get();
 
                 /* botaccesstoken popup */
                 $botAccessToken = DB::table('pages')
-                    ->where('id','=','16')
+                    ->where('id','=','17')
                     ->get();
                 break;
             case "en":
                 /* nickName popup */
                 $nickName = DB::table('pages')
-                    ->where('id','=','13')
+                    ->where('id','=','14')
                     ->get();
 
                 /* botusername popup */
@@ -154,7 +154,7 @@ class BotController extends Controller
             case "ca":
                 /* nickName popup */
                 $nickName = DB::table('pages')
-                    ->where('id','=','13')
+                    ->where('id','=','15')
                     ->get();
 
                 /* botusername popup */

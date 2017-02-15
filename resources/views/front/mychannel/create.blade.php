@@ -133,7 +133,7 @@
             <div class="create_bot">
                 <div class="how-to-create">
                     <p>{{ trans('front/MyChannel.how_to_create') }}</p>
-                    <div class="click_button"><span><a href="#">{{ trans('front/MyChannel.click_here') }}</a></span></div>
+                    <div class="click_button"><span><a  href="javascript:void(0);" onclick="mypopupinfo('ChannelNameModal');">{{ trans('front/MyChannel.click_here') }}</a></span></div>
                 </div>
 
 
@@ -162,17 +162,12 @@
                     	</label>
                         </li>-->
                         <li>
-                            <span>{{ trans('front/MyChannel.name') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
+                            <span>{{ trans('front/MyChannel.name') }}</span>
                             <label id="uName">{!! Form::control('text', 0, 'name', $errors) !!}</label>
                         </li>
 
                         <li>
-                            <span>{{ trans('front/MyChannel.description') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelDecriptionModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
-                            <label>{!! Form::control('textarea', 0, 'description', $errors) !!}</label>
-                        </li>
-
-                        <li>
-                            <span>{{ trans('front/MyChannel.share_link') }} <a href="javascript:void(0);" onclick="mypopupinfo('ChannelShareLink');">{!! HTML::image('img/front/icon.png') !!}</a></span>
+                            <span>{{ trans('front/MyChannel.share_link') }}</span>
                             <label id="uShareLink">{!! Form::control('text', 0, 'share_link', $errors) !!}</label>
                         </li>
 

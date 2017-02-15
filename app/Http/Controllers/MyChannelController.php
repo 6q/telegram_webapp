@@ -77,11 +77,28 @@ class MyChannelController extends Controller {
 				->where('id', '=', '2')
 				->get();
 		
-		/* channelName popup */
-        $channelName = DB::table('pages')
-                        ->where('id','=','16')
-                        ->get();
-        
+
+        switch (config('app.locale')) {
+            case "es":
+                /* channelName popup */
+                $channelName = DB::table('pages')
+                    ->where('id','=','19')
+                    ->get();
+                break;
+            case "en":
+                /* channelName popup */
+                $channelName = DB::table('pages')
+                    ->where('id','=','16')
+                    ->get();
+                break;
+            case "ca":
+                /* channelName popup */
+                $channelName = DB::table('pages')
+                    ->where('id','=','18')
+                    ->get();
+                break;
+        }
+
         return view('front.mychannel.create', compact('plans', 'email', 'country','total_bots','total_chanels','Form_action','search','channelName','bots'));
     }
 
