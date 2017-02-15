@@ -116,21 +116,60 @@ class BotController extends Controller
         }
         
         $country = DB::table('countries')->get();
-        
-        /* nickName popup */
-        $nickName = DB::table('pages')
-                        ->where('id','=','13')
-                        ->get();
-						
-		/* botusername popup */
-        $botUserName = DB::table('pages')
-                        ->where('id','=','14')
-                        ->get();
-						
-		/* botaccesstoken popup */
-        $botAccessToken = DB::table('pages')
-                        ->where('id','=','15')
-                        ->get();				
+
+
+        switch (Config::get('app.locale')) {
+            case "es":
+                /* nickName popup */
+                $nickName = DB::table('pages')
+                    ->where('id','=','13')
+                    ->get();
+
+                /* botusername popup */
+                $botUserName = DB::table('pages')
+                    ->where('id','=','16')
+                    ->get();
+
+                /* botaccesstoken popup */
+                $botAccessToken = DB::table('pages')
+                    ->where('id','=','16')
+                    ->get();
+                break;
+            case "en":
+                /* nickName popup */
+                $nickName = DB::table('pages')
+                    ->where('id','=','13')
+                    ->get();
+
+                /* botusername popup */
+                $botUserName = DB::table('pages')
+                    ->where('id','=','14')
+                    ->get();
+
+                /* botaccesstoken popup */
+                $botAccessToken = DB::table('pages')
+                    ->where('id','=','14')
+                    ->get();
+                break;
+            case "ca":
+                /* nickName popup */
+                $nickName = DB::table('pages')
+                    ->where('id','=','13')
+                    ->get();
+
+                /* botusername popup */
+                $botUserName = DB::table('pages')
+                    ->where('id','=','15')
+                    ->get();
+
+                /* botaccesstoken popup */
+                $botAccessToken = DB::table('pages')
+                    ->where('id','=','15')
+                    ->get();
+                break;
+        }
+
+
 						
         return view('front.bots.create',compact('plans','email','country','total_bots','total_chanels','Form_action','search','billing_details','states','nickName','botUserName','botAccessToken'));
     }

@@ -166,7 +166,7 @@
 				<div class="create_bot">
 					<div class="how-to-create">
 						<p>{{ trans('front/bots.how_to_create') }}</p>
-						<div class="click_button"><span><a target="_blank" href="{!! URL::to('/pages/detail/12') !!}">{{ trans('front/bots.click_here') }}</a></span></div>
+						<div class="click_button"><span><a target="_blank" href="javascript:void(0);" onclick="mypopupinfo('BotUserNameModal');">{{ trans('front/bots.click_here') }}</a></span></div>
 					</div>
 
 
@@ -174,12 +174,12 @@
 					<div class="crete_bot_form">
 						<ul>
 							<li>
-								<span>{{ trans('front/bots.bot_username') }} <a href="javascript:void(0);" onclick="mypopupinfo('BotUserNameModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
+								<span>{{ trans('front/bots.bot_username') }}</span>
 								<label id="uName">{!! Form::control('text', 0, 'username', $errors,'','','required') !!}</label>
 							</li>
 
 							<li>
-								<span>{{ trans('front/bots.bot_access_token') }} <a href="javascript:void(0);" onclick="mypopupinfo('BotAccessTokenModal');">{!! HTML::image('img/front/icon.png') !!}</a></span>
+								<span>{{ trans('front/bots.bot_access_token') }}</span>
 								<label id="aToken">{!! Form::control('text', 0, 'bot_token', $errors,'','','required') !!}</label>
 							</li>
                         </ul>
@@ -191,13 +191,13 @@
 							<li>
 								<span>{{ trans('front/bots.start_message') }}</span>
 								<label class="lead emoji-picker-container text-area">
-                                    {!! Form::control('textarea', 0, 'start_message', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.welcome_default_message')."' maxlength='250' required") !!}
+                                    {!! Form::control('textarea', 0, 'start_message', $errors,'',trans('front/bots.welcome_default_message'),"data-emojiable='true' placeholder='".trans('front/bots.welcome_default_message')."' maxlength='250' required") !!}
                                 </label>
 							</li>
 							<li>
 								<span>{{ trans('front/bots.list_all_commands') }}</span>
 								<label  class="lead">
-									{!! Form::control('text', 0, 'comanda', $errors, '','', " placeholder='".trans('front/bots.list_command')."' maxlength='50' required") !!}
+									{!! Form::control('text', 0, 'comanda', $errors, '',trans('front/bots.list_command'), " placeholder='".trans('front/bots.list_command')."' maxlength='50' required") !!}
 								</label>
 
 								<p><small>* {{ trans('front/bots.list_command_help') }}</small></p>
@@ -205,7 +205,7 @@
 							<li>
 								<span>{{ trans('front/bots.bot_error_msg') }}</span>
 								<label id="aError_msg"  class="lead emoji-picker-container">
-									{!! Form::control('text', 0, 'error_msg', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.error_default_message')."' maxlength='50' required") !!}
+									{!! Form::control('text', 0, 'error_msg', $errors,'',trans('front/bots.error_default_message'),"data-emojiable='true' placeholder='".trans('front/bots.error_default_message')."' maxlength='50' required") !!}
 								</label>
 							</li>
 						</ul>
@@ -217,56 +217,56 @@
 							<li class="example_information col-sm-6">
 								<span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_autorespostes">
-                                    {!! Form::control('text', 0, 'autoresponse', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_information')."' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'autoresponse', $errors,'',trans('front/bots.default_information'),"data-emojiable='true' placeholder='".trans('front/bots.default_information')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_information col-sm-6">
 								<span>{{ trans('front/bots.intortext_of_autoresponses_button') }}</span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_autoresponses', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_autoresponses', $errors,'',trans('front/bots.default_information_description'),"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_contact col-sm-6">
 								<span>{{ trans('front/bots.name_of_contact_forms_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_formularis">
-                                    {!! Form::control('text', 0, 'contact_form', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_contact')."' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'contact_form', $errors,'',trans('front/bots.default_contact'),"data-emojiable='true' placeholder='".trans('front/bots.default_contact')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_contact col-sm-6">
 								<span>{{ trans('front/bots.intortext_of_contact_forms_button') }}</span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_contact_form', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_contact_description')."' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_contact_form', $errors,'',trans('front/bots.default_contact_description'),"data-emojiable='true' placeholder='".trans('front/bots.default_contact_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_photos col-sm-6">
 								<span>{{ trans('front/bots.name_of_galleries_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_galeries">
-                                    {!! Form::control('text', 0, 'galleries', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_galleries')."' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'galleries', $errors,'',trans('front/bots.default_galleries'),"data-emojiable='true' placeholder='".trans('front/bots.default_galleries')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_photos col-sm-6">
 								<span>{{ trans('front/bots.introtext_of_galleries_button') }}</span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_galleries', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_galleries', $errors,'',trans('front/bots.default_information_description'),"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_channels col-sm-6">
 								<span>{{ trans('front/bots.name_of_channels_button') }} </span>
                                 <label  class="lead emoji-picker-container"id="boto_canals">
-                                    {!! Form::control('text', 0, 'channels', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_channels')."' maxlength='20' required") !!}
+                                    {!! Form::control('text', 0, 'channels', $errors,'',trans('front/bots.default_channels'),"data-emojiable='true' placeholder='".trans('front/bots.default_channels')."' maxlength='20' required") !!}
                                 </label>
 							</li>
 
 							<li class="example_our_channels col-sm-6">
 								<span>{{ trans('front/bots.introtext_of_channels_button') }} </span>
                                 <label  class="lead emoji-picker-container">
-                                    {!! Form::control('text', 0, 'intro_channels', $errors,'','',"data-emojiable='true' placeholder='".trans('front/bots.default_channels_description')."' maxlength='120' required") !!}
+                                    {!! Form::control('text', 0, 'intro_channels', $errors,'',trans('front/bots.default_channels_description'),"data-emojiable='true' placeholder='".trans('front/bots.default_channels_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
 						</ul>
@@ -695,6 +695,11 @@
             window.emojiPicker.discover();
         });
 		$(document).ready(function(e) {
+            $('#auto_resp').html($('#boto_autorespostes').find('div.emoji-wysiwyg-editor').html());
+            $('#conntact_fbutton').html($('#boto_formularis').find('div.emoji-wysiwyg-editor').html());
+            $('#gallery_imgs').html($('#boto_galeries').find('div.emoji-wysiwyg-editor').html());
+            $('#chnl_btn').html($('#boto_canals').find('div.emoji-wysiwyg-editor').html());
+
             $('#boto_autorespostes').find('div.emoji-wysiwyg-editor').keyup(function(e) {
                 $('#auto_resp').html($('#boto_autorespostes').find('div.emoji-wysiwyg-editor').html());
             });
