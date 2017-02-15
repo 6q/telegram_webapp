@@ -241,9 +241,12 @@ Route::post('/{bottoken}/webhook', function ($token) {
     $data = json_decode($update,true);
     $messageText = (isset($data['message']['text']) && !empty($data['message']['text']))?$data['message']['text']:'';
 	$messageTextImg = (isset($data['message']['document']['file_name']) && !empty($data['message']['document']['file_name']))?$data['message']['document']['file_name']:'';
-	$messageTextPhoto = (isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id']))?$data['message']['photo'][0]['file_id']:'';
+	$messageTextImgSize = (isset($data['message']['document']['file_size']) && !empty($data['message']['document']['file_size']))?$data['message']['document']['file_size']:'';
+	$messageTextPhoto = (isset($data['message']['photo'][3]['file_id']) && !empty($data['message']['photo'][3]['file_id']))?$data['message']['photo'][3]['file_id']:'';
+	$messageTextPhotoSize = (isset($data['message']['photo'][3]['file_size']) && !empty($data['message']['photo'][3]['file_size']))?$data['message']['photo'][3]['file_size']:'';
 	
-	
+	//file_put_contents(public_path().'/result3.txt',$update);
+	//file_put_contents(public_path().'/result.txt',$update);
     //file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
     
     $telegram = new Api($token);
@@ -273,19 +276,19 @@ Route::post('/{bottoken}/webhook', function ($token) {
     if(!empty($dbBotId))
 	{
 		//file_put_contents(public_path().'/result.txt',serialize($data));
-		if(empty($messageText) && !empty($messageTextImg)){
-			$file_id = $data['message']['document']['thumb']['file_id'];
-			$file_response = $telegram->getFile(['file_id' => $file_id]);
+		if(empty($messageText) && !empty($messageTextImg) && !empty($messageTextImgSize)){
+			$file_id = $data['message']['document']['file_id'];
+			$file_response = $telegram->getFile(['file_id' => $file_id,'file_size' => $messageTextImgSize]);
 			$arr = json_decode(json_encode($file_response));
 			$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
 			$messageText = $path;
 		}
 		
-		if(empty($messageText) && !empty($messageTextPhoto)){
+		if(empty($messageText) && !empty($messageTextPhoto) && !empty($messageTextPhotoSize)){
 			//file_put_contents(public_path().'/result.txt',json_encode($data['message']['photo'][0]['file_id']));		
-			if(isset($data['message']['photo'][0]['file_id']) && !empty($data['message']['photo'][0]['file_id'])){
-				$file_id = $data['message']['photo'][0]['file_id'];
-				$file_response = $telegram->getFile(['file_id' => $file_id]);
+			if(isset($data['message']['photo'][3]['file_id']) && !empty($data['message']['photo'][3]['file_id'])){
+				$file_id = $data['message']['photo'][3]['file_id'];
+				$file_response = $telegram->getFile(['file_id' => $file_id,'file_size' => $messageTextPhotoSize]);
 				$arr = json_decode(json_encode($file_response));
 				$path = 'https://api.telegram.org/file/bot'.$token.'/'.$arr->file_path;
 				$messageText = $path;

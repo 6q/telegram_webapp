@@ -227,6 +227,18 @@ $(function(){
 			$('#intro_heading div').removeClass('has-error');
 		}
 		
+		 $("#preview li").each(function( i ) {
+			 var li_id = $(this).attr('id');
+			 var inp_name_img = $('#'+li_id+' input').val();
+			 if(inp_name_img == ''){
+				 $('#'+li_id+' input').css('border','1px solid #ff0000');
+				 chk = 0;
+			 }
+			 else{
+			 	$('#'+li_id+' input').css('border','1px solid #a6a6a6');
+			 }
+		 });
+		
 		if(chk){
 			return true;
 		}

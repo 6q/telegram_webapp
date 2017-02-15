@@ -21,7 +21,6 @@ footer {
   position: absolute;
   right: 0;
   bottom: 0;
-
 }
 .loading_ajax_img {
   position: absolute;
@@ -1687,6 +1686,12 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
   min-height: 7em;
   resize: vertical;
 }
+#bot_main_buttons .col-plan > div {
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+}
+#bot_main_buttons table{ border:none;}
 @media (max-width:1620px){
   .col_top .col-lg-2 h3 {
     font-size: 16px;
