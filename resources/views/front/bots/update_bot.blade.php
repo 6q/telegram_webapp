@@ -67,7 +67,10 @@
                                     {!! Form::control('text', 0, 'intro_autoresponses', $errors,'',$bot->intro_autoresponses,"data-emojiable='true' placeholder='Selecciona la informació que desitgis' maxlength='120' required") !!}
                                 </label>
                             </li>
-
+                        </ul>
+                    </div>
+                    <div class="crete_bot_form">
+                        <ul>
                             <li class="example_contact col-sm-6">
                                 <span>{{ trans('front/bots.name_of_contact_forms_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_formularis">
@@ -81,7 +84,10 @@
                                     {!! Form::control('text', 0, 'intro_contact_form', $errors,'',$bot->intro_contact_form,"data-emojiable='true' placeholder='Escull amb qui desitges contactar' maxlength='120' required") !!}
                                 </label>
                             </li>
-
+                        </ul>
+                    </div>
+                    <div class="crete_bot_form">
+                        <ul>
                             <li class="example_our_photos col-sm-6">
                                 <span>{{ trans('front/bots.name_of_galleries_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_galeries">
@@ -95,7 +101,10 @@
                                     {!! Form::control('text', 0, 'intro_galleries', $errors,'',$bot->intro_galleries,"data-emojiable='true' placeholder='Escull una galeria de fotografies' maxlength='120' required") !!}
                                 </label>
                             </li>
-
+                        </ul>
+                    </div>
+                    <div class="crete_bot_form">
+                        <ul>
                             <li class="example_our_channels col-sm-6">
                                 <span>{{ trans('front/bots.name_of_channels_button') }} </span>
                                 <label  class="lead emoji-picker-container"id="boto_canals">

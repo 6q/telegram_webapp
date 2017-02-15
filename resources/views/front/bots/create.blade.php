@@ -213,7 +213,7 @@
 					</div>
 
 					<div class="crete_bot_form">
-						<ul id="principal_buttons">
+						<ul>
 							<li class="example_information col-sm-6">
 								<span>{{ trans('front/bots.name_of_autoresponses_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_autorespostes">
@@ -227,7 +227,10 @@
                                     {!! Form::control('text', 0, 'intro_autoresponses', $errors,'',trans('front/bots.default_information_description'),"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
-
+						</ul>
+					</div>
+					<div class="crete_bot_form">
+						<ul>
 							<li class="example_contact col-sm-6">
 								<span>{{ trans('front/bots.name_of_contact_forms_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_formularis">
@@ -241,7 +244,10 @@
                                     {!! Form::control('text', 0, 'intro_contact_form', $errors,'',trans('front/bots.default_contact_description'),"data-emojiable='true' placeholder='".trans('front/bots.default_contact_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
-
+						</ul>
+					</div>
+					<div class="crete_bot_form">
+						<ul>
 							<li class="example_our_photos col-sm-6">
 								<span>{{ trans('front/bots.name_of_galleries_button') }}</span>
                                 <label  class="lead emoji-picker-container" id="boto_galeries">
@@ -255,7 +261,10 @@
                                     {!! Form::control('text', 0, 'intro_galleries', $errors,'',trans('front/bots.default_information_description'),"data-emojiable='true' placeholder='".trans('front/bots.default_information_description')."' maxlength='120' required") !!}
                                 </label>
 							</li>
-
+						</ul>
+					</div>
+					<div class="crete_bot_form">
+						<ul>
 							<li class="example_our_channels col-sm-6">
 								<span>{{ trans('front/bots.name_of_channels_button') }} </span>
                                 <label  class="lead emoji-picker-container"id="boto_canals">

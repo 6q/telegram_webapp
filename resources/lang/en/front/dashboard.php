@@ -43,4 +43,6 @@ return [
     'create_command' => 'Create command',
     'buttons' => 'Buttons',
     'users' => 'Users',
+    'messages_sent_the_last' => 'Messages sent the last',
+
 ];

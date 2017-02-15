@@ -44,4 +44,5 @@ return [
     'create_command' => 'Nuevo submenú',
     'bot' => 'Bot',
     'channel' => 'Canal',
+    'messages_sent_the_last' => 'Mensajes enviados los últimos',
 ];

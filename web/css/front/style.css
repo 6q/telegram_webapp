@@ -660,6 +660,10 @@ div.buying_table {
 .week {
   float: right;
 }
+.week.canal {
+  color:#fff;
+  padding-left:10px;
+}
 .week select {
   -moz-appearance: none;
   background-image: url("../../img/front/select_arrow.png");
@@ -916,6 +920,7 @@ p.h2 > img {
 }
 .buy_now {
   text-align: center;
+  margin-top:30px;
 }
 .col-dash .days_preparing > a {
   float: none;
@@ -1032,7 +1037,7 @@ p.h2 > img {
   background-color: #efefef;
   border-radius: 8px;
   display: inline-block;
-  margin: 30px 0;
+  margin: 30px 0 0;
   padding: 30px 30px 0;
   width: 100%;
 }

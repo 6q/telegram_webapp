@@ -56,4 +56,6 @@ return [
     'send' => 'Enviar',
     'bot' => 'Bot',
     'channel' => 'Canal',
+    'messages_sent_the_last' => 'Missatges enviats els últims',
+
 ];

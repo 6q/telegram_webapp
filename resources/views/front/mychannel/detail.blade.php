@@ -32,7 +32,7 @@
                     lineWidth: 5,
                     pointSize: 10,
                     colors: ['#00B09E'],
-                    legend: { position: 'bottom' },ed
+                    legend: { position: 'bottom' },
 
                 };
 
@@ -44,7 +44,8 @@
 		<div class="status">
 
 			{!! Form::open(['url' => 'dashboard', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'status_dropdown']) !!}
-			<div class="week">
+			<div class="week canal">
+				{{ trans('front/dashboard.messages_sent_the_last') }}
 				<select id="chart_time" onchange="getCharts()">
 					<option value="10_days" selected>{{ trans('front/dashboard.ten_days') }}</option>
 					<option value="30_days">{{ trans('front/dashboard.thirty_days') }}</option>
