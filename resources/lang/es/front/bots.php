@@ -132,4 +132,7 @@ return [
     'per_month' => 'cada mes',
     'free' => 'GRATIS',
     'message_limit' => 'Has excedido el máximo de mensajes de tu plan.',
+    'message_sent_succesfully' => 'Mensaje enviado correctamente.',
+    'image_sent_succesfully' => 'Imagen enviada correctamente.',
+    'message_not_sent' => 'El mensaje no ha sido enviado.',
 ];

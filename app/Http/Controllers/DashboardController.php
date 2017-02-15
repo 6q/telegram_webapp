@@ -458,24 +458,11 @@ class DashboardController extends Controller {
                         ->get();
             
             $perDaySendMesgLimit = $plan[0]->manual_message;
-            $manual_message_interval = $plan[0]->manual_message_interval;
 
-            if ($manual_message_interval == "day") {
                 $chkData = DB::table('channel_send_message')
                     ->where('channel_id','=',$request->get('chat_id'))
                     ->where('send_date','=',date('Y-m-d'))
                     ->get();
-            } else if ($manual_message_interval == "week") {
-                $chkData = DB::table('channel_send_message')
-                    ->where('channel_id','=',$request->get('chat_id'))
-                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 week")),date('Y-m-d')))
-                    ->get();
-            } else if ($manual_message_interval == "month") {
-                $chkData = DB::table('channel_send_message')
-                    ->where('channel_id','=',$request->get('chat_id'))
-                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 month")),date('Y-m-d')))
-                    ->get();
-            }
 
             
             $totalCount = count($chkData);
@@ -546,7 +533,27 @@ class DashboardController extends Controller {
         }
 		die;
     }
-    
+
+    /*
+            $manual_message_interval = $plan[0]->manual_message_interval;
+
+            if ($manual_message_interval == "day") {
+                $chkData = DB::table('channel_send_message')
+                    ->where('channel_id','=',$request->get('chat_id'))
+                    ->where('send_date','=',date('Y-m-d'))
+                    ->get();
+            } else if ($manual_message_interval == "week") {
+                $chkData = DB::table('channel_send_message')
+                    ->where('channel_id','=',$request->get('chat_id'))
+                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 week")),date('Y-m-d')))
+                    ->get();
+            } else if ($manual_message_interval == "month") {
+                $chkData = DB::table('channel_send_message')
+                    ->where('channel_id','=',$request->get('chat_id'))
+                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 month")),date('Y-m-d')))
+                    ->get();
+            }
+     */
     
     public function sendbotmessage(Request $request){
 		$img_url = '';
@@ -642,13 +649,13 @@ class DashboardController extends Controller {
             }
 			
 			if (isset($response->message_id) && !empty($response->message_id)) {
-				echo 'Message sent succesfully' ;
+				echo trans('front/bots.message_sent_succesfully');
 			} 
 			else if($chk_img){
-				echo 'Image sent succesfully' ;
+				echo trans('front/bots.image_sent_succesfully');
 			}
 			else {
-				echo 'Sorry message not sent';
+				echo trans('front/bots.message_not_sent');
 			}
         }
 		die;

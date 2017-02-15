@@ -135,5 +135,7 @@ return [
     'per_month' => 'each month',
     'free' => 'FREE',
     'message_limit' => 'Your message send limit is over.',
-
+    'message_sent_succesfully' => 'Message sent succesfully.',
+    'image_sent_succesfully' => 'Image sent succesfully.',
+    'message_not_sent' => 'Message not sent.',
 ];

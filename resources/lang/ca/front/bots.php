@@ -132,6 +132,8 @@ return [
     'per_month' => 'cada mes',
     'free' => 'GRATUÍT',
     'message_limit' => 'Has accedit el màxim de missatges del teu pla.',
-
+    'message_sent_succesfully' => 'Missatge enviat correctament.',
+    'image_sent_succesfully' => 'Imatge enviada correctament.',
+    'message_not_sent' => 'El missatge no ha pogut ser enviat.',
 
 ];
