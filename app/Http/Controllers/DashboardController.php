@@ -458,15 +458,29 @@ class DashboardController extends Controller {
                         ->get();
             
             $perDaySendMesgLimit = $plan[0]->manual_message;
-            
-            $chkData = DB::table('channel_send_message')
-                            ->where('channel_id','=',$request->get('chat_id'))
-                            ->where('send_date','=',date('Y-m-d'))
-                            ->get();
+            $manual_message_interval = $plan[0]->manual_message_interval;
+
+            if ($manual_message_interval == "day") {
+                $chkData = DB::table('channel_send_message')
+                    ->where('channel_id','=',$request->get('chat_id'))
+                    ->where('send_date','=',date('Y-m-d'))
+                    ->get();
+            } else if ($manual_message_interval == "week") {
+                $chkData = DB::table('channel_send_message')
+                    ->where('channel_id','=',$request->get('chat_id'))
+                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 week")),date('Y-m-d')))
+                    ->get();
+            } else if ($manual_message_interval == "month") {
+                $chkData = DB::table('channel_send_message')
+                    ->where('channel_id','=',$request->get('chat_id'))
+                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 month")),date('Y-m-d')))
+                    ->get();
+            }
+
             
             $totalCount = count($chkData);
             if($totalCount >= $perDaySendMesgLimit){
-                echo 'Your message send limit is over.';
+                echo trans('front/bots/message_limit');
                 exit();
             }
         }

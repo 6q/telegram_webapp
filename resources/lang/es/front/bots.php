@@ -127,4 +127,9 @@ return [
     'default_galleries_description' => 'Seleccione una galería de fotografías',
     'list_all_commands' => 'Listar todos los comandos',
 
+    'per_day' => 'cada día',
+    'per_week' => 'cada semana',
+    'per_month' => 'cada mes',
+    'free' => 'GRATIS',
+    'message_limit' => 'Has excedido el máximo de mensajes de tu plan.',
 ];

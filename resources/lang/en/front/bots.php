@@ -130,5 +130,10 @@ return [
     'default_galleries_description' => 'Select a photo gallery',
     'list_all_commands' => 'List all commands',
 
+    'per_day' => 'each day',
+    'per_week' => 'each week',
+    'per_month' => 'each month',
+    'free' => 'FREE',
+    'message_limit' => 'Your message send limit is over.',
 
 ];

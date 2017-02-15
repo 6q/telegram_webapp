@@ -156,7 +156,8 @@ class PlanController extends Controller
 		$plan->gallery_images=$request->get('gallery_images');
 		$plan->bot_commands = $request->get('bot_commands');
 		$plan->manual_message=$request->get('manual_message');
-		
+		$plan->manual_message_interval=$request->get('manual_message_interval');
+
 		if($request->get('custom_image')!=''){
 		 $plan->custom_image=$request->get('custom_image');
 		}else{

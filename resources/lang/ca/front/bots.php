@@ -127,4 +127,11 @@ return [
     'default_galleries_description' => 'Seleccioni una galeria de fotografies',
     'list_all_commands' => 'Llistar totes les comandes',
 
+    'per_day' => 'cada dia',
+    'per_week' => 'cada setmana',
+    'per_month' => 'cada mes',
+    'free' => 'GRATUÍT',
+    'message_limit' => 'Has accedit el màxim de missatges del teu pla.',
+
+
 ];

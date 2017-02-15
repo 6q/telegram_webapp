@@ -58,69 +58,85 @@
 												?>
 												<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 													<!-- PRICE ITEM -->
-													<div class="panel price panel-blue">
+													<div class="panel price panel-<? if ($pv1->price>0) echo "green"; else echo "blue"; ?>">
 														<div class="panel-heading  text-center">
 															<h3><?php echo $pv1->name;?></h3>
 														</div>
 														<div class="panel-body text-center">
 															<p class="lead" style="font-size:16px">
 																<strong>
+                                                                    <? if ($pv1->price>0) { ?>
 																	<span><?php echo $pv1->price;?>€</span>
 																	<small>
-																		<?php
-																		if($pv1->duration == 3){
-																		echo ' cada trimestre';
-																		}
-																		else{
-																		echo ' cada '.$pv1->duration.' mesos';
-																		}
-																		?>
+                                                                        <?php
+                                                                        if($pv1->duration == 3){
+                                                                            echo trans('front/bots.each_quarter');
+                                                                        }
+                                                                        else{
+                                                                            echo ' '.trans('front/bots.every').' '.$pv1->duration.' '.trans('front/bots.months');
+                                                                        }
+                                                                        ?>
 																	</small>
+                                                                    <?} else echo trans('front/bots.free'); ?>
 																</strong>
 															</p>
 														</div>
 														<ul class="list-group list-group-flush text-center">
 															<li class="list-group-item">
-																<b><?php echo $pv1->autoresponses;?></b> autorespostes
+																<b><?php echo $pv1->autoresponses;?></b> {{ trans('front/bots.autoresponses') }}
 																<i class="icon-ok text-info"></i>
 															</li>
 															<li class="list-group-item">
 																<b>
-																	<?php
-																	if($pv1->contact_forms == 0){
-																	echo 'NO';
-																	}
-																	else{
-																	echo $pv1->contact_forms;
-																	}
-																	?>
+                                                                    <?php
+                                                                    if($pv1->contact_forms == 0){
+                                                                        echo 'NO';
+                                                                    }
+                                                                    else{
+                                                                        echo $pv1->contact_forms;
+                                                                    }
+                                                                    ?>
 																</b>
-																formularis de contacte <i class="icon-ok text-info"></i>
+																{{ trans('front/bots.contact_forms') }} <i class="icon-ok text-info"></i>
 															</li>
 															<li class="list-group-item">
-																<b><?php echo $pv1->image_gallery ?></b> galeries de fotografies <i class="icon-ok text-info"></i>
+																<b><?php echo $pv1->image_gallery ?></b> {{ trans('front/bots.photo_galleries') }} <i class="icon-ok text-info"></i>
 															</li>
 															<li class="list-group-item">
-																<b><?php echo $pv1->gallery_images ?></b> imatges per galeria <i class="icon-ok text-info"></i>
+																<b><?php echo $pv1->gallery_images ?></b> {{ trans('front/bots.images_per_gallery') }} <i class="icon-ok text-info"></i>
 															</li>
 															<li class="list-group-item">
-																<b><?php echo $pv1->bot_commands ?></b> bot commands <i class="icon-ok text-info"></i>
+																<b><?php echo $pv1->bot_commands ?></b> {{ trans('front/bots.bot_commands') }} <i class="icon-ok text-info"></i>
 															</li>
 															<li class="list-group-item">
-																<b><?php echo $pv1->manual_message;?></b> comunicats per dia <i class="icon-ok text-info"></i></li>
-															<li class="list-group-item">Benvinguda editable <i class="icon-ok text-success"></i></li>
-															<li class="list-group-item">Missatge d'error editable <i class="icon-ok text-success"></i></li>
+																<b><?php echo $pv1->manual_message;?></b>
+                                                                <?php
+                                                                switch ($manual_message_interval) {
+                                                                    case "day":
+                                                                        echo trans('front/bots.per_day');
+                                                                        break;
+                                                                    case "month":
+                                                                        echo trans('front/bots.per_month');
+                                                                        break;
+                                                                    case "week":
+                                                                        echo trans('front/bots.per_week');
+                                                                        break;
+                                                                }
+                                                                ?>
+																<i class="icon-ok text-info"></i></li>
+															<li class="list-group-item">{{ trans('front/bots.editable_welcome_message') }} <i class="icon-ok text-success"></i></li>
+															<li class="list-group-item">{{ trans('front/bots.editable_error_message') }} <i class="icon-ok text-success"></i></li>
 														</ul>
 														<div class="panel-footer">
                                                         	<?php 
 																if($planPrice > 0){
 															?>
-																	<a href="javascript:void(0);" onclick="PlanUpgrade('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success">Escojer</a>
+																	<a href="javascript:void(0);" onclick="PlanUpgrade('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success">{{ trans('front/bots.choose') }}</a>
                                                             <?php
 																}
 																else{
 																?>
-                                                                	<a href="javascript:void(0);" onclick="PlanUpgradeFree('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success">Escojer</a>	
+                                                                	<a href="javascript:void(0);" onclick="PlanUpgradeFree('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success">{{ trans('front/bots.choose') }}</a>
                                                                 <?php
 																}
 															?>        
