@@ -98,10 +98,16 @@ class BotController extends Controller
                         ->get();
         }
         else{
-            $plans = DB::table('plans')
-						->where('plan_type','=','1')
-						->where('status','=','1')
-						->get();
+            if (Auth::user()->role_id == 2) {
+                $plans = DB::table('plans')
+                    ->where('plan_type', '=', '1')
+                    ->where('status', '=', '1')
+                    ->get();
+            } else if (Auth::user()->role_id == 3) {
+                $plans = DB::table('plans')
+                ->where('plan_type', '=', '1')
+                    ->get();
+            }
         }
         
         

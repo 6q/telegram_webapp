@@ -78,6 +78,9 @@
 							case "FREE":
 								$color = "grey";
 								break;
+							case "AMTU":
+								$color = "grey";
+								break;
 							case "PREMIUM":
 								$color = "red";
 								break;
@@ -94,9 +97,9 @@
 
 
                         ?>
-						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 							<!-- PRICE ITEM -->
-							<div class="panel price panel-<?=$color?>">
+							<div class="panel price panel-<?=$color?>"  onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" style="cursor:pointer">
 								<div class="panel-heading  text-center">
 									<h3><?php echo $pv1->name;?></h3>
 								</div>
@@ -202,7 +205,7 @@
 				<div class="create_bot">
 					<div class="how-to-create">
 						<p>{{ trans('front/bots.how_to_create') }}</p>
-						<div class="click_button"><span><a target="_blank" href="javascript:void(0);" onclick="mypopupinfo('BotUserNameModal');">{{ trans('front/bots.click_here') }}</a></span></div>
+						<div class="click_button"><span><a href="javascript:void(0);" onclick="mypopupinfo('BotUserNameModal');">{{ trans('front/bots.click_here') }}</a></span></div>
 					</div>
 
 

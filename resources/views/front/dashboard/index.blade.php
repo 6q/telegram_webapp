@@ -79,7 +79,10 @@
                         <img src="{{URL::asset('img/balls.gif')}}" class="loading_img">
                         <div id="chart_div" style="height: 300px;"></div>
                     </div>
-                    <?php } //else echo "<img src=".URL::asset('img/front/dashboard_example.jpg')." class='dashboard_example'>"; ?>
+                    <?php } else { ?>
+					<h2 style="color:#3f6280">{{ trans('front/dashboard.welcome_to_citymes') }}</h2>
+					<p style="color:#3f6280">{{ trans('front/dashboard.activate_bot') }}</p>
+					<?php } ?>
 
 				<div class="col-my-content">
 					<h3 id="my_bots">{{ trans('front/dashboard.my_bots') }}</h3>
@@ -109,7 +112,7 @@
 
 						<li class="col-sm-4">
 							<div class="days_preparing">
-								<h1 class="add_plus">{!! link_to_route('bot.create', '+', [], ['class' => '']) !!}</h1>
+								<h1 class="add_plus bots">{!! link_to_route('bot.create', '+', [], ['class' => '']) !!}</h1>
 							</div>
 						</li>
 					</ul>

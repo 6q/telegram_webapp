@@ -130,7 +130,21 @@ class DashboardController extends Controller {
                         ->get();
 
                 $bot_total_msg = count($msg);
+
+                if ($bot_total_msg < 1000) {
+                    // Anything less than a thousand
+                    $bot_total_msg = number_format($bot_total_msg);
+                } else if ($bot_total_msg < 1000000) {
+                    // Anything less than a milion
+                    $bot_total_msg = number_format($bot_total_msg / 1000, 0) . 'm';
+                } else {
+                    // At least a milion
+                    $bot_total_msg = number_format($bot_total_msg / 1000000, 0) . 'M';
+                }
+
                 $bots[$k1]->total_msg = $bot_total_msg;
+
+
 
 	            $usrs = DB::table('bot_users')
 		            ->where('bot_id', '=', $v1->id)

@@ -45,4 +45,7 @@ return [
     'bot' => 'Bot',
     'channel' => 'Canal',
     'messages_sent_the_last' => 'Mensajes enviados los últimos',
+    'welcome_to_citymes' => 'Bienvenid@ a Citymes',
+    'activate_bot' => 'Active un Bot y/o Canal para empezar a gestionarlo.',
+
 ];

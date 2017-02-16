@@ -50,5 +50,8 @@ return [
     'buttons' => 'Buttons',
     'users' => 'Users',
     'messages_sent_the_last' => 'Messages sent the last',
+    'activity_last_days' => 'Activity last days',
+    'welcome_to_citymes' => 'Welcome to Citymes',
+    'activate_bot' => 'Activate a Bot or a Channel to start managing it.',
 
 ];

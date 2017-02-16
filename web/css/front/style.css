@@ -826,6 +826,13 @@ p.h2 > img {
   padding:66.1px 0 0;
 
 }
+.col-dash .add_plus.bots > a {
+  color:#23A0DA;
+  display: block;
+  float: none;
+  padding:66.1px 0 0;
+
+}
 
 .col-my-content > h3 {
   color: #23A0DA;

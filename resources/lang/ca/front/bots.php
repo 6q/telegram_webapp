@@ -130,7 +130,7 @@ return [
     'per_day' => 'cada dia',
     'per_week' => 'cada setmana',
     'per_month' => 'cada mes',
-    'free' => 'GRATUÍT',
+    'free' => 'GRATUÏT',
     'message_limit' => 'Has accedit el màxim de missatges del teu pla.',
     'message_sent_succesfully' => 'Missatge enviat correctament.',
     'image_sent_succesfully' => 'Imatge enviada correctament.',
