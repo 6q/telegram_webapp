@@ -19,6 +19,8 @@ use App\Http\Controllers\Auth\AuthController;
 
 use Illuminate\Support\Facades\Route;
 
+use DB;
+
 class AuthController extends Controller
 {
 
@@ -122,11 +124,60 @@ class AuthController extends Controller
 	public function postRegister(
 		RegisterRequest $request,
 		UserRepository $user_gestion)
-	{
+	{	   
 		$user = $user_gestion->store(
 			$request->all(), 
 			$confirmation_code = str_random(30)
 		);
+		
+		$pass = $request->get('password');
+		if(!empty($user))
+		{
+			$to_email = $user->email;
+			if(!empty($to_email)){
+				$contactFormEmail = DB::table('site_settings')
+								->where('name','=','contact_form_email')
+								->get();
+								
+				$from_email = $contactFormEmail[0]->value;
+				
+				$email_template = DB::table('email_templates')
+										->where('title','LIKE','welcome_email')
+										->get();
+				$email_subject = $email_template[0]->subject;						
+				$template = $email_template[0]->description;
+				
+				$emailFindReplace = array(
+					'##USERNAME##' => $to_email,
+				);
+						
+				$html = strtr($template, $emailFindReplace);
+
+				$email_arr = array();
+				$email_arr['to_email'] = $to_email;
+				$email_arr['subject'] = $email_subject;
+				$email_arr['from'] = $from_email;
+				
+				\Mail::send(['html' => 'front.bots.email_bot_template'],
+					array(
+						'text' => $html
+					), function($message) use ($email_arr)
+				{
+					$message->from($email_arr['to_email']);
+					$message->to($email_arr['to_email'])->subject($email_arr['subject']);
+				});
+				
+				$credentials = array(
+					'email' => $to_email,
+					'password' => $pass
+				);
+				
+				if (Auth::attempt($credentials)) {
+					return redirect('/dashboard')->with('ok', trans('front/verify.message'));
+				}
+				
+			}
+		}
 
 		//$this->dispatch(new SendMail($user));
 

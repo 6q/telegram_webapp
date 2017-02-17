@@ -14,10 +14,10 @@
 			</td>
 			<td>{!! link_to_route('page.show', trans('back/page.see'), [$page->id], ['class' => 'btn btn-success btn-block btn']) !!}</td>
 			<td>{!! link_to_route('page.edit', trans('back/page.edit'), [$page->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
-			<td>
+			<!--<td>
 				{!! Form::open(['method' => 'DELETE', 'route' => ['page.destroy', $page->id]]) !!}
 				{!! Form::destroy(trans('back/page.destroy'), trans('back/page.destroy-warning')) !!}
 				{!! Form::close() !!}
-			</td>
+			</td>-->
 		</tr>
 	@endforeach

@@ -104,7 +104,6 @@ class DashboardController extends Controller {
         
         */
         
-        
         $userId = Auth::user()->id;
         $Form_action = 'dashboard';
         $search = '';
@@ -121,7 +120,7 @@ class DashboardController extends Controller {
 		$bots = DB::table('bots')
             ->where('user_id', '=', $userId)
             ->get();
-			
+		
         if(!empty($bots)){
             foreach($bots as $k1 => $v1){
                 $msg = DB::table('bot_messages')
@@ -195,11 +194,15 @@ class DashboardController extends Controller {
 				$botId[] = 	$v1->id;
 			}
 		}
-        
-        $recivedMsg = DB::table('bot_messages')
+	
+        /*$recivedMsg = DB::table('bot_messages')
                         ->whereIn('bot_id',$botId)
                         ->whereBetween('date', array($startDateTime, $endDateTime))
                         ->get();
+						*/
+		$recivedMsg = '';				
+						
+					
         /*****************************/
         
         
