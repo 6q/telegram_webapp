@@ -98,7 +98,7 @@
 					<li class="token_bot"><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
 				</ul>
 				<br>
-				<div style="display:inline-block;float:left">
+				<div class="send-edit">
 					<a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bots[0]->id;?>');"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ trans('front/dashboard.send_message') }}</a>
 					<a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> {!! trans('front/dashboard.edit_bot') !!}</a>
 					<!--<a href="{!! URL::to('/command/create/'.$bots[0]->id) !!}" class="btn btn-success"><i class="fa fa-star" aria-hidden="true"></i> {!! trans('front/dashboard.create_command') !!}</a>-->

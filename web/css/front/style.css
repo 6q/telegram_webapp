@@ -1840,7 +1840,23 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     min-height: 230px;
   }
 }
+.send-edit {
+  display:inline-block;float:left;
+}
 @media (max-width:767px){
+  .send-edit {
+    display:block;
+    width:100%;
+  }
+  .buy_now > a {
+    float:left;
+    width:100%;
+    margin-bottom:20px;
+  }
+  .buy_now > input {
+    float:left;
+    width:100%;
+  }
   .my_account.col-user .col-lg-2 {
     text-align:center;
     margin-bottom:15px;
@@ -2026,7 +2042,8 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     max-width: 25px;
   }
   .my_account h4 {
-    margin-bottom: 15px;
+    margin-bottom: 0;
+    text-align:center;
     width: 100%;
   }
   .modify_icon > a {
