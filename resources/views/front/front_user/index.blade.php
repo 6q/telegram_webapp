@@ -16,9 +16,8 @@
             	<?php
                 	$ur = '/front_user/'.Auth::user()->id.'/edit';
 				?>
-				<a href="{!! URL::to($ur) !!}" class="">
-                	<span>{!! trans('front/fornt_user.modify_account') !!}</span>
-                    {!! HTML::image('img/front/modify_icon.png') !!}
+				<a href="{!! URL::to($ur) !!}" class="btn btn-success">
+                	{!! trans('front/fornt_user.modify_account') !!}
                 </a>
                 
                 

@@ -329,9 +329,6 @@ h1.logo {
   margin-right:20px;
 }
 .modify_icon > a {
-  background-image: url("../../img/front/border_image.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   display: inline-block;
   padding: 8px 17px;
 }
@@ -2018,7 +2015,18 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
 }
 
 @media (max-width:480px){
-
+  .my_account {
+    margin-bottom:10px;
+  }
+  .modify_icon {
+    width:100%;
+    padding:0;
+    margin:0;
+  }
+  .modify_icon a {
+    width:100%;
+    margin-top:20px;
+  }
   select#select_lang {
     border-radius: 3px;
     bottom: 15px;

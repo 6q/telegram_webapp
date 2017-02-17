@@ -33,22 +33,22 @@
 					?>	
                   <ul>
                     <li>
-                      <span>{{ trans('front/fornt_user.first_name') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/fornt_user.first_name') }}</span>
                       <label id="uName">{!! Form::control('text', 0, 'first_name', $errors,'',$fname) !!}</label>
                     </li>
                     
                     <li>
-                      <span>{{ trans('front/fornt_user.last_name') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/fornt_user.last_name') }}</span>
                       <label id="aToken">{!! Form::control('text', 0, 'last_name', $errors,'',$lname	) !!}</label>
                     </li>
 					
 					<li>
-                      <span>{{ trans('front/fornt_user.email') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/fornt_user.email') }}</span>
                       <label>{!! Form::control_stripe_email('text', 0, 'email', $errors,'',$email) !!}</label>
                     </li>
 					  
 					<li>
-						<span>{{ trans('front/fornt_user.country') }} {!! HTML::image('img/front/icon.png') !!}</span>
+						<span>{{ trans('front/fornt_user.country') }}</span>
 						<label>
 							<select id="country" name="country" class="form-control">
 								<option value=""></option>
@@ -68,23 +68,23 @@
 					</li>  
 					  
 					<li>
-                      <span>{{ trans('front/fornt_user.zipcode') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/fornt_user.zipcode') }}</span>
                       <label>{!! Form::control('text', 0, 'zipcode', $errors,'',$zipcode) !!}</label>
                     </li>
 					  
 					<li>
-                      <span>{{ trans('front/fornt_user.mobile') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/fornt_user.mobile') }}</span>
                       <label>{!! Form::control('text', 0, 'mobile', $errors,'',$mobile) !!}</label>
                     </li>  
                     
                     
            <li>
-                      <span>{{ trans('front/fornt_user.new_password') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/fornt_user.new_password') }}</span>
                       <label id="new_pass">{!! Form::control('password', 0, 'new_password', $errors,'','') !!}</label>
                     </li>
                     
                     <li>
-                      <span>{{ trans('front/fornt_user.confirm_password') }} {!! HTML::image('img/front/icon.png') !!}</span>
+                      <span>{{ trans('front/fornt_user.confirm_password') }}</span>
                       <label id="cpass">{!! Form::control('password', 0, 'confirm_password', $errors,'',''	) !!}</label>
                     </li>
                     
