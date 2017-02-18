@@ -83,7 +83,7 @@
                             <ul id="usermenu" class="collapse">
                                 <li><a href="{!! url('user') !!}">{{ trans('back/admin.see-all') }}</a></li>
                                 <li><a href="{!! url('user/create') !!}">{{ trans('back/admin.add') }}</a></li>
-                                <li><a href="{!! url('user/roles') !!}">{{ trans('back/roles.roles') }}</a></li>
+                                <!--<li><a href="{!! url('user/roles') !!}">{{ trans('back/roles.roles') }}</a></li>-->
                             </ul>
                         </li>
 						<li {!! classActiveSegment(1, 'plan') !!}>
