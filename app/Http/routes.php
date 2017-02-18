@@ -247,7 +247,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 	
 	//file_put_contents(public_path().'/result3.txt',$update);
 	//file_put_contents(public_path().'/result.txt',$update);
-    //file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
+    file_put_contents(public_path().'/updates.txt',$update.'>>'.$token);
     
     $telegram = new Api($token);
 	
@@ -261,7 +261,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
     $chatId = $data['message']['chat']['id'];
     $message_id = $data['message']['message_id'];
     
-    $bot_data = DB::table('bots')->where('bot_token', 'LIKE', '%'.$token.'%')->where('is_subscribe','=','0')->get();
+    $bot_data = DB::table('bots')->where('bot_token', 'LIKE', $token)->where('is_subscribe','=','0')->get();
     $dbBotId = (isset($bot_data[0]->id) && $bot_data[0]->id!='')?$bot_data[0]->id:'';
 
     /*
@@ -345,7 +345,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 			}
 		}
 		
-		$bot_commands_title = '';
+		$bot_commands_title = array();
 		$bot_commands = DB::table('bot_commands')->where('bot_id','=',$dbBotId)->get();
 		if(!empty($bot_commands)){
 			foreach($bot_commands as $key1 => $val1){
@@ -408,7 +408,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 			}
 			//file_put_contents(public_path().'/result_command.txt',json_encode($msg));
 		}
-		else if(in_array($messageText,$bot_commands_title)){
+		else if(!empty($bot_commands_title) && in_array($messageText,$bot_commands_title)){
 			$bot_cmd_msg = DB::table('bot_commands')
 							->where('bot_id','=',$dbBotId)
 							->where('title','LIKE','%'.$messageText.'%')

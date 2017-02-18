@@ -29,9 +29,25 @@
     ?>
     <tr>
         <td colspan="5" class="paginacio">
-            <div class="botonou">
-                <a href="{!! URL::to('/command/create/'.$botid) !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
+           <div class="botonou">
+				<?php
+                if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && $total_pages_contatc_form < $planDetails[0]->contact_forms)
+                {
+                ?>
+                <a href="{!! URL::to('/command/create/'.$botid.'?type=contactforms') !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
+                <?php
+                }
+                else{
+                ?>
+                <a href="{!! URL::to('/command/create/'.$botid.'?type=contactforms&act=1') !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
+                <?php
+                }
+                ?>
             </div>
+
+            <?php if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && $planDetails[0]->contact_forms<999){
+                echo '<div class="info_test"> '.$total_pages_contatc_form.' / '.$planDetails[0]->contact_forms.' </div>';
+            } ?>
 
             <div id="botContactFormNavPosition" class="light-theme simple-pagination">
                 <?php
