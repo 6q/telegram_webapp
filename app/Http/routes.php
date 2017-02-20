@@ -392,7 +392,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		
 		if($messageText == '/start'){
 			$msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
-			//$msg .= chr(10).'Use keyword "/getappcommands" to get this bot commands.';
+			$msg .= chr(10).chr(10).'© Citymes.com';
 		}
 		else if(isset($bot_data[0]->comanda) && $messageText == $bot_data[0]->comanda)
 		{

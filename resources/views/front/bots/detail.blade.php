@@ -94,10 +94,11 @@
 			</div>
 			<div class="col-lg-10">
 				<ul>
-					<li style="font-size:20px"><h4>{!! $bots[0]->username !!}</h4> <?php if(isset($planDetails[0]->name) && !empty($planDetails[0]->name)){ echo $planDetails[0]->name; } ?> <a href="https://telegram.me/{!! $bots[0]->username !!}" target="_blank" title="Telegram Bot"><i class="fa fa-external-link" aria-hidden="true"></i></a></li>
+					<li class="titol_bot"><h4>{!! $bots[0]->username !!} <a href="https://telegram.me/{!! $bots[0]->username !!}" target="_blank" title="Telegram Bot"><i class="fa fa-external-link" aria-hidden="true"></i></a></h4>
+						<?php if(isset($planDetails[0]->name) && !empty($planDetails[0]->name)){ echo $planDetails[0]->name; } ?>HOLA
+					</li>
 					<li class="token_bot"><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
 				</ul>
-				<br>
 				<div class="send-edit">
 					<a href="javascript:void(0);" class="btn btn-primary" onclick="mypopup_botfunction('<?php echo $bots[0]->id;?>');"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ trans('front/dashboard.send_message') }}</a>
 					<a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> {!! trans('front/dashboard.edit_bot') !!}</a>
@@ -105,10 +106,10 @@
 				</div>
 				<ul class="nav nav-tabs nav-pills pills_bot" role="tablist">
 					<li class="active">
-						<a data-toggle="tab" href="#bot_main_buttons"><i class="fa fa-bars" aria-hidden="true"></i> {!! trans('front/dashboard.buttons') !!}</a>
+						<a data-toggle="tab" href="#bot_main_buttons"><i class="fa fa-bars" aria-hidden="true"></i> {!! trans('front/bots.buttons') !!}</a>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#bot_users"><i class="fa fa-user" aria-hidden="true"></i> {!! trans('front/dashboard.users') !!}</a>
+						<a data-toggle="tab" href="#bot_users"><i class="fa fa-user" aria-hidden="true"></i> {!! trans('front/bots.users') !!}</a>
 					</li>
 					<li><a data-toggle="tab" href="#bot_messages"><i class="fa fa-line-chart" aria-hidden="true"></i> Log</a></li>
 				</ul>
@@ -750,7 +751,7 @@
 				<div style="clear:both"></div>
                 
                 <div class="col-plan col-lg-12">
-					<h2 class="h2_channels">{!! trans('front/bots.bot_command') !!}</h2>
+					<h2 class="h2_commands">{!! trans('front/bots.bot_command') !!} ({{ $bots[0]->comanda }})</h2>
                         
                         <div id="bt_commands_BC">
 							<table id="botChannels">

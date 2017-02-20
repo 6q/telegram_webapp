@@ -41,7 +41,7 @@ return [
     'search' => 'Buscar',
     'and_or_attach_an_image' => 'También puedes enviar una imagen (sola o con el texto):',
     'send' => 'Enviar',
-    'create_command' => 'Nuevo submenú',
+    'create_command' => '+',
     'bot' => 'Bot',
     'channel' => 'Canal',
     'messages_sent_the_last' => 'Mensajes enviados los últimos',

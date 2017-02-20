@@ -90,12 +90,12 @@ return [
 	'log_download' => 'Descarregar el Log en EXCEL',
 	'pdf_user_download' => 'Descarregar els usuaris en PDF',
 	'pdf_log_download' => 'Descarregar el Log en PDF',
-	'bot_add_command' => 'Afegir comanda',
-	'bot_command' => 'Comandes',
+	'bot_add_command' => '+',
+	'bot_command' => 'Consultes',
 	'command_description' => 'Resposta',
-	'command_created' => 'S\'ha creat correctament la comanda',
-	'command_created_err' =>'Aquesta comanda ja existeix.',
-	'command_deleted' => 'Comanda eliminada correctament',
+	'command_created' => 'S\'ha creat correctament la consulta',
+	'command_created_err' =>'Aquesta consulta ja existeix.',
+	'command_deleted' => 'Consulta eliminada correctament',
 	'command_error' => 'Hi ha hagut un error',
 	'upgrade_plan' => 'Canviar el pla',
 
@@ -106,16 +106,16 @@ return [
     'contact_forms' => 'formularis de contacte',
     'photo_galleries' => 'galeries de fotografies',
     'images_per_gallery' => 'imatges per galeria',
-    'bot_commands' => 'comandes',
+    'bot_commands' => 'consultes',
     'messages_per_day' => 'missatges per dia',
     'editable_welcome_message' => 'Benvinguda editable',
     'editable_error_message' => 'Missatge d\'error editable',
     'choose' => 'Escollir',
 
     /* Bot Creation */
-    'list_command_help' => 'Aquesta comanda (/llista, /help, /ajuda...) és per llistar totes les comandes ocultes del bot.',
+    'list_command_help' => 'Aquesta consulta serveix per llistar totes les consultes ocultes del bot.',
     'list_command' => '/llista',
-    'welcome_default_message' => 'Benvingut al nostre bot, aquí pots trobar informació i contactar amb nosaltres. Utilitza /llista per veure totes les nostres comandes.',
+    'welcome_default_message' => 'Benvingut al nostre bot, aquí pots trobar informació i contactar amb nosaltres. Utilitza /llista per veure totes les nostres consultes.',
     'error_default_message' => 'Ho sentim, no hem entès el teu missatge.',
     'default_information' => 'Informació',
     'default_information_description' => 'Seleccioni la informació que necessita',
@@ -125,7 +125,7 @@ return [
     'default_contact_description' => 'Seleccioni un formulari de contacte',
     'default_galleries' => 'Galeries',
     'default_galleries_description' => 'Seleccioni una galeria de fotografies',
-    'list_all_commands' => 'Llistar totes les comandes',
+    'list_all_commands' => 'Llistar totes les consultes',
 
     'per_day' => 'cada dia',
     'per_week' => 'cada setmana',
@@ -135,5 +135,9 @@ return [
     'message_sent_succesfully' => 'Missatge enviat correctament.',
     'image_sent_succesfully' => 'Imatge enviada correctament.',
     'message_not_sent' => 'El missatge no ha pogut ser enviat.',
+
+    'buttons' => 'Botons',
+    'users' => 'Usuaris',
+    'log' => 'Log',
 
 ];

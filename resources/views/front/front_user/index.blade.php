@@ -73,7 +73,7 @@
 								</ul>
 							</td>
                             <td>
-								<a href="{!! URL::to('/bot/upgradeplan/'.$dv1['bot']['id']) !!}"><i class="fa fa-tag" aria-hidden="true"></i> {!! trans('front/bots.upgrade_plan') !!}</a>
+								<a href="{!! URL::to('/bot/upgradeplan/'.$dv1['bot']['id']) !!}"><i class="fa fa-tag" aria-hidden="true" title=" {!! trans('front/bots.upgrade_plan') !!}"></i></a>
                             	<?php
                                 	if($dv1['bot']['is_subscribe'] == 1){
 										?>

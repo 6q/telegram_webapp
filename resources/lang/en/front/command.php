@@ -23,13 +23,15 @@ return [
 	'chanel_msg' => 'Chanel messages',
 	'error' => 'Some error occurred',
 	'created' => 'Command created successfully',
-	'or' => 'Or',
-	'browse' => 'browse',
+	'or' => 'and/or send an image',
+	'browse' => 'browse image',
 	'introduction_headline' => 'Introduction headline',
 	'upload_image' => 'Upload image',
-	'upload' => 'Upload',
+	'upload' => 'Upload image',
 	'up_grade' => 'Please upgrade your menbership.',
 	'updated' => 'Update Successfully',
 	'email' => 'Email',
-	'deleted' => 'Command deleted'
+	'deleted' => 'Command deleted',
+    'gallery_introduction_headline' => 'Gallery description'
+
 ];

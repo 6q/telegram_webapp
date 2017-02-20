@@ -54,4 +54,7 @@ return [
     'welcome_to_citymes' => 'Welcome to Citymes',
     'activate_bot' => 'Activate a Bot or a Channel to start managing it.',
 
+    'buttons' => 'Buttons',
+    'users' => 'Users',
+    'log' => 'Log',
 ];

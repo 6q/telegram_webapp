@@ -23,12 +23,14 @@ return [
 	'chanel_msg' => 'Missatge que es rebrà al clicar el botó',
 	'error' => 'Hi ha hagut un error',
 	'created' => 'Botó creat correctament',
-	'or' => 'O enviar una imatge',
-	'browse' => 'Cercar',
+	'or' => 'i/o enviar una imatge',
+	'browse' => 'Cercar imatge',
 	'upload_image' => 'Pujar una imatge',
 	'upload' => 'Carregar',
 	'up_grade' => 'Necessites ampliar el teu tipus de subscripció.',
 	'updated' => 'Actualitzat correctament',
 	'email' => 'E-mail',
-	'deleted' => 'Eliminat' 
+	'deleted' => 'Eliminat',
+    'gallery_introduction_headline' => 'Descripció de la galeria'
+
 ];
