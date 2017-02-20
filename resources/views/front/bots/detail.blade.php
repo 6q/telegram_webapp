@@ -94,7 +94,7 @@
 			</div>
 			<div class="col-lg-10">
 				<ul>
-					<li style="font-size:20px"><h4>{!! $bots[0]->username !!}</h4> <?php if(isset($planDetails[0]->name) && !empty($planDetails[0]->name)){ echo $planDetails[0]->name; } ?> </li>
+					<li style="font-size:20px"><h4>{!! $bots[0]->username !!}</h4> <?php if(isset($planDetails[0]->name) && !empty($planDetails[0]->name)){ echo $planDetails[0]->name; } ?> <a href="https://telegram.me/{!! $bots[0]->username !!}" target="_blank" title="Telegram Bot"><i class="fa fa-external-link" aria-hidden="true"></i></a></li>
 					<li class="token_bot"><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
 				</ul>
 				<br>

@@ -91,8 +91,10 @@ class AuthController extends Controller
                 $this->clearLoginAttempts($request);
             }
 
-			$auth->login($user, $request->has('memory'));
-            
+			//$auth->login($user, $request->has('memory'));
+            $remember = true;
+			$auth->login($user, $remember);
+
 			if($request->session()->has('user_id'))	{
 				$request->session()->forget('user_id');
 			}
