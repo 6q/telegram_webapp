@@ -455,6 +455,23 @@ section.col_top, .container_1 {
     font-weight: 500;
     margin:0;
 }
+.els_plans .my_account > h5 {
+    clear: both;
+    color: #34adac;
+    display: block;
+    font-size: 26px;
+    font-weight: 500;
+    margin:20px 0px;
+}
+.els_plans p {
+    text-align:justify;
+}
+.els_plans h4 {
+    text-align:center;
+    font-weight: bold;
+    color:#2FA7DD;
+    margin:20px 0 0;
+}
 .buying_table th {
     background-color: #00aca0;
     padding: 10px;

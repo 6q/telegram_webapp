@@ -49,18 +49,29 @@
 		{!! Form::hidden('stripeToken', 'stripeToken', array('id' => 'stripeToken')) !!}
 
 		<div id="row1">
-			<div class="my_account telegram">
-				<h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{{ trans('front/bots.telegram') }}</span></h4>
-				<h5>{{ trans('front/bots.our_plans') }}</h5>
-			</div>
+
 
 			<div class="buying">
 				<div class="buying_table">
 
                     <?php // echo '<pre>';print_r($plans);echo '</pre>';?>
 
-					<div class="row_1 heading">
-
+					<div class="row_1 heading ">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 els_plans">
+							<div class=" my_account telegram">
+								<h5>{{ trans('front/bots.our_plans') }}</h5>
+							</div>
+							<p>
+								{{ trans('front/bots.our_plans_1') }}
+							</p>
+							<p>
+								{{ trans('front/bots.our_plans_2') }}
+							</p>
+							<p>
+								{{ trans('front/bots.our_plans_3') }}
+							</p>
+							<h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{{ trans('front/bots.telegram') }}</span></h4>
+						</div>
                         <?php
                         if(isset($plans) && !empty($plans)){
                         foreach($plans as $p1 => $pv1){
@@ -97,6 +108,7 @@
 
 
                         ?>
+
 						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 							<!-- PRICE ITEM -->
 							<div class="panel price panel-<?=$color?>"  onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" style="cursor:pointer">

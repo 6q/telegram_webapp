@@ -1035,7 +1035,8 @@ Route::post('/{bottoken}/webhook', function ($token) {
             ];
 			*/
             $msg = (isset($bot_data[0]->start_message) && !empty($bot_data[0]->start_message))?$bot_data[0]->start_message:'';
-            
+            $msg .= chr(10).chr(10).'© Citymes.com';
+
             DB::table('tmp_img')->truncate();
             DB::table('tmp_bots')->truncate();
             DB::table('tmp_message')->truncate();
