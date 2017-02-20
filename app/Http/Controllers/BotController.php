@@ -1383,9 +1383,8 @@ class BotController extends Controller
 			
 			/* nickName popup */
 			$nickName = DB::table('pages')
-							->where('id','=','13')
+							->where('id','=','17')
 							->get();
-							
 			
             $bot = Bot::find($bot_id);
             

@@ -99,43 +99,39 @@ class MessageController extends Controller
 		
 		$Total_transactions = DB::table('bot_messages')->where('bot_id', '=', $bot_id)->orderby('id','DESC')->get();
 		$total_pages_tb = count($Total_transactions);
-		
+
 		$bots = DB::table('bots')
             ->where('user_id', '=', $user_id)
 			->where('id', '=', $bot_id)
             ->get();
-		
+
 		$total_msg = array();
 		if(!empty($bots)){
-			foreach($bots as $k1 => $v1){
-				$total_pages_tb = 0;
-				$Total_transactions = DB::table('bot_messages')->where('bot_id', '=', $bot_id)->orderby('id','DESC')->get();
-				$total_pages_tb = count($Total_transactions);
-				$total_msg[$k1] = $total_pages_tb;
-
-				$msg = DB::table('bot_messages')
-                        ->where('bot_id', '=', $v1->id)
-						->orderby('id','DESC')
-						->limit($limit)
-						->offset($start)
-                        ->get();
+			$total_msg[0] = $total_pages_tb;
 				
-				if(!empty($msg)){
-					foreach($msg as $k2 => $v2){
-						$bot_user = DB::table('bot_users')
-                        ->where('id', '=', $v2->bot_user_id)
-							->orderby('id','DESC')
-                        ->get();
-						
-						$msg[$k2]->bot_user = '';
-						if(isset($bot_user[0]) && !empty($bot_user[0])){
-							$msg[$k2]->bot_user = $bot_user[0]->first_name.' '.$bot_user[0]->first_name;
-						}
+			$msg = DB::table('bot_messages')
+					->where('bot_id', '=', $bots[0]->id)
+					->orderby('id','DESC')
+					->limit($limit)
+					->offset($start)
+					->get();
+
+			if(!empty($msg))
+			{
+				foreach($msg as $k2 => $v2){
+					$bot_user = DB::table('bot_users')
+									->where('id', '=', $v2->bot_user_id)
+									->orderby('id','DESC')
+									->get();
+					
+					$msg[$k2]->bot_user = '';
+					if(isset($bot_user[0]) && !empty($bot_user[0])){
+						$msg[$k2]->bot_user = $bot_user[0]->first_name.' '.$bot_user[0]->first_name;
 					}
 				}
-				
-				$bots[$k1]->message = $msg;
 			}
+			
+			$bots[0]->message = $msg;
 		}
 		
 		return view('front.message.paginate_bot_message',compact('bots','total_msg','current_page','bot_id','limit','adjacents')); 

@@ -21,11 +21,24 @@
     <a href="{!! url('user') !!}" type="button" name="total" class="btn btn-default {{ classActiveOnlyPath('user') }}">{{ trans('back/users.all') }} 
       <span class="badge">{{  $counts['total'] }}</span>
     </a>
-    @foreach ($roles as $role)
+                
+    <?php
+		foreach ($roles as $role)
+		{
+	?>
       <a href="{!! url('user/sort/' . $role->slug) !!}" type="button" name="{!! $role->slug !!}" class="btn btn-default {{ classActiveOnlySegment(3, $role->slug) }}">{{ $role->title . 's' }} 
-        <span class="badge">{{ $counts[$role->slug] }}</span>
+        <span class="badge">
+        	<?php 
+				if(isset($counts[$role->slug]) && !empty($counts[$role->slug])){
+					echo $counts[$role->slug];
+				}
+				else{
+					echo '0';
+				}
+			?>
+        </span>
       </a>
-    @endforeach
+    <?php }?>
   </div>
 
 	@if(session()->has('ok'))

@@ -69,6 +69,7 @@
                             </li>
                         </ul>
                     </div>
+                    
                     <div class="crete_bot_form">
                         <ul>
                             <li class="example_contact col-sm-6">
@@ -148,7 +149,7 @@
                     <h4 class="modal-title">{!! trans('front/bots.bot_nick_name') !!}</h4>
                 </div>
                 <div class="modal-body">
-                    <p><?php echo $nickName[0]->content;?></p>
+                    <p><?php if(isset($nickName[0]->content) && !empty($nickName[0]->content)){echo $nickName[0]->content;}?></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{!! trans('front/bots.close') !!}</button>

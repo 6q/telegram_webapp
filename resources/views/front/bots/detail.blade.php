@@ -340,7 +340,7 @@
 									</div>
 
                                     <?php if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && $planDetails[0]->contact_forms<999){
-                                        echo '<div class="info_test"> '.$total_pages.' / '.$planDetails[0]->contact_forms.' </div>';
+                                        echo '<div class="info_test"> '.$total_pages_contatc_form.' / '.$planDetails[0]->contact_forms.' </div>';
                                     } ?>
 
 									<div id="botContactFormNavPosition" class="light-theme simple-pagination">

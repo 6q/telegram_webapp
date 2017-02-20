@@ -15,7 +15,7 @@ class IsRedactor {
 	public function handle($request, Closure $next)
 	{
 		
-		if (session('statut') === 'admin' || session('statut') === 'user')
+		if (session('statut') === 'admin' || session('statut') === 'user' || session('statut') === 'vip')
 		{
 		
 			return $next($request);
