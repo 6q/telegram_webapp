@@ -49,29 +49,28 @@
 		{!! Form::hidden('stripeToken', 'stripeToken', array('id' => 'stripeToken')) !!}
 
 		<div id="row1">
-
-
+			<div class="my_account telegram">
+				<h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{{ trans('front/bots.telegram') }}</span></h4>
+				<h5>{{ trans('front/bots.our_plans') }}</h5>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 els_plans" style="padding:20px 50px;">
+				<p>
+					{{ trans('front/bots.our_plans_1') }}
+				</p>
+				<p>
+					{{ trans('front/bots.our_plans_2') }}
+				</p>
+				<p>
+					{{ trans('front/bots.our_plans_3') }}
+				</p>
+			</div>
 			<div class="buying">
 				<div class="buying_table">
 
                     <?php // echo '<pre>';print_r($plans);echo '</pre>';?>
 
-					<div class="row_1 heading ">
-						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 els_plans">
-							<div class=" my_account telegram">
-								<h5>{{ trans('front/bots.our_plans') }}</h5>
-							</div>
-							<p>
-								{{ trans('front/bots.our_plans_1') }}
-							</p>
-							<p>
-								{{ trans('front/bots.our_plans_2') }}
-							</p>
-							<p>
-								{{ trans('front/bots.our_plans_3') }}
-							</p>
-							<h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{{ trans('front/bots.telegram') }}</span></h4>
-						</div>
+					<div class="row_1 heading">
+
                         <?php
                         if(isset($plans) && !empty($plans)){
                         foreach($plans as $p1 => $pv1){
@@ -227,6 +226,7 @@
 							<li>
 								<span>{{ trans('front/bots.bot_username') }}</span>
 								<label id="uName">{!! Form::control('text', 0, 'username', $errors,'','','required') !!}</label>
+								<p><small>* {{ trans('front/bots.bot_username_help') }}</small></p>
 							</li>
 
 							<li>

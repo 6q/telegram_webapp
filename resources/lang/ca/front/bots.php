@@ -35,6 +35,7 @@ return [
 	'how_to_create' => 'Per poder configurar el teu bot de Telegram amb Citymes, primer l\'has de tenir creat. Clica el següent botó i t\'explicarem pas a pas com fer-ho',
 	'click_here' => 'Com crear un bot de Telegram',
 	'bot_username' => 'Nom del Bot',
+	'bot_username_help' => 'El nom del bot ha de ser exactament el corresponent amb el creat amb BotFather, acabat en "bot"',
 	'bot_access_token' => 'Token del Bot',
 	'description' => 'Descripció',
 	'browse' => 'Cercar',

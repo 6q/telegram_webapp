@@ -95,7 +95,7 @@
 			<div class="col-lg-10">
 				<ul>
 					<li class="titol_bot"><h4>{!! $bots[0]->username !!} <a href="https://telegram.me/{!! $bots[0]->username !!}" target="_blank" title="Telegram Bot"><i class="fa fa-external-link" aria-hidden="true"></i></a></h4>
-						<?php if(isset($planDetails[0]->name) && !empty($planDetails[0]->name)){ echo $planDetails[0]->name; } ?>HOLA
+						<?php if(isset($planDetails[0]->name) && !empty($planDetails[0]->name)){ echo $planDetails[0]->name; } ?>
 					</li>
 					<li class="token_bot"><b>{{ trans('front/bots.bot_token') }}:</b> {!! $bots[0]->bot_token !!}</li>
 				</ul>
@@ -758,8 +758,6 @@
                                 <thead>
                                 <tr>
                                     <th>{!! trans('front/bots.bot_command') !!}</th>
-                                    <th>{!! trans('front/bots.command_description') !!}</th>
-                                    <th>{!! trans('front/bots.image') !!}</th>
                                     <th>{{ trans('front/bots.action') }}</th>
                                 </tr>
                                 </thead>
@@ -770,16 +768,6 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $v6->title;?></td>
-                                    <td><?php echo $v6->command_description;?></td>
-                                    <td>
-										<?php
-                                        	if(isset($v6->image) && !empty($v6->image)){
-												?>
-                                                	{!! HTML::image('uploads/'.$v6->image,'',array( 'width' => 70, 'height' => 70 )) !!}
-                                                <?php
-											}
-										?>
-                                    </td>
                                     <td>
                                         <a class="btn btn-warning" href="{!! URL::to('/bot/bot_command_edit/'.$v6->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                         <a class="btn btn-danger" href="{!! URL::to('/bot/bot_command_delete/'.$v6->bot_id.'/'.$v6->id) !!}" onclick="return confirm('Are you sure want to delete this command?');"><i class="fa fa-trash" aria-hidden="true"></i></a>

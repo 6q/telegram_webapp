@@ -46,7 +46,7 @@ return [
     'ninety_days' => '90 days',
     'joined_the_bot' => 'joined the bot',
     'manage' => 'Manage',
-    'create_command' => 'Create command',
+    'create_command' => '+',
     'buttons' => 'Buttons',
     'users' => 'Users',
     'messages_sent_the_last' => 'Messages sent the last',
