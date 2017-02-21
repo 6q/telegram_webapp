@@ -15,7 +15,7 @@ return [
 	'vat_number' => 'Vat Number',
 	'payment_method' => 'Payment Method',
 	'image' => 'Image',
-	'bot' => 'View bot',
+	'bot' => 'View bots',
 	'role' => 'Role',		
 	'seen' => 'Seen',
 	'status' => 'Status',

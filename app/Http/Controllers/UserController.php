@@ -85,7 +85,7 @@ class UserController extends Controller {
 	public function indexSort($role)
 	{
 		$counts = $this->user_gestion->counts();
-		$users = $this->user_gestion->index(4, $role);
+		$users = $this->user_gestion->index(20, $role);
 		
 		$links = $users->render();
 		$roles = $this->role_gestion->all();
