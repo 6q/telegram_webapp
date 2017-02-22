@@ -142,7 +142,7 @@
 								</div>
 								<ul class="list-group list-group-flush text-center">
 									<li class="list-group-item">
-										<b><?php echo $pv1->autoresponses;?></b> {{ trans('front/bots.autoresponses') }}
+										<b><?php echo $pv1->autoresponses<999 ?: "&infin;"; ?></b> {{ trans('front/bots.autoresponses') }}
 										<i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
@@ -152,7 +152,7 @@
                                             echo 'NO';
                                             }
                                             else{
-                                            echo $pv1->contact_forms;
+                                             echo $pv1->contact_forms<999 ?: "&infin;";
                                             }
                                             ?>
 										</b>
@@ -162,16 +162,16 @@
 										<b><?php echo $pv1->image_gallery<999 ?: "&infin;"; ?></b> {{ trans('front/bots.photo_galleries') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<b><?php echo $pv1->gallery_images ?></b> {{ trans('front/bots.images_per_gallery') }} <i class="icon-ok text-info"></i>
+										<b><?php echo $pv1->gallery_images<999 ?: "&infin;"; ?></b> {{ trans('front/bots.images_per_gallery') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<b><?php echo $pv1->bot_commands ?></b> {{ trans('front/bots.bot_commands') }} <i class="icon-ok text-info"></i>
+										<b><?php echo $pv1->bot_commands<999 ?: "&infin;"; ?></b> {{ trans('front/bots.bot_commands') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<? if ($pv1->manual_message<999) {
+										<? if ($pv1->manual_message>999) {
                                         	echo trans('front/bots.no_limit');
 										} else {
-											echo '<b>'.$pv1->manual_message.'</b>';
+											echo '<b>'.$pv1->manual_message.'</b> ';
 
 											switch ($manual_message_interval) {
 												case "day":
