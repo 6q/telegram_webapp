@@ -127,7 +127,7 @@
                                             <? if ($pv1->price>0) { ?>
 											<span><?php echo $pv1->price;?></span>
 											<small>
-												€<?php
+												€/<?php
                                                 if($pv1->duration == 3){
                                                 echo trans('front/bots.each_quarter');
                                                 }
