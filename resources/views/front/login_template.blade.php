@@ -44,11 +44,26 @@
 
 		<div class="fusion-main-menu" style="">
             <ul id="menu-main-menu-catalan" class="fusion-menu">
-                <li id="menu-item-687" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-687"><a href="http://www.citymes.com/#sobre-citymes"><span class="menu-text">Sobre Citymes</span></a></li>
-                <li id="menu-item-688" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-688 current-menu-item"><a href="http://www.citymes.com/#plataforma"><span class="menu-text">Plataforma</span></a></li>
-                <li id="menu-item-690" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-690"><a href="http://www.citymes.com/#partners"><span class="menu-text">Partners</span></a></li>
-                <li id="menu-item-691" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-691"><a href="http://www.citymes.com/#contactar"><span class="menu-text">Contactar</span></a></li>
-                <li id="menu-item-692" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-692 fusion-menu-item-button fusion-last-menu-item"><a href="https://app.citymes.com"><span class="menu-text fusion-button button-default button-medium">ACCÉS PLATAFORMA</span></a></li>
+                @if(Config::get('app.locale')=="en")
+                    <li id="menu-item-687" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-687"><a href="http://www.citymes.com/es/#sobre-citymes"><span class="menu-text">About Citymes</span></a></li>
+                    <li id="menu-item-688" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-688 current-menu-item"><a href="http://www.citymes.com/es/#plataforma"><span class="menu-text">Platform</span></a></li>
+                    <li id="menu-item-690" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-690"><a href="http://www.citymes.com/es/#partners"><span class="menu-text">Partners</span></a></li>
+                    <li id="menu-item-691" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-691"><a href="http://www.citymes.com/es/#contactar"><span class="menu-text">Contact</span></a></li>
+                    <li id="menu-item-692" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-692 fusion-menu-item-button fusion-last-menu-item"><a href="https://app.citymes.com"><span class="menu-text fusion-button button-default button-medium">PLATFORM LOGIN</span></a></li>
+                @elseif(Config::get('app.locale')=="es")
+                    <li id="menu-item-687" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-687"><a href="http://www.citymes.com/es/#sobre-citymes"><span class="menu-text">Sobre Citymes</span></a></li>
+                    <li id="menu-item-688" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-688 current-menu-item"><a href="http://www.citymes.com/es/#plataforma"><span class="menu-text">Plataforma</span></a></li>
+                    <li id="menu-item-690" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-690"><a href="http://www.citymes.com/es/#partners"><span class="menu-text">Partners</span></a></li>
+                    <li id="menu-item-691" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-691"><a href="http://www.citymes.com/es/#contactar"><span class="menu-text">Contactar</span></a></li>
+                    <li id="menu-item-692" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-692 fusion-menu-item-button fusion-last-menu-item"><a href="https://app.citymes.com"><span class="menu-text fusion-button button-default button-medium">ACCESO PLATAFORMA</span></a></li>
+                @elseif(Config::get('app.locale')=="ca")
+                    <li id="menu-item-687" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-687"><a href="http://www.citymes.com/#sobre-citymes"><span class="menu-text">Sobre Citymes</span></a></li>
+                    <li id="menu-item-688" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-688 current-menu-item"><a href="http://www.citymes.com/#plataforma"><span class="menu-text">Plataforma</span></a></li>
+                    <li id="menu-item-690" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-690"><a href="http://www.citymes.com/#partners"><span class="menu-text">Partners</span></a></li>
+                    <li id="menu-item-691" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-691"><a href="http://www.citymes.com/#contactar"><span class="menu-text">Contactar</span></a></li>
+                    <li id="menu-item-692" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-692 fusion-menu-item-button fusion-last-menu-item"><a href="https://app.citymes.com"><span class="menu-text fusion-button button-default button-medium">ACCÉS PLATAFORMA</span></a></li>
+                @endif
+
                 <li style="padding-right:0px;">
                     <div class="col-laguage">
                         <?php
@@ -101,7 +116,13 @@
 
             </div>
             <div class="footer-copyright">
-                © Copyright 2016 – Tots els drets reservats&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/ca/avis-legal/">Avís Legal</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.citymes.com">Citymes.com</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.gestinet.com/es/mantenimiento-informatico">Mantenimiento informático</a>
+                @if(Config::get('app.locale')=="en")
+                    Citymes © {{date('Y')}} – All rights reserved   |   <a href="http://www.citymes.com/es/#contactar" target="_blank">Contact</a> | <a href="http://www.citymes.com/es/aviso-legal/" target="_blank">Legal Advise</a>   |   <a href="http://www.citymes.com/es/" target="_blank">Citymes.com</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.gestinet.com/es/mantenimiento-informatico">Mantenimiento informático</a>
+                @elseif(Config::get('app.locale')=="es")
+                    Citymes © {{date('Y')}} – Todos los derechos reservados   |   <a href="http://www.citymes.com/es/#contactar" target="_blank">Contactar</a> | <a href="http://www.citymes.com/es/aviso-legal/" target="_blank">Aviso Legal</a>   |   <a href="http://www.citymes.com/es/" target="_blank">Citymes.com</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.gestinet.com/es/mantenimiento-informatico">Mantenimiento informático</a>
+                @elseif(Config::get('app.locale')=="ca")
+                    Citymes © {{date('Y')}} – Tots els drets reservats   |   <a href="http://www.citymes.com/#contactar" target="_blank">Contactar</a> | <a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Avís Legal</a>   |   <a href="http://www.citymes.com/" target="_blank">Citymes.com</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="http://www.gestinet.com/manteniment-informatic">Mantenimient informàtic</a>
+                @endif
             </div>
         </section>
         {!! HTML::script('js/jquery1.12.4.js') !!}

@@ -55,7 +55,6 @@
 			@elseif(Config::get('app.locale')=="ca")
 				Citymes © {{date('Y')}} – Tots els drets reservats   |   <a href="http://www.citymes.com/#contactar" target="_blank">Contactar</a> | <a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Avís Legal</a>   |   <a href="http://www.citymes.com/" target="_blank">Citymes.com</a>
 			@endif
-
 		</footer>
 		{!! HTML::script('lib/js/nanoscroller.min.js') !!}
 		{!! HTML::script('lib/js/tether.min.js') !!}
