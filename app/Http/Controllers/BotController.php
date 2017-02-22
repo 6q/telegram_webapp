@@ -1165,6 +1165,7 @@ class BotController extends Controller
 		if(!empty($request->get('id'))){
 			$id = $request->get('id');
 			$bot_id = $request->get('bot_id');
+			/*
 			$rules = array(
 				'title' => 'required|unique:bot_commands,title,'.$id,
 			);
@@ -1172,6 +1173,20 @@ class BotController extends Controller
 			$v = Validator::make($request->all(), $rules);
 
 			if($v->passes())
+			*/
+			$error = 'false';
+			$submenu_heading_text = $request->get('title');
+			
+			$chk = DB::table('bot_commands')
+									->where('id','!=',$id)
+									->where('bot_id','=',$bot_id)
+									->where('title','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chk[0]->title) && !empty($chk[0]->title)){
+				$error = 'true';
+			}
+			
+			if($error == 'false')
 			{
 				$bot_command = BotCommand::find($request->get('id'));
 				$bot_command->id = $request->get('id');
@@ -1203,9 +1218,20 @@ class BotController extends Controller
 				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 			}
 			else{
+				if($error == 'true'){
+					$messages = 'The bot command text has already been taken.';
+					return redirect('bot/bot_command_edit/'.$id)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('bot/bot_command_edit/'.$id)->withErrors($v);
+				}
+			}
+			/*else{
 				$messages = $v->messages();
 				return redirect('bot/bot_command_edit/'.$id)->withErrors($v);
 			}
+			*/
 		}
 	}
 

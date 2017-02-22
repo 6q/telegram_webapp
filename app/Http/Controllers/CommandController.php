@@ -72,6 +72,42 @@ class CommandController extends Controller
 		
         if(!empty($request->get('autoresponse')) && $request->get('autoresponse') == 1)
         {
+			$error = 'false';
+			$submenu_heading_text = $request->get('submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$botId)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')
+								->where('type_id','=',$botId)
+								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')
+									->where('type_id','=',$botId)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$chkGalleries = DB::table('galleries')
+									->where('type_id','=',$botId)
+									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+			
+			/*
 			$rules = array(
 				'submenu_heading_text' => 'required|unique:autoresponses',
 				'autoresponse_msg' => 'required:autoresponses'
@@ -80,6 +116,8 @@ class CommandController extends Controller
 			$v = Validator::make($request->all(), $rules);
 
 			if( $v->passes() ) 
+			*/
+			if( $error == 'false' ) 
 			{
 				$autoresponse = new Autoresponse;    
 				$autoresponse->types = 'bot';
@@ -114,14 +152,27 @@ class CommandController extends Controller
 				
 				//return redirect('front_user')->with('ok', trans('front/command.created'));
 				return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
-			} else { 
+			} 
+			else{
+				if($error == 'true'){
+					$messages = 'The autoresponse submenu heading text has already been taken.';
+					return redirect('bot/detail/'.$botId)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('bot/detail/'.$botId)->withErrors($v);
+				}
+			}
+			/*else { 
 				$messages = $v->messages();
 				return redirect('command/create/'.$botId)->withErrors($v);
 			}
+			*/
         }
         
         if(!empty($request->get('contact_form')) && $request->get('contact_form') == 1)
         {
+			/*
 			$rules = array(
 				'submenu_heading_text' => 'required|unique:contact_forms',
 			);
@@ -129,6 +180,43 @@ class CommandController extends Controller
 			$v = Validator::make($request->all(), $rules);
 
 			if($v->passes())
+			*/
+			$error = 'false';
+			$submenu_heading_text = $request->get('submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$botId)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')
+								->where('type_id','=',$botId)
+								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')
+									->where('type_id','=',$botId)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$chkGalleries = DB::table('galleries')
+									->where('type_id','=',$botId)
+									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+			
+			if( $error == 'false' ) 
 			{
 				$contact_form = new ContactForm;
             
@@ -164,22 +252,71 @@ class CommandController extends Controller
 				
 				//return redirect('front_user')->with('ok', trans('front/command.created'));
 				return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));	
-			}else { 
+			}
+			/*else { 
 				$messages = $v->messages();
 				return redirect('command/create/'.$botId)->withErrors($v);
+			}
+			*/
+			else{
+				if($error == 'true'){
+					$messages = 'The Contactform submenu heading text has already been taken.';
+					return redirect('command/create/'.$botId)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('command/create/'.$botId)->withErrors($v);
+				}
 			}
         }
         
         if(!empty($request->get('gallery_form')) && $request->get('gallery_form') == 1)
         {
             //echo '<pre>';print_r($request->all());die;
-            $rules = array(
+            /*$rules = array(
 				'gallery_submenu_heading_text' => 'required|unique:galleries',
 			);
 
 			$v = Validator::make($request->all(), $rules);
+			*/
 			
-			if($v->passes())
+			$error = 'false';
+			$gallery_submenu_heading_text = $request->get('gallery_submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$request->get('bot_id'))
+									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')
+								->where('type_id','=',$request->get('bot_id'))
+								->where('chanel_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+								->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')
+									->where('type_id','=',$request->get('bot_id'))
+									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$chkGalleries = DB::table('galleries')
+									->where('type_id','=',$request->get('bot_id'))
+									->where('gallery_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+			
+			//if($v->passes())
+			if($error == 'false')
 			{
 				$gallery = new Gallery; 
 				$gallery->types = 'bot';
@@ -214,14 +351,26 @@ class CommandController extends Controller
 				return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
 			}
 			else{
+				if($error == 'true'){
+					$messages = 'The gallery submenu heading text has already been taken.';
+					return redirect('bot/detail/'.$botId)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('bot/detail/'.$botId)->withErrors($v);
+				}
+			}
+			/*else{
 				$messages = $v->messages();
 				return redirect('command/create/'.$botId)->withErrors($v);
 			}
+			*/
         }
         
         
         if(!empty($request->get('chanel')) && $request->get('chanel') == 1)
         {
+			/*
 			$rules = array(
 				'chanel_submenu_heading_text' => 'required|unique:chanels',
 			);
@@ -229,6 +378,43 @@ class CommandController extends Controller
 			$v = Validator::make($request->all(), $rules);
 
 			if($v->passes())
+			*/
+			$error = 'false';
+			$submenu_heading_text = $request->get('chanel_submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$botId)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')
+								->where('type_id','=',$botId)
+								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')
+									->where('type_id','=',$botId)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$chkGalleries = DB::table('galleries')
+									->where('type_id','=',$botId)
+									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+
+			if($error == 'false')
 			{
 				//echo '<pre>';print_r($request->all());die;
 				$chanel = new Chanel; 
@@ -269,9 +455,19 @@ class CommandController extends Controller
 			   return redirect('bot/detail/'.$botId)->with('ok', trans('front/command.created'));
 			}
 			else{
+				if($error == 'true'){
+					$messages = 'The Channel submenu heading text has already been taken.';
+					return redirect('command/create/'.$botId)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('command/create/'.$botId)->withErrors($v);
+				}
+			}
+			/*else{
 				$messages = $v->messages();
 				return redirect('command/create/'.$botId)->withErrors($v);	
-			}
+			}*/
         }
     }
     
@@ -329,6 +525,43 @@ class CommandController extends Controller
 			$id = $request->get('id');
 			$bot_id = $request->get('bot_id');
 			
+			$error = 'false';
+			$submenu_heading_text = $request->get('submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('id', '!=',$id)
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')
+								->where('type_id','=',$bot_id)
+								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$chkGalleries = DB::table('galleries')
+									->where('type_id','=',$bot_id)
+									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+			
+			/*
 			$rules = array(
 				'submenu_heading_text' => 'required|unique:autoresponses,submenu_heading_text,'.$id,
 				'autoresponse_msg' => 'required:autoresponses'
@@ -337,6 +570,8 @@ class CommandController extends Controller
 			$v = Validator::make($request->all(), $rules);
 
 			if( $v->passes() ) 
+			*/
+			if( $error == 'false' ) 
 			{
 				$autoresponse = Autoresponse::find($request->get('id'));
 				$autoresponse->id = $request->get('id');
@@ -371,9 +606,20 @@ class CommandController extends Controller
 				//return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.created'));
 			}
-			else{
+			/*else{
 				$messages = $v->messages();
 				return redirect('command/autoresponse_edit/'.$id)->withErrors($v);
+			}
+			*/
+			else{
+				if($error == 'true'){
+					$messages = 'The autoresponse submenu heading text has already been taken.';
+					return redirect('command/autoresponse_edit/'.$id)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('command/autoresponse_edit/'.$id)->withErrors($v);
+				}
 			}
 		}
 	}
@@ -413,17 +659,58 @@ class CommandController extends Controller
 		}
 	}
 	
-	public function chanel_update(Request $request){
-		if(!empty($request->get('id'))){
+	public function chanel_update(Request $request)
+	{
+		if(!empty($request->get('id')))
+		{
 			$bot_id = $request->get('bot_id');
 			$id = $request->get('id');
-			$rules = array(
+			
+			/*$rules = array(
 				'chanel_submenu_heading_text' => 'required|unique:chanels,chanel_submenu_heading_text,'.$id,
 			);
 
 			$v = Validator::make($request->all(), $rules);
 
 			if($v->passes())
+			*/
+			$error = 'false';
+			$submenu_heading_text = $request->get('chanel_submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')
+								->where('id', '!=',$id)
+								->where('type_id','=',$bot_id)
+								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$chkGalleries = DB::table('galleries')
+									->where('type_id','=',$bot_id)
+									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+			
+			if($error == 'false')
 			{
 				$chanel = Chanel::find($request->get('id'));
 				$chanel->id = $request->get('id');
@@ -456,9 +743,20 @@ class CommandController extends Controller
 				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 			}
 			else{
+				if($error == 'true'){
+					$messages = 'The autoresponse submenu heading text has already been taken.';
+					return redirect('command/chanel_edit/'.$id)->withErrors($messages);
+				}
+				else{
+					$messages = $v->messages();
+					return redirect('command/chanel_edit/'.$id)->withErrors($v);
+				}
+			}
+			/*else{
 				$messages = $v->messages();
 				return redirect('command/chanel_edit/'.$id)->withErrors($v);
 			}
+			*/
 		}
 	}
 	
@@ -509,6 +807,7 @@ class CommandController extends Controller
 			$id = $request->get('id');
 			$bot_id = $request->get('bot_id');
 			
+			/*
 			$rules = array(
 				'submenu_heading_text' => 'required|unique:contact_forms,submenu_heading_text,'.$id,
 			);
@@ -516,6 +815,44 @@ class CommandController extends Controller
 			$v = Validator::make($request->all(), $rules);
 
 			if($v->passes())
+			*/
+			$error = 'false';
+			$submenu_heading_text = $request->get('submenu_heading_text');
+			
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+				$error = 'true';
+			}
+			
+			$chkChanels = DB::table('chanels')
+								->where('type_id','=',$bot_id)
+								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->get();
+			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+				$error = 'true';
+			}
+			
+			$chkContactForms = DB::table('contact_forms')
+									->where('id', '!=',$id)
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+				$error = 'true';
+			}
+			
+			$chkGalleries = DB::table('galleries')
+									->where('type_id','=',$bot_id)
+									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+			
+			if($error == 'false')
 			{
 				//$to_email = $request->get('email');
 				$contactFormEmail = DB::table('site_settings')
@@ -549,10 +886,19 @@ class CommandController extends Controller
 				
 				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 			}
+			if($error == 'true'){
+				$messages = 'The contactform submenu heading text has already been taken.';
+				return redirect('command/contactform_edit/'.$id)->withErrors($messages);
+			}
 			else{
 				$messages = $v->messages();
 				return redirect('command/contactform_edit/'.$id)->withErrors($v);
 			}
+			/*else{
+				$messages = $v->messages();
+				return redirect('command/contactform_edit/'.$id)->withErrors($v);
+			}
+			*/
 		}
 	}
 	
@@ -620,28 +966,49 @@ class CommandController extends Controller
 			$error = 'false';
 			$gallery_submenu_heading_text = $request->get('gallery_submenu_heading_text');
 			
-			$chkAutoresponse = DB::table('autoresponses')->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')->get();
+			$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
 			}
 			
-			$chkChanels = DB::table('chanels')->where('chanel_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')->get();
+			$chkChanels = DB::table('chanels')
+								->where('type_id','=',$bot_id)
+								->where('chanel_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
 			}
 			
-			$chkContactForms = DB::table('contact_forms')->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')->get();
+			$chkContactForms = DB::table('contact_forms')
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
 			}
 			
-			$rules = array(
+			$chkGalleries = DB::table('galleries')
+									->where('id','!=',$request->get('id'))
+									->where('type_id','=',$bot_id)
+									->where('gallery_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->get();
+			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
+				$error = 'true';
+			}
+			
+			
+			/*$rules = array(
 				'gallery_submenu_heading_text' => 'required|unique:galleries,gallery_submenu_heading_text,'.$id
 			);
+			*/
 	
-				$v = Validator::make($request->all(), $rules);
+				//$v = Validator::make($request->all(), $rules);
 				
-				if($error == 'false' && $v->passes())
+				//if($error == 'false' && $v->passes())
+				if($error == 'false')
 				{
 					$gallery = Gallery::find($request->get('id'));
 					$gallery->id = $request->get('id');

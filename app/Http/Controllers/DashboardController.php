@@ -574,6 +574,7 @@ class DashboardController extends Controller {
     
     public function sendbotmessage(Request $request){
 		$img_url = '';
+		$userId = Auth::user()->id;
 		if($request->hasFile('bot_image')){
 			$error_img = $_FILES["bot_image"]["error"];
 			$img_name = $_FILES["bot_image"]["name"];
@@ -618,6 +619,32 @@ class DashboardController extends Controller {
                 }
             }
         }
+		
+		 $checkData = DB::table('user_subscriptions')
+                            ->where('types','=','bot')
+                            ->where('type_id','=',$botId)
+                            ->get();
+            
+		$planId = $checkData[0]->plan_id;
+		
+		$plan = DB::table('plans')
+					->where('id','=',$planId)
+					->get();
+		
+		$perDaySendMesgLimit = $plan[0]->manual_message;
+
+		$chkData = DB::table('bot_send_message')
+			->where('bot_id','=',$botId)
+			->where('send_date','=',date('Y-m-d'))
+			->get();
+
+		
+		$totalCount = count($chkData);
+		if($totalCount >= $perDaySendMesgLimit){
+			echo trans('front/bots/message_limit');
+			exit();
+		}
+			
 		
         $chk_img = false;
         if(!empty($chatIdArr) && !empty($bot_token)){
@@ -665,10 +692,16 @@ class DashboardController extends Controller {
 				}
             }
 			
-			if (isset($response->message_id) && !empty($response->message_id)) {
+			if (isset($response->message_id) && !empty($response->message_id)) 
+			{
+				DB::table('bot_send_message')->insertGetId(
+						['user_id' => $userId, 'bot_id' => $botId, 'send_date' => date('Y-m-d'), 'message' => $message]
+				);
+					
 				echo trans('front/bots.message_sent_succesfully');
 			} 
-			else if($chk_img){
+			else if($chk_img)
+			{
 				echo trans('front/bots.image_sent_succesfully');
 			}
 			else {
