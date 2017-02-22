@@ -6,6 +6,7 @@ return [
 	'my_account' => 'Meu Compte',
 	'messages' => 'Missatges',
 	'logout' => 'Sortir',
+    'help' => 'Ajuda',
 	'english' => 'English',
 	'french' => 'French',
 	'catalan' => 'Català',

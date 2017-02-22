@@ -2,24 +2,38 @@
 
 	<div class="col-lg-2" id="menu">
 		<div class="home">
-			<a href="{!! URL::to('/dashboard') !!}" data-toggle="tooltip" title="{!! trans('front/header.dashboard') !!}">{!! HTML::image('img/front/home.png') !!}</a>
+			<a href="{!! URL::to('/dashboard') !!}" data-toggle="tooltip" title="{!! trans('front/header.dashboard') !!}">
+				<i class="fa fa-home" aria-hidden="true" style="font-size:22px;"></i>
+			</a>
 		</div>
 		<div class="user">
-			<a href="{!! URL::to('/front_user') !!}" data-toggle="tooltip" title="{!! trans('front/header.my_account') !!}">{!! HTML::image('img/front/img1.png') !!}</a>
+			<a href="{!! URL::to('/front_user') !!}" data-toggle="tooltip" title="{!! trans('front/header.my_account') !!}">
+				<i class="fa fa-user" aria-hidden="true" style="font-size:22px;"></i>
+			</a>
 		
 		</div>
 
 		<div class="col_message">
-			<a href="{!! URL::to('/messages') !!}" data-toggle="tooltip" title="{!! trans('front/header.logs') !!}">{!! HTML::image('img/front/img2.png') !!}</a>
+			<a href="{!! URL::to('/messages') !!}" data-toggle="tooltip" title="{!! trans('front/header.logs') !!}">
+				<i class="fa fa-comments" aria-hidden="true" style="font-size:22px;"></i>
+			</a>
 		</div>
 
-
-		<div class="languages">
-			<a data-toggle="modal" data-target="#languages"><i class="fa fa-globe" aria-hidden="true" style="font-size:22px;"></i></a>
+		<div class="col_help">
+			<a href="{!! URL::to('/pages/detail/20') !!}" data-toggle="tooltip" title="{!! trans('front/header.help') !!}">
+				<i class="fa fa-question" aria-hidden="true" style="font-size:22px;"></i>
+			</a>
 		</div>
 		<div class="col_lock">
-			<a href="{!! URL::to('/auth/logout') !!}" data-toggle="tooltip" title="{!! trans('front/header.logout') !!}">{!! HTML::image('img/front/img3.png') !!}</a>
+			<a href="{!! URL::to('/auth/logout') !!}" data-toggle="tooltip" title="{!! trans('front/header.logout') !!}">
+				<i class="fa fa-lock" aria-hidden="true" style="font-size:22px;"></i>
+			</a>
 		</div>
+
+		<div class="languages">
+			<a data-toggle="modal" data-target="#languages" title="{!! trans('front/header.change_language') !!}"><i class="fa fa-globe" aria-hidden="true" style="font-size:22px;"></i></a>
+		</div>
+
 
 
 

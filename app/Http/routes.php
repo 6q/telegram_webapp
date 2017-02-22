@@ -405,7 +405,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 				{
 					$msg .= $bcv1->title.chr(10);
 				}
-			}
+			} else $msg .= "\xE2\x9D\x8C".chr(10);
 			//file_put_contents(public_path().'/result_command.txt',json_encode($msg));
 		}
 		else if(!empty($bot_commands_title) && in_array($messageText,$bot_commands_title)){
@@ -1073,28 +1073,57 @@ Route::post('/{bottoken}/webhook', function ($token) {
         
         $cfile = new CURLFile($img_url, 'image/jpg');
 
-        if(!empty($msg)){
-            $data = [
-                'chat_id' => $chat_id ,
-                'photo' => $cfile,
-                'caption' => $msg,
-            ];
+        if(!empty($msg)) {
+            if (strlen($msg)<200) {
+                $data = [
+                    'chat_id' => $chat_id,
+                    'photo' => $cfile,
+                    'caption' => $msg,
+                ];
+                $ch = curl_init($BOTAPI.'sendPhoto');
+                curl_setopt($ch, CURLOPT_HEADER, false);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                $result = curl_exec($ch);
+                curl_close($ch);
+            } else {
+                $data = [
+                    'chat_id' => $chat_id,
+                    'photo' => $cfile
+                ];
+                $ch = curl_init($BOTAPI.'sendPhoto');
+                curl_setopt($ch, CURLOPT_HEADER, false);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $response = $telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $msg,
+                    'reply_markup' => $reply_markup
+                ]);
+            }
         }
         else{
             $data = [
                 'chat_id' => $chat_id,
                 'photo' => $cfile
             ];
+            $ch = curl_init($BOTAPI.'sendPhoto');
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $result = curl_exec($ch);
+            curl_close($ch);
         }
 
-        $ch = curl_init($BOTAPI.'sendPhoto');
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $result = curl_exec($ch);
-        curl_close($ch);
+
     } else if (!empty($msg)){
         if(!empty($bot_messages_id)){
             DB::table('bot_messages')->where('id', $bot_messages_id)->update(array('reply_message' => $msg));

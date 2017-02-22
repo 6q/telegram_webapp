@@ -1877,10 +1877,14 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
 .send-edit {
     display:inline-block;float:left;
 }
+.nav-tabs > li > a {
+    text-align:center;
+}
 @media (max-width:767px){
     .send-edit {
         display:block;
         width:100%;
+        margin-top:10px;
     }
     .buy_now > a {
         float:left;
@@ -1938,7 +1942,7 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     }
     ul.pills_bot {
         width:100%;
-        margin:0;
+        margin:0 0 20px;
         padding:0;
     }
     section.col_top {

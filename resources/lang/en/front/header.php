@@ -4,6 +4,8 @@ return [
 	'logs' => 'Recent activity',
 	'my_account' => 'My account',
 	'messages' => 'Messages',
+	'help' => 'Help',
+	'dashboard' => 'Dashboard',
 	'logout' => 'Logout',
 	'english' => 'English',
 	'french' => 'French',

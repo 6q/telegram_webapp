@@ -77,7 +77,7 @@
             }
             jQuery(document).ready(function(){
                 if(isTouchDevice()===false) {
-                    jQuery('[data-toggle="tooltip"]').tooltip({placement: "bottomreat el"});
+                    jQuery('[data-toggle="tooltip"]').tooltip({placement: "right"});
                 }
             });
 
