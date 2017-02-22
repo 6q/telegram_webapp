@@ -107,20 +107,27 @@
 
 
                         ?>
-
-						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                        <? if ($pv1->name == "AMTU") { ?>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<? } else { ?>
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<? } ?>
 							<!-- PRICE ITEM -->
 							<div class="panel price panel-<?=$color?>"  onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" style="cursor:pointer">
 								<div class="panel-heading  text-center">
-									<h3><?php echo $pv1->name;?></h3>
+									<h3>
+                                    <? if ($pv1->price>0) { ?>
+										<?php echo $pv1->name;?>
+                                    <?} else echo trans('front/bots.free'); ?>
+									</h3>
 								</div>
 								<div class="panel-body text-center">
 									<p class="lead" style="font-size:16px">
 										<strong>
                                             <? if ($pv1->price>0) { ?>
-											<span><?php echo $pv1->price;?>€</span>
+											<span><?php echo $pv1->price;?></span>
 											<small>
-                                                <?php
+												€<?php
                                                 if($pv1->duration == 3){
                                                 echo trans('front/bots.each_quarter');
                                                 }
@@ -152,7 +159,7 @@
 										{{ trans('front/bots.contact_forms') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<b><?php echo $pv1->image_gallery ?></b> {{ trans('front/bots.photo_galleries') }} <i class="icon-ok text-info"></i>
+										<b><?php echo $pv1->image_gallery<999 ?: "&infin;"; ?></b> {{ trans('front/bots.photo_galleries') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
 										<b><?php echo $pv1->gallery_images ?></b> {{ trans('front/bots.images_per_gallery') }} <i class="icon-ok text-info"></i>
@@ -161,26 +168,31 @@
 										<b><?php echo $pv1->bot_commands ?></b> {{ trans('front/bots.bot_commands') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<b><?php echo $pv1->manual_message;?></b>
-                                        <?php
-                                        switch ($manual_message_interval) {
-                                        case "day":
-                                        echo trans('front/bots.per_day');
-                                        break;
-                                        case "month":
-                                        echo trans('front/bots.per_month');
-                                        break;
-                                        case "week":
-                                        echo trans('front/bots.per_week');
-                                        break;
-                                        }
+										<? if ($pv1->manual_message<999) {
+                                        	echo trans('front/bots.no_limit');
+										} else {
+											echo '<b>'.$pv1->manual_message.'</b>';
+
+											switch ($manual_message_interval) {
+												case "day":
+													echo trans('front/bots.per_day');
+													break;
+												case "month":
+													echo trans('front/bots.per_month');
+													break;
+												case "week":
+													echo trans('front/bots.per_week');
+													break;
+											}
+										}
                                         ?>
 										<i class="icon-ok text-info"></i></li>
-									<li class="list-group-item">{{ trans('front/bots.editable_welcome_message') }} <i class="icon-ok text-success"></i></li>
-									<li class="list-group-item">{{ trans('front/bots.editable_error_message') }} <i class="icon-ok text-success"></i></li>
+									<li class="list-group-item">
+										{{ trans('front/bots.editable_options') }} <i class="icon-ok text-success"></i>
+									</li>
 								</ul>
 								<div class="panel-footer">
-									<a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success">{{ trans('front/bots.choose') }}</a>
+									<a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
 								</div>
 							</div>
 							<!-- /PRICE ITEM -->

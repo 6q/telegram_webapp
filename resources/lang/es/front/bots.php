@@ -106,7 +106,7 @@ return [
     /* Our Plans */
     'every' => 'cada',
     'months' => 'meses',
-    'each_quarter' => 'cada trimestre',
+    'each_quarter' => 'trimestre',
     'contact_forms' => 'formularios de contacto',
     'photo_galleries' => 'galerías de fotos',
     'images_per_gallery' => 'imágenes por galería',
@@ -131,9 +131,11 @@ return [
     'default_galleries_description' => 'Seleccione una galería de fotografías',
     'list_all_commands' => 'Listar todas las consultas',
 
-    'per_day' => 'cada día',
-    'per_week' => 'cada semana',
-    'per_month' => 'cada mes',
+    'per_day' => 'msg. instantaneo al día',
+    'per_week' => 'msg. instantaneos a la semana',
+    'per_month' => 'msg. instantaneos al mes',
+    'no_limit' => 'Ilimitados msg. instantaneos',
+    'editable_options' => '100% opciones editables',
     'free' => 'GRATIS',
     'message_limit' => 'Has excedido el máximo de mensajes de tu plan.',
     'message_sent_succesfully' => 'Mensaje enviado correctamente.',

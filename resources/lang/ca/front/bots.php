@@ -106,7 +106,7 @@ return [
     /* Our Plans */
     'every' => 'cada',
     'months' => 'mesos',
-    'each_quarter' => 'cada trimestre',
+    'each_quarter' => 'trimestre',
     'contact_forms' => 'formularis de contacte',
     'photo_galleries' => 'galeries de fotografies',
     'images_per_gallery' => 'imatges per galeria',
@@ -131,9 +131,11 @@ return [
     'default_galleries_description' => 'Seleccioni una galeria de fotografies',
     'list_all_commands' => 'Llistar totes les consultes',
 
-    'per_day' => 'cada dia',
-    'per_week' => 'cada setmana',
-    'per_month' => 'cada mes',
+    'per_day' => 'msg. instantani al dia',
+    'per_week' => 'msg. instantanis a la setmana',
+    'per_month' => 'msg. instantanis al mes',
+    'no_limit' => 'Il·limitats msg. instantanis',
+    'editable_options' => '100% opcions editables',
     'free' => 'GRATUÏT',
     'message_limit' => 'Has accedit el màxim de missatges del teu pla.',
     'message_sent_succesfully' => 'Missatge enviat correctament.',

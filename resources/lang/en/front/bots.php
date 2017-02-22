@@ -109,7 +109,7 @@ return [
     /* Our Plans */
     'every' => 'every',
     'months' => 'months',
-    'each_quarter' => 'each quarter',
+    'each_quarter' => 'quarter',
     'contact_forms' => 'contact forms',
     'photo_galleries' => 'photo galleries',
     'images_per_gallery' => 'images per gallery',
@@ -134,9 +134,11 @@ return [
     'default_galleries_description' => 'Select a photo gallery',
     'list_all_commands' => 'List all commands',
 
-    'per_day' => 'each day',
-    'per_week' => 'each week',
-    'per_month' => 'each month',
+    'per_day' => 'instant msg. each day',
+    'per_week' => 'instant msg. each week',
+    'per_month' => 'instant msg. each month',
+    'no_limit' => 'Infinite instant msg.',
+    'editable_options' => '100% editable options',
     'free' => 'FREE',
     'message_limit' => 'Your message send limit is over.',
     'message_sent_succesfully' => 'Message sent succesfully.',
