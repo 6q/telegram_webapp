@@ -192,7 +192,7 @@
 									</li>
 								</ul>
 								<div class="panel-footer">
-									<a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+									<a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-<?=$color;?>"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
 								</div>
 							</div>
 							<!-- /PRICE ITEM -->

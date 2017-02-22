@@ -167,12 +167,12 @@
                                     <?php
                                     if($planPrice > 0){
                                     ?>
-									<a href="javascript:void(0);" onclick="PlanUpgrade('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+									<a href="javascript:void(0);" onclick="PlanUpgrade('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-<?=$color;?>"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                                     <?php
                                     }
                                     else{
                                     ?>
-									<a href="javascript:void(0);" onclick="PlanUpgradeFree('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+									<a href="javascript:void(0);" onclick="PlanUpgradeFree('<?php echo $planId;?>');" class="btn btn-lg btn-block btn-<?=$color;?>"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                                     <?php
                                     }
                                     ?>

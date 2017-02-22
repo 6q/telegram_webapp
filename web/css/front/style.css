@@ -1030,6 +1030,42 @@ p.h2 > img {
     color: #537385;
     font-size: 18px;
 }
+a.btn-red {
+    background:#D04E50;
+    background-border: #FF6062;
+    color:#fff;
+}
+a.btn-red:hover {
+    background:#EF5A5C;
+    color:#fff;
+}
+a.btn-grey {
+    background:#6D6D6D;
+    background-border: #B7B7B7;
+    color:#fff;
+}
+a.btn-grey:hover {
+    background:#808080;
+    color:#fff;
+}
+a.btn-blue {
+    background:#608BB4;
+    background-border: #73A3D4;
+    color:#fff;
+}
+a.btn-blue:hover {
+    background:#73A3D4;
+    color:#fff;
+}
+a.btn-green {
+    background:#57AC57;
+    background-border: #65C965;
+    color:#fff;
+}
+a.btn-green:hover {
+    background:#65C965;
+    color:#fff;
+}
 .click_button a {
     background: rgba(0, 0, 0, 0) linear-gradient(0deg, #3daade, #48cdcf) repeat scroll 0 0;
     border-radius: 5px;
