@@ -2005,6 +2005,9 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     #menu > div {
         display: inline-block;
     }
+    .container_1 .col-sm-3 #menu div a {
+        padding: 20px 18px;
+    }
     #menu > a:hover {
         background:#1991C4;
     }
