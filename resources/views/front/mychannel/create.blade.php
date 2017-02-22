@@ -73,7 +73,7 @@
                             $image_gallery = $pv1->image_gallery;
                             ?>
 
-                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <!-- PRICE ITEM -->
                             <div class="panel price panel-blue">
                                 <div class="panel-heading  text-center">
@@ -102,7 +102,7 @@
                                     </li>
                                 </ul>
                                 <div class="panel-footer">
-                                    <a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success">{{ trans('front/bots.choose')  }}</a>
+                                    <a href="javascript:void(0);" onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" class="btn btn-lg btn-block btn-success"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                             <!-- /PRICE ITEM -->

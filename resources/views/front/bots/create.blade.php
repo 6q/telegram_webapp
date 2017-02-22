@@ -116,7 +116,7 @@
 							<div class="panel price panel-<?=$color?>"  onclick="muFunctionPlan('<?php echo $planId;?>','<?php echo $planName;?>','<?php echo $planPrice;?>','<?php echo $planTimePeriod;?>','2');" style="cursor:pointer">
 								<div class="panel-heading  text-center">
 									<h3>
-                                    <? if ($pv1->price>0) { ?>
+                                    <? if ($pv1->name != "FREE") { ?>
 										<?php echo $pv1->name;?>
                                     <?} else echo trans('front/bots.free'); ?>
 									</h3>
@@ -142,7 +142,7 @@
 								</div>
 								<ul class="list-group list-group-flush text-center">
 									<li class="list-group-item">
-										<b><?php echo $pv1->autoresponses<999 ?: "&infin;"; ?></b> {{ trans('front/bots.autoresponses') }}
+										<b><?php echo $pv1->autoresponses<999 ? $pv1->autoresponses : "&infin;"; ?></b> {{ trans('front/bots.autoresponses') }}
 										<i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
@@ -152,20 +152,20 @@
                                             echo 'NO';
                                             }
                                             else{
-                                             echo $pv1->contact_forms<999 ?: "&infin;";
+                                             echo $pv1->contact_forms<999 ? $pv1->contact_forms : "&infin;";
                                             }
                                             ?>
 										</b>
 										{{ trans('front/bots.contact_forms') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<b><?php echo $pv1->image_gallery<999 ?: "&infin;"; ?></b> {{ trans('front/bots.photo_galleries') }} <i class="icon-ok text-info"></i>
+										<b><?php echo $pv1->image_gallery<999 ? $pv1->image_gallery : "&infin;"; ?></b> {{ trans('front/bots.photo_galleries') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<b><?php echo $pv1->gallery_images<999 ?: "&infin;"; ?></b> {{ trans('front/bots.images_per_gallery') }} <i class="icon-ok text-info"></i>
+										<b><?php echo $pv1->gallery_images<999 ? $pv1->gallery_images : "&infin;"; ?></b> {{ trans('front/bots.images_per_gallery') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
-										<b><?php echo $pv1->bot_commands<999 ?: "&infin;"; ?></b> {{ trans('front/bots.bot_commands') }} <i class="icon-ok text-info"></i>
+										<b><?php echo $pv1->bot_commands<999 ? $pv1->bot_commands : "&infin;"; ?></b> {{ trans('front/bots.bot_commands') }} <i class="icon-ok text-info"></i>
 									</li>
 									<li class="list-group-item">
 										<? if ($pv1->manual_message>999) {
