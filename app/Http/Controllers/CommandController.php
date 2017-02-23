@@ -484,7 +484,7 @@ class CommandController extends Controller
                $img_path = $_FILES["myfile"]["tmp_name"];
               // $img_name_s = time()."-".$img_name;
 			   $ext = pathinfo($img_name);
-			   $img_name_s = time().'.'.$ext['extension'];
+			   $img_name_s = time().rand().'.'.$ext['extension'];
                $upload_img = public_path().'/uploads/'.$img_name_s;
 
                if(move_uploaded_file($img_path,$upload_img)){
@@ -999,6 +999,42 @@ class CommandController extends Controller
 				$error = 'true';
 			}
 			
+			$msg = '';
+			if(!empty($request->get('title'))){
+				foreach($request->get('title') as $k1 => $v1){
+					$data = explode('_',$k1);
+	
+					$chkAutoresponse = DB::table('autoresponses')
+									->where('type_id','=',$bot_id)
+									->where('submenu_heading_text','LIKE','%'.$v1.'%')
+									->get();
+					if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
+						$error = 'true';
+						break;
+					}
+					
+					$chkChanels = DB::table('chanels')
+										->where('type_id','=',$bot_id)
+										->where('chanel_submenu_heading_text','LIKE','%'.$v1.'%')
+										->get();
+					if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
+						$error = 'true';
+						break;
+					}
+					
+					$chkContactForms = DB::table('contact_forms')
+											->where('type_id','=',$bot_id)
+											->where('submenu_heading_text','LIKE','%'.$v1.'%')
+											->get();
+					if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
+						$error = 'true';
+						break;
+					}
+				}
+				
+				$msg = 'Image Title is already uesd. Please use different title name';
+			}
+			
 			
 			/*$rules = array(
 				'gallery_submenu_heading_text' => 'required|unique:galleries,gallery_submenu_heading_text,'.$id
@@ -1039,9 +1075,12 @@ class CommandController extends Controller
 					return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 				}
 				else{
-					if($error == 'true'){
+					if($error == 'true' && $msg == ''){
 						$messages = 'The gallery submenu heading text has already been taken.';
 						return redirect('command/gallery_edit/'.$id)->withErrors($messages);
+					}
+					else if($error == 'true' && $msg != ''){
+						return redirect('command/gallery_edit/'.$id)->withErrors($msg);
 					}
 					else{
 						$messages = $v->messages();

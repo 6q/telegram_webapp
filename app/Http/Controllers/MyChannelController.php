@@ -107,7 +107,7 @@ class MyChannelController extends Controller {
      *
      * @return Response
      */
-    public function store(MyChannelCreateRequest $request) 
+    public function store(Request $request) 
 	{
         $firstName = Auth::user()->first_name;
         $lastName = Auth::user()->last_name;
@@ -129,7 +129,8 @@ class MyChannelController extends Controller {
 
 
 
-        if ($chanel->save()) {
+        if ($chanel->save()) 
+		{
             $lastInsertId = $chanel->id;
 
             /* User billing */
@@ -161,69 +162,176 @@ class MyChannelController extends Controller {
             $plans = DB::table('plans')->where('id', '=', $request->get('plan_id'))->get();
             $stripe_plan_id = $plans[0]->id;
 
-
-            $customer = $stripe->customers()->create([
-                'source' => $stripeToken,
-                'email' => $email,
-                //'plan' => $stripe_plan_id
-            ]);
-
-
-            if (!empty($customer)) {
-                $customerID = $customer['id'];
+			if($plans[0]->price > 0)
+			{
+				$customer = $stripe->customers()->create([
+					'source' => $stripeToken,
+					'email' => $email,
+					//'plan' => $stripe_plan_id
+				]);
 				
-				$chanel_subscription = $stripe->subscriptions()->create($customerID, ['plan' => $stripe_plan_id]);
-
-                $chanel = MyChannel::find($lastInsertId);
-                $chanel->stripe_customer_id = $customerID;
-				$chanel->stripe_subscription_id = $chanel_subscription['id'];
-                $chanel->save();
-
-                /* user_subscriptions */
-                $user_subscription = new UserSubscription;
-
-                $user_subscription->user_id = $user_id;
-                $user_subscription->plan_id = $stripe_plan_id;
-                $user_subscription->types = 'Channel';
-                $user_subscription->type_id = $lastInsertId;
-                $user_subscription->price = $request->get('plan_price');
-                $user_subscription->subscription_date = date('Y-m-d', $chanel_subscription['current_period_start']);
-                $user_subscription->expiry_date = date('Y-m-d', $chanel_subscription['current_period_end']);
-                $user_subscription->last_billed = date('Y-m-d');
-                $user_subscription->status = 'Completed';
-                $user_subscription->created_at = date('Y-m-d h:i:s');
-                $user_subscription->updated_at = date('Y-m-d h:i:s');
-
-                $user_subscription->save();
-                /* user_subscriptions */
-
-
-
-
-                /* UserTransaction */
-
-                $user_transaction = new UserTransaction;
-                $user_transaction->user_id = $user_id;
-                $user_transaction->plan_id = $stripe_plan_id;
-                $user_transaction->types = 'Channel';
-                $user_transaction->type_id = $lastInsertId;
-                $user_transaction->amount = $request->get('plan_price');
-                $user_transaction->Description = '';
-                $user_transaction->created_at = date('Y-m-d h:i:s');
-                $user_transaction->updated_at = date('Y-m-d h:i:s');
-
-                $user_transaction->save();
-                /* UserTransaction */
+				if (!empty($customer)) 
+				{
+					$customerID = $customer['id'];
+					
+					$chanel_subscription = $stripe->subscriptions()->create($customerID, ['plan' => $stripe_plan_id]);
+	
+					$chanel = MyChannel::find($lastInsertId);
+					$chanel->stripe_customer_id = $customerID;
+					$chanel->stripe_subscription_id = $chanel_subscription['id'];
+					$chanel->save();
+	
+					/* user_subscriptions */
+					$user_subscription = new UserSubscription;
+	
+					$user_subscription->user_id = $user_id;
+					$user_subscription->plan_id = $stripe_plan_id;
+					$user_subscription->types = 'Channel';
+					$user_subscription->type_id = $lastInsertId;
+					$user_subscription->price = $request->get('plan_price');
+					$user_subscription->subscription_date = date('Y-m-d', $chanel_subscription['current_period_start']);
+					$user_subscription->expiry_date = date('Y-m-d', $chanel_subscription['current_period_end']);
+					$user_subscription->last_billed = date('Y-m-d');
+					$user_subscription->status = 'Completed';
+					$user_subscription->created_at = date('Y-m-d h:i:s');
+					$user_subscription->updated_at = date('Y-m-d h:i:s');
+	
+					$user_subscription->save();
+					/* user_subscriptions */
+	
+	
+	
+	
+					/* UserTransaction */
+	
+					$user_transaction = new UserTransaction;
+					$user_transaction->user_id = $user_id;
+					$user_transaction->plan_id = $stripe_plan_id;
+					$user_transaction->types = 'Channel';
+					$user_transaction->type_id = $lastInsertId;
+					$user_transaction->amount = $request->get('plan_price');
+					$user_transaction->Description = '';
+					$user_transaction->created_at = date('Y-m-d h:i:s');
+					$user_transaction->updated_at = date('Y-m-d h:i:s');
+	
+					$user_transaction->save();
+					/* UserTransaction */
+					
+					
+					
+					$contactFormEmail = DB::table('site_settings')
+									->where('name','=','contact_form_email')
+									->get();
+					$from_email = $contactFormEmail[0]->value;					
+									
+					//$to_email = $contactFormEmail[0]->value;//$request->get('email');
+					$to_email = $request->get('email');	
+					$email_template = DB::table('email_templates')
+													->where('title','LIKE','channel_email')
+													->get();
+					$email_subject = $email_template[0]->subject;									
+					$template = $email_template[0]->description;	
+					
+					$planDetail = DB::table('plans')
+											->where('id','=',$request->get('plan_id'))
+											->get();
+											
+					$planName = (isset($planDetail[0]->name) && !empty($planDetail[0]->name))?$planDetail[0]->name:'';				
+					$NO_MESSAGE_PER_DAY = (isset($planDetail[0]->manual_message) && !empty($planDetail[0]->manual_message))?$planDetail[0]->manual_message:'';
+					$PRICE = $request->get('plan_price');
+					
+					
+					$country = DB::table('countries')
+									->where('id','=',$request->get('country'))
+									->get();
+					$countryName = (isset($country[0]->name) && !empty($country[0]->name))?$country[0]->name:'';				
+			
+					
+					$state = DB::table('states')
+									->where('id','=',$request->get('state'))
+									->get();
+					$stateName = (isset($state[0]->name) && !empty($state[0]->name))?$state[0]->name:'';
+					
+					$emailFindReplace = array(
+						'##PLAN_USERNAME##' => $planName,
+						'##PRICE##' => $request->get('plan_price'),
+						'##NO_MESSAGE_PER_DAY##' => $NO_MESSAGE_PER_DAY,
+						'##CHANNEL_NAME##' => $request->get('name'),
+						'##DESCRIPTION##' => $request->get('description'),
+						'##CHANNEL_SHARE_LINK##' => $request->get('share_link'),
+						'##STREET##' => $request->get('street'),
+						'##COUNTRY##' => $countryName,
+						'##STATE##' => $stateName,
+						'##CITY##' => $request->get('city'),
+						'##POSTAL_CODE##' => $request->get('zip'),
+						'##EMAIL##' => $request->get('email'),
+						'##CARD_NAME##' => $request->get('cardholdername'),
+						'##NUMBER##' => $request->get('cardnumber'),
+						'##EXP_DATE##' => $request->get('card_exp'),
+						'##CVV##' => $request->get('cvv')
+					);
+					
+					$html = strtr($template, $emailFindReplace);
+					
+					$email_arr = array();
+					$email_arr['to_email'] = $to_email;
+					$email_arr['subject'] = $email_subject;
+					$email_arr['from'] = $from_email;
+							
+					\Mail::send(['html' => 'front.bots.email_bot_template'],
+						array(
+							'text' => $html
+						), function($message) use ($email_arr)
+					{
+						$message->from($email_arr['from']);
+						$message->to($email_arr['to_email'])->subject($email_arr['subject']);
+					});
+			
+				}
+			}
+			else{
+				$duration = $plans[0]->duration;
+				$expiry_date = date('Y-m-d',strtotime('+'.$duration.' month'));
 				
+				/* user_subscriptions */
+				$user_subscription = new UserSubscription;
+
+				$user_subscription->user_id = $user_id;
+				$user_subscription->plan_id = $stripe_plan_id;
+				$user_subscription->types = 'Channel';
+				$user_subscription->type_id = $lastInsertId;
+				$user_subscription->price = $request->get('plan_price');
+				$user_subscription->subscription_date = date('Y-m-d');
+				$user_subscription->expiry_date = $expiry_date;
+				$user_subscription->last_billed = date('Y-m-d');
+				$user_subscription->status = 'Completed';
+				$user_subscription->created_at = date('Y-m-d h:i:s');
+				$user_subscription->updated_at = date('Y-m-d h:i:s');
+
+				$user_subscription->save();
+				/* user_subscriptions */
 				
+				/* UserTransaction */
+				$user_transaction = new UserTransaction;
+				$user_transaction->user_id = $user_id;
+				$user_transaction->plan_id = $stripe_plan_id;
+				$user_transaction->types = 'Channel';
+				$user_transaction->type_id = $lastInsertId;
+				$user_transaction->amount = $request->get('plan_price');
+				$user_transaction->Description = '';
+				$user_transaction->created_at = date('Y-m-d h:i:s');
+				$user_transaction->updated_at = date('Y-m-d h:i:s');
+
+				$user_transaction->save();
+				/* UserTransaction */
 				
 				$contactFormEmail = DB::table('site_settings')
-								->where('name','=','contact_form_email')
-								->get();
+									->where('name','=','contact_form_email')
+									->get();
 				$from_email = $contactFormEmail[0]->value;					
 								
 				//$to_email = $contactFormEmail[0]->value;//$request->get('email');
-				$to_email = $request->get('email');	
+				$to_email = $email;	
 				$email_template = DB::table('email_templates')
 												->where('title','LIKE','channel_email')
 												->get();
@@ -257,16 +365,16 @@ class MyChannelController extends Controller {
 					'##CHANNEL_NAME##' => $request->get('name'),
 					'##DESCRIPTION##' => $request->get('description'),
 					'##CHANNEL_SHARE_LINK##' => $request->get('share_link'),
-					'##STREET##' => $request->get('street'),
+					'##STREET##' => '',
 					'##COUNTRY##' => $countryName,
 					'##STATE##' => $stateName,
-					'##CITY##' => $request->get('city'),
-					'##POSTAL_CODE##' => $request->get('zip'),
-					'##EMAIL##' => $request->get('email'),
-					'##CARD_NAME##' => $request->get('cardholdername'),
-					'##NUMBER##' => $request->get('cardnumber'),
-					'##EXP_DATE##' => $request->get('card_exp'),
-					'##CVV##' => $request->get('cvv')
+					'##CITY##' => '',
+					'##POSTAL_CODE##' => '',
+					'##EMAIL##' => $email,
+					'##CARD_NAME##' => '',
+					'##NUMBER##' => '',
+					'##EXP_DATE##' => '',
+					'##CVV##' => ''
 				);
 				
 				$html = strtr($template, $emailFindReplace);
@@ -284,8 +392,8 @@ class MyChannelController extends Controller {
 					$message->from($email_arr['from']);
 					$message->to($email_arr['to_email'])->subject($email_arr['subject']);
 				});
-		
-            }
+					
+			}
             return redirect('dashboard')->with('ok', trans('front/MyChannel.created'));
         } else {
             return redirect('dashboard')->with('ok', trans('front/MyChannel.error'));
