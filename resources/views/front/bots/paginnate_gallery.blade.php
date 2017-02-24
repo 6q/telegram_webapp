@@ -14,7 +14,7 @@
         <td><?php echo $v4->gallery_submenu_heading_text;?></td>
         <td>
             <a class="btn btn-warning" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            <a class="btn btn-danger" href="{!! URL::to('/command/gallery_delete/'.$v4->type_id.'/'.$v4->id) !!}" onclick="return confirm('Are you sure want to delete this gallery?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/gallery_delete/'.$v4->type_id.'/'.$v4->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>
         </td>
     </tr>
     <?php

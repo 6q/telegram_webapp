@@ -146,6 +146,8 @@ return [
     'users' => 'Usuarios',
     'log' => 'Log',
 
-    'button_already_been_taken' => 'Lo sentimos, pero no puede utilizar el mismo nombre dos veces en un botón de Telegram'
+    'button_already_been_taken' => 'Lo sentimos, pero no puede utilizar el mismo nombre dos veces en un botón de Telegram',
+    'are_you_sure' => '¿Estás seguro?',
+    'you_are_going_to_delete' => 'No vas a poder volver atrás',
 
 ];

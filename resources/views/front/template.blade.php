@@ -12,12 +12,14 @@
 		{!! HTML::style('css/front/bootstrap.css') !!}
 		{!! HTML::style('css/front/datepicker.css') !!}
 		{!! HTML::style('lib/css/nanoscroller.css') !!}
+		{!! HTML::style('lib/css/sweetalert.css') !!}
 		{!! HTML::style('lib/css/emoji.css') !!}
 
 		{!! HTML::script('js/front/jquery1.12.4.js') !!}
 		{!! HTML::script('js/front/bootstrap-datepicker.js') !!}
 		{!! HTML::script('js/front/bootstrap-datepicker.es.js') !!}
 		{!! HTML::script('js/front/bootstrap.js') !!}
+		{!! HTML::script('lib/js/sweetalert.min.js') !!}
 
 
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

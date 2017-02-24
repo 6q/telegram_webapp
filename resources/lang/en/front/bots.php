@@ -147,5 +147,7 @@ return [
     'buttons' => 'Buttons',
     'users' => 'Users',
 
-    'button_already_been_taken' => 'We are sorry, but you can\'t use the same name two times on a button on Telegram'
+    'button_already_been_taken' => 'We are sorry, but you can\'t use the same name two times on a button on Telegram',
+    'are_you_sure' => 'Are you sure?',
+    'you_are_going_to_delete' => 'You can\'t go back',
 ];

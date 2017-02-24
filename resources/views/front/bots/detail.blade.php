@@ -4,7 +4,26 @@
 	{!! HTML::style('css/front/simplePagination.css') !!}
 	{!! HTML::script('js/front/jquery.simplePagination.js') !!}
 
+<script>
+    $(document).ready(function () {
 
+    });
+
+        function warnBeforeRedirect(linkURL) {
+            swal({
+                html:true,
+                title: "{{ trans('front/bots.are_you_sure') }}",
+                text: "{{ trans('front/bots.you_are_going_to_delete') }}",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "{{ trans('front/bots.cancel') }}",
+            }, function () {
+                // Redirect the user
+                window.location.href = linkURL;
+            });
+        }
+
+</script>
 	<div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
 
 		@include('front.top')
@@ -144,7 +163,7 @@
                                 <td><?php echo $v2->submenu_heading_text;?></td>
                                 <td>
                                     <a class="btn btn-warning" href="{!! URL::to('/command/autoresponse_edit/'.$v2->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger" href="{!! URL::to('/command/autoresponse_delete/'.$v2->type_id.'/'.$v2->id) !!}" onclick="return confirm('Are you sure want to delete this command?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/autoresponse_delete/'.$v2->type_id.'/'.$v2->id) !!}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             <?php
@@ -308,7 +327,7 @@
                             <tr>
                                 <td><?php echo $v3->submenu_heading_text;?></td>
                                 <td><a class="btn btn-warning" href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger" href="{!! URL::to('/command/contactform_delete/'.$v3->type_id.'/'.$v3->id) !!}" onclick="return confirm('Are you sure want to delete this contact form?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/contactform_delete/'.$v3->type_id.'/'.$v3->id) !!}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             <?php
@@ -471,7 +490,7 @@
 							<td><?php echo $v4->gallery_submenu_heading_text;?></td>
 							<td>
 								<a class="btn btn-warning" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-								<a class="btn btn-danger" href="{!! URL::to('/command/gallery_delete/'.$v4->type_id.'/'.$v4->id) !!}" onclick="return confirm('Are you sure want to delete this gallery?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+								<a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/gallery_delete/'.$v4->type_id.'/'.$v4->id) !!}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
 							</td>
 						</tr>
 						<?php
@@ -628,7 +647,7 @@
                                     <td><?php echo $v5->chanel_submenu_heading_text;?></td>
                                     <td>
                                         <a class="btn btn-warning" href="{!! URL::to('/command/chanel_edit/'.$v5->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                        <a class="btn btn-danger" href="{!! URL::to('/command/chanel_delete/'.$v5->type_id.'/'.$v5->id) !!}" onclick="return confirm('Are you sure want to delete this channel?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/chanel_delete/'.$v5->type_id.'/'.$v5->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -770,7 +789,7 @@
                                     <td><?php echo $v6->title;?></td>
                                     <td>
                                         <a class="btn btn-warning" href="{!! URL::to('/bot/bot_command_edit/'.$v6->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                        <a class="btn btn-danger" href="{!! URL::to('/bot/bot_command_delete/'.$v6->bot_id.'/'.$v6->id) !!}" onclick="return confirm('Are you sure want to delete this command?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/bot/bot_command_delete/'.$v6->bot_id.'/'.$v6->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -1576,10 +1595,11 @@
 			$('#chnl_btn').html("<?php echo $bots[0]->channels; ?>");
 
 
+
 		});
 
-	</script>
 
+	</script>
 	<style>
 		.thumb {
 			width: 20%;

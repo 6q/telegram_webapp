@@ -29,7 +29,7 @@
                         </td>
                         <td>
                             <a class="btn btn-warning" href="{!! URL::to('/bot/bot_command_edit/'.$v6->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a class="btn btn-danger" href="{!! URL::to('/bot/bot_command_delete/'.$v6->bot_id.'/'.$v6->id) !!}" onclick="return confirm('Are you sure want to delete this command?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/bot/bot_command_delete/'.$v6->bot_id.'/'.$v6->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
 					</tr>
 				<?php

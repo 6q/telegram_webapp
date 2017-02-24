@@ -13,7 +13,7 @@
     <tr>
         <td><?php echo $v3->submenu_heading_text;?></td>
         <td><a class="btn btn-warning" href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            <a class="btn btn-danger" href="{!! URL::to('/command/contactform_delete/'.$v3->type_id.'/'.$v3->id) !!}" onclick="return confirm('Are you sure want to delete this contact form?');"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/contactform_delete/'.$v3->type_id.'/'.$v3->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>
         </td>
     </tr>
     <?php
