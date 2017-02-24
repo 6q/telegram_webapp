@@ -630,22 +630,38 @@ class DashboardController extends Controller {
 		$plan = DB::table('plans')
 					->where('id','=',$planId)
 					->get();
-		
-		$perDaySendMesgLimit = $plan[0]->manual_message;
 
-		$chkData = DB::table('bot_send_message')
-			->where('bot_id','=',$botId)
-			->where('send_date','=',date('Y-m-d'))
-			->get();
+        $perDaySendMesgLimit = $plan[0]->manual_message;
 
-		
-		$totalCount = count($chkData);
-		if($totalCount >= $perDaySendMesgLimit){
-			echo trans('front/bots/message_limit');
-			exit();
-		}
-			
-		
+        $manual_message_interval = $plan[0]->manual_message_interval;
+
+        if ($manual_message_interval) {
+
+            if ($manual_message_interval == "day") {
+                $chkData = DB::table('bot_send_message')
+                    ->where('bot_id','=',$botId)
+                    ->where('send_date','=',date('Y-m-d'))
+                    ->get();
+            } else if ($manual_message_interval == "week") {
+                $chkData = DB::table('bot_send_message')
+                    ->where('bot_id','=',$botId)
+                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 week")),date('Y-m-d')))
+                    ->get();
+            } else if ($manual_message_interval == "month") {
+                $chkData = DB::table('bot_send_message')
+                    ->where('bot_id','=',$botId)
+                    ->whereBetween('send_date',array(date('Y-m-d', strtotime("-1 month")),date('Y-m-d')))
+                    ->get();
+            }
+
+
+            $totalCount = count($chkData);
+            if($totalCount >= $perDaySendMesgLimit){
+                echo trans('front/bots.message_limit');
+                exit();
+            }
+        }
+
         $chk_img = false;
         if(!empty($chatIdArr) && !empty($bot_token)){
             foreach($chatIdArr as $ck2 => $cv2){
