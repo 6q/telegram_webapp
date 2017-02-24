@@ -2160,6 +2160,20 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     }
 }
 @media (max-width:420px){
+    .buy_now > input {
+        margin-bottom:20px;
+    }
+    .col-my-content > h3 {
+        text-align:center;
+    }
+    .my_account.telegram h4 {
+        width:100%;
+        text-align:center;
+    }
+    .my_account.telegram h5 {
+        width:100%;
+        text-align:center;
+    }
     .logo img {
         max-width: none;
     }

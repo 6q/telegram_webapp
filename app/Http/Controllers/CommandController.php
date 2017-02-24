@@ -155,7 +155,7 @@ class CommandController extends Controller
 			} 
 			else{
 				if($error == 'true'){
-					$messages = 'The autoresponse submenu heading text has already been taken.';
+					$messages = trans('front/bot.button_already_been_taken');
 					return redirect('bot/detail/'.$botId)->withErrors($messages);
 				}
 				else{
@@ -260,7 +260,7 @@ class CommandController extends Controller
 			*/
 			else{
 				if($error == 'true'){
-					$messages = 'The Contactform submenu heading text has already been taken.';
+					$messages = trans('front/bot.button_already_been_taken');
 					return redirect('command/create/'.$botId)->withErrors($messages);
 				}
 				else{
@@ -352,7 +352,7 @@ class CommandController extends Controller
 			}
 			else{
 				if($error == 'true'){
-					$messages = 'The gallery submenu heading text has already been taken.';
+					$messages = trans('front/bot.button_already_been_taken');
 					return redirect('bot/detail/'.$botId)->withErrors($messages);
 				}
 				else{
@@ -456,7 +456,7 @@ class CommandController extends Controller
 			}
 			else{
 				if($error == 'true'){
-					$messages = 'The Channel submenu heading text has already been taken.';
+					$messages = trans('front/bot.button_already_been_taken');
 					return redirect('command/create/'.$botId)->withErrors($messages);
 				}
 				else{
@@ -613,7 +613,7 @@ class CommandController extends Controller
 			*/
 			else{
 				if($error == 'true'){
-					$messages = 'The autoresponse submenu heading text has already been taken.';
+					$messages = trans('front/bot.button_already_been_taken');
 					return redirect('command/autoresponse_edit/'.$id)->withErrors($messages);
 				}
 				else{
@@ -744,7 +744,7 @@ class CommandController extends Controller
 			}
 			else{
 				if($error == 'true'){
-					$messages = 'The autoresponse submenu heading text has already been taken.';
+					$messages = trans('front/bot.button_already_been_taken');
 					return redirect('command/chanel_edit/'.$id)->withErrors($messages);
 				}
 				else{
@@ -887,7 +887,7 @@ class CommandController extends Controller
 				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 			}
 			if($error == 'true'){
-				$messages = 'The contactform submenu heading text has already been taken.';
+				$messages = trans('front/bot.button_already_been_taken');
 				return redirect('command/contactform_edit/'.$id)->withErrors($messages);
 			}
 			else{
@@ -1032,7 +1032,7 @@ class CommandController extends Controller
 					}
 				}
 				
-				$msg = 'Image Title is already uesd. Please use different title name';
+				$msg = trans('front/bots.button_already_been_taken');
 			}
 			
 			
@@ -1076,7 +1076,7 @@ class CommandController extends Controller
 				}
 				else{
 					if($error == 'true' && $msg == ''){
-						$messages = 'The gallery submenu heading text has already been taken.';
+						$messages = trans('front/bot.button_already_been_taken');
 						return redirect('command/gallery_edit/'.$id)->withErrors($messages);
 					}
 					else if($error == 'true' && $msg != ''){

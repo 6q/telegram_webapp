@@ -37,7 +37,7 @@ class BotController extends Controller
 		parent::login_check();
         parent::getTotalbot_chanel();
 		
-		define('PAGE_DATA_LIMIT','4');
+		define('PAGE_DATA_LIMIT','5');
 		define('PAGE_DATA_LIMIT_MESSAGE','10');
 		define('PAGE_DATA_LIMIT_USER','10');
 		define('PAGE_ADJACENTS','3');

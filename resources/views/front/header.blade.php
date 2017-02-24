@@ -87,12 +87,24 @@
 			<img src="{{URL::asset('img/front/telegram-preview.png')}}" >
 		</div>
 		<div class="chat_tab">
-			<ul>
-				<li><a id="auto_resp">1</a></li>
-				<li><a id="conntact_fbutton">2</a></li>
-				<li><a id="gallery_imgs">3</a></li>
-				<li><a id="chnl_btn">4</a></li>
-			</ul>
+
+			<? if (!empty($bots)) { ?>
+				<ul>
+					<li><a id="auto_resp" href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar">1</a></li>
+					<li><a id="conntact_fbutton" href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar">2</a></li>
+					<li><a id="gallery_imgs" href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar">3</a></li>
+					<li><a id="chnl_btn" href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar">4</a></li>
+				</ul>
+			<? } else { ?>
+
+				<ul>
+					<li><a id="auto_resp">1</a></li>
+					<li><a id="conntact_fbutton">2</a></li>
+					<li><a id="gallery_imgs">3</a></li>
+					<li><a id="chnl_btn">4</a></li>
+				</ul>
+
+			<? } ?>
 		</div>
 	</div>
 </div>

@@ -146,4 +146,5 @@ return [
     'users' => 'Usuaris',
     'log' => 'Log',
 
+    'button_already_been_taken' => 'Ho sentim, però no es pot utilitzar el mateix nom dues vegades en un botó de Telegram'
 ];

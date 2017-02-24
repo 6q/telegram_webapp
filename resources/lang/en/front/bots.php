@@ -146,4 +146,6 @@ return [
     'message_not_sent' => 'Message not sent.',
     'buttons' => 'Buttons',
     'users' => 'Users',
+
+    'button_already_been_taken' => 'We are sorry, but you can\'t use the same name two times on a button on Telegram'
 ];
