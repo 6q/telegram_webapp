@@ -133,7 +133,7 @@ return [
 
     'per_day' => 'msg. instantani al dia',
     'per_week' => 'msg. instantanis a la setmana',
-    'per_month' => 'msg. instantanis al mes',
+    'per_month' => 'msg. instantani al mes',
     'no_limit' => 'Il·limitats msg. instantanis',
     'editable_options' => '100% opcions editables',
     'free' => 'GRATUÏT',

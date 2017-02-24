@@ -327,10 +327,30 @@
 				{!! Form::close() !!}
 
 
-				<div id="alert_1" class="showMsg alert_show"><h2>{!! trans('front/command.up_grade') !!}</h2></div>
-				<div id="alert_2" class="showMsg alert_show"><h2>{!! trans('front/command.up_grade') !!}</h2></div>
-				<div id="alert_3" class="showMsg alert_show"><h2>{!! trans('front/command.up_grade') !!}</h2></div>
-				<div id="alert_4" class="showMsg alert_show"><h2>{!! trans('front/command.up_grade') !!}</h2></div>
+				<div id="alert_1" class="showMsg alert_show">
+                    <h2 style="text-align:center;font-size:16px;margin:40px;">{!! trans('front/command.up_grade') !!}</h2>
+                    <div class="input_submit buy_now" style="text-align:center">
+                        <a href="{!! URL::to('/bot/create') !!}">{{ trans('front/bots.contact_plans') }}</a>
+                    </div>
+                </div>
+				<div id="alert_2" class="showMsg alert_show">
+                    <h2 style="text-align:center;font-size:16px;margin:40px;">{!! trans('front/command.up_grade') !!}</h2>
+                    <div class="input_submit buy_now" style="text-align:center">
+                        <a href="{!! URL::to('/bot/create') !!}">{{ trans('front/bots.contact_plans') }}</a>
+                    </div>
+                </div>
+				<div id="alert_3" class="showMsg alert_show">
+                    <h2 style="text-align:center;font-size:16px;margin:40px;">{!! trans('front/command.up_grade') !!}</h2>
+                    <div class="input_submit buy_now" style="text-align:center">
+                        <a href="{!! URL::to('/bot/create') !!}">{{ trans('front/bots.contact_plans') }}</a>
+                    </div>
+                </div>
+				<div id="alert_4" class="showMsg alert_show">
+                    <h2 style="text-align:center;font-size:16px;margin:40px">{!! trans('front/command.up_grade') !!}</h2>
+                    <div class="input_submit buy_now" style="text-align:center">
+                        <a href="{!! URL::to('/bot/create') !!}">{{ trans('front/bots.contact_plans') }}</a>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>

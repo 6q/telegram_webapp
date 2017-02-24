@@ -64,8 +64,9 @@
 		{!! HTML::script('lib/js/emoji-picker.js') !!}
 		{!! HTML::script('js/jQueryEmoji.js') !!}
 		<script>
-
             jQuery(document).ready(function () {
+                $('.col-sm-8').css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 'slow');
+
                 //alert('hello');
                 jQuery(function () {
                     jQuery(".datepicker").datepicker( {
