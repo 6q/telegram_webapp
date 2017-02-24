@@ -41,11 +41,12 @@
 
     @include('front.top')  
 
-    {!! Form::open(['url' => 'my_channel', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'payment-form']) !!}
+    {!! Form::open(['url' => 'my_channel', 'method' => 'post','enctype'=>"multipart/form-data", 'class' => 'form-horizontal panel','id' =>'payment-form-chanel']) !!}
 
     {!! Form::hidden('plan_id', 'plan_id', array('id' => 'plan_idd')) !!}
     {!! Form::hidden('plan_price', 'plan_price', array('id' => 'plan_pricee')) !!}
     {!! Form::hidden('stripeToken', 'stripeToken', array('id' => 'stripeToken')) !!}
+    {!! Form::hidden('botID',$bots[0]->id,array('id' => 'botID')) !!}
 
     <div id="row1">
         <div class="my_account telegram">
@@ -140,7 +141,7 @@
 
                 <div class="crete_bot_form">
                     <ul>
-                    	{!! Form::control('hidden',0,'botID',$errors,'',$bots[0]->id) !!}
+                    	
                     	<!--<li>
                         	<label id="bName">
                             <div class="form-group">
@@ -569,9 +570,14 @@
         $('#channel_description').html(channel_description);
         $('#channel_share_link').html(share_link);
 
-
-
-        muFunction(id);
+		var check_price = $('#plan_pricee').val();
+		
+		if(check_price > 0){
+			muFunction(id);
+		}
+		else{
+			$('#payment-form-chanel').submit();
+		}
     }
 
 
