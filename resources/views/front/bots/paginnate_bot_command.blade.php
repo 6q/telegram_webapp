@@ -2,8 +2,6 @@
 	<thead>
 		<tr>
     		<th>{!! trans('front/bots.bot_command') !!}</th>
-    		<th>{!! trans('front/bots.command_description') !!}</th>
-            <th>{!! trans('front/bots.image') !!}</th>
             <th>{{ trans('front/bots.action') }}</th>
 		</tr>
 	</thead>
@@ -17,16 +15,6 @@
 		?>
 					<tr>
     					<td><?php echo $v6->title;?></td>
-    					<td><?php echo $v6->command_description;?></td>
-                        <td>
-							<?php
-                                if(isset($v6->image) && !empty($v6->image)){
-                                    ?>
-                                        {!! HTML::image('uploads/'.$v6->image,'',array( 'width' => 70, 'height' => 70 )) !!}
-                                    <?php
-                                }
-                            ?>
-                        </td>
                         <td>
                             <a class="btn btn-warning" href="{!! URL::to('/bot/bot_command_edit/'.$v6->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/bot/bot_command_delete/'.$v6->bot_id.'/'.$v6->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>

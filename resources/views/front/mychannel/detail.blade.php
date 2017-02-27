@@ -103,7 +103,22 @@
                     ?>
                         <tr>
                           <td><?php echo $v2->channel_name;?></td>
-                          <td><?php echo $v2->message;?></td>
+                          <td>
+                              <?php
+								  $imatge = str_replace("/usr/home/app.citymes.com/web/uploads/","",$v2->message);
+                              if(file_exists(public_path().'/uploads/'.$imatge) && !empty($v2->message)){
+                              ?>
+							  <button href="#" id="link<?php echo $v2->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$imatge?>" class="imatge">
+								  <i class="fa fa-camera" aria-hidden="true"></i>
+							  </button>
+
+                              <?php
+                              }
+                              else{
+                                  echo $v2->message;
+                              }
+                              ?>
+						  </td>
                           <td><?php echo $v2->send_date;?></td>
                         </tr>
                     <?php

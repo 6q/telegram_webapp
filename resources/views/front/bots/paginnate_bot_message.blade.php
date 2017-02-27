@@ -19,7 +19,7 @@
             if(file_exists(public_path().'/uploads/'.$bmv1->text) && !empty($bmv1->text)){
             ?>
             <button href="#" id="link<?php echo $bmv1->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$bmv1->text?>" class="imatge">
-                Imatge
+                <i class="fa fa-camera" aria-hidden="true"></i>
             </button>
 
             <?php
@@ -34,7 +34,7 @@
             if(file_exists(public_path().'/uploads/'.$bmv1->reply_message) && !empty($bmv1->reply_message)){
             ?>
             <button href="#" id="link<?php echo $bmv1->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$bmv1->reply_message?>" class="imatge">
-                Imatge
+                <i class="fa fa-camera" aria-hidden="true"></i>
             </button>
             <?php
             }
