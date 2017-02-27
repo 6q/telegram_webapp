@@ -171,7 +171,9 @@
                             <span>{{ trans('front/MyChannel.share_link') }}</span>
                             <label id="uShareLink">{!! Form::control('text', 0, 'share_link', $errors) !!}</label>
                         </li>
-
+                        <li>
+                            {{ trans('front/MyChannel.aviso') }}
+                        </li>
                     </ul>
 
                 </div>

@@ -275,7 +275,7 @@
 					-->
 
 					<p class="lead emoji-picker-container">
-						<textarea id="bot_msg" class="form-control textarea-control" name="channel_msg" cols="20" rows="5" placeholder="{{ trans('front/dashboard.enter_message') }}" data-emojiable="true"></textarea>
+						<textarea id="bot_msg" class="form-control textarea-control" name="channel_msg" cols="20" rows="15" placeholder="{{ trans('front/dashboard.enter_message') }}" data-emojiable="true" maxlength="4000"></textarea>
 					</p>
 
                     <label> {{ trans('front/dashboard.and_or_attach_an_image') }} </label>

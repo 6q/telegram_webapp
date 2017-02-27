@@ -65,5 +65,7 @@ return [
 	'send_message' => 'Send Messages',
 	'send_date' => 'Date',
 	'no_record' => 'No recourd found',
-	'bot_name' => 'Bot name'
+	'bot_name' => 'Bot name',
+    'aviso' => 'No t\'oblidis d\'afegir l\'usuari "CitymesAdminBot" com a administrador del canal!'
+
 ];
