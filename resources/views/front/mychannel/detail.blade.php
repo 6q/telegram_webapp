@@ -111,7 +111,7 @@
 							  <button href="#" id="link<?php echo $v2->id;?>" data-toggle="modal" data-target="#myModalImg" src="/uploads/<?=$imatge?>" class="imatge">
 								  <i class="fa fa-camera" aria-hidden="true"></i>
 							  </button>
-
+								  /uploads/<?=$imatge?>
                               <?php
                               }
                               else{
