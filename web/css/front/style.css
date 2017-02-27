@@ -2188,6 +2188,9 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     }
 
 }
+body .modal-dialog .emoji-wysiwyg-editor.textarea-control {
+    min-height: 15em;
+}
 
 /* COMMON PRICING STYLES */
 .panel.price,
