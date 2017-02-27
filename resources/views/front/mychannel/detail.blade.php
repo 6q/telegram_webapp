@@ -406,7 +406,9 @@
 							$('#imgLoad').css('display','none');
 							$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>Forbidden: Some error occured');
 							$('.alert-new').css('display','block');
-						}
+                            $('#alertMsg').css('display','block');
+
+                        }
 					});
 				}				
 				return false;
