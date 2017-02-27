@@ -108,7 +108,7 @@
 								  $imatge = str_replace("/usr/home/app.citymes.com/web/uploads/","",$v2->message);
                               if(file_exists(public_path().'/uploads/'.$imatge) && !empty($v2->message)){
                               ?>
-							  <button href="#" id="link<?php echo $v2->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$imatge?>" class="imatge">
+							  <button href="#" id="link<?php echo $v2->id;?>" data-toggle="modal" data-target="#myModalImg" src="/uploads/<?=$imatge?>" class="imatge">
 								  <i class="fa fa-camera" aria-hidden="true"></i>
 							  </button>
 
@@ -462,5 +462,37 @@
     .thumb {
         width: 20%;
     }
+</style>
+<div class="modal fade" id="myModalImg" role="dialog">
+	<div class="modal-dialog modal-lg">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body" id="showImg">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">X</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<style type="text/css">
+	.my-img a {
+		display: inline-block;
+		margin: 10px;
+		border: 2px solid #CCC;
+	}
+	.my-img a:hover {
+		border: 2px solid #45AFFF;
+	}
+	.modal-lg {
+		width: 86%;
+	}
+	.modal-body {
+		overflow: auto;
+		max-height: auto;
+	}
 </style>
 @stop
