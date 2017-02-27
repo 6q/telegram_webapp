@@ -1297,9 +1297,8 @@
 					<input type="hidden" name="b_bot_id" id="b_bot_id" />
 					<p class="lead emoji-picker-container">
 						<textarea id="bot_msg" class="form-control textarea-control" name="bot_msg" cols="20" rows="15" placeholder="{{ trans('front/dashboard.enter_message') }}" data-emojiable="true" maxlength="4000"></textarea>
-						<br><i>* Màx. 4000 caràcters</i>
 					</p>
-
+					<br><small>* Màx. 4000 caràcters</small>
 
 					<br>
 
