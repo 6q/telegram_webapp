@@ -51,10 +51,22 @@
 		</section>
 		<footer>
 			@if(Config::get('app.locale')=="en")
+				<script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
+				<script type="text/javascript">
+                    FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Help+and+Support&submitTitle=Send&submitThanks=Thank+you&searchArea=no", "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png", "utf8": "✓", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#456288", "alignment": "3", "offset": "60px", "submitThanks": "Thank you", "formHeight": "500px", "url": "https://gestinet.freshdesk.com"} );
+				</script>
 				Citymes © {{date('Y')}} – All rights reserved   |   <a href="http://www.citymes.com/#contactar" target="_blank">Contact</a> | <a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Legal Advise</a>   |   <a href="http://www.citymes.com/" target="_blank">Citymes.com</a>
 			@elseif(Config::get('app.locale')=="es")
+				<script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
+				<script type="text/javascript">
+                    FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Ayuda+y+Soporte&submitTitle=Enviar&submitThanks=Gracias%2C+te+contactaremos+lo+mas+r%C3%A1pido+posible&searchArea=no", "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png", "utf8": "✓", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#456288", "alignment": "3", "offset": "60px", "submitThanks": "Gracias, te contactaremos lo mas rápido posible", "formHeight": "500px", "url": "https://gestinet.freshdesk.com"} );
+				</script>
 				Citymes © {{date('Y')}} – Todos los derechos reservados   |   <a href="http://www.citymes.com/es/#contactar" target="_blank">Contactar</a> | <a href="http://www.citymes.com/es/aviso-legal/" target="_blank">Aviso Legal</a>   |   <a href="http://www.citymes.com/" target="_blank">Citymes.com</a>
 			@elseif(Config::get('app.locale')=="ca")
+				<script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
+				<script type="text/javascript">
+                    FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Ajuda+i+Suport&submitTitle=Enviar&submitThanks=Gr%C3%A0cies.+Et+contactarem+el+m%C3%A9s+r%C3%A0pid+possible&searchArea=no", "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png", "utf8": "✓", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#456288", "alignment": "3", "offset": "60px", "submitThanks": "Gràcies. Et contactarem el més ràpid possible", "formHeight": "500px", "url": "https://gestinet.freshdesk.com"} );
+				</script>
 				Citymes © {{date('Y')}} – Tots els drets reservats   |   <a href="http://www.citymes.com/#contactar" target="_blank">Contactar</a> | <a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Avís Legal</a>   |   <a href="http://www.citymes.com/" target="_blank">Citymes.com</a>
 			@endif
 		</footer>
