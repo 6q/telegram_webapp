@@ -108,10 +108,9 @@
 								  $imatge = str_replace("/usr/home/app.citymes.com/web/uploads/","",$v2->message);
                               if(file_exists(public_path().'/uploads/'.$imatge) && !empty($v2->message)){
                               ?>
-							  <button href="#" id="link<?php echo $v2->id;?>" data-toggle="modal" data-target="#myModalImg" src="/uploads/<?=$imatge?>" class="imatge">
+							  <button href="#" id="link<?php echo $v2->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$imatge?>" class="imatge">
 								  <i class="fa fa-camera" aria-hidden="true"></i>
 							  </button>
-								  /uploads/<?=$imatge?>
                               <?php
                               }
                               else{
@@ -241,7 +240,7 @@
     </div>
 </div>
 
-<div id="myModal" class="modal fade" role="dialog" style="display:none;">
+<div id="myModalChannel" class="modal fade" role="dialog" style="display:none;">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -349,51 +348,8 @@
 		//$('#botID').val('');
 		$('#channel_msg').val('');
 
-		$('#myModal').modal();
+		$('#myModalChannel').modal();
 	}
-	
-	/*
-	function sendMsg(){
-            var chk = true;
-            var botID = $('#botID').val();
-            var channel_msg = $('#channel_msg').val();
-            var channel_id = $('#chat_id').val();
-
-            if(botID == ''){
-                chk = false;
-                $('#botID').css('border','1px solid #ff0000');
-            }
-            else{
-                $('#botID').css('border','1px solid #ccc');
-            }
-
-            if(channel_msg == ''){
-                chk = false;
-                $('#channel_msg').css('border','1px solid #ff0000');
-            }
-            else{
-                $('#channel_msg').css('border','1px solid #ccc');
-            }
-
-
-            if(chk){
-                var token_new = $('input[name=_token]').val();
-                $.ajax({
-                    url: '<?php // echo URL::to('/dashboard/sendmessage')?>',
-                    headers: {'X-CSRF-TOKEN': token_new},
-                    data: {bot_id: botID, channel_msg:channel_msg,channel_id:channel_id},
-                    type:'POST',
-                    success: function (resp) {
-                        alert(resp);
-                        $('#myModal').modal('hide');
-                    },
-                    error: function (request, status, error) {
-                        alert('Forbidden: bot is not a member of the channel chat');
-                    }
-                });
-            }
-        }
-		*/
 		
 		
 		$(document).ready(function(e) {
@@ -444,7 +400,7 @@
 							$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'+resp);
 							$('.alert-new').css('display','block');
 							$('#alertMsg').css('display','block');
-							$('#myModal').modal('hide');
+							$('#myModalChannel').modal('hide');
 						},
 						error: function (request, status, error) {
 							$('#imgLoad').css('display','none');
@@ -463,7 +419,7 @@
         width: 20%;
     }
 </style>
-<div class="modal fade" id="myModalImg" role="dialog">
+<div class="modal fade" id="myModal" role="dialog">
 	<div class="modal-dialog modal-lg">
 
 		<!-- Modal content-->
