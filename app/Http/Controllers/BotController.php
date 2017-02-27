@@ -98,6 +98,7 @@ class BotController extends Controller
                         ->get();
         }
         else{
+            // Si el rol és em d'amtu
             if (Auth::user()->role_id == 2) {
                 $plans = DB::table('plans')
                     ->where('plan_type', '=', '1')
