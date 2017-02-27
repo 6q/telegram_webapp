@@ -1138,7 +1138,7 @@
                             <?php
                             }
                             else{
-                                echo $bmv1->text;
+                                echo strlen($bmv1->text) > 100 ? substr($bmv1->text,0,100)."..." : $bmv1->text;
                             }
                             ?>
 						</td>
@@ -1152,7 +1152,8 @@
                         <?php
                         }
                         else{
-                            echo $bmv1->reply_message;
+                            echo strlen($bmv1->reply_message) > 100 ? substr($bmv1->reply_message,0,100)."..." : $bmv1->reply_message;
+
                         }
                         ?>
 						</td>
@@ -1298,8 +1299,8 @@
 					<p class="lead emoji-picker-container">
 						<textarea id="bot_msg" class="form-control textarea-control" name="bot_msg" cols="20" rows="15" placeholder="{{ trans('front/dashboard.enter_message') }}" data-emojiable="true" maxlength="4000"></textarea>
 					</p>
-					<br><small>* Màx. 4000 caràcters</small>
-
+					<small>* Màx. 4000 caràcters</small>
+					<br>
 					<br>
 
 					<label> {{ trans('front/dashboard.and_or_attach_an_image') }} </label>

@@ -107,14 +107,15 @@
                               <?php
 								  $imatge = str_replace("/usr/home/app.citymes.com/web/uploads/","",$v2->message);
                               if(file_exists(public_path().'/uploads/'.$imatge) && !empty($v2->message)){
-                              ?>
+                              ?><!--
 							  <button href="#" id="link<?php echo $v2->id;?>" data-toggle="modal" data-target="#myModal" src="/uploads/<?=$imatge?>" class="imatge">
 								  <i class="fa fa-camera" aria-hidden="true"></i>
-							  </button>
+							  </button>-->
+								  <img src="/uploads/<?=$imatge?>" width="50px" height="50px">
                               <?php
                               }
                               else{
-                                  echo $v2->message;
+                                  echo strlen($v2->message) > 100 ? substr($v2->message,0,100)."..." : $v2->message;
                               }
                               ?>
 						  </td>
@@ -277,8 +278,8 @@
 					<p class="lead emoji-picker-container">
 						<textarea id="bot_msg" class="form-control textarea-control" name="channel_msg" cols="20" rows="15" placeholder="{{ trans('front/dashboard.enter_message') }}" data-emojiable="true" maxlength="4000"></textarea>
 					</p>
-					<br><small>* Màx. 4000 caràcters</small>
-
+					<small>* Màx. 4000 caràcters</small>
+					<br>
 					<br>
 
                     <label> {{ trans('front/dashboard.and_or_attach_an_image') }} </label>
