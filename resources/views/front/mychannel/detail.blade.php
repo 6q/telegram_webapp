@@ -76,7 +76,9 @@
 			<br>
 
 				<a href="javascript:void(0);" class="btn btn-primary" onclick="mypopupfunction('<?php echo $chanels[0]->id;?>');"><i class="fa fa-paper-plane" aria-hidden="true"></i> {{ trans('front/dashboard.send_message') }}</a>
+			<!--
 				<a href="{!! URL::to('/my_channel/update_channel/'.$chanels[0]->id) !!}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> {!! trans('front/dashboard.edit_channel') !!}</a>
+				-->
 
 		</div>
 	</div>
