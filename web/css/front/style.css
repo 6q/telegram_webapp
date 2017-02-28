@@ -1638,7 +1638,7 @@ img {
 .canals .days_preparing p.h2 > a span {
     color:#55BBB5;
 }
-#menu .languages {
+#menu #menu_bottom {
     position: absolute;
     width: 100%;
     bottom:0;

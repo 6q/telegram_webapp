@@ -5,6 +5,7 @@ return [
 	'my_account' => 'Mi Cuenta',
 	'messages' => 'Mensajes',
     'help' => 'Ayuda',
+    'info' => 'Información',
     'dashboard' => 'Panel de Control',
 	'logout' => 'Salir',
 	'english' => 'English',

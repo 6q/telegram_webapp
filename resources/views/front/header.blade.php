@@ -19,20 +19,29 @@
 			</a>
 		</div>
 
-		<div class="col_help">
-			<a href="{!! URL::to('/pages/detail/20') !!}" data-toggle="tooltip" title="{!! trans('front/header.help') !!}">
-				<i class="fa fa-question" aria-hidden="true" style="font-size:22px;"></i>
+		<div class="col_info">
+			<a href="{!! URL::to('/pages/detail/20') !!}" data-toggle="tooltip" title="{!! trans('front/header.info') !!}">
+				<i class="fa fa-info" aria-hidden="true" style="font-size:22px;"></i>
 			</a>
 		</div>
+
 		<div class="col_lock">
 			<a href="{!! URL::to('/auth/logout') !!}" data-toggle="tooltip" title="{!! trans('front/header.logout') !!}">
 				<i class="fa fa-lock" aria-hidden="true" style="font-size:22px;"></i>
 			</a>
 		</div>
 
-		<div class="languages">
-			<a data-toggle="modal" data-target="#languages" title="{!! trans('front/header.change_language') !!}"><i class="fa fa-globe" aria-hidden="true" style="font-size:22px;"></i></a>
+		<div id="menu_bottom">
+			<div class="col_help">
+				<a href="#" onclick="FreshWidget.show(); return false;" data-toggle="tooltip" title="{!! trans('front/header.help') !!}">
+					<i class="fa fa-question" aria-hidden="true" style="font-size:22px;"></i>
+				</a>
+			</div>
+			<div class="languages">
+				<a data-toggle="modal" data-target="#languages" title="{!! trans('front/header.change_language') !!}"><i class="fa fa-globe" aria-hidden="true" style="font-size:22px;"></i></a>
+			</div>
 		</div>
+
 
 
 

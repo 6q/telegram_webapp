@@ -7,6 +7,7 @@ return [
 	'messages' => 'Missatges',
 	'logout' => 'Sortir',
     'help' => 'Ajuda',
+    'info' => 'Informació',
 	'english' => 'English',
 	'french' => 'French',
 	'catalan' => 'Català',
