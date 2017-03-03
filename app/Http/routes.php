@@ -408,7 +408,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 			} else $msg .= "\xE2\x9D\x8C".chr(10);
 			//file_put_contents(public_path().'/result_command.txt',json_encode($msg));
 		}
-		else if(!empty($bot_commands_title) && in_array($messageText,$bot_commands_title)){
+		else if(!empty($bot_commands_title) && in_array(strtok($messageText, " "),$bot_commands_title)){
 			$bot_cmd_msg = DB::table('bot_commands')
 							->where('bot_id','=',$dbBotId)
 							->where('title','LIKE','%'.$messageText.'%')
@@ -421,7 +421,15 @@ Route::post('/{bottoken}/webhook', function ($token) {
 	                $image_name = $bot_cmd_msg[0]->image;
 				}
 				if($bot_cmd_msg[0]->webservice_type<>0 AND filter_var($bot_cmd_msg[0]->webservice_url, FILTER_VALIDATE_URL)) {
-					$xml = simplexml_load_file($bot_cmd_msg[0]->webservice_url);
+
+					if ($bot_cmd_msg[0]->webservice_type == 1) {
+						$url=$bot_cmd_msg[0]->webservice_url;
+					} elseif ($bot_cmd_msg[0]->webservice_type == 2) {
+						$arr = explode(' ',trim($messageText));
+						$url = $bot_cmd_msg[0]->webservice_url.$arr[1];
+					}
+
+					$xml = simplexml_load_file($url);
 					//echo $xml->asXML();
 					if ($xml === false) {
 						$msg .= "Failed loading XML: ";
@@ -436,10 +444,14 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							//echo "<hr>";
 							//print_r($object);
 							if ($i == 1){
-								$msg .= chr(10)."__________";
+								$j = 0;
 								foreach ($object as $resource) {
+									if ($j == 0) {
+										$msg .= chr(10)."__________";
+									}
 
 									$msg .= chr(10). "<b>".$resource["name"]."</b>: ".$resource;
+									++$j;
 								}
 							}
 							++$i;
