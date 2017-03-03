@@ -439,7 +439,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 								$msg .= chr(10)."__________";
 								foreach ($object as $resource) {
 
-									$msg .= chr(10). $resource["name"].": ".$resource;
+									$msg .= chr(10). "*".$resource["name"]."*: ".$resource;
 								}
 							}
 							++$i;
@@ -457,7 +457,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
         
         if($messageText != "\xE2\x97\x80"){
             DB::table('tmp_message')->insert(
-                ['chat_id' => $chatId,'message_id' => $message_id,'message' => $messageText.'_'.$dbBotId]
+                ['chat_id' => $chatId,'message_id' => $message_id,'message' => $messageText.'_'.$dbBotId,'parse_mode' => 'Markdown']
             );
         }
         
