@@ -425,7 +425,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 					if ($bot_cmd_msg[0]->webservice_type == 1) {
 						$url=$bot_cmd_msg[0]->webservice_url;
 					} elseif ($bot_cmd_msg[0]->webservice_type == 2) {
-						$arr = explode(' ',trim($messageText));
+						$arr = preg_split('/ +/', $messageText);
 						if (array_key_exists(1,$arr)) {
 							$url = $bot_cmd_msg[0]->webservice_url.$arr[1];
 							$msg .= chr(10).$url;
