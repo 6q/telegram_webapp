@@ -1131,7 +1131,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     'chat_id' => $chatId,
                     'text' => $msg,
                     'reply_markup' => $reply_markup,
-	                'parse_mode' => 'Markdown'
+	                'parse_mode' => 'HTML'
                 ]);
             }
         }
@@ -1160,7 +1160,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             'chat_id' => $chatId,
             'text' => $msg,
             'reply_markup' => $reply_markup,
-	        'parse_mode' => 'Markdown'
+	        'parse_mode' => 'HTML'
         ]);
     }
 
