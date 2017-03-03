@@ -411,7 +411,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		else if(!empty($bot_commands_title) && in_array(strtok($messageText, " "),$bot_commands_title)){
 			$bot_cmd_msg = DB::table('bot_commands')
 							->where('bot_id','=',$dbBotId)
-							->where('title','LIKE','%'.$messageText.'%')
+							->where('title','LIKE','%'.strtok($messageText, " ").'%')
 							->get();
 			if(!empty($bot_cmd_msg)){
 				$msg = (isset($bot_cmd_msg[0]->command_description) && !empty($bot_cmd_msg[0]->command_description)?$bot_cmd_msg[0]->command_description:'');
@@ -420,18 +420,24 @@ Route::post('/{bottoken}/webhook', function ($token) {
 					$img_url = public_path().'/uploads/'.$bot_cmd_msg[0]->image;
 	                $image_name = $bot_cmd_msg[0]->image;
 				}
+
 				if($bot_cmd_msg[0]->webservice_type<>0) {
 
 					if ($bot_cmd_msg[0]->webservice_type == 1) {
-						$url=$bot_cmd_msg[0]->webservice_url;
+
+						$url = $bot_cmd_msg[0]->webservice_url;
+
 					} elseif ($bot_cmd_msg[0]->webservice_type == 2) {
-						$arr = preg_split('/ +/', $messageText);
+
+						$arr = explode(' ', $messageText);
 						if (array_key_exists(1,$arr)) {
 							$url = $bot_cmd_msg[0]->webservice_url.$arr[1];
 							$msg .= chr(10).$url;
 
 						} else {
 							$url = "";
+							$msg .= chr(10)."__________";
+							$msg .= chr(10)."\xE2\x9D\x8C";
 						}
 
 					}
