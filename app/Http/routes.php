@@ -439,7 +439,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 								$msg .= chr(10)."__________";
 								foreach ($object as $resource) {
 
-									$msg .= chr(10). "*".$resource["name"]."*: ".$resource;
+									$msg .= chr(10). "<b>".$resource["name"]."</b>: ".$resource;
 								}
 							}
 							++$i;
@@ -1131,7 +1131,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     'chat_id' => $chatId,
                     'text' => $msg,
                     'reply_markup' => $reply_markup,
-	                'parse_mode' => 'markdown'
+	                'parse_mode' => 'HTML'
                 ]);
             }
         }
@@ -1160,7 +1160,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             'chat_id' => $chatId,
             'text' => $msg,
             'reply_markup' => $reply_markup,
-	        'parse_mode' => 'markdown'
+	        'parse_mode' => 'HTML'
         ]);
     }
 
