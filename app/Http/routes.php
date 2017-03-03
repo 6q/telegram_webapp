@@ -420,6 +420,31 @@ Route::post('/{bottoken}/webhook', function ($token) {
 					$img_url = public_path().'/uploads/'.$bot_cmd_msg[0]->image;
 	                $image_name = $bot_cmd_msg[0]->image;
 				}
+				if($bot_cmd_msg[0]->webservice_type<>0 AND filter_var($bot_cmd_msg[0]->webservice_url, FILTER_VALIDATE_URL)) {
+					$xml = simplexml_load_file($bot_cmd_msg[0]->webservice_url);
+					//echo $xml->asXML();
+					if ($xml === false) {
+						echo "Failed loading XML: ";
+						foreach(libxml_get_errors() as $error) {
+							$msg .= chr(10). $error->message;
+						}
+					} else {
+						//print_r($xml);
+						$i = 0;
+						foreach ($xml as $object)
+						{
+							//echo "<hr>";
+							//print_r($object);
+							if ($i == 1){
+								foreach ($object as $resource) {
+
+									$msg .= chr(10). "<b>".$resource["name"]."</b>: ".$resource;
+								}
+							}
+							++$i;
+						}
+					}
+				}
 			}
 		}
 		else{

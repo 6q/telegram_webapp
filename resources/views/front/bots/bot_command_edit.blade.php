@@ -74,6 +74,86 @@
                         </label>
                     </li>
 
+                    <script>
+		                $( function() {
+			                $("#accordion").accordion({ header: "a", collapsible: true, active: false });
+		                } );
+                    </script>
+                    <div id="accordion">
+                        <a style="cursor:pointer">+ Opcions avançades</a>
+                        <div>
+                            <br>
+                            <li class="webservice_type">
+                                <span> Afegir webservice? </span>
+
+                                <div class="box">
+                                    <select id="webservice_type" name="webservice_type">
+					                    <?php
+					                    $sel1 = '';
+					                    if ($botCommands[0]->webservice_type == 0) {
+						                    $sel1 = "selected='selected'";
+					                    }
+
+					                    $sel2 = '';
+					                    if ($botCommands[0]->webservice_type == 1) {
+						                    $sel2 = "selected='selected'";
+					                    }
+
+					                    $sel3 = '';
+					                    if ($botCommands[0]->webservice_type == 2) {
+						                    $sel2 = "selected='selected'";
+					                    }
+					                    ?>
+                                        <option value="0" <?php echo $sel1; ?> >No</option>
+                                        <option value="1" <?php echo $sel2; ?> >Sí</option>
+                                        <option value="2" <?php echo $sel3; ?> >Sí, amb variable</option>
+                                    </select>
+                                </div>
+                            <li>
+                                <span>Webservice URL</span>
+                                <label id="bc_title" class="lead emoji-picker-container">
+                                    {!! Form::control('url', 0, 'webservice_url', $errors, '',$botCommands[0]->webservice_url,"data-emojiable='false'") !!}
+                                </label>
+                                <small>* Si és amb una variable que ha d'introduïr l'usuari, acabar la url amb la variable i el signe "=" obert.</small>
+
+                            </li>
+                            <li>
+			                    <?
+			                    if (filter_var($botCommands[0]->webservice_url, FILTER_VALIDATE_URL) ) {
+				                    echo "<h3>Resultat Webservice</h3>";
+				                    $xml = simplexml_load_file($botCommands[0]->webservice_url);
+				                    //echo $xml->asXML();
+				                    if ($xml === false) {
+					                    echo "Failed loading XML: ";
+					                    foreach(libxml_get_errors() as $error) {
+						                    echo "<br>". $error->message;
+					                    }
+				                    } else {
+					                    //print_r($xml);
+					                    $i = 0;
+					                    foreach ($xml as $object)
+					                    {
+						                    //echo "<hr>";
+						                    //print_r($object);
+						                    if ($i == 1){
+							                    foreach ($object as $resource) {
+
+								                    //echo "<hr>";
+								                    //print_r($resource);
+								                    echo "<br><b>".$resource["name"]."</b>: ".$resource;
+							                    }
+						                    }
+						                    ++$i;
+					                    }
+				                    }
+
+			                    }
+			                    ?>
+                            </li>
+                        </div>
+                    </div>
+
+
 
                     <li class="input_submit buy_now">
                     <a href="{!! URL::to('/bot/detail/'.$botCommands[0]->bot_id) !!}">{{ trans('front/bots.back') }}</a>
