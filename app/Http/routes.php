@@ -1159,8 +1159,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
         $response = $telegram->sendMessage([
             'chat_id' => $chatId,
             'text' => $msg,
-            'reply_markup' => $reply_markup,
-	        'parse_mode' => 'Markdown'
+            'reply_markup' => $reply_markup
         ]);
     }
 
