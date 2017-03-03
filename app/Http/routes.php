@@ -432,12 +432,9 @@ Route::post('/{bottoken}/webhook', function ($token) {
 						$arr = explode(' ', $messageText);
 						if (array_key_exists(1,$arr)) {
 							$url = $bot_cmd_msg[0]->webservice_url.$arr[1];
-							$msg .= chr(10).$url;
 
 						} else {
 							$url = "";
-							$msg .= chr(10)."__________";
-							$msg .= chr(10)."\xE2\x9D\x8C";
 						}
 
 					}
@@ -460,7 +457,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 									$j = 0;
 									foreach ($object as $resource) {
 										if ($j == 0) {
-											$msg .= chr(10)."__________";
+											$msg .= chr(10)."__________".chr(10);
 										}
 
 										$msg .= chr(10). "<b>".$resource["name"]."</b>: ".$resource;
