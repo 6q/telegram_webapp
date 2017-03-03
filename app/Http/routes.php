@@ -424,7 +424,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 					$xml = simplexml_load_file($bot_cmd_msg[0]->webservice_url);
 					//echo $xml->asXML();
 					if ($xml === false) {
-						$msg = "Failed loading XML: ";
+						$msg .= "Failed loading XML: ";
 						foreach(libxml_get_errors() as $error) {
 							$msg .= chr(10). $error->message;
 						}
@@ -438,7 +438,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							if ($i == 1){
 								foreach ($object as $resource) {
 
-									$msg .= chr(10). "*".$resource["name"]."*: ".$resource;
+									$msg .= chr(10)."_____".chr(10). "*".$resource["name"]."*: ".$resource;
 								}
 							}
 							++$i;
@@ -456,7 +456,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
         
         if($messageText != "\xE2\x97\x80"){
             DB::table('tmp_message')->insert(
-                ['chat_id' => $chatId,'message_id' => $message_id,'message' => $messageText.'_'.$dbBotId,'parse_mode' => 'Markdown']
+                ['chat_id' => $chatId,'message_id' => $message_id,'message' => $messageText.'_'.$dbBotId]
             );
         }
         
@@ -1157,8 +1157,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
         $response = $telegram->sendMessage([
             'chat_id' => $chatId,
             'text' => $msg,
-            'reply_markup' => $reply_markup,
-	        'parse_mode' => 'Markdown'
+            'reply_markup' => $reply_markup
         ]);
     }
 
