@@ -101,7 +101,7 @@
 
 					                    $sel3 = '';
 					                    if ($botCommands[0]->webservice_type == 2) {
-						                    $sel2 = "selected='selected'";
+						                    $sel3 = "selected='selected'";
 					                    }
 					                    ?>
                                         <option value="0" <?php echo $sel1; ?> >No</option>
