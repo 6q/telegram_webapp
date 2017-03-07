@@ -16,3 +16,4 @@
 [15-Feb-2017 15:22:12 UTC] PHP Parse error:  syntax error, unexpected 'case' (T_CASE) in /home/gestinet/www/citymes.app/storage/framework/views/4aa95f3bd785a281220c6636039c396139121cf7.php on line 99
 [22-Feb-2017 07:43:25 UTC] PHP Fatal error:  Class 'Carbon' not found in /home/gestinet/www/citymes.app/storage/framework/views/5ff958209f5b55acc96a3af847acde5c60ae94c1.php on line 61
 [03-Mar-2017 10:06:34 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/gestinet/www/citymes.app/app/Http/routes.php on line 424
+[07-Mar-2017 16:29:03 UTC] PHP Parse error:  syntax error, unexpected ',', expecting ']' in /home/gestinet/www/citymes.app/resources/lang/en/front/dashboard.php on line 56

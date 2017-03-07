@@ -129,7 +129,7 @@
 								<p class="h2">
 									<a href="{!! URL::to('/my_channel/detail/'.$myChanel->id) !!}">
 										{!! HTML::image('img/front/days_counting_img_channel.png') !!}<span class="count_users">{!! $myChanel->total_msg !!}</span>
-										<span class="count_messages"><b data-toggle="tooltip" title="Missatges enviats els últims 30 dies"><i class="fa fa-line-chart" aria-hidden="true" style="font-size:12px;"></i></b></span>
+										<span class="count_messages"><b data-toggle="tooltip" title="{{ trans('front/dashboard.messages_sent_the_last_10_days') }}"><i class="fa fa-line-chart" aria-hidden="true" style="font-size:12px;"></i></b></span>
 									</a>
 								</p>
 

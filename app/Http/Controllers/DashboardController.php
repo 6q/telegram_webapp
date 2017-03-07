@@ -111,10 +111,10 @@ class DashboardController extends Controller {
             $search = $_REQUEST['search'];
         }
         
-        $startDate = date('Y-m-d', strtotime('today - 30 days'));
+        $startDate = date('Y-m-d', strtotime('today - 10 days'));
         $endDate = date('Y-m-d');
         
-        $startDateTime = date('Y-m-d h:i:s', strtotime('today - 30 days'));
+        $startDateTime = date('Y-m-d h:i:s', strtotime('today - 10 days'));
         $endDateTime = date('Y-m-d h:i:s');
         
 		$bots = DB::table('bots')
@@ -169,15 +169,13 @@ class DashboardController extends Controller {
             ->where('user_id', '=', $userId)
             ->get();
         }     
-        
-		$startDate_thisMonth = date('Y-m-01');
-        $endDate_thisMonth = date('Y-m-t');
+
 				
         if(!empty($chanel)){
             foreach($chanel as $ch1 => $cv1){
                 $send_message = DB::table('channel_send_message')
                                     ->where('channel_id','=',$cv1->id)
-									->whereBetween('send_date', array($startDate_thisMonth, $endDate_thisMonth))
+									->whereBetween('send_date', array($startDate, $endDate))
                                     ->get();
                 $total_msg = count($send_message);
                 $chanel[$ch1]->total_msg = $total_msg;

@@ -6,6 +6,9 @@ return [
 	'add_new_bot_chanel' => 'Add new Bot & Chanel',
 	'last' => 'Last',
 	'days' => 'Days',
+	'active_users' => 'Active users',
+	'activity_last_days' => 'Activity the last 10 days',
+	'messages_sent_the_last_10_days' => 'Messages sent the last 10 days',
 	'recieved_message' => 'Recieved Message',
 	'global_statistics' => 'Global Statistics',
 	'this_week' => 'This week',
@@ -23,7 +26,6 @@ return [
 	'select_time_duraction' => 'Select',
 	'recieved_messages' => 'Recieved messages',
 	'send_messages' => 'Send messages',
-	'active_users' => 'Active users',
 	'error' => 'Error',
 	'send_message' => 'Send Message',
 	'edit_bot' => 'Edit bot',
@@ -50,11 +52,7 @@ return [
     'buttons' => 'Buttons',
     'users' => 'Users',
     'messages_sent_the_last' => 'Messages sent the last',
-    'activity_last_days' => 'Activity last days',
     'welcome_to_citymes' => 'Welcome to Citymes',
     'activate_bot' => 'Activate a Bot or a Channel to start managing it.',
-
-    'buttons' => 'Buttons',
-    'users' => 'Users',
-    'log' => 'Log',
+    'log' => 'Log'
 ];
