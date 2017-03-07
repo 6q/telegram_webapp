@@ -14,4 +14,6 @@ return [
 	'spanish' => 'Castellano',
 	'password_change' => 'Modificar password',
     'lan' => 'ES',
+	'change_language' => 'Cambiar idioma',
+	'close' => 'Cerrar'
 ];
