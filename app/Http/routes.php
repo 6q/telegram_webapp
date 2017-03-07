@@ -457,7 +457,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 									$j = 0;
 									foreach ($object as $resource) {
 										if ($j == 0) {
-											$msg .= chr(10)."__________".chr(10);
+											$msg .= chr(10)."____________________".chr(10);
 										}
 
 										$msg .= chr(10). "<b>".$resource["name"]."</b>: ".$resource;

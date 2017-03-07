@@ -500,21 +500,41 @@ class DashboardController extends Controller {
 				$data = array();
 				
 				if(!empty($message)){
-					$data = [
-						'chat_id' => '@'.$channel_name,
-						'photo' => $img_url,
-						'caption' => $message
-					];
+					if (strlen($message)<200) {
+						$data = [
+							'chat_id' => '@' . $channel_name,
+							'photo' => $img_url,
+							'caption' => $message
+						];
+						$result = $telegram->sendPhoto($data);
+						$response = json_decode(json_encode($result));
+					} else {
+						$data = [
+							'chat_id' => '@'.$channel_name,
+							'photo' => $img_url
+						];
+						$result = $telegram->sendPhoto($data);
+						$response = json_decode(json_encode($result));
+						$telegram = new Api($bot_token);
+
+						$data = [];
+						$data['chat_id'] = '@'.$channel_name;
+						$data['text'] = $message;
+
+						$result = $telegram->sendMessage($data);
+					}
+
 				}
 				else{
 					$data = [
 						'chat_id' => '@'.$channel_name,
 						'photo' => $img_url
 					];
+					$result = $telegram->sendPhoto($data);
+					$response = json_decode(json_encode($result));
 				}
 				
-				$result = $telegram->sendPhoto($data);
-				$response = json_decode(json_encode($result));
+
 				
 				if(isset($response->message_id) && !empty($response->message_id)){
 					DB::table('channel_send_message')->insertGetId(
@@ -673,35 +693,60 @@ class DashboardController extends Controller {
 					$cfile = new \CURLFile($img_url, 'image/jpg'); 
 					
 					if(!empty($message)){
-						$data = [
-							'chat_id' => $cv2, 
-							'photo' => $cfile,
-							'caption' => $message
-						];
+						if (strlen($message)<200) {
+							$data = [
+								'chat_id' => $cv2,
+								'photo' => $cfile,
+								'caption' => $message
+							];
+						} else {
+							$data = [
+								'chat_id' => $cv2,
+								'photo' => $cfile
+							];
+							$ch = curl_init($BOTAPI.'sendPhoto');
+							curl_setopt($ch, CURLOPT_HEADER, false);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+							curl_setopt($ch, CURLOPT_POST, 1);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+							curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+							$result = curl_exec($ch);
+							curl_close($ch);
+							$chk_img = true;
+							$telegram = new Api($bot_token);
+
+							$response = $telegram->sendMessage([
+								'chat_id' => $cv2,
+								'text' => $message,
+								'parse_mode' => 'HTML'
+							]);
+						}
 					}
 					else{
 						$data = [
 							'chat_id' => $cv2, 
 							'photo' => $cfile
 						];
+						$ch = curl_init($BOTAPI.'sendPhoto');
+						curl_setopt($ch, CURLOPT_HEADER, false);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+						curl_setopt($ch, CURLOPT_POST, 1);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+						curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+						$result = curl_exec($ch);
+						curl_close($ch);
+						$chk_img = true;
 					}
 			
-					$ch = curl_init($BOTAPI.'sendPhoto');
-					curl_setopt($ch, CURLOPT_HEADER, false);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					curl_setopt($ch, CURLOPT_POST, 1);
-					curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-					$result = curl_exec($ch);
-					curl_close($ch);
-					$chk_img = true;
+
 				}
 				else if(!empty($message)){
 					$telegram = new Api($bot_token);
 					$data = [];
 					$data['chat_id'] = $cv2;
 					$data['text'] = $message;
-				
+					$data['parse_mode'] = 'HTML';
+
 					$result = $telegram->sendMessage($data);
 					
 					$response = json_decode(json_encode($result));
