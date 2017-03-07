@@ -43,7 +43,12 @@
             }
             ?>
         </td>
-        <td><?php echo $bmv1->date;?></td>
+        <td>
+		    <?php
+		    $date = new DateTime($bmv1->date);
+		    echo $date->format('d-m-Y')."<br>".$date->format('H:i:s');
+		    ?>
+        </td>
     </tr>
     <?php
     }

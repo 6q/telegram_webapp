@@ -967,7 +967,12 @@
                         <tr>
                             <td><?php echo $auv1->first_name;?></td>
                             <td><?php echo $auv1->last_name;?></td>
-                            <td><?php echo $auv1->created_at;?></td>
+							<td>
+		                        <?php
+		                        $date = new DateTime($auv1->created_at);
+		                        echo $date->format('d-m-Y')."<br>".$date->format('H:i:s');
+		                        ?>
+							</td>
                         </tr>
                         <?php
                         }
@@ -1157,7 +1162,13 @@
                         }
                         ?>
 						</td>
-						<td><?php echo $bmv1->date;?></td>
+						<td>
+							<?php
+							$date = new DateTime($bmv1->date);
+							echo $date->format('d-m-Y')."<br>".$date->format('H:i:s');
+							?>
+						</td>
+						</td>
 					</tr>
 					<?php
 					}

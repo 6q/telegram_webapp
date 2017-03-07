@@ -2094,6 +2094,9 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
 }
 
 @media (max-width:480px){
+    .mobile_hide {
+        display:none;
+    }
     .bot_command_content {
         margin-bottom:0;
     }
