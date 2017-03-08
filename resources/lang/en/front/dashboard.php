@@ -25,7 +25,7 @@ return [
 	'select_bot' => 'Select Bots',
 	'select_time_duraction' => 'Select',
 	'recieved_messages' => 'Recieved messages',
-	'send_messages' => 'Send messages',
+	'send_messages' => 'Activity (clicks and petitions)',
 	'error' => 'Error',
 	'send_message' => 'Send Message',
 	'edit_bot' => 'Edit bot',
