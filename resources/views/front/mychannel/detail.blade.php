@@ -121,7 +121,12 @@
                               }
                               ?>
 						  </td>
-                          <td><?php echo $v2->send_date;?></td>
+                          <td>
+							  <?php
+							  $date = new DateTime($v2->send_date);
+							  echo $date->format('d-m-Y');
+							  ?>
+						  </td>
                         </tr>
                     <?php
                   }
