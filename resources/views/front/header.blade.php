@@ -20,9 +20,21 @@
 		</div>
 
 		<div class="col_info">
-			<a href="{!! URL::to('/pages/detail/20') !!}" data-toggle="tooltip" title="{!! trans('front/header.info') !!}">
-				<i class="fa fa-info" aria-hidden="true" style="font-size:22px;"></i>
-			</a>
+
+			@if(Config::get('app.locale')=="en")
+				<a href="{!! URL::to('/pages/detail/22') !!}" data-toggle="tooltip" title="{!! trans('front/header.info') !!}">
+					<i class="fa fa-info" aria-hidden="true" style="font-size:22px;"></i>
+				</a>
+			@elseif(Config::get('app.locale')=="es")
+				<a href="{!! URL::to('/pages/detail/21') !!}" data-toggle="tooltip" title="{!! trans('front/header.info') !!}">
+					<i class="fa fa-info" aria-hidden="true" style="font-size:22px;"></i>
+				</a>
+			@elseif(Config::get('app.locale')=="ca")
+				<a href="{!! URL::to('/pages/detail/20') !!}" data-toggle="tooltip" title="{!! trans('front/header.info') !!}">
+					<i class="fa fa-info" aria-hidden="true" style="font-size:22px;"></i>
+				</a>
+			@endif
+
 		</div>
 
 		<div class="col_lock">
