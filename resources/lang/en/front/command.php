@@ -32,6 +32,12 @@ return [
 	'updated' => 'Update Successfully',
 	'email' => 'Email',
 	'deleted' => 'Command deleted',
-    'gallery_introduction_headline' => 'Gallery description'
+    'gallery_introduction_headline' => 'Gallery description',
 
+	'advanced_options' => 'Advanced options',
+	'add_webservice' => 'Add webservice?',
+	'no' => 'No',
+	'yes' => 'Yes',
+	'yes_with_variable' => 'Yes with variable',
+	'if_variable' => '',
 ];

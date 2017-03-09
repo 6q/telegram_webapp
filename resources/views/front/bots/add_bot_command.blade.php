@@ -56,7 +56,7 @@
                         <label><input type="file" name="image" id="image"><span>{{ trans('front/command.browse') }}</span></label>
                         <div id="image-holder"> </div>    
                     </li>
-
+                <? if (session('statut') === 'admin' || session('statut') === 'vip') { ?>
                     <script>
 		                $( function() {
 			                $("#accordion").accordion({ header: "a", collapsible: true, active: false });
@@ -66,26 +66,28 @@
                         <a style="cursor:pointer">+ Opcions avançades</a>
                         <div>
                             <br>
-                            <li cl
-                    <li class="webservice_type">
-                        <span> Afegir webservice? </span>
-                        <div class="box">
-                            <select id="webservice_type" name="webservice_type">
+                            <li class="webservice_type">
+                                <span> Afegir webservice? </span>
+                                <div class="box">
+                                    <select id="webservice_type" name="webservice_type">
 
-                                <option value="0">No</option>
-                                <option value="1">Sí</option>
-                                <option value="2">Sí, amb variable</option>
-                            </select>
+                                        <option value="0">No</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">Sí, amb variable</option>
+                                    </select>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Webservice URL</span>
+                                <label id="bc_title" class="lead emoji-picker-container">
+                                    {!! Form::control('url', 0, 'webservice_url', $errors, '','',"data-emojiable='false'") !!}
+                                </label>
+                                <small>* Si és amb una variable que ha d'introduïr l'usuari, acabar la url amb la variable i el signe "=" obert.</small>
+
+                            </li>
                         </div>
-                    <li>
-                        <span>Webservice URL</span>
-                        <label id="bc_title" class="lead emoji-picker-container">
-                            {!! Form::control('url', 0, 'webservice_url', $errors, '','',"data-emojiable='false'") !!}
-                        </label>
-                        <small>* Si és amb una variable que ha d'introduïr l'usuari, acabar la url amb la variable i el signe "=" obert.</small>
-
-                    </li>
-            </div>
+                    </div>
+                    <? } ?>
                     <li class="input_submit"><input type="submit" value="{!! trans('front/command.submit') !!}"></li>
 
                 </ul>

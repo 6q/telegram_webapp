@@ -332,16 +332,16 @@ class DashboardController extends Controller {
         $arr[$i][0] = '';
         switch ($chart_details) {
 	        case 'recieved_messages':
-		        $arr[$i][1] = trans('front/dashboard.send_messages');
+		        $type_details = trans('front/dashboard.send_messages');
 		        break;
 	        case 'send_messages':
-		        $arr[$i][1] = trans('front/dashboard.send_messages');
+		        $type_details = trans('front/dashboard.send_messages');
 		        break;
 	        case 'active_users':
-		        $arr[$i][1] = trans('front/dashboard.active_users');
+		        $type_details = trans('front/dashboard.active_users');
 		        break;
         }
-
+	    $arr[$i][1] = "Bot";
 
 		if(!empty($bot_id) && $bot_id == 'all_bots' && ($chart_details == 'recieved_messages' || $chart_details == 'send_messages' || $chart_details == 'active_users')){
 			$j = 1;
@@ -362,8 +362,8 @@ class DashboardController extends Controller {
                                 ->where('bot_id',$bv1->id)
                                 ->where('date','LIKE','%'.$v1.'%')
                                 ->get();
-					
-					$arr[$i][0] = trans('front/bots.day').": ".date('d-m-Y',strtotime($v1));
+
+					$arr[$i][0] = date('d-m-Y',strtotime($v1)).":\n".$type_details;
 					$arr[$i][$j] = count($count_bot);	
 					$j++;
 				}
@@ -374,8 +374,8 @@ class DashboardController extends Controller {
                                 ->where('bot_id','=',$bot_id)
                                 ->where('date','LIKE','%'.$v1.'%')
                                 ->get();
-				
-				$arr[$i][0] = trans('front/bots.day').": ".date('d-m-Y',strtotime($v1));
+
+	            $arr[$i][0] = date('d-m-Y',strtotime($v1)).":\n".$type_details;
 				$arr[$i][1] = count($count_bot);	
 				$i++;			
             }
@@ -385,9 +385,9 @@ class DashboardController extends Controller {
                		$count_bot = DB::table('bot_users')
                                 ->where('bot_id',$bv1->id)
                                 ->where('created_at','<=',$v1)
-                                ->get();			
-					
-					$arr[$i][0] = trans('front/bots.day').": ".date('d-m-Y',strtotime($v1));
+                                ->get();
+
+					$arr[$i][0] = date('d-m-Y',strtotime($v1)).":\n".$type_details;
 					$arr[$i][$j] = count($count_bot);	
 					$j++;
 				}
@@ -399,7 +399,7 @@ class DashboardController extends Controller {
                                 ->where('created_at','<=',$v1)
                                 ->get();
 								
-				$arr[$i][0] = trans('front/bots.day').": ".date('d.m',strtotime($v1));
+				$arr[$i][0] = date('d-m-Y',strtotime($v1)).":\n".$type_details;
 				$arr[$i][1] = count($count_bot);	
 				$i++;				
             }

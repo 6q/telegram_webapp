@@ -151,9 +151,6 @@
                 <div class="modal-body">
                     <p><?php if(isset($nickName[0]->content) && !empty($nickName[0]->content)){echo $nickName[0]->content;}?></p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{!! trans('front/bots.close') !!}</button>
-                </div>
             </div>
 
         </div>

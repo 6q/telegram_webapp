@@ -15,7 +15,7 @@ return [
 	'bot_image' => 'Bot Image',
 	'start_message' => 'Missatge d\'inici',
 	'delete' => 'Eliminar Bot',
-	'edit' => 'Actualitzar Bot',
+	'edit' => 'Editar Bot',
 	'confirm' => 'Segur que vols eliminar el bot?',
 	'add_new_bot' => 'Add a new Bot &amp; Channel',
 	'our_plans' => 'Els nostres plans',
@@ -149,4 +149,12 @@ return [
     'button_already_been_taken' => 'Ho sentim, però no es pot utilitzar el mateix nom dues vegades en un botó de Telegram',
     'are_you_sure' => 'Estàs segur?',
     'you_are_going_to_delete' => 'Segur que ho vols eliminar? No podràs tornar enrere.',
+
+	'day' => 'Dia',
+
+	'custom_plan' => 'Pla personalitzat',
+	'custom_plan_info' => 'Necessiteu més recursos per al vostre bot? Voleu implementar webservices o altres eines avançades? Omple el formulari i parlem-ne.',
+	'contact' => 'Contactar',
+	'information' => 'Informació',
+
 ];

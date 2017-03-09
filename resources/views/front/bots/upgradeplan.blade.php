@@ -9,13 +9,9 @@
 
 		@include('front.top')
 
-		<div class="my_account telegram">
-			<h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{!! trans('front/command.telegram') !!}</span></h4>
-			<h5>{!! trans('front/command.create_bot_command') !!}</h5>
-		</div>
+
 
 		<div class="bot_command">
-			<div class="bot_command_content">
 				@if ($errors->has())
 					<div class="alert alert-danger">
 						@foreach ($errors->all() as $error)
@@ -23,13 +19,34 @@
 						@endforeach
 					</div>
 				@endif
-				<h2>{!! trans('front/bots.upgrade_plan') !!}</h2>
-			</div>
+
 
 
 			{!! Form::open(['url' => 'bot/upgradeplan/'.$bot_id, 'method' => 'post', 'class' => 'form-horizontal panel','id'=>'plan_upgrade_form','enctype'=>"multipart/form-data"]) !!}
 			{!! Form::control('hidden', 0, 'bot_id', $errors, '',$bot_id) !!}
 			<div class="buying">
+				<div class="my_account telegram">
+					<h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{!! trans('front/command.telegram') !!}</span></h4>
+					<h5>{!! trans('front/bots.upgrade_plan') !!}</h5>
+				</div>
+				<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<i class="fa fa-info-circle" aria-hidden="true"></i> {{ trans('front/bots.information') }}
+						</div>
+						<div class="panel-body">
+							<p>
+								{{ trans('front/bots.our_plans_1') }}
+							</p>
+							<p>
+								{{ trans('front/bots.our_plans_2') }}
+							</p>
+							<p>
+								{{ trans('front/bots.our_plans_3') }}
+							</p>
+						</div>
+					</div>
+				</div>
 				<div class="buying_table">
 
                     <?php // echo '<pre>';print_r($plans);echo '</pre>';?>
@@ -190,7 +207,23 @@
                         <?php
                         }
                         ?>
-
+								<div style="clear:both"></div>
+								<br>
+								<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div class="panel panel-success">
+										<div class="panel-heading">
+											<i class="fa fa-question-circle" aria-hidden="true"></i> {{ trans('front/bots.custom_plan') }}
+										</div>
+										<div class="panel-body">
+											{{ trans('front/bots.custom_plan_info') }}
+											<p align="center">
+												<button type="button" class="btn btn-default btn-lg" onclick="FreshWidget.show(); return false;">
+													<i class="fa fa-envelope" aria-hidden="true"></i> {{ trans('front/bots.contact') }}
+												</button>
+											</p>
+										</div>
+									</div>
+								</div>
 
 
 					</div>

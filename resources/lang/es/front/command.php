@@ -5,7 +5,7 @@ return [
 	'channels' => 'Canales',
 	'add_new_bot_chanel' => 'Añadir Bot o Canal',
 	'create_bot_command' => 'Crear nuevo botón',
-	'update_bot_command' => 'Actualizar botón',
+	'update_bot_command' => 'Editar botón',
 	'telegram' => 'Telegram',
 	'select_type' => 'Seleccionar tipo',
 	'autoresponse' => 'Autorespuesta',
@@ -31,5 +31,12 @@ return [
 	'updated' => 'Actualizado correctamente',
 	'email' => 'E-mail',
 	'deleted' => 'Eliminado',
-    'gallery_introduction_headline' => 'Descripción de la galería'
+    'gallery_introduction_headline' => 'Descripción de la galería',
+
+	'advanced_options' => 'Opciones avanzadas',
+	'add_webservice' => 'Añadir webservice?',
+	'no' => 'No',
+	'yes' => 'Si',
+	'yes_with_variable' => 'Si con variable',
+	'if_variable' => '',
 ];

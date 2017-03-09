@@ -143,6 +143,10 @@ footer a {
     padding: 10px;
     width: 100%;
 }
+.modal-header {
+    background:#24A1DA;
+    color:#fff;
+}
 .content input[type="submit"] {
     background-color: #00a7b6;
     color: #fff;
@@ -2092,8 +2096,34 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
         padding-bottom: 5px;
     }
 }
-
+#mobile_footer {
+    display:none;
+}
 @media (max-width:480px){
+
+    #mobile_footer {
+        display:block;
+        float:left;
+        width:100%;
+        background: #24A1DA;
+        text-align:center;
+
+    }
+    #mobile_footer div {
+        display: inline-block;
+
+    }
+    #mobile_footer div a {
+        padding:15px 20px;
+        float:left;
+        color:#fff;
+        cursor:pointer;
+
+    }
+    #mobile_footer div a:hover {
+        background:#1991C4;
+
+    }
     .mobile_hide {
         display:none;
     }

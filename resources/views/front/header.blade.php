@@ -134,9 +134,6 @@
 				<p><a href="{!! URL::to('/language/es') !!}">Español</a></p>
 				<p><a href="{!! URL::to('/language/en') !!}">English</a></p>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">{!! trans('front/header.close') !!}</button>
-			</div>
 		</div>
 
 	</div>

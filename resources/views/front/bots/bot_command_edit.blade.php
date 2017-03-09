@@ -73,6 +73,7 @@
                             ?>
                         </label>
                     </li>
+	                <? if (session('statut') === 'admin' || session('statut') === 'vip') { ?>
 
                     <script>
 		                $( function() {
@@ -80,11 +81,11 @@
 		                } );
                     </script>
                     <div id="accordion">
-                        <a style="cursor:pointer">+ Opcions avançades</a>
+                        <a style="cursor:pointer">+ {{ trans('front/command.advanced_options') }}</a>
                         <div>
                             <br>
                             <li class="webservice_type">
-                                <span> Afegir webservice? </span>
+                                <span>  {{ trans('front/command.add_webservice') }}</span>
 
                                 <div class="box">
                                     <select id="webservice_type" name="webservice_type">
@@ -104,21 +105,22 @@
 						                    $sel3 = "selected='selected'";
 					                    }
 					                    ?>
-                                        <option value="0" <?php echo $sel1; ?> >No</option>
-                                        <option value="1" <?php echo $sel2; ?> >Sí</option>
-                                        <option value="2" <?php echo $sel3; ?> >Sí, amb variable</option>
+                                        <option value="0" <?php echo $sel1; ?> > {{ trans('front/command.no') }}</option>
+                                        <option value="1" <?php echo $sel2; ?> > {{ trans('front/command.yes') }}</option>
+                                        <option value="2" <?php echo $sel3; ?> > {{ trans('front/command.yes_with_variable') }}</option>
                                     </select>
                                 </div>
+                            </li>
                             <li>
                                 <span>Webservice URL</span>
                                 <label id="bc_title" class="lead emoji-picker-container">
                                     {!! Form::control('url', 0, 'webservice_url', $errors, '',$botCommands[0]->webservice_url,"data-emojiable='false'") !!}
                                 </label>
-                                <small>* Si és amb una variable que ha d'introduïr l'usuari, acabar la url amb la variable i el signe "=" obert.</small>
+                                <small>* {{ trans('front/command.if_variable') }}</small>
 
                             </li>
-                            <li>
-			                    <?
+
+			                    <? /*
 			                    if (filter_var($botCommands[0]->webservice_url, FILTER_VALIDATE_URL) ) {
 				                    echo "<h3>Resultat Webservice</h3>";
 				                    $xml = simplexml_load_file($botCommands[0]->webservice_url);
@@ -147,11 +149,12 @@
 					                    }
 				                    }
 
-			                    }
+			                    } */
 			                    ?>
-                            </li>
+
                         </div>
                     </div>
+                    <? } ?>
 
 
 

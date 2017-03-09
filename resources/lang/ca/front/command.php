@@ -5,7 +5,7 @@ return [
 	'channels' => 'Canals',
 	'add_new_bot_chanel' => 'Afegir Bot o Canal',
 	'create_bot_command' => 'Crear un nou botó',
-	'update_bot_command' => 'Actualitzar botó',
+	'update_bot_command' => 'Editar botó',
 	'telegram' => 'Telegram',
 	'select_type' => 'Selecciona el tipus de botó que vols crear',
 	'autoresponse' => 'Autoresposta',
@@ -32,6 +32,13 @@ return [
 	'updated' => 'Actualitzat correctament',
 	'email' => 'E-mail',
 	'deleted' => 'Eliminat',
-    'gallery_introduction_headline' => 'Descripció de la galeria'
+    'gallery_introduction_headline' => 'Descripció de la galeria',
+
+	'advanced_options' => 'Opcions avançades',
+	'add_webservice' => 'Afegir webservice?',
+	'no' => 'No',
+	'yes' => 'Sí',
+	'yes_with_variable' => 'Sí amb variable',
+	'if_variable' => 'Si és amb una variable que ha d\'introduïr l\'usuari, acabar la url amb la variable i el signe "=" obert.',
 
 ];

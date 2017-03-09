@@ -49,11 +49,15 @@
 			</div>
 
 		</section>
-		<style>
-			footer a {
-				cursor:pointer;
-			}
-		</style>
+		<div id="mobile_footer">
+			<div>
+				<a href="#" onclick="FreshWidget.show(); return false;" data-toggle="tooltip" title="{!! trans('front/header.help') !!}">
+					<i class="fa fa-question" aria-hidden="true" style="font-size:22px;"></i>
+				</a>
+
+				<a data-toggle="modal" data-target="#languages" title="{!! trans('front/header.change_language') !!}"><i class="fa fa-globe" aria-hidden="true" style="font-size:22px;"></i></a>
+			</div>
+		</div>
 		<footer>
 			@if(Config::get('app.locale')=="en")
 				<script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
@@ -61,18 +65,14 @@
                     FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Help+and+Support&submitTitle=Send&submitThanks=Thank+you&searchArea=no", "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png", "utf8": "✓", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#456288", "alignment": "3", "offset": "-1500px", "submitThanks": "Thank you", "formHeight": "500px", "url": "https://gestinet.freshdesk.com"} );
 				</script>
 				<a href="http://www.citymes.com/" target="_blank">Citymes</a> © {{date('Y')}} |
-				<a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Legal Advise</a> |
-				<a data-toggle="modal" data-target="#languages" title="{!! trans('front/header.change_language') !!}"><i class="fa fa-globe" aria-hidden="true"></i> Language</a> |
-				<a href="#" onclick="FreshWidget.show(); return false;" title="{!! trans('front/header.help') !!}"><i class="fa fa-question" aria-hidden="true"></i> Contact</a>
+				<a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Legal Advise</a>
 			@elseif(Config::get('app.locale')=="es")
 				<script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
 				<script type="text/javascript">
                     FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Ayuda+y+Soporte&submitTitle=Enviar&submitThanks=Gracias%2C+te+contactaremos+lo+mas+r%C3%A1pido+posible&searchArea=no", "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png", "utf8": "✓", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#456288", "alignment": "3", "offset": "-1500px", "submitThanks": "Gracias, te contactaremos lo mas rápido posible", "formHeight": "500px", "url": "https://gestinet.freshdesk.com"} );
 				</script>
 				<a href="http://www.citymes.com/" target="_blank">Citymes</a> © {{date('Y')}} |
-				<a href="http://www.citymes.com/es/aviso-legal/" target="_blank">Aviso Legal</a> |
-				<a data-toggle="modal" data-target="#languages" title="{!! trans('front/header.change_language') !!}"><i class="fa fa-globe" aria-hidden="true"></i> Idioma</a> |
-				<a href="#" onclick="FreshWidget.show(); return false;" title="{!! trans('front/header.help') !!}"><i class="fa fa-question" aria-hidden="true"></i> Contactar</a>
+				<a href="http://www.citymes.com/es/aviso-legal/" target="_blank">Aviso Legal</a>
 
 			@elseif(Config::get('app.locale')=="ca")
 				<script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
@@ -80,9 +80,7 @@
                     FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Ajuda+i+Suport&submitTitle=Enviar&submitThanks=Gr%C3%A0cies.+Et+contactarem+el+m%C3%A9s+r%C3%A0pid+possible&searchArea=no", "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png", "utf8": "✓", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#456288", "alignment": "3", "offset": "-1500px", "submitThanks": "Gràcies. Et contactarem el més ràpid possible", "formHeight": "500px", "url": "https://gestinet.freshdesk.com"} );
 				</script>
 				<a href="http://www.citymes.com/" target="_blank">Citymes</a> © {{date('Y')}} |
-				<a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Avís Legal</a> |
-				<a data-toggle="modal" data-target="#languages" title="{!! trans('front/header.change_language') !!}"><i class="fa fa-globe" aria-hidden="true"></i> Idioma</a> |
-				<a href="#" onclick="FreshWidget.show(); return false;" title="{!! trans('front/header.help') !!}"><i class="fa fa-question" aria-hidden="true"></i> Contactar</a>
+				<a href="http://www.citymes.com/ca/avis-legal/" target="_blank">Avís Legal</a>
 			@endif
 		</footer>
 		{!! HTML::script('lib/js/nanoscroller.min.js') !!}

@@ -476,7 +476,7 @@ class MyChannelController extends Controller {
 		
 		 if($chart_time == '10_days'){
             $day = date('w');
-            $startDate = date('Y-m-d',strtotime('today - 7 days'));
+            $startDate = date('Y-m-d',strtotime('today - 10 days'));
             $endDate = date('Y-m-d');
         }
 
@@ -507,7 +507,7 @@ class MyChannelController extends Controller {
 							->where('send_date','LIKE','%'.$v1.'%')
 							->get();
 			
-			$arr[$i][0] = date('d.m',strtotime($v1));
+			$arr[$i][0] = date('d-m-Y',strtotime($v1)).": ".trans('front/dashboard.messages_sent_the_last')." ".trans('front/dashboard.'.$chart_time);
 			$arr[$i][1] = count($count_bot);	
 			$i++;
 		}

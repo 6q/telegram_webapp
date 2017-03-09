@@ -150,4 +150,12 @@ return [
     'are_you_sure' => '¿Estás seguro?',
     'you_are_going_to_delete' => 'No vas a poder volver atrás',
 
+	'day' => 'Día',
+
+	'custom_plan' => 'Plan personalizado',
+	'custom_plan_info' => '¿Necesitáis mas recursos para vuestro bot? ¿Queréis implementar webservices o otras herramientas avanzadas? Rellena el formulario y lo hablamos.',
+	'contact' => 'Contactar',
+	'information' => 'Información',
+
+
 ];

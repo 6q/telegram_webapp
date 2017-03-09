@@ -1622,7 +1622,7 @@ class BotController extends Controller
 				$bot_command->image = $img_name_s;
 				
 				if($bot_command->save()){
-					return redirect('bot/detail/'.$bot_id)->with('ok', trans('back/bot.command_created'));
+					return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/bots.command_created'));
 				}
 			}
 			else{
