@@ -26,18 +26,21 @@ foreach($bots as $k1 => $v1){
 	        echo $date->format('d-m-Y')."<br>".$date->format('H:i:s');
 	        ?>
         </td>
-        <td><?php echo $mv1->text;?></td>
+        <td><?php
+	        echo strlen($mv1->text) > 100 ? substr($mv1->text,0,100)."..." : $mv1->text;
+	        ?>
+		</td>
         <td class="mobile_hide">
-			<?php
-			if(file_exists(public_path().'/uploads/'.$mv1->reply_message) && !empty($mv1->reply_message)){
-			?>
-            {!! HTML::image('uploads/'.$mv1->reply_message) !!}
-			<?php
-			}
-			else{
-				echo $mv1->reply_message;
-			}
-			?>
+	        <?php
+	        if(strlen($mv1->reply_message) < 1000 && file_exists(public_path().'/uploads/'.$mv1->reply_message) && !empty($mv1->reply_message)){
+	        ?>
+			{!! HTML::image('uploads/'.$mv1->reply_message) !!}
+	        <?php
+	        }
+	        else{
+		        echo strlen($mv1->reply_message) > 100 ? substr($mv1->reply_message,0,100)."..." : $mv1->reply_message;
+	        }
+	        ?>
         </td>
     </tr>
 	<?php
