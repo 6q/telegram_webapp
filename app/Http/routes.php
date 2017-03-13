@@ -411,7 +411,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		else if(!empty($bot_commands_title) && in_array(strtolower(strtok($messageText, " ")),$bot_commands_title)){
 			$bot_cmd_msg = DB::table('bot_commands')
 							->where('bot_id','=',$dbBotId)
-							->where('lower(title)','LIKE','%'.strtolower(strtok($messageText, " ")).'%')
+							->where('LOWER(title)','LIKE','%'.strtolower(strtok($messageText, " ")).'%')
 							->get();
 			if(!empty($bot_cmd_msg)){
 				$msg = (isset($bot_cmd_msg[0]->command_description) && !empty($bot_cmd_msg[0]->command_description)?$bot_cmd_msg[0]->command_description:'');
