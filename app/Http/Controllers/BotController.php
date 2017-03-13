@@ -41,7 +41,7 @@ class BotController extends Controller
 		define('PAGE_DATA_LIMIT_MESSAGE','10');
 		define('PAGE_DATA_LIMIT_USER','10');
 		define('PAGE_ADJACENTS','3');
-		define('PAGE_BOT_COMMAND','5');
+		define('PAGE_BOT_COMMAND','10');
     }
     
          
@@ -594,7 +594,7 @@ class BotController extends Controller
 	                            ->get();
 		$total_pages_message = count($Total_message);
 		
-		$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->get();
+		$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->get();
 		$total_bot_commands = count($botCommands);
 		
 		$limit = PAGE_DATA_LIMIT; 
@@ -665,7 +665,7 @@ class BotController extends Controller
 								->limit($limitMessage)
 	                            ->get();
 				
-				$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->limit($bot_commands_limit)->get();
+				$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->limit($bot_commands_limit)->get();
 								
 								
             }
@@ -1121,10 +1121,10 @@ class BotController extends Controller
 			$start = 0;	
 		}
 		
-		$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->get();
+		$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->get();
 		$total_bot_commands = count($botCommands);
 		
-		$botCommands = DB::table('bot_commands')->where('bot_id','=',$botid)->limit($limit)->offset($start)->get();
+		$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->limit($limit)->offset($start)->get();
 		
 		return view('front.bots.paginnate_bot_command', compact('botCommands','total_bot_commands','limit','botid','current_page','adjacents'));
 	}
@@ -1355,7 +1355,7 @@ class BotController extends Controller
             $messages = DB::table('bot_messages')->where('bot_id', '=', $bot_id)->get();
             $bot_uesers = DB::table('bot_users')->where('bot_id', '=', $bot_id)->get();
 			
-			$botCommands = DB::table('bot_commands')->where('bot_id','=',$bot_id)->get();
+			$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$bot_id)->get();
             
         }
         
