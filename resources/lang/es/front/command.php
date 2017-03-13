@@ -32,6 +32,8 @@ return [
 	'email' => 'E-mail',
 	'deleted' => 'Eliminado',
     'gallery_introduction_headline' => 'Descripción de la galería',
+	'if_you_want_to_receive' => 'Si se quiere recibir el formulario a mas de un correo electrónico, separelos por comas',
+
 
 	'advanced_options' => 'Opciones avanzadas',
 	'add_webservice' => 'Añadir webservice?',

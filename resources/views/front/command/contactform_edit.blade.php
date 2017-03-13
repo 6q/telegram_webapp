@@ -53,6 +53,9 @@
                         <label id="email_err" class="lead">
                             {!! Form::control('text', 0, 'email', $errors,'',$contact_forms[0]->email) !!}
                         </label>
+                        <small>
+                            * {!! trans('front/command.if_you_want_to_receive') !!}
+                        </small>
                     </li>
 
                     <li>
@@ -252,10 +255,6 @@
             var headline = $('#headline').val();
 
             if (email == '') {
-                chk = 0;
-                $('#email_err div').addClass('has-error');
-            }
-            else if (!isValidEmailAddress(email)) {
                 chk = 0;
                 $('#email_err div').addClass('has-error');
             }

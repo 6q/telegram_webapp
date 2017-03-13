@@ -33,6 +33,8 @@ return [
 	'email' => 'Email',
 	'deleted' => 'Command deleted',
     'gallery_introduction_headline' => 'Gallery description',
+	'if_you_want_to_receive' => 'If you want to receive the form on more than one email, divide them with commas',
+
 
 	'advanced_options' => 'Advanced options',
 	'add_webservice' => 'Add webservice?',

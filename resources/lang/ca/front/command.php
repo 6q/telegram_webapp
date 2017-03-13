@@ -33,6 +33,7 @@ return [
 	'email' => 'E-mail',
 	'deleted' => 'Eliminat',
     'gallery_introduction_headline' => 'Descripció de la galeria',
+    'if_you_want_to_receive' => 'Si es vol rebre el formulari a més d\'un correu electrònic, separar-los per comes',
 
 	'advanced_options' => 'Opcions avançades',
 	'add_webservice' => 'Afegir webservice?',

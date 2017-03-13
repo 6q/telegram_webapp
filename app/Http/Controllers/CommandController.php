@@ -599,6 +599,7 @@ class CommandController extends Controller
 					   move_uploaded_file($img_path,$upload_img);
 					}
 				}
+
 	
 				$autoresponse->image = $img_name_s;
 				$autoresponse->save();
@@ -722,14 +723,14 @@ class CommandController extends Controller
 					$chanel->chanel_msg = $request->get('chanel_msg');
 				}
 				
-				$img_name_s = $request->get('old_image');
-				if($request->hasFile('image')){
-					$error_img = $_FILES["image"]["error"];
-					$img_name = $_FILES["image"]["name"];
+				$img_name_s = $request->get('old_img');
+				if($request->hasFile('chanel_image')){
+					$error_img = $_FILES["chanel_image"]["error"];
+					$img_name = $_FILES["chanel_image"]["name"];
 	
 					if($error_img == '0' && $img_name != '' )
 					{
-					   $img_path = $_FILES["image"]["tmp_name"];
+					   $img_path = $_FILES["chanel_image"]["tmp_name"];
 					   $ext = pathinfo($img_name);
 					   $img_name_s = time().'.'.$ext['extension'];
 					   $upload_img = public_path().'/uploads/'.$img_name_s;
@@ -740,7 +741,7 @@ class CommandController extends Controller
 	
 				$chanel->image = $img_name_s;
 				$chanel->save();
-	
+
 				return redirect('bot/detail/'.$bot_id)->with('ok', trans('front/command.updated'));
 			}
 			else{
