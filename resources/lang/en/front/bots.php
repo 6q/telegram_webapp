@@ -154,7 +154,7 @@ return [
 	'day' => 'Day',
 
 	'custom_plan' => 'Custom plan',
-	'custom_plan_info' => 'You need more resources for your bot? Do you want to implement advanced services such as webservices? Fill the form, we will love to speak with you!',
+	'custom_plan_info' => 'Do you need more resources for your bot? Do you want to implement advanced services such as webservices? Fill up the form.',
 	'contact' => 'Contact',
 	'information' => 'Information',
 ];

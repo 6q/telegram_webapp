@@ -153,7 +153,7 @@ return [
 	'day' => 'Día',
 
 	'custom_plan' => 'Plan personalizado',
-	'custom_plan_info' => '¿Necesitáis mas recursos para vuestro bot? ¿Queréis implementar webservices o otras herramientas avanzadas? Rellena el formulario y lo hablamos.',
+	'custom_plan_info' => '¿Necesita más recursos en su bot? ¿Quiere implementar "webservices" o otras herramientas avanzadas? Rellene el formulario.',
 	'contact' => 'Contactar',
 	'information' => 'Información',
 

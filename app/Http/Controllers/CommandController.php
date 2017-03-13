@@ -730,7 +730,8 @@ class CommandController extends Controller
 					if($error_img == '0' && $img_name != '' )
 					{
 					   $img_path = $_FILES["image"]["tmp_name"];
-					   $img_name_s = time()."_".$img_name;
+					   $ext = pathinfo($img_name);
+					   $img_name_s = time().'.'.$ext['extension'];
 					   $upload_img = public_path().'/uploads/'.$img_name_s;
 	
 					   move_uploaded_file($img_path,$upload_img);

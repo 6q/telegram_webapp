@@ -153,7 +153,7 @@ return [
 	'day' => 'Dia',
 
 	'custom_plan' => 'Pla personalitzat',
-	'custom_plan_info' => 'Necessiteu més recursos per al vostre bot? Voleu implementar webservices o altres eines avançades? Omple el formulari i parlem-ne.',
+	'custom_plan_info' => 'Necessita més recursos per al seu bot? Vol implementar "webservices" o altres eines avançades? Ompli el formulari.',
 	'contact' => 'Contactar',
 	'information' => 'Informació',
 
