@@ -1128,7 +1128,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                 $data = [
                     'chat_id' => $chat_id,
                     'photo' => $cfile,
-                    'caption' => $msg,
+                    'caption' => strip_tags($msg),
                 ];
                 $ch = curl_init($BOTAPI.'sendPhoto');
                 curl_setopt($ch, CURLOPT_HEADER, false);
