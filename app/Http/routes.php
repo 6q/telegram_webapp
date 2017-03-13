@@ -396,7 +396,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		}
 		else if(isset($bot_data[0]->comanda) && $messageText == $bot_data[0]->comanda)
 		{
-			$commands  = DB::table('bot_commands')->where('bot_id','=',$dbBotId)->get();
+			$commands  = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$dbBotId)->get();
 			//file_put_contents(public_path().'/result_command.txt',json_encode($commands));
 			$msg = '';
 			if(!empty($commands))
