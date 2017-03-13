@@ -349,7 +349,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		$bot_commands = DB::table('bot_commands')->where('bot_id','=',$dbBotId)->get();
 		if(!empty($bot_commands)){
 			foreach($bot_commands as $key1 => $val1){
-				$bot_commands_title[] = $val1->title;
+				$bot_commands_title[] = strtolower($val1->title);
 			}
 		}
         
@@ -408,10 +408,10 @@ Route::post('/{bottoken}/webhook', function ($token) {
 			} else $msg .= "\xE2\x9D\x8C".chr(10);
 			//file_put_contents(public_path().'/result_command.txt',json_encode($msg));
 		}
-		else if(!empty($bot_commands_title) && in_array(strtok($messageText, " "),$bot_commands_title)){
+		else if(!empty($bot_commands_title) && in_array(strtolower(strtok($messageText, " ")),$bot_commands_title)){
 			$bot_cmd_msg = DB::table('bot_commands')
 							->where('bot_id','=',$dbBotId)
-							->where('title','LIKE','%'.strtok($messageText, " ").'%')
+							->where('lower(title)','LIKE','%'.strtolower(strtok($messageText, " ")).'%')
 							->get();
 			if(!empty($bot_cmd_msg)){
 				$msg = (isset($bot_cmd_msg[0]->command_description) && !empty($bot_cmd_msg[0]->command_description)?$bot_cmd_msg[0]->command_description:'');
