@@ -1054,17 +1054,19 @@ class CommandController extends Controller
 					$gallery->introduction_headline = $request->get('introduction_headline');
 					$gallery->updated_at = date('Y-m-d h:i:s');
 		
-					if($gallery->save()){
+					if($gallery->save()) {
 						$galleryId = $gallery->id;
 		
 						if(!empty($request->get('title'))){
 							DB::table('gallery_images')->where('gallery_id', '=', $galleryId)->delete();
+							$descriptions = $request->get('description');
 							foreach($request->get('title') as $k1 => $v1){
 								$data = explode('_',$k1);
-		
+
 								$gallery_img = new GalleryImage;
 								$gallery_img->gallery_id = $galleryId;
 								$gallery_img->title = $v1;
+								$gallery_img->description = $descriptions[$k1];
 								$gallery_img->image = $data[0];
 								$gallery_img->sort_order = $data[1];
 								$gallery_img->created_at = date('Y-m-d h:i:s');

@@ -1054,7 +1054,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 							->where('title', 'LIKE', '%'.$messageText.'%')
 							->get();	
 						
-						$msg = '';
+						$msg = $gallery_images[0]->description;
 						$img_url = '';
 						$image_name = '';
 						if(isset($gallery_images[0]->image) && !empty($gallery_images[0]->image)){

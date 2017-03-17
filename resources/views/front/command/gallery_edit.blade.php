@@ -74,7 +74,11 @@
 								if(isset($gallery_images) && !empty($gallery_images)){
 									foreach($gallery_images as $k1 => $v1){
 										?>
-										<li id="<?php echo $i; ?>"><a href="javascript:void(0);" class="close_button" onclick="rmv('<?php echo $i; ?>')">X</a><span><img src="{{ URL::to('/') }}/uploads/<?php echo $v1->image; ?>" /></span><input type="text" name="title[<?php echo $v1->image.'_'.$i; ?>]" value="<?php echo $v1->title; ?>" /></li>
+										<li id="<?php echo $i; ?>">
+											<a href="javascript:void(0);" class="close_button" onclick="rmv('<?php echo $i; ?>')">X</a><span><img src="{{ URL::to('/') }}/uploads/<?php echo $v1->image; ?>" /></span>
+											<input type="text" name="title[<?php echo $v1->image.'_'.$i; ?>]" value="<?php echo $v1->title; ?>" placeholder="Botón" required/>
+											<textarea type="text" name="description[<?php echo $v1->image.'_'.$i; ?>]" placeholder="Descripción"><?php echo $v1->description; ?></textarea>
+										</li>
 										<?php
 										$i++;
 									}
@@ -175,7 +179,7 @@ $(document).ready(function()
 			}
         },
         onSuccess: function (files, data, xhr){
-			$('#preview').append('<li id="'+count+'"><a href="javascript:void(0);" class="close_button" onclick="rmv('+count+')">X</a><span><img src="{{ URL::to('/') }}/uploads/'+data+'" /></span><input type="text" name="title['+data+'_'+count+']" value="" /></li>');
+			$('#preview').append('<li id="'+count+'"><a href="javascript:void(0);" class="close_button" onclick="rmv('+count+')">X</a><span><img src="{{ URL::to('/') }}/uploads/'+data+'" /></span><input type="text" name="title['+data+'_'+count+']" value="" placeholder="Botón" required /><textarea type="text" name="description['+data+'_'+count+']" placeholder="Descripción"></textarea></li>');
 			
 			count = parseInt(count)+1;
 		},
