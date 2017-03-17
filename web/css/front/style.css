@@ -1564,6 +1564,7 @@ span.selectOption:hover
     clear: both;
     display: inline-block;
     margin-top: 30px;
+    width:100%;
 }
 
 .upload_content li {

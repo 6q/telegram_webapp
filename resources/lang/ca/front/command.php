@@ -42,4 +42,7 @@ return [
 	'yes_with_variable' => 'Sí amb variable',
 	'if_variable' => 'Si és amb una variable que ha d\'introduïr l\'usuari, acabar la url amb la variable i el signe "=" obert.',
 
+	'button' => 'Botó',
+	'description' => 'Descripció',
+
 ];

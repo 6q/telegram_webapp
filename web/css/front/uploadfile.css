@@ -159,9 +159,6 @@ body .bot_command_form .upload > span {
 .upload .ajax-upload-dragdrop {
   width: 131px !important;
 }
-#command_form .upload_content li {
-  width: auto;
-}
 .bot_command_form .upload_content input {
   padding: 4px 0;
 }

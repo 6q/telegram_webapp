@@ -41,4 +41,7 @@ return [
 	'yes' => 'Si',
 	'yes_with_variable' => 'Si con variable',
 	'if_variable' => '',
+
+	'button' => 'Botón',
+	'description' => 'Descripción',
 ];
