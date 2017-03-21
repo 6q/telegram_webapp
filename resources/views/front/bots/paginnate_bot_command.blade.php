@@ -3,7 +3,7 @@
 		<tr>
     		<th>{!! trans('front/bots.bot_command') !!}</th>
             <th>{{ trans('front/bots.action') }}</th>
-			<th width="20px"></th>
+			<th width="35px"></th>
 		</tr>
 	</thead>
 	
