@@ -778,6 +778,7 @@
                                 <tr>
                                     <th>{!! trans('front/bots.bot_command') !!}</th>
                                     <th>{{ trans('front/bots.action') }}</th>
+                                    <th width="20px"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -791,6 +792,9 @@
                                         <a class="btn btn-warning" href="{!! URL::to('/bot/bot_command_edit/'.$v6->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                         <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/bot/bot_command_delete/'.$v6->bot_id.'/'.$v6->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
+									<td>
+										<?php if(isset($v6->webservice_type) && !empty($v6->webservice_url)) echo '<i class="fa fa-plug" aria-hidden="true" title="Webservice" ></i>'; ?>
+									</td>
                                 </tr>
                                 <?php
                                 }
