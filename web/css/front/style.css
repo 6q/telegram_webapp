@@ -1736,7 +1736,7 @@ img {
     border-bottom:1px #C5C6C6 solid;
     width: 100%;
     color:black!important;
-    height:44px;
+    height:40px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -2150,7 +2150,7 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     border-bottom: 1px #C5C6C6 solid;
     width: 100%;
     color: black !important;
-    height:44px;
+    height:40px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
