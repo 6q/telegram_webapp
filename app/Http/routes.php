@@ -524,7 +524,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             
         }
         else if(!empty($messageText) && $messageText == $contact_form){
-            $db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
+            $db_contact_form = DB::table('contact_forms')->orderBy('submenu_heading_text','ASC')->where('type_id', '=', $dbBotId)->get();
 			
 			$w_contact_form = DB::table('bots')->where('id', '=', $dbBotId)->get();
 			if(isset($w_contact_form[0]->intro_contact_form) && !empty($w_contact_form[0]->intro_contact_form)){
@@ -554,7 +554,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             
         }
         else if(!empty($messageText) && $messageText == $galleries){
-            $db_galleries = DB::table('galleries')->where('type_id', '=', $dbBotId)->get();
+            $db_galleries = DB::table('galleries')->orderBy('gallery_submenu_heading_text','ASC')->where('type_id', '=', $dbBotId)->get();
 			
 			$w_galleries = DB::table('bots')->where('id', '=', $dbBotId)->get();
 			if(isset($w_galleries[0]->intro_galleries) && !empty($w_galleries[0]->intro_galleries)){
@@ -582,7 +582,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
             $keyboard = $arr;
         }
         else if(!empty($messageText) && $messageText == $channels){
-            $db_chanels = DB::table('chanels')->where('type_id', '=', $dbBotId)->get();
+            $db_chanels = DB::table('chanels')->orderBy('chanel_submenu_heading_text','ASC')->where('type_id', '=', $dbBotId)->get();
 			
 			$w_chanels = DB::table('bots')->where('id', '=', $dbBotId)->get();
 			if(isset($w_chanels[0]->intro_channels) && !empty($w_chanels[0]->intro_channels)){
@@ -670,7 +670,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
                     $arr = '';
                     $Back = "\xE2\x97\x80";
                     $i = 0;
-                    $db_autoresponse = DB::table('autoresponses')->where('type_id', '=', $dbBotId)->get();
+                    $db_autoresponse = DB::table('autoresponses')->orderBy('submenu_heading_text','ASC')->where('type_id', '=', $dbBotId)->get();
                     if(isset($db_autoresponse) && !empty($db_autoresponse)){
                         foreach($db_autoresponse as $ak1 => $av1){
                             $arr[$i]['text'] = $av1->submenu_heading_text;

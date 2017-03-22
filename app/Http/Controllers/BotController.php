@@ -623,25 +623,25 @@ class BotController extends Controller
                 $autoResponse = DB::table('autoresponses')
                                     ->where('type_id', '=', $botid)
                                     ->where('submenu_heading_text', 'LIKE', '%'.$search.'%')
-									->limit($limit)
+	                                ->orderBy('submenu_heading_text','ASC')
                                     ->get();
                 
                 $contactForm = DB::table('contact_forms')
                                     ->where('type_id', '=', $botid)
                                     ->where('submenu_heading_text', 'LIKE', '%'.$search.'%')
-									->limit($limit)
+	                                ->orderBy('submenu_heading_text','ASC')
                                     ->get();
                 
                 $gallery = DB::table('galleries')
                                     ->where('type_id', '=', $botid)
                                     ->where('gallery_submenu_heading_text', 'LIKE', '%'.$search.'%')
-									->limit($limit)
+	                                ->orderBy('gallery_submenu_heading_text','ASC')
                                     ->get();
                 
                 $chanels = DB::table('chanels')
                                     ->where('type_id', '=', $botid)
                                     ->where('chanel_submenu_heading_text', 'LIKE', '%'.$search.'%')
-									->limit($limit)
+	                                ->orderBy('chanel_submenu_heading_text','ASC')
                                     ->get();
                 
                 $activeUser = '';
@@ -651,10 +651,10 @@ class BotController extends Controller
                 
             }
             else{
-                $autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->limit($limit)->get();
-                $contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->limit($limit)->get();
-                $gallery = DB::table('galleries')->where('type_id', '=', $botid)->limit($limit)->get();
-                $chanels = DB::table('chanels')->where('type_id', '=', $botid)->limit($limit)->get();
+                $autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->orderBy('submenu_heading_text','ASC')->get();
+                $contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->orderBy('submenu_heading_text','ASC')->get();
+                $gallery = DB::table('galleries')->where('type_id', '=', $botid)->orderBy('gallery_submenu_heading_text','ASC')->get();
+                $chanels = DB::table('chanels')->where('type_id', '=', $botid)->orderBy('chanel_submenu_heading_text','ASC')->get();
                 
                 $activeUser = DB::table('bot_users')->where('bot_id', '=', $botid)->limit($limitUser)->get();
                 

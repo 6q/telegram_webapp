@@ -641,7 +641,8 @@ div.buying_table {
 .paginacio .botonou .btn {
     font-size: 14px;
     line-height: 24px;
-    padding: 0 7px;
+    padding-left:10px;
+    padding-right:10px;
     margin: 0 5px 0 0;
     float:left;
 }
@@ -1735,6 +1736,20 @@ img {
     border-bottom:1px #C5C6C6 solid;
     width: 100%;
     color:black!important;
+    height:44px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.chat_tab a:hover {
+
+    border-bottom:1px #898989 solid;
+
+}
+.chat_tab a:active {
+
+    background:#EFEFEF;
+
 }
 
 #bots_contentNavPosition ul li span, #bots_contentNavPosition ul li a {
@@ -2099,6 +2114,66 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
 }
 #mobile_footer {
     display:none;
+}
+.tablesearch {
+    font-size: 12px;
+    margin: 0;
+    float: left;
+    width: 120px;
+    margin-right: 5px;
+    display: none;
+}
+.telebuttons {
+    background:#DEE1E6;
+    height:200px;
+    overflow-y: scroll;
+    vertical-align: top;
+    display:block;
+}
+.telebuttons ul {
+    margin: 0 0 10px 0;
+    width: 100%;
+}
+.telebuttons ul li {
+    border: medium none;
+    float: left;
+    padding: 3px;
+    width: 50%;
+    position:relative;
+}
+.telebuttons ul li a.telebutton {
+    font-size: 16px;
+    padding: 10px 5px 10px;
+    display: inline-block;
+    background: #fff;
+    border-radius: 4px;
+    border-bottom: 1px #C5C6C6 solid;
+    width: 100%;
+    color: black !important;
+    height:44px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.telebuttons ul li .danger{
+    display:block;
+    width:auto;
+    padding:0;
+    position:absolute;
+    top:7px;
+    right:7px;
+    color:#DEE1E6;
+    cursor: pointer;
+    font-size:14px;
+}
+.telebuttons ul li .danger:hover{
+    color:gray;
+}
+.telebuttons ul li a.telebutton:hover {
+    border-bottom: 1px #898989 solid;
+}
+.telebuttons ul li a.telebutton:active {
+    background: #EFEFEF;
 }
 @media (max-width:480px){
 

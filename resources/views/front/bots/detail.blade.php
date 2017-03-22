@@ -148,35 +148,31 @@
 						</a></h2>
                     <div id="a_autoResp">    
 						<table id="botAutoresponse">
-                            <thead>
-                            <tr>
-                                <th>{{ trans('front/bots.submenu_heading_text') }}</th>
-                                <th>{{ trans('front/bots.action') }}</th>
-                            </tr>
-                            </thead>
                             <tbody>
-                            <?php
-                            if(!empty($autoResponse)){
-                            foreach($autoResponse as $d2 => $v2){
-                            ?>
-                            <tr>
-                                <td><?php echo $v2->submenu_heading_text;?></td>
-                                <td>
-                                    <a class="btn btn-warning" href="{!! URL::to('/command/autoresponse_edit/'.$v2->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/autoresponse_delete/'.$v2->type_id.'/'.$v2->id) !!}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                            <?php
-                            }
-                            }
-                            else{
-                            ?>
-                            <tr>
-                                <td colspan="5">{{ trans('front/fornt_user.no_record') }}</td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
+							<tr>
+								<td colspan="5"  class="telebuttons">
+									<ul>
+										<?php
+										if(!empty($autoResponse)){
+										foreach($autoResponse as $d2 => $v2){
+										?>
+											<li>
+												<a class="telebutton" href="{!! URL::to('/command/autoresponse_edit/'.$v2->id) !!}" data-toggle="tooltip" data-original-title="Editar">
+													<?php echo $v2->submenu_heading_text;?>
+												</a>
+												<a class="danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/autoresponse_delete/'.$v2->type_id.'/'.$v2->id) !!}')"><i class="fa fa-times" aria-hidden="true"></i></a>
+											</li>
+										<?php
+										}
+										} else {
+										?>
+											<li>{{ trans('front/fornt_user.no_record') }}</li>
+										<?php
+										}
+										?>
+									</ul>
+								</td>
+							</tr>
                             <tfoot>
                             <tr>
                                 <td colspan="5" class="paginacio">
@@ -185,7 +181,7 @@
                                         if(isset($planDetails[0]->autoresponses) && !empty($planDetails[0]->autoresponses) && $total_pages < $planDetails[0]->autoresponses){
                                         ?>
 										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=autoresponses') !!}" class="btn btn-success">
-											{!! trans('front/dashboard.create_command') !!}
+											<i class="fa fa-plus" aria-hidden="true"></i>
 										</a>
 
                                         <?php
@@ -193,7 +189,7 @@
                                         else{
                                         ?>
 										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=autoresponses&act=1') !!}" class="btn btn-success">
-											{!! trans('front/dashboard.create_command') !!}
+											<i class="fa fa-plus" aria-hidden="true"></i>
 										</a>
                                         <?php
                                         }
@@ -204,98 +200,7 @@
                                     } ?>
 
 										<div id="botAutoresponseNavPosition" class="light-theme simple-pagination">
-                                            <?php
-                                            $lastpage = 0;
-                                            if($total_pages > 0)
-                                            {
-                                                $prev = $page - 1;
-                                                $next = $page + 1;
-                                                $lastpage = ceil($total_pages/$limit);
-                                                $lpm1 = $lastpage - 1;
-                                            }
-
-                                            $pagination = '';
-                                            if($lastpage >= 1)
-                                            {
-                                                $pagination = '<ul>';
-
-                                                if ($page > 1)
-                                                    $pagination.= '<li><a href="javascript:void(0)" class="page-link" onclick="changePagination('."'0','first','".$bots[0]->id."'".')")">&lt;</a>';
-                                                else
-                                                    $pagination.= '<li class="disabled"><span class="current prev">&lt;</span></li>';
-
-
-                                                if ($lastpage < 7 + ($adjacents * 2))
-                                                {
-                                                    for ($counter = 1; $counter <= $lastpage; $counter++)
-                                                    {
-                                                        if ($counter == $page)
-                                                            $pagination.= '<li class="active"><span class="current">'.$counter.'</span></li>';
-                                                        else
-                                                            $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$counter.'</a></li>';
-                                                    }
-                                                }
-                                                elseif($lastpage > 5 + ($adjacents * 2))
-                                                {
-                                                    if($page < 1 + ($adjacents * 2))
-                                                    {
-                                                        for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
-                                                        {
-                                                            if ($counter == $page)
-                                                                $pagination.= '<li class="active"><span class="current">'.$counter.'</span>';
-                                                            else
-                                                                $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$counter.'</a></li>';
-                                                        }
-                                                        $pagination.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lpm1."','".$lpm1."_no', '".$bots[0]->id."'".')">'.$lpm1.'</a></li>';
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lastpage."','".$lastpage."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';
-                                                    }
-                                                    elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
-                                                    {
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'1','1_no', '".$bots[0]->id."'".')">1</a></li>';
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                        $pagination.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
-                                                        {
-                                                            if ($counter == $page)
-                                                                $pagination.= '<li class="active"><span class="current">'.$counter.'</span>';
-                                                            else
-                                                                $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';
-                                                        }
-                                                        $pagination.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lpm1."','".$lpm1."_no','".$bots[0]->id."'".')">'.$lpm1.'</a></li>';
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$lastpage."','".$lastpage."_no', '".$bots[0]->id."'".')">'.$lastpage.'</a></li>';
-                                                    }
-                                                    else
-                                                    {
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'1','1_no','".$bots[0]->id."'".')">1</a></li>';
-                                                        $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                        $pagination.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
-                                                        {
-                                                            if ($counter == $page)
-                                                                $pagination.= '<li class="active"><span class="current">'.$counter.'</span>';
-                                                            else
-                                                                $pagination.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePagination('."'".$counter."','".$counter."_no', '".$bots[0]->id."'".')">'.$counter.'</a></li>';
-                                                        }
-                                                    }
-                                                }
-
-                                                if ($page < $counter - 1)
-                                                {
-                                                    $pagination.= '<li><a class="page-link next" href="javascript:void(0)" onclick="changePagination('."'".$next."','".$next."_no', '".$bots[0]->id."'".')">&gt;</a></li>';
-                                                }
-                                                else
-                                                {
-                                                    $pagination.= '<li class="active"><span class="current next">&gt;</span>';
-                                                }
-
-                                                $pagination .= '</ul>';
-                                            }
-
-                                            echo $pagination;
-                                            ?>
-											<img id="imgLoadAjax" src="{{URL::asset('img/balls.gif')}}" class="loading_ajax_img" style="display:none;">
+											<input type="text" class="tablesearch" placeholder="Cercar...">
 										</div>
                                 </td>
                             </tr>
@@ -307,37 +212,34 @@
 				</div>
 
 				<div class="col-plan col-lg-6">
-					<h2 class="h2_contact"><?php echo $bots[0]->contact_form; ?>                     <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
+					<h2 class="h2_contact"><?php echo $bots[0]->contact_form; ?>
+						<a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
 							<i class="fa fa-pencil" aria-hidden="true"></i>
-						</a></h2>
+						</a>
+					</h2>
                     
                     <div id="c_autoResp">
                     	<table id="botContactForm">
-                            <thead>
-                            <tr>
-                                <th>{{ trans('front/bots.submenu_heading_text') }}</th>
-                                <th>{{ trans('front/bots.action') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+							<tbody>
+							<tr>
+								<td colspan="5"  class="telebuttons">
+									<ul>
                             <?php
                             if(!empty($contactForm)){
                             foreach($contactForm as $d3 => $v3){
                             ?>
-                            <tr>
-                                <td><?php echo $v3->submenu_heading_text;?></td>
-                                <td><a class="btn btn-warning" href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/contactform_delete/'.$v3->type_id.'/'.$v3->id) !!}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
+								<li>
+									<a class="telebutton" href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}" data-toggle="tooltip" data-original-title="Editar">
+			                            <?php echo $v3->submenu_heading_text;?>
+									</a>
+									<a class="danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/contactform_delete/'.$v3->type_id.'/'.$v3->id) !!}')"><i class="fa fa-times" aria-hidden="true"></i></a>
+								</li>
                             <?php
                             }
                             }
                             else{
                             ?>
-                            <tr>
-                                <td colspan="5">{{ trans('front/fornt_user.no_record') }}</td>
-                            </tr>
+								<li>{{ trans('front/fornt_user.no_record') }}</li>
                             <?php
                             }
                             ?>
@@ -348,12 +250,12 @@
                                         if(isset($planDetails[0]->contact_forms) && !empty($planDetails[0]->contact_forms) && $total_pages_contatc_form < $planDetails[0]->contact_forms)
                                         {
                                         ?>
-										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms') !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
+										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms') !!}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                         <?php
                                         }
                                         else{
                                         ?>
-										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms&act=1') !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
+										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=contactforms&act=1') !!}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                         <?php
                                         }
                                         ?>
@@ -364,99 +266,8 @@
                                     } ?>
 
 									<div id="botContactFormNavPosition" class="light-theme simple-pagination">
-                                        <?php
-                                        $lastpage_cf = 0;
-                                        if($total_pages_contatc_form > 0)
-                                        {
-                                            $prev_cf = $page - 1;
-                                            $next_cf = $page + 1;
-                                            $lastpage_cf = ceil($total_pages_contatc_form/$limit);
-                                            $lpm1_cf = $lastpage_cf - 1;
-                                        }
+										<input type="text" class="tablesearch" placeholder="Cercar...">
 
-                                        $pagination_cf = '';
-                                        if($lastpage_cf >= 1)
-                                        {
-                                            $pagination_cf = '<ul>';
-
-                                            if ($page > 1)
-                                                $pagination_cf.= '<li><a href="javascript:void(0)" class="page-link" onclick="changePaginationCF('."'0','first','".$bots[0]->id."'".')")">&lt;</a>';
-                                            else
-                                                $pagination_cf.= '<li class="disabled"><span class="current prev">&lt;</span></li>';
-
-
-                                            if ($lastpage_cf < 7 + ($adjacents * 2))
-                                            {
-                                                for ($counter_cf = 1; $counter_cf <= $lastpage_cf; $counter_cf++)
-                                                {
-                                                    if ($counter_cf == $page)
-                                                        $pagination_cf.= '<li class="active"><span class="current">'.$counter_cf.'</span></li>';
-                                                    else
-                                                        $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$counter_cf."','".$counter_cf."_no', '".$bots[0]->id."'".')">'.$counter_cf.'</a></li>';
-                                                }
-                                            }
-                                            elseif($lastpage_cf > 5 + ($adjacents * 2))
-                                            {
-                                                if($page < 1 + ($adjacents * 2))
-                                                {
-                                                    for ($counter_cf = 1; $counter_cf < 4 + ($adjacents * 2); $counter_cf++)
-                                                    {
-                                                        if ($counter_cf == $page)
-                                                            $pagination_cf.= '<li class="active"><span class="current">'.$counter_cf.'</span>';
-                                                        else
-                                                            $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$counter_cf."','".$counter_cf."_no', '".$bots[0]->id."'".')">'.$counter_cf.'</a></li>';
-                                                    }
-                                                    $pagination_cf.= '<li><span class="ellipse clickable">...</span></li>';
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$lpm1_cf."','".$lpm1_cf."_no', '".$bots[0]->id."'".')">'.$lpm1_cf.'</a></li>';
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$lastpage_cf."','".$lastpage_cf."_no', '".$bots[0]->id."'".')">'.$lastpage_cf.'</a></li>';
-                                                }
-                                                elseif($lastpage_cf - ($adjacents * 2) > $page && $page > ($adjacents * 2))
-                                                {
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'1','1_no', '".$bots[0]->id."'".')">1</a></li>';
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                    $pagination_cf.= '<li><span class="ellipse clickable">...</span></li>';
-                                                    for ($counter_cf = $page - $adjacents; $counter_cf <= $page + $adjacents; $counter_cf++)
-                                                    {
-                                                        if ($counter_cf == $page)
-                                                            $pagination_cf.= '<li class="active"><span class="current">'.$counter_cf.'</span>';
-                                                        else
-                                                            $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$counter_cf."','".$counter_cf."_no', '".$bots[0]->id."'".')">'.$lastpage_cf.'</a></li>';
-                                                    }
-                                                    $pagination_cf.= '<li><span class="ellipse clickable">...</span></li>';
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$lpm1_cf."','".$lpm1_cf."_no','".$bots[0]->id."'".')">'.$lpm1_cf.'</a></li>';
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$lastpage_cf."','".$lastpage_cf."_no', '".$bots[0]->id."'".')">'.$lastpage_cf.'</a></li>';
-                                                }
-                                                else
-                                                {
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'1','1_no','".$bots[0]->id."'".')">1</a></li>';
-                                                    $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                    $pagination_cf.= '<li><span class="ellipse clickable">...</span></li>';
-                                                    for ($counter_cf = $lastpage_cf - (2 + ($adjacents * 2)); $counter_cf <= $lastpage_cf; $counter_cf++)
-                                                    {
-                                                        if ($counter_cf == $page)
-                                                            $pagination_cf.= '<li class="active"><span class="current">'.$counter_cf.'</span>';
-                                                        else
-                                                            $pagination_cf.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCF('."'".$counter_cf."','".$counter_cf."_no', '".$bots[0]->id."'".')">'.$counter_cf.'</a></li>';
-                                                    }
-                                                }
-                                            }
-
-
-                                            if ($page < $counter_cf - 1)
-                                            {
-                                                $pagination_cf.= '<li><a class="page-link next" href="javascript:void(0)" onclick="changePaginationCF('."'".$next_cf."','".$next_cf."_no', '".$bots[0]->id."'".')">&gt;</a></li>';
-                                            }
-                                            else
-                                            {
-                                                $pagination_cf.= '<li class="active"><span class="current next">&gt;</span>';
-                                            }
-
-                                            $pagination_cf .= '</ul>';
-                                        }
-
-                                        echo $pagination_cf;
-                                        ?>
-										<img id="imgLoadAjaxCF" src="{{URL::asset('img/balls.gif')}}" class="loading_ajax_img" style="display:none;">
 									</div>
                                 </td>
                             </tr>
@@ -475,291 +286,96 @@
 					</h2>
 					<div id="g_autoResp">
                     	<table id="botGallery">
-						<thead>
-						<tr>
-							<th>{{ trans('front/bots.submenu_heading_text') }}</th>
-							<th>{{ trans('front/bots.action') }}</th>
-						</tr>
-						</thead>
-						<tbody>
-						<?php
-						if(!empty($gallery)){
-						foreach($gallery as $d4 => $v4){
-						?>
-						<tr>
-							<td><?php echo $v4->gallery_submenu_heading_text;?></td>
-							<td>
-								<a class="btn btn-warning" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-								<a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/gallery_delete/'.$v4->type_id.'/'.$v4->id) !!}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-							</td>
-						</tr>
-						<?php
-						}
-						}
-						else{
-						?>
-						<tr>
-							<td colspan="5">{{ trans('front/fornt_user.no_record') }}</td>
-						</tr>
-						<?php
-						}
-						?>
-						<tr>
-							<td colspan="5" class="paginacio">
-								<div class="botonou">
-									 <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $total_pages_gallery < $planDetails[0]->image_gallery){
-									 ?>
-										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries') !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
-									 <?php
-										 }
-										 else{
-										?>
-											<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries&act=1') !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
+							<tbody>
+							<tr>
+								<td colspan="5"  class="telebuttons">
+									<ul>
 										<?php
-										 }
-									 ?>
-								</div>
+										if(!empty($gallery)){
+										foreach($gallery as $d4 => $v4){
+										?>
+											<li>
+												<a class="telebutton" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}" data-toggle="tooltip" data-original-title="Editar">
+													<?php echo $v4->gallery_submenu_heading_text;?>
+												</a>
+												<a class="danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/gallery_delete/'.$v4->type_id.'/'.$v4->id) !!}')"><i class="fa fa-times" aria-hidden="true"></i></a>
+											</li>
 
-                                <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $planDetails[0]->image_gallery<999){
-                                    echo '<div class="info_test"> '.$total_pages_gallery.' / '.$planDetails[0]->image_gallery.' </div>';
-                                } ?>
+										<?php
+										}
+										}
+										?>
+									</ul>
+								</td>
+							</tr>
+							<tfoot>
+							<tr>
+								<td colspan="5" class="paginacio">
+									<div class="botonou">
+					                    <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $total_pages_gallery < $planDetails[0]->image_gallery){
+					                    ?>
+										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries') !!}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+					                    <?php
+					                    }
+					                    else{
+					                    ?>
+										<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=galleries&act=1') !!}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+					                    <?php
+					                    }
+					                    ?>
+									</div>
 
-								<div id="botGalleryNavPosition" class="light-theme simple-pagination">
-                                    <?php
-                                    $lastpage_g = 0;
-                                    if($total_pages_gallery > 0)
-                                    {
-                                        $prev_g = $page - 1;
-                                        $next_g = $page + 1;
-                                        $lastpage_g = ceil($total_pages_gallery/$limit);
-                                        $lpm1_g = $lastpage_g - 1;
-                                    }
+				                    <?php if(isset($planDetails[0]->image_gallery) && !empty($planDetails[0]->image_gallery) && $planDetails[0]->image_gallery<999){
+					                    echo '<div class="info_test"> '.$total_pages_gallery.' / '.$planDetails[0]->image_gallery.' </div>';
+				                    } ?>
 
-                                    $pagination_g = '';
-                                    if($lastpage_g >= 1)
-                                    {
-                                        $pagination_g = '<ul>';
-
-                                        if ($page > 1)
-                                            $pagination_g.= '<li><a href="javascript:void(0)" class="page-link" onclick="changePaginationG('."'0','first','".$bots[0]->id."'".')")">&lt;</a>';
-                                        else
-                                            $pagination_g.= '<li class="disabled"><span class="current prev">&lt;</span></li>';
-
-
-                                        if ($lastpage_g < 7 + ($adjacents * 2))
-                                        {
-                                            for ($counter_g = 1; $counter_g <= $lastpage_g; $counter_g++)
-                                            {
-                                                if ($counter_g == $page)
-                                                    $pagination_g.= '<li class="active"><span class="current">'.$counter_g.'</span></li>';
-                                                else
-                                                    $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$counter_g."','".$counter_g."_no', '".$bots[0]->id."'".')">'.$counter_g.'</a></li>';
-                                            }
-                                        }
-                                        elseif($lastpage_g > 5 + ($adjacents * 2))
-                                        {
-                                            if($page < 1 + ($adjacents * 2))
-                                            {
-                                                for ($counter_g = 1; $counter_g < 4 + ($adjacents * 2); $counter_g++)
-                                                {
-                                                    if ($counter_g == $page)
-                                                        $pagination_g.= '<li class="active"><span class="current">'.$counter_g.'</span>';
-                                                    else
-                                                        $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$counter_g."','".$counter_g."_no', '".$bots[0]->id."'".')">'.$counter_g.'</a></li>';
-                                                }
-                                                $pagination_g.= '<li><span class="ellipse clickable">...</span></li>';
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$lpm1_g."','".$lpm1_g."_no', '".$bots[0]->id."'".')">'.$lpm1_g.'</a></li>';
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$lastpage_g."','".$lastpage_g."_no', '".$bots[0]->id."'".')">'.$lastpage_g.'</a></li>';
-                                            }
-                                            elseif($lastpage_g - ($adjacents * 2) > $page && $page > ($adjacents * 2))
-                                            {
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'1','1_no', '".$bots[0]->id."'".')">1</a></li>';
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                $pagination_g.= '<li><span class="ellipse clickable">...</span></li>';
-                                                for ($counter_g = $page - $adjacents; $counter_g <= $page + $adjacents; $counter_g++)
-                                                {
-                                                    if ($counter_g == $page)
-                                                        $pagination_g.= '<li class="active"><span class="current">'.$counter_g.'</span>';
-                                                    else
-                                                        $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$counter_g."','".$counter_g."_no', '".$bots[0]->id."'".')">'.$counter_g.'</a></li>';
-                                                }
-                                                $pagination_g.= '<li><span class="ellipse clickable">...</span></li>';
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$lpm1_g."','".$lpm1_g."_no','".$bots[0]->id."'".')">'.$lpm1_g.'</a></li>';
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$lastpage_g."','".$lastpage_g."_no', '".$bots[0]->id."'".')">'.$lastpage_g.'</a></li>';
-                                            }
-                                            else
-                                            {
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'1','1_no','".$bots[0]->id."'".')">1</a></li>';
-                                                $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                $pagination_g.= '<li><span class="ellipse clickable">...</span></li>';
-                                                for ($counter_g = $lastpage_g - (2 + ($adjacents * 2)); $counter_g <= $lastpage_g; $counter_g++)
-                                                {
-                                                    if ($counter_g == $page)
-                                                        $pagination_g.= '<li class="active"><span class="current">'.$counter_g.'</span>';
-                                                    else
-                                                        $pagination_g.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationG('."'".$counter_g."','".$counter_g."_no', '".$bots[0]->id."'".')">'.$counter_g.'</a></li>';
-                                                }
-                                            }
-                                        }
-
-                                        if ($page < $counter_g - 1)
-                                        {
-                                            $pagination_g.= '<li><a class="page-link next" href="javascript:void(0)" onclick="changePaginationG('."'".$next_g."','".$next_g."_no', '".$bots[0]->id."'".')">&gt;</a></li>';
-                                        }
-                                        else
-                                        {
-                                            $pagination_g.= '<li class="active"><span class="current next">&gt;</span>';
-                                        }
-
-                                        $pagination_g .= '</ul>';
-                                    }
-
-                                    echo $pagination_g;
-                                    ?>
-									<img id="imgLoadAjaxG" src="{{URL::asset('img/balls.gif')}}" class="loading_ajax_img" style="display:none;">
-								</div>
-							</td>
-						</tr>
+									<div id="botGalleryNavPosition" class="light-theme simple-pagination">
+										<input type="text" class="tablesearch" placeholder="Cercar...">
+									</div>
+								</td>
+							</tr>
+							</tfoot>
 						</tbody>
 					</table>
                     </div>
 				</div>
 
 				<div class="col-plan col-lg-6">
-					<h2 class="h2_channels"><?php echo $bots[0]->channels; ?>                     <a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
+					<h2 class="h2_channels"><?php echo $bots[0]->channels; ?>
+						<a href="{!! URL::to('/bot/update_bot/'.$bots[0]->id) !!}#main_buttons" data-toggle="tooltip" data-original-title="Editar el nom" class="editar_boto">
 							<i class="fa fa-pencil" aria-hidden="true"></i>
 						</a></h2>
                         
                         <div id="ch_autoResp">
 							<table id="botChannels">
-                                <thead>
-                                <tr>
-                                    <th>{{ trans('front/bots.submenu_heading_text') }}</th>
-                                    <th>{{ trans('front/bots.action') }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+								<tbody>
+								<tr>
+									<td colspan="5"  class="telebuttons">
+										<ul>
                                 <?php
                                 if(!empty($chanels)){
                                 foreach($chanels as $d5 => $v5){
                                 ?>
-                                <tr>
-                                    <td><?php echo $v5->chanel_submenu_heading_text;?></td>
-                                    <td>
-                                        <a class="btn btn-warning" href="{!! URL::to('/command/chanel_edit/'.$v5->id) !!}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                        <a class="btn btn-danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/chanel_delete/'.$v5->type_id.'/'.$v5->id) !!}');"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
+									<li>
+										<a class="telebutton" href="{!! URL::to('/command/chanel_edit/'.$v5->id) !!}" data-toggle="tooltip" data-original-title="Editar">
+			                                <?php echo $v5->chanel_submenu_heading_text;?>
+										</a>
+										<a class="danger" onclick="return warnBeforeRedirect('{!! URL::to('/command/chanel_delete/'.$v5->type_id.'/'.$v5->id) !!}')"><i class="fa fa-times" aria-hidden="true"></i></a>
+									</li>
+
                                 <?php
                                 }
-                                }
-                                else{
-                                ?>
-                                <tr>
-                                    <td colspan="5">{{ trans('front/fornt_user.no_record') }}</td>
-                                </tr>
-                                <?php
                                 }
                                 ?>
                                 <tr>
 									<td colspan="5" class="paginacio">
 										<div class="botonou">
-                                        	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=chanel') !!}" class="btn btn-success">{!! trans('front/dashboard.create_command') !!}</a>
+                                        	<a href="{!! URL::to('/command/create/'.$bots[0]->id.'?type=chanel') !!}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
 										</div>
 
 										<div id="botChannelsNavPosition" class="light-theme simple-pagination">
-                                            <?php
-                                            $lastpage_ch = 0;
-                                            if($total_pages_chanels > 0)
-                                            {
-                                                $prev_ch = $page - 1;
-                                                $next_ch = $page + 1;
-                                                $lastpage_ch = ceil($total_pages_chanels/$limit);
-                                                $lpm1_ch = $lastpage_ch - 1;
-                                            }
+											<input type="text" class="tablesearch" placeholder="Cercar...">
 
-                                            $pagination_ch = '';
-                                            if($lastpage_ch >= 1)
-                                            {
-                                                $pagination_ch = '<ul>';
-
-                                                if ($page > 1)
-                                                    $pagination_ch.= '<li><a href="javascript:void(0)" class="page-link" onclick="changePaginationCH('."'0','first','".$bots[0]->id."'".')")">&lt;</a>';
-                                                else
-                                                    $pagination_ch.= '<li class="disabled"><span class="current prev">&lt;</span></li>';
-
-
-                                                if ($lastpage_ch < 7 + ($adjacents * 2))
-                                                {
-                                                    for ($counter_ch = 1; $counter_ch <= $lastpage_ch; $counter_ch++)
-                                                    {
-                                                        if ($counter_ch == $page)
-                                                            $pagination_ch.= '<li class="active"><span class="current">'.$counter_ch.'</span></li>';
-                                                        else
-                                                            $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$counter_ch."','".$counter_ch."_no', '".$bots[0]->id."'".')">'.$counter_ch.'</a></li>';
-                                                    }
-                                                }
-                                                elseif($lastpage_ch > 5 + ($adjacents * 2))
-                                                {
-                                                    if($page < 1 + ($adjacents * 2))
-                                                    {
-                                                        for ($counter_ch = 1; $counter_ch < 4 + ($adjacents * 2); $counter_ch++)
-                                                        {
-                                                            if ($counter_ch == $page)
-                                                                $pagination_ch.= '<li class="active"><span class="current">'.$counter_ch.'</span>';
-                                                            else
-                                                                $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$counter_ch."','".$counter_ch."_no', '".$bots[0]->id."'".')">'.$counter_ch.'</a></li>';
-                                                        }
-                                                        $pagination_ch.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$lpm1_ch."','".$lpm1_ch."_no', '".$bots[0]->id."'".')">'.$lpm1_ch.'</a></li>';
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$lastpage_ch."','".$lastpage_ch."_no', '".$bots[0]->id."'".')">'.$lastpage_ch.'</a></li>';
-                                                    }
-                                                    elseif($lastpage_ch - ($adjacents * 2) > $page && $page > ($adjacents * 2))
-                                                    {
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'1','1_no', '".$bots[0]->id."'".')">1</a></li>';
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                        $pagination_ch.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        for ($counter_ch = $page - $adjacents; $counter_ch <= $page + $adjacents; $counter_ch++)
-                                                        {
-                                                            if ($counter_ch == $page)
-                                                                $pagination_ch.= '<li class="active"><span class="current">'.$counter_ch.'</span>';
-                                                            else
-                                                                $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$counter_ch."','".$counter_ch."_no', '".$bots[0]->id."'".')">'.$counter_ch.'</a></li>';
-                                                        }
-                                                        $pagination_ch.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$lpm1_ch."','".$lpm1_ch."_no','".$bots[0]->id."'".')">'.$lpm1_ch.'</a></li>';
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$lastpage_ch."','".$lastpage_ch."_no', '".$bots[0]->id."'".')">'.$lastpage_ch.'</a></li>';
-                                                    }
-                                                    else
-                                                    {
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'1','1_no','".$bots[0]->id."'".')">1</a></li>';
-                                                        $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'2','2_no', '".$bots[0]->id."'".')">2</a></li>';
-                                                        $pagination_ch.= '<li><span class="ellipse clickable">...</span></li>';
-                                                        for ($counter_ch = $lastpage_ch - (2 + ($adjacents * 2)); $counter_ch <= $lastpage_ch; $counter_ch++)
-                                                        {
-                                                            if ($counter_ch == $page)
-                                                                $pagination_ch.= '<li class="active"><span class="current">'.$counter_ch.'</span>';
-                                                            else
-                                                                $pagination_ch.= '<li><a class="page-link" href="javascript:void(0)" onclick="changePaginationCH('."'".$counter_ch."','".$counter_ch."_no', '".$bots[0]->id."'".')">'.$counter_ch.'</a></li>';
-                                                        }
-                                                    }
-                                                }
-
-                                                if ($page < $counter_ch - 1)
-                                                {
-                                                    $pagination_ch.= '<li><a class="page-link next" href="javascript:void(0)" onclick="changePaginationCH('."'".$next_ch."','".$next_ch."_no', '".$bots[0]->id."'".')">&gt;</a></li>';
-                                                }
-                                                else
-                                                {
-                                                    $pagination_ch.= '<li class="active"><span class="current next">&gt;</span>';
-                                                }
-
-                                                $pagination_ch .= '</ul>';
-                                            }
-
-                                            echo $pagination_ch;
-                                            ?>
-											<img id="imgLoadAjaxCH" src="{{URL::asset('img/balls.gif')}}" class="loading_ajax_img" style="display:none;">
 										</div>
                                     </td>
                                 </tr>
@@ -810,7 +426,7 @@
 								<tr>
 									<td colspan="5" class="paginacio">
 										<div class="botonou">
-											<a href="{!! URL::to('bot/bot_command/'.$bots[0]->id) !!}"  class="btn btn-success <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands) && $total_bot_commands == $planDetails[0]->bot_commands) echo "disabled"; ?>">{!! trans('front/bots.bot_add_command') !!}</a>
+											<a href="{!! URL::to('bot/bot_command/'.$bots[0]->id) !!}"  class="btn btn-success <?php if(isset($planDetails[0]->bot_commands) && !empty($planDetails[0]->bot_commands) && $total_bot_commands == $planDetails[0]->bot_commands) echo "disabled"; ?>"><i class="fa fa-plus" aria-hidden="true"></i></a>
 										</div>
 
                                             
@@ -819,7 +435,8 @@
 											} ?>
 
 										<div id="botCommandNavPosition" class="light-theme simple-pagination">
-                                            <?php
+											<input type="text" class="tablesearch" placeholder="Cercar...">
+										<?php
                                             $lastpage_bc = 0;
                                             if($total_bot_commands > 0)
                                             {

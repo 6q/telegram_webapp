@@ -142,11 +142,11 @@
 			$(function() {
 				setInterval(function() {
 					$(".alert").hide()
-				}, 5000);
+				}, 10000);
 				
 				setInterval(function() {
 					$("#alertMsg").hide()
-				}, 5000);
+				}, 10000);
 			});
 		</script>
 
