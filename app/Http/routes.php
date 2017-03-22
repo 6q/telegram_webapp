@@ -495,7 +495,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 				$msg = "\xE2\x9E\xA1 ".$autoresponse;
 			}
 			
-            $db_autoresponse = DB::table('autoresponses')->where('type_id', '=', $dbBotId)->get();
+            $db_autoresponse = DB::table('autoresponses')->orderBy('submenu_heading_text','ASC')->where('type_id', '=', $dbBotId)->get();
             
             $arr = '';
             $Back = "\xE2\x97\x80";
@@ -693,7 +693,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 					DB::table('tmp_mytable')->insert(
 						['data_key' => $tbl_contact_forms[0]->id,'data_value' => $tbl_contact_forms[0]->headline]
 					);
-                    $db_contact_form = DB::table('contact_forms')->where('type_id', '=', $dbBotId)->get();
+                    $db_contact_form = DB::table('contact_forms')->orderBy('submenu_heading_text','ASC')->where('type_id', '=', $dbBotId)->get();
             
                     $arr = '';
                     $Back = "\xE2\x97\x80";
