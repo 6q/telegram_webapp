@@ -411,7 +411,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 		else if(!empty($bot_commands_title) && in_array(strtolower(strtok($messageText, " ")),$bot_commands_title)){
 			$bot_cmd_msg = DB::table('bot_commands')
 							->where('bot_id','=',$dbBotId)
-							->where('title','LIKE','%'.strtok($messageText, " ").'%')
+							->where('title','LIKE',''.strtok($messageText, " ").'')
 							->get();
 			if(!empty($bot_cmd_msg)){
 				$msg = (isset($bot_cmd_msg[0]->command_description) && !empty($bot_cmd_msg[0]->command_description)?$bot_cmd_msg[0]->command_description:'');
@@ -1051,7 +1051,7 @@ Route::post('/{bottoken}/webhook', function ($token) {
 					if(!empty($galleryID)){
 						$gallery_images = DB::table('gallery_images')
 							->where('gallery_id', '=', $galleryID)
-							->where('title', 'LIKE', '%'.$messageText.'%')
+							->where('title', 'LIKE', ''.$messageText.'')
 							->get();	
 						
 						$msg = $gallery_images[0]->description;

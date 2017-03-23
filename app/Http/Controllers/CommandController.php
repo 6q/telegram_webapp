@@ -77,7 +77,7 @@ class CommandController extends Controller
 			
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$botId)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -85,7 +85,7 @@ class CommandController extends Controller
 			
 			$chkChanels = DB::table('chanels')
 								->where('type_id','=',$botId)
-								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -93,7 +93,7 @@ class CommandController extends Controller
 			
 			$chkContactForms = DB::table('contact_forms')
 									->where('type_id','=',$botId)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -101,7 +101,7 @@ class CommandController extends Controller
 			
 			$chkGalleries = DB::table('galleries')
 									->where('type_id','=',$botId)
-									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -156,7 +156,7 @@ class CommandController extends Controller
 			else{
 				if($error == 'true'){
 					$messages = trans('front/bot.button_already_been_taken');
-					return redirect('bot/detail/'.$botId)->withErrors($messages);
+					return redirect('command/create/'.$botId)->withErrors($messages);
 				}
 				else{
 					$messages = $v->messages();
@@ -186,7 +186,7 @@ class CommandController extends Controller
 			
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$botId)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -194,7 +194,7 @@ class CommandController extends Controller
 			
 			$chkChanels = DB::table('chanels')
 								->where('type_id','=',$botId)
-								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -202,7 +202,7 @@ class CommandController extends Controller
 			
 			$chkContactForms = DB::table('contact_forms')
 									->where('type_id','=',$botId)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -210,7 +210,7 @@ class CommandController extends Controller
 			
 			$chkGalleries = DB::table('galleries')
 									->where('type_id','=',$botId)
-									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -285,7 +285,7 @@ class CommandController extends Controller
 			
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$request->get('bot_id'))
-									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -293,7 +293,7 @@ class CommandController extends Controller
 			
 			$chkChanels = DB::table('chanels')
 								->where('type_id','=',$request->get('bot_id'))
-								->where('chanel_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -301,7 +301,7 @@ class CommandController extends Controller
 			
 			$chkContactForms = DB::table('contact_forms')
 									->where('type_id','=',$request->get('bot_id'))
-									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -309,7 +309,7 @@ class CommandController extends Controller
 			
 			$chkGalleries = DB::table('galleries')
 									->where('type_id','=',$request->get('bot_id'))
-									->where('gallery_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -384,7 +384,7 @@ class CommandController extends Controller
 			
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$botId)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -392,7 +392,7 @@ class CommandController extends Controller
 			
 			$chkChanels = DB::table('chanels')
 								->where('type_id','=',$botId)
-								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -400,7 +400,7 @@ class CommandController extends Controller
 			
 			$chkContactForms = DB::table('contact_forms')
 									->where('type_id','=',$botId)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -408,7 +408,7 @@ class CommandController extends Controller
 			
 			$chkGalleries = DB::table('galleries')
 									->where('type_id','=',$botId)
-									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -531,7 +531,7 @@ class CommandController extends Controller
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('id', '!=',$id)
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -539,7 +539,7 @@ class CommandController extends Controller
 			
 			$chkChanels = DB::table('chanels')
 								->where('type_id','=',$bot_id)
-								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -547,7 +547,7 @@ class CommandController extends Controller
 			
 			$chkContactForms = DB::table('contact_forms')
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -555,7 +555,7 @@ class CommandController extends Controller
 			
 			$chkGalleries = DB::table('galleries')
 									->where('type_id','=',$bot_id)
-									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -680,7 +680,7 @@ class CommandController extends Controller
 			
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -689,7 +689,7 @@ class CommandController extends Controller
 			$chkChanels = DB::table('chanels')
 								->where('id', '!=',$id)
 								->where('type_id','=',$bot_id)
-								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -697,7 +697,7 @@ class CommandController extends Controller
 			
 			$chkContactForms = DB::table('contact_forms')
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -705,7 +705,7 @@ class CommandController extends Controller
 			
 			$chkGalleries = DB::table('galleries')
 									->where('type_id','=',$bot_id)
-									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -823,7 +823,7 @@ class CommandController extends Controller
 			
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -831,7 +831,7 @@ class CommandController extends Controller
 			
 			$chkChanels = DB::table('chanels')
 								->where('type_id','=',$bot_id)
-								->where('chanel_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -840,7 +840,7 @@ class CommandController extends Controller
 			$chkContactForms = DB::table('contact_forms')
 									->where('id', '!=',$id)
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -848,7 +848,7 @@ class CommandController extends Controller
 			
 			$chkGalleries = DB::table('galleries')
 									->where('type_id','=',$bot_id)
-									->where('gallery_submenu_heading_text','LIKE','%'.$submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -970,7 +970,7 @@ class CommandController extends Controller
 			
 			$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 				$error = 'true';
@@ -978,7 +978,7 @@ class CommandController extends Controller
 			
 			$chkChanels = DB::table('chanels')
 								->where('type_id','=',$bot_id)
-								->where('chanel_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+								->where('chanel_submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 								->get();
 			if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 				$error = 'true';
@@ -986,7 +986,7 @@ class CommandController extends Controller
 			
 			$chkContactForms = DB::table('contact_forms')
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->where('submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 				$error = 'true';
@@ -995,7 +995,7 @@ class CommandController extends Controller
 			$chkGalleries = DB::table('galleries')
 									->where('id','!=',$request->get('id'))
 									->where('type_id','=',$bot_id)
-									->where('gallery_submenu_heading_text','LIKE','%'.$gallery_submenu_heading_text.'%')
+									->where('gallery_submenu_heading_text','LIKE',''.$gallery_submenu_heading_text.'')
 									->get();
 			if($error == 'false' && isset($chkGalleries[0]) && !empty($chkGalleries[0])){
 				$error = 'true';
@@ -1008,7 +1008,7 @@ class CommandController extends Controller
 	
 					$chkAutoresponse = DB::table('autoresponses')
 									->where('type_id','=',$bot_id)
-									->where('submenu_heading_text','LIKE','%'.$v1.'%')
+									->where('submenu_heading_text','LIKE',''.$v1.'')
 									->get();
 					if($error == 'false' && isset($chkAutoresponse[0]->submenu_heading_text) && !empty($chkAutoresponse[0]->submenu_heading_text)){
 						$error = 'true';
@@ -1017,7 +1017,7 @@ class CommandController extends Controller
 					
 					$chkChanels = DB::table('chanels')
 										->where('type_id','=',$bot_id)
-										->where('chanel_submenu_heading_text','LIKE','%'.$v1.'%')
+										->where('chanel_submenu_heading_text','LIKE',''.$v1.'')
 										->get();
 					if($error == 'false' && isset($chkChanels[0]) && !empty($chkChanels[0])){
 						$error = 'true';
@@ -1026,7 +1026,7 @@ class CommandController extends Controller
 					
 					$chkContactForms = DB::table('contact_forms')
 											->where('type_id','=',$bot_id)
-											->where('submenu_heading_text','LIKE','%'.$v1.'%')
+											->where('submenu_heading_text','LIKE',''.$v1.'')
 											->get();
 					if($error == 'false' && isset($chkContactForms[0]) && !empty($chkContactForms[0])){
 						$error = 'true';
