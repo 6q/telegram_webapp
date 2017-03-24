@@ -984,29 +984,7 @@
 			});
 		}
 
-        /*
-         jQuery(function($) {
-         var pageParts = $("#botContactForm tbody tr");
-         var numPages = pageParts.length;
-         var perPage = 4;
-         pageParts.slice(perPage).hide();
 
-         $("#botContactFormNavPosition").pagination({
-         items: numPages,
-         itemsOnPage: perPage,
-         cssStyle: "light-theme",
-         onPageClick: function(pageNum) {
-         var start = perPage * (pageNum - 1);
-         var end = start + perPage;
-         pageParts.hide().slice(start, end).show();
-         }
-         });
-         });
-         */
-
-    </script>
-
-    <script type="text/javascript">
 
 		function mypopup_botfunction(bot_id) {
 			$('#bot_msg').css('border', '1px solid #ccc');
@@ -1016,40 +994,6 @@
 
 			$('#myModalBot').modal();
 		}
-
-        /*
-         function sendMsgBot(){
-         var chk = true;
-         var bot_msg = $('#bot_msg').val();
-         var b_bot_id = $('#b_bot_id').val();
-
-         if(bot_msg == ''){
-         chk = false;
-         $('#bot_msg').css('border','1px solid #ff0000');
-         }
-         else{
-         $('#bot_msg').css('border','1px solid #ccc');
-         }
-
-
-         if(chk){
-         var token_new = $('input[name=_token]').val();
-         $.ajax({
-         url: '<?php //echo URL::to('/dashboard/sendbotmessage')?>',
-         headers: {'X-CSRF-TOKEN': token_new},
-         data: {bot_msg:bot_msg,b_bot_id:b_bot_id},
-         type:'POST',
-         success: function (resp) {
-         alert(resp);
-         $('#myModalBot').modal('hide');
-         },
-         error: function (request, status, error) {
-         alert('Forbidden: bot is not a member of the channel chat');
-         }
-         });
-         }
-         }
-         */
 
 
 		$(document).ready(function (e) {
@@ -1101,8 +1045,7 @@
 				return false;
 			});
 		});
-    </script>
-    <script>
+
 		$(document).ready(function (e) {
 			$('#bot_messages').on('click', '.imatge', function () {
 				//alert($(this).attr("src"));
@@ -1123,11 +1066,7 @@
 
 
     </script>
-    <style>
-        .thumb {
-            width: 20%;
-        }
-    </style>
+
 
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -1191,7 +1130,7 @@
 			var changePosition = function(requestData){
 				var token = $('input[name=_token]').val();
 				$.ajax({
-					url: '<?php echo URL::to('/bot/sortbuttons')?>/',
+					url: '<?php echo URL::to('/bot/sort_autoresponses')?>/',
 					headers: {'X-CSRF-TOKEN': token},
 					'type': 'POST',
 					'data': requestData,

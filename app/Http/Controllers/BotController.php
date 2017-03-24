@@ -623,24 +623,28 @@ class BotController extends Controller
                 $autoResponse = DB::table('autoresponses')
                                     ->where('type_id', '=', $botid)
                                     ->where('submenu_heading_text', 'LIKE', '%'.$search.'%')
+	                                ->orderBy('sort_order','ASC')
 	                                ->orderBy('submenu_heading_text','ASC')
                                     ->get();
                 
                 $contactForm = DB::table('contact_forms')
                                     ->where('type_id', '=', $botid)
                                     ->where('submenu_heading_text', 'LIKE', '%'.$search.'%')
+	                                ->orderBy('sort_order','ASC')
 	                                ->orderBy('submenu_heading_text','ASC')
                                     ->get();
                 
                 $gallery = DB::table('galleries')
                                     ->where('type_id', '=', $botid)
                                     ->where('gallery_submenu_heading_text', 'LIKE', '%'.$search.'%')
+	                                ->orderBy('sort_order','ASC')
 	                                ->orderBy('gallery_submenu_heading_text','ASC')
                                     ->get();
                 
                 $chanels = DB::table('chanels')
                                     ->where('type_id', '=', $botid)
                                     ->where('chanel_submenu_heading_text', 'LIKE', '%'.$search.'%')
+	                                ->orderBy('sort_order','ASC')
 	                                ->orderBy('chanel_submenu_heading_text','ASC')
                                     ->get();
                 
@@ -651,10 +655,10 @@ class BotController extends Controller
                 
             }
             else{
-                $autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->orderBy('submenu_heading_text','ASC')->get();
-                $contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->orderBy('submenu_heading_text','ASC')->get();
-                $gallery = DB::table('galleries')->where('type_id', '=', $botid)->orderBy('gallery_submenu_heading_text','ASC')->get();
-                $chanels = DB::table('chanels')->where('type_id', '=', $botid)->orderBy('chanel_submenu_heading_text','ASC')->get();
+                $autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->orderBy('sort_order','ASC')->orderBy('submenu_heading_text','ASC')->get();
+                $contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->orderBy('sort_order','ASC')->orderBy('submenu_heading_text','ASC')->get();
+                $gallery = DB::table('galleries')->where('type_id', '=', $botid)->orderBy('sort_order','ASC')->orderBy('gallery_submenu_heading_text','ASC')->get();
+                $chanels = DB::table('chanels')->where('type_id', '=', $botid)->orderBy('sort_order','ASC')->orderBy('chanel_submenu_heading_text','ASC')->get();
                 
                 $activeUser = DB::table('bot_users')->where('bot_id', '=', $botid)->limit($limitUser)->get();
                 
@@ -1796,9 +1800,30 @@ class BotController extends Controller
 		}		
 	}
 
-	public function sortbuttons(Request $request){
+	public function sort_autoresponses(Request $request){
 
-		print_r($request);
+		// TODO
+
+		return true;
+
+	}
+	public function sort_contactforms(Request $request){
+
+		// TODO
+
+		return true;
+
+	}
+	public function sort_galleries(Request $request){
+
+		// TODO
+
+		return true;
+
+	}
+	public function sort_channels(Request $request){
+
+		// TODO
 
 		return true;
 
