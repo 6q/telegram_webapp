@@ -10,7 +10,8 @@
         @include('front.top')
 
         <div class="my_account telegram">
-            <h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{!! trans('front/command.telegram') !!}</span></h4>
+            <h4>{!! HTML::image('img/front/telegrtam_icon.png') !!}<span>{!! trans('front/command.telegram') !!}</span>
+            </h4>
             <h5>{!! trans('front/command.create_bot_command') !!}</h5>
         </div>
 
@@ -27,11 +28,11 @@
             </div>
 
             <div id="ul_form" class="bot_command_form">
- 
+
                 {!! Form::open(['url' => 'bot/bot_command_edit/'.$botCommands[0]->id, 'method' => 'post', 'class' => 'form-horizontal panel','enctype'=>"multipart/form-data",'onsubmit' =>'return validate();']) !!}
 
                 {!! Form::hidden('id', $botCommands[0]->id, array('id' => 'chanel')) !!}
-                 {!! Form::hidden('bot_id', $botCommands[0]->bot_id, array('id' => '')) !!}
+                {!! Form::hidden('bot_id', $botCommands[0]->bot_id, array('id' => '')) !!}
 
                 <ul class="show_hide_ul">
                     <li>
@@ -46,39 +47,39 @@
                         <label id="ch_msg" class="lead emoji-picker-container text-area">
                             {!! Form::control('textarea', 0, 'command_description', $errors,'',$botCommands[0]->command_description,"data-emojiable='false' required") !!}
                         </label>
-                        
+
                         <label>
-                          {!! trans('front/command.or') !!}
+                            {!! trans('front/command.or') !!}
                         </label>
-                        
+
                     </li>
-                    
-                    <li class="browse_content"> 
+
+                    <li class="browse_content">
                         <label>
-                        	<input type="file" name="image" id="image"><span>{{ trans('front/command.browse') }}</span>
-                            
-                            <input type="hidden" name="old_img" id="old_img" value="{!! $botCommands[0]->image !!}" />
-					
+                            <input type="file" name="image" id="image"><span>{{ trans('front/command.browse') }}</span>
+
+                            <input type="hidden" name="old_img" id="old_img" value="{!! $botCommands[0]->image !!}"/>
+
 							<?php
-                                if(isset($botCommands[0]->image) && !empty($botCommands[0]->image)){
-                                    ?>
-                                        <div id="image-holder">{!! HTML::image('uploads/'.$botCommands[0]->image) !!}</div>
-                                    <?php
-                                }
-                                else{
-                                ?>
-                                    <div id="image-holder"> </div>
-                                <?php
-                                }
-                            ?>
+							if(isset($botCommands[0]->image) && !empty($botCommands[0]->image)){
+							?>
+                            <div id="image-holder">{!! HTML::image('uploads/'.$botCommands[0]->image) !!}</div>
+							<?php
+							}
+							else{
+							?>
+                            <div id="image-holder"></div>
+							<?php
+							}
+							?>
                         </label>
                     </li>
-	                <? if (session('statut') === 'admin' || session('statut') === 'vip') { ?>
+					<? if (session('statut') === 'admin' || session('statut') === 'vip') { ?>
 
                     <script>
-		                $( function() {
-			                $("#accordion").accordion({ header: "a", collapsible: true, active: false });
-		                } );
+						$(function () {
+							$("#accordion").accordion({header: "a", collapsible: true, active: false});
+						});
                     </script>
                     <div id="accordion">
                         <a style="cursor:pointer">+ {{ trans('front/command.advanced_options') }}</a>
@@ -89,22 +90,22 @@
 
                                 <div class="box">
                                     <select id="webservice_type" name="webservice_type">
-					                    <?php
-					                    $sel1 = '';
-					                    if ($botCommands[0]->webservice_type == 0) {
-						                    $sel1 = "selected='selected'";
-					                    }
+										<?php
+										$sel1 = '';
+										if ($botCommands[0]->webservice_type == 0) {
+											$sel1 = "selected='selected'";
+										}
 
-					                    $sel2 = '';
-					                    if ($botCommands[0]->webservice_type == 1) {
-						                    $sel2 = "selected='selected'";
-					                    }
+										$sel2 = '';
+										if ($botCommands[0]->webservice_type == 1) {
+											$sel2 = "selected='selected'";
+										}
 
-					                    $sel3 = '';
-					                    if ($botCommands[0]->webservice_type == 2) {
-						                    $sel3 = "selected='selected'";
-					                    }
-					                    ?>
+										$sel3 = '';
+										if ($botCommands[0]->webservice_type == 2) {
+											$sel3 = "selected='selected'";
+										}
+										?>
                                         <option value="0" <?php echo $sel1; ?> > {{ trans('front/command.no') }}</option>
                                         <option value="1" <?php echo $sel2; ?> > {{ trans('front/command.yes') }}</option>
                                         <option value="2" <?php echo $sel3; ?> > {{ trans('front/command.yes_with_variable') }}</option>
@@ -120,7 +121,7 @@
 
                             </li>
 
-			                    <? /*
+							<? /*
 			                    if (filter_var($botCommands[0]->webservice_url, FILTER_VALIDATE_URL) ) {
 				                    echo "<h3>Resultat Webservice</h3>";
 				                    $xml = simplexml_load_file($botCommands[0]->webservice_url);
@@ -150,18 +151,21 @@
 				                    }
 
 			                    } */
-			                    ?>
+							?>
 
                         </div>
                     </div>
-                    <? } ?>
-
+					<? } ?>
 
 
                     <li class="input_submit buy_now">
-                    <a href="{!! URL::to('/bot/detail/'.$botCommands[0]->bot_id) !!}">{{ trans('front/bots.back') }}</a>
-                    {!! Form::submit_new(trans('front/command.submit')) !!}
-                  </li>
+                        <a href="{!! URL::to('/bot/detail/'.$botCommands[0]->bot_id) !!}">{{ trans('front/bots.back') }}</a>
+                        {!! Form::submit_new(trans('front/command.submit')) !!}
+                    </li>
+                    <li style="text-align:right">
+                        <a onclick="return warnBeforeRedirect('{!! URL::to('/bot/bot_command_delete/'.$botCommands[0]->bot_id.'/'.$botCommands[0]->id) !!}')"
+                           class="btn-danger btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </li>
 
                 </ul>
 
@@ -173,7 +177,7 @@
     </div>
 
     <style>
-        #image-holder{
+        #image-holder {
             display: inline-block;
             width: 20%;
         }
@@ -194,11 +198,13 @@
             top: 0;
             width: 102px;
             z-index: 9;
-            cursor:pointer;
+            cursor: pointer;
         }
+
         .browse_content {
             position: relative;
         }
+
         .browse_content span {
             background: rgba(0, 0, 0, 0) linear-gradient(0deg, #e3e3e3, #ededed, #f7f7f7) repeat scroll 0 0;
             border: 1px solid #c7c7c7;
@@ -215,10 +221,10 @@
             height: auto;
         }
     </style>
-    
+
     <script>
-		$(document).ready(function(e) {
-            $("#image").on('change', function () {
+		$(document).ready(function (e) {
+			$("#image").on('change', function () {
 				if (typeof (FileReader) != "undefined") {
 					var image_holder = $("#image-holder");
 					image_holder.empty();
@@ -228,32 +234,32 @@
 							"src": e.target.result,
 							"class": "thumb-image"
 						}).appendTo(image_holder);
-		 
+
 					}
 					image_holder.show();
 					reader.readAsDataURL($(this)[0].files[0]);
 				} else {
 					$('#resp').html('<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>This browser does not support FileReader.');
-					$('.alert-new').css('display','block');
-					$('#alertMsg').css('display','block');
+					$('.alert-new').css('display', 'block');
+					$('#alertMsg').css('display', 'block');
 				}
 			});
-        });
-		
-    	function validate(){
+		});
+
+		function validate() {
 			var title = $('#title').val();
-			if(title != ''){
-				var res = /^\/[a-z0-9]+$/i.test(title);	
-				if(res){
+			if (title != '') {
+				var res = /^\/[a-z0-9]+$/i.test(title);
+				if (res) {
 					$('#bc_title .form-group').removeClass('has-error');
 					return true;
 				}
-				else{
+				else {
 					$('#bc_title .form-group').addClass('has-error');
 					return false;
 				}
 			}
-			else{
+			else {
 				$('#bc_title .form-group').addClass('has-error');
 				return false;
 			}
@@ -261,5 +267,24 @@
 		}
     </script>
 
+    <script>
+		$(document).ready(function () {
 
+		});
+
+		function warnBeforeRedirect(linkURL) {
+			swal({
+				html: true,
+				title: "{{ trans('front/bots.are_you_sure') }}",
+				text: "{{ trans('front/bots.you_are_going_to_delete') }}",
+				type: "warning",
+				showCancelButton: true,
+				cancelButtonText: "{{ trans('front/bots.cancel') }}",
+			}, function () {
+				// Redirect the user
+				window.location.href = linkURL;
+			});
+		}
+
+    </script>
 @stop        

@@ -13,9 +13,9 @@
 
 
     <script>
-        $(document).ready(function () {
-            $('#selectBox').niceSelect();
-        });
+		$(document).ready(function () {
+			$('#selectBox').niceSelect();
+		});
     </script>
 
     <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
@@ -66,11 +66,11 @@
                     </li>
 
 
-                    <?php
-                    if(isset($contact_forms_ques) && !empty($contact_forms_ques)){
-                    $i = 0;//http://192.168.1.4/intranet/home.php#tabsi-2
-                    foreach($contact_forms_ques as $k1 => $v1){
-                    ?>
+					<?php
+					if(isset($contact_forms_ques) && !empty($contact_forms_ques)){
+					$i = 0;//http://192.168.1.4/intranet/home.php#tabsi-2
+					foreach($contact_forms_ques as $k1 => $v1){
+					?>
                     <li id="<?php echo $i; ?>">
                         <span>{!! trans('front/command.question_heading') !!}</span>
                         <label id="ques">
@@ -89,33 +89,33 @@
 							<div class="box">
 							  <select id="selectBox_<?php echo $i;?>" name="type_response[<?php echo $i;?>]">
 								<?php
-                    $sel1 = '';
-                    if ($v1->response_type == 'text') {
-                        $sel1 = "selected='selected'";
-                    }
+					$sel1 = '';
+					if ($v1->response_type == 'text') {
+						$sel1 = "selected='selected'";
+					}
 
-                    $sel2 = '';
-                    if ($v1->response_type == 'image') {
-                        $sel2 = "selected='selected'";
-                    }
-                    ?>
+					$sel2 = '';
+					if ($v1->response_type == 'image') {
+						$sel2 = "selected='selected'";
+					}
+					?>
                         <option value="text" <?php echo $sel1; ?> >Text</option>
 								<option value="image" <?php echo $sel2; ?> >Image</option>
 							  </select>
 							</div>	
 						  </li>	-->
                     <script>
-                        $(document).ready(function () {
-                            $('#selectBox_<?php echo $i;?>').niceSelect();
-                        });
+						$(document).ready(function () {
+							$('#selectBox_<?php echo $i;?>').niceSelect();
+						});
                     </script>
-                    <?php
-                    $i++;
-                    }
-                    }
-                    else{
-                    $i = 0;
-                    ?>
+					<?php
+					$i++;
+					}
+					}
+					else{
+					$i = 0;
+					?>
                     <li>
                         <span>{!! trans('front/command.question_heading') !!}</span>
                         <label id="ques">
@@ -137,9 +137,9 @@
 						  </select>
 						</div>	
 					  </li>	-->
-                    <?php
-                    }
-                    ?>
+					<?php
+					}
+					?>
 
                     <li id="res"></li>
 
@@ -158,7 +158,13 @@
                         <a href="{!! URL::to('/bot/detail/'.$contact_forms[0]->type_id) !!}">{{ trans('front/bots.back') }}</a>
                         {!! Form::submit_new(trans('front/command.submit')) !!}
                     </li>
-
+                    <li style="text-align:right">
+                        <a class="btn btn-danger"
+                           onclick="return warnBeforeRedirect('{!! URL::to('/command/contactform_delete/'.$contact_forms[0]->type_id.'/'.$contact_forms[0]->id) !!}')">
+                            <i
+                                    class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </li>
                 </ul>
                 {!! Form::close() !!}
 
@@ -229,84 +235,103 @@
 
     <script>
 
-        function add_more() {
-            var i = $('#add_more').attr('data-rel');
-            i = parseInt(i) + 1;
+		function add_more() {
+			var i = $('#add_more').attr('data-rel');
+			i = parseInt(i) + 1;
 
-            var html = '<ul><li id=' + i + '><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading[' + i + ']" placeholder="" id="ques_heading" class="ques_heading form-control"><a href="javascript:void(0);" class="close_button" onclick="rmv(' + i + ')">X</a></div></label></li></ul>';
+			var html = '<ul><li id=' + i + '><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading[' + i + ']" placeholder="" id="ques_heading" class="ques_heading form-control"><a href="javascript:void(0);" class="close_button" onclick="rmv(' + i + ')">X</a></div></label></li></ul>';
             /*
              var html = '<ul><li><span>{!! trans("front/command.question_heading") !!}</span><label id="ques"><div class=""><input type="text" name="ques_heading['+i+']" placeholder="" id="ques_heading" class="ques_heading form-control"></div></label></li><li class="type_response"><span> {!! trans("front/command.type_of_response_expected") !!} </span><div class="box"><select name="type_response['+i+']" id="selectBox'+i+'"><option value="text">Text</option><option value="image">Image</option></select></div></li></ul>';
              */
 
-            $('#add_more').attr('data-rel', i);
-            $('#res').append(html);
-            $('#selectBox' + i).niceSelect();
-        }
+			$('#add_more').attr('data-rel', i);
+			$('#res').append(html);
+			$('#selectBox' + i).niceSelect();
+		}
 
-        function rmv(id) {
-            $('#' + id).remove();
-        }
-
-
-        function validateContactForm() {
-            var chk = 1;
-            var email = $('#email').val();
-            var contact_submenu_heading_text = $('#submenu_heading_text').val();
-            var headline = $('#headline').val();
-
-            if (email == '') {
-                chk = 0;
-                $('#email_err div').addClass('has-error');
-            }
-            else {
-                $('#email_err div').removeClass('has-error');
-            }
-
-            if (contact_submenu_heading_text == '') {
-                chk = 0;
-                $('#contact div').addClass('has-error');
-            }
-            else {
-                $('#contact div').removeClass('has-error');
-            }
+		function rmv(id) {
+			$('#' + id).remove();
+		}
 
 
-            if (headline == '') {
-                chk = 0;
-                $('#head_line div').addClass('has-error');
-            }
-            else {
-                $('#head_line div').removeClass('has-error');
-            }
+		function validateContactForm() {
+			var chk = 1;
+			var email = $('#email').val();
+			var contact_submenu_heading_text = $('#submenu_heading_text').val();
+			var headline = $('#headline').val();
+
+			if (email == '') {
+				chk = 0;
+				$('#email_err div').addClass('has-error');
+			}
+			else {
+				$('#email_err div').removeClass('has-error');
+			}
+
+			if (contact_submenu_heading_text == '') {
+				chk = 0;
+				$('#contact div').addClass('has-error');
+			}
+			else {
+				$('#contact div').removeClass('has-error');
+			}
 
 
-            $('.ques_heading').each(function (index) {
-                var qques = $(this).val();
-                if (qques == '') {
-                    chk = 0;
-                    $(this).parent().addClass('has-error');
-                }
-                else {
-                    $(this).parent().removeClass('has-error');
-                }
-            });
-
-            if (chk) {
-                return true;
-            }
-            else {
-                return false;
-            }
-
-        }
+			if (headline == '') {
+				chk = 0;
+				$('#head_line div').addClass('has-error');
+			}
+			else {
+				$('#head_line div').removeClass('has-error');
+			}
 
 
-        function isValidEmailAddress(emailAddress) {
-            var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+			$('.ques_heading').each(function (index) {
+				var qques = $(this).val();
+				if (qques == '') {
+					chk = 0;
+					$(this).parent().addClass('has-error');
+				}
+				else {
+					$(this).parent().removeClass('has-error');
+				}
+			});
 
-            return pattern.test(emailAddress);
-        }
+			if (chk) {
+				return true;
+			}
+			else {
+				return false;
+			}
+
+		}
+
+
+		function isValidEmailAddress(emailAddress) {
+			var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+
+			return pattern.test(emailAddress);
+		}
 
     </script>
+    <script>
+	    $(document).ready(function () {
 
+	    });
+
+	    function warnBeforeRedirect(linkURL) {
+		    swal({
+			    html:true,
+			    title: "{{ trans('front/bots.are_you_sure') }}",
+			    text: "{{ trans('front/bots.you_are_going_to_delete') }}",
+			    type: "warning",
+			    showCancelButton: true,
+			    cancelButtonText: "{{ trans('front/bots.cancel') }}",
+		    }, function () {
+			    // Redirect the user
+			    window.location.href = linkURL;
+		    });
+	    }
+
+    </script>
 @stop

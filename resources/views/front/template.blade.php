@@ -136,6 +136,9 @@
                 $('td').Emoji({
                     path:'https://app.citymes.com/img/apple40/'
                 });
+                $('.telebutton').Emoji({
+                    path:'https://app.citymes.com/img/apple40/'
+                });
             });
 
 			

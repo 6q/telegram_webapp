@@ -1795,5 +1795,12 @@ class BotController extends Controller
 			return redirect('bot/detail/'.$request->get('bot_id'))->with('ok', trans('back/bot.plan_update'));
 		}		
 	}
-    
+
+	public function sortbuttons(Request $request){
+
+		print_r($request);
+
+		return true;
+
+	}
 }

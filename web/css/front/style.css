@@ -607,9 +607,14 @@ div.buying_table {
     color: #697a83;
     font-size: 35px;
 }
-.col-plan td.paginacio {
+.col-plan .paginacio {
     background:#EFEFEF;
     padding:5px 0px 5px 5px;
+    display:block;
+    vertical-align: top;
+    width:100%;
+    float:left;
+
 }
 .paginacio .info_test {
     width:auto;
@@ -2116,12 +2121,11 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     display:none;
 }
 .tablesearch {
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
     float: left;
     width: 120px;
     margin-right: 5px;
-    display: none;
 }
 .telebuttons {
     background:#DEE1E6;
@@ -2130,16 +2134,27 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     vertical-align: top;
     display:block;
 }
+.telebuttons.commands {
+    background:#DEE1E6;
+    height:auto;
+    overflow-y: hidden;
+    vertical-align: top;
+    display:block;
+}
 .telebuttons ul {
-    margin: 0 0 10px 0;
-    width: 100%;
+    margin: 10px;
+    float:left;
+    width: calc(100% - 20px);
 }
 .telebuttons ul li {
-    border: medium none;
     float: left;
     padding: 3px;
+    height: 44px;
     width: 50%;
     position:relative;
+}
+.telebuttons.commands ul li {
+    width: 33%;
 }
 .telebuttons ul li a.telebutton {
     font-size: 14px;
@@ -2166,9 +2181,6 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     cursor: pointer;
     font-size:14px;
 }
-.telebuttons ul li .danger:hover{
-    color:gray;
-}
 .telebuttons ul li a.telebutton:hover {
     border-bottom: 1px #898989 solid;
 }
@@ -2176,7 +2188,9 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     background: #EFEFEF;
 }
 @media (max-width:480px){
-
+    .telebuttons.commands ul li {
+        width: 50%;
+    }
     #mobile_footer {
         display:block;
         float:left;
