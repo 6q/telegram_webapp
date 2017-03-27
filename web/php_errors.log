@@ -19,3 +19,12 @@
 [07-Mar-2017 16:29:03 UTC] PHP Parse error:  syntax error, unexpected ',', expecting ']' in /home/gestinet/www/citymes.app/resources/lang/en/front/dashboard.php on line 56
 [08-Mar-2017 15:23:26 UTC] PHP Fatal error:  Input string is too long in /home/gestinet/www/citymes.app/vendor/symfony/debug/ExceptionHandler.php on line 412
 [24-Mar-2017 07:57:08 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/gestinet/www/citymes.app/storage/framework/views/ae9414a10d79bbb44d623ca61cc08345c85c3b5c.php on line 1285
+[27-Mar-2017 10:07:10 Europe/Berlin] PHP Fatal error:  Call to undefined function reordenar_elemento() in /home/gestinet/www/citymes.app/web/sortable.php on line 31
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'mycitymes'@'62.83.242.15' (using password: YES) in /home/gestinet/www/citymes.app/web/sortable.php on line 8
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/gestinet/www/citymes.app/web/sortable.php on line 18
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'mycitymes'@'62.83.242.15' (using password: YES) in /home/gestinet/www/citymes.app/web/sortable.php on line 8
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/gestinet/www/citymes.app/web/sortable.php on line 18
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'mycitymes'@'62.83.242.15' (using password: YES) in /home/gestinet/www/citymes.app/web/sortable.php on line 8
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/gestinet/www/citymes.app/web/sortable.php on line 18
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'mycitymes'@'62.83.242.15' (using password: YES) in /home/gestinet/www/citymes.app/web/sortable.php on line 8
+[27-Mar-2017 10:07:30 Europe/Berlin] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/gestinet/www/citymes.app/web/sortable.php on line 18

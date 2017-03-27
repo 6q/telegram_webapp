@@ -172,7 +172,7 @@
 									if(!empty($autoResponse)){
 									foreach($autoResponse as $d2 => $v2){
 									?>
-                                    <li data-itemId="{{ $v2->id }}">
+                                    <li id="autoresponse-{{ $v2->id }}">
                                         <a class="telebutton"
                                            href="{!! URL::to('/command/autoresponse_edit/'.$v2->id) !!}"
                                            data-toggle="tooltip" data-original-title="Editar">
@@ -241,7 +241,7 @@
 									if(!empty($contactForm)){
 									foreach($contactForm as $d3 => $v3){
 									?>
-                                    <li>
+                                    <li id="contactform-{{ $v3->id }}">
                                         <a class="telebutton"
                                            href="{!! URL::to('/command/contactform_edit/'.$v3->id) !!}"
                                            data-toggle="tooltip" data-original-title="Editar">
@@ -307,7 +307,7 @@
 									if(!empty($gallery)){
 									foreach($gallery as $d4 => $v4){
 									?>
-                                    <li>
+                                    <li id="gallery-{{ $v4->id }}">
                                         <a class="telebutton" href="{!! URL::to('/command/gallery_edit/'.$v4->id) !!}"
                                            data-toggle="tooltip" data-original-title="Editar">
 											<?php echo $v4->gallery_submenu_heading_text;?>
@@ -367,7 +367,7 @@
 									if(!empty($chanels)){
 									foreach($chanels as $d5 => $v5){
 									?>
-                                    <li>
+                                    <li id="channel-{{ $v5->id }}">
                                         <a class="telebutton" href="{!! URL::to('/command/chanel_edit/'.$v5->id) !!}"
                                            data-toggle="tooltip" data-original-title="Editar">
 											<?php echo $v5->chanel_submenu_heading_text;?>
@@ -1108,79 +1108,54 @@
 
     <script>
 		$(function () {
-			//$("#sortable_botAutoresponse").sortable();
-			//$("#sortable_botAutoresponse").disableSelection();
 
-			$("#sortable_botContactForm").sortable();
-			$("#sortable_botContactForm").disableSelection();
 
-			$("#sortable_botGallery").sortable();
-			$("#sortable_botGallery").disableSelection();
-
-			$("#sortable_botChannels").sortable();
-			$("#sortable_botChannels").disableSelection();
-
-			/**
-			 *
-			 * @param type string 'insertAfter' or 'insertBefore'
-			 * @param entityName
-			 * @param id
-			 * @param positionId
-			 */
-			var changePosition = function(requestData){
-				var token = $('input[name=_token]').val();
-				$.ajax({
-					url: '<?php echo URL::to('/bot/sort_autoresponses')?>/',
-					headers: {'X-CSRF-TOKEN': token},
-					'type': 'POST',
-					'data': requestData,
-					'success': function(data) {
-						if (data.success) {
-							console.log('Saved!');
-						} else {
-							console.error(data.errors);
-						}
-					},
-					'error': function(){
-						console.error('Something wrong!');
-					}
-				});
-			};
-
-			$(document).ready(function(){
-				var $sortableTable = $('#sortable_botAutoresponse');
-				if ($sortableTable.length > 0) {
-					$sortableTable.sortable({
-						handle: '.telebutton',
-						update: function(a, b){
-
-							var entityName = $(this).data('entityname');
-							var $sorted = b.item;
-
-							var $previous = $sorted.prev();
-							var $next = $sorted.next();
-
-							if ($previous.length > 0) {
-								changePosition({
-									parentId: $sorted.data('parentid'),
-									type: 'moveAfter',
-									entityName: entityName,
-									id: $sorted.data('itemid'),
-									positionEntityId: $previous.data('itemid')
-								});
-							} else if ($next.length > 0) {
-								changePosition({
-									parentId: $sorted.data('parentid'),
-									type: 'moveBefore',
-									entityName: entityName,
-									id: $sorted.data('itemid'),
-									positionEntityId: $next.data('itemid')
-								});
-							} else {
-								console.error('Something wrong!');
-							}
-						},
-						cursor: "move"
+			$( "#sortable_botAutoresponse" ).sortable({
+				forceHelperSize: true,
+				update: function(event, ui) {
+					var orden = $(this).sortable('toArray').toString();
+					$.ajax({
+						url: '/sortable.php?table=autoresponses',
+						data: {"data": orden},
+						type: 'post'
+					}).done(function(data) {
+					});
+					$(".ajax-loader").hide();
+				}
+			});
+			$( "#sortable_botContactForm" ).sortable({
+				forceHelperSize: true,
+				update: function(event, ui) {
+					var orden = $(this).sortable('toArray').toString();
+					$.ajax({
+						url: '/sortable.php?table=contact_forms',
+						data: {"data": orden},
+						type: 'post'
+					}).done(function(data) {
+					});
+				}
+			});
+			$( "#sortable_botGallery" ).sortable({
+				forceHelperSize: true,
+				update: function(event, ui) {
+					var orden = $(this).sortable('toArray').toString();
+					$.ajax({
+						url: '/sortable.php?table=galleries',
+						data: {"data": orden},
+						type: 'post'
+					}).done(function(data) {
+					});
+				}
+			});
+			$( "#sortable_botChannels" ).sortable({
+				forceHelperSize: true,
+				update: function(event, ui) {
+					var orden = $(this).sortable('toArray').toString();
+					$.ajax({
+						url: '/sortable.php?table=chanels',
+						data: {"data": orden},
+						type: 'post'
+					}).done(function(data) {
 					});
 				}
 			});
