@@ -2153,7 +2153,8 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     float: left;
     padding: 3px;
     height: 44px;
-    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
     position:relative;
 }
 .telebuttons.commands ul li {
