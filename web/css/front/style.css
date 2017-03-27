@@ -2158,6 +2158,8 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
     position:relative;
 }
 .telebuttons.commands ul li {
+    min-width: 33%;
+    max-width: 33%;
     width: 33%;
 }
 .telebuttons ul li a.telebutton {
