@@ -2140,9 +2140,10 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
 .telebuttons.commands {
     background:#DEE1E6;
     height:auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     vertical-align: top;
     display:block;
+    max-height: 400px;
 }
 .telebuttons ul {
     margin: 10px;
