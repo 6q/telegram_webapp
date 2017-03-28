@@ -669,7 +669,7 @@ class BotController extends Controller
 								->limit($limitMessage)
 	                            ->get();
 				
-				$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->limit($bot_commands_limit)->get();
+				$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->get();
 								
 								
             }
