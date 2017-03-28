@@ -2195,6 +2195,8 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
 }
 @media (max-width:480px){
     .telebuttons.commands ul li {
+        min-width: 50%;
+        max-width: 50%;
         width: 50%;
     }
     #mobile_footer {
