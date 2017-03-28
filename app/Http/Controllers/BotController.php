@@ -970,7 +970,7 @@ class BotController extends Controller
 			$planDetails = DB::table('plans')->where('id','=',$subscription[0]->plan_id)->get();
 		}
 		
-		$autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		$autoResponse = DB::table('autoresponses')->where('type_id', '=', $botid)->offset($start)->get();
 		
 		return view('front.bots.paginnate_autoresponse', compact('planDetails','autoResponse','total_pages','limit','botid','current_page'));
 	}
@@ -1001,7 +1001,7 @@ class BotController extends Controller
 			$planDetails = DB::table('plans')->where('id','=',$subscription[0]->plan_id)->get();
 		}
 		
-		$contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		$contactForm = DB::table('contact_forms')->where('type_id', '=', $botid)->offset($start)->get();
 		
 		return view('front.bots.paginnate_contact_form', compact('contactForm','planDetails','total_pages_contatc_form','limit','botid','current_page','adjacents'));
 	}
@@ -1032,7 +1032,7 @@ class BotController extends Controller
 			$planDetails = DB::table('plans')->where('id','=',$subscription[0]->plan_id)->get();
 		}
 		
-		$gallery = DB::table('galleries')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		$gallery = DB::table('galleries')->where('type_id', '=', $botid)->offset($start)->get();
 		
 		return view('front.bots.paginnate_gallery', compact('planDetails','gallery','total_pages_gallery','limit','botid','current_page','adjacents'));
 	}
@@ -1053,7 +1053,7 @@ class BotController extends Controller
 		$Total_chanels = DB::table('chanels')->where('type_id', '=', $botid)->get();
 		$total_pages_chanels = count($Total_chanels);
 		
-		$chanels = DB::table('chanels')->where('type_id', '=', $botid)->limit($limit)->offset($start)->get();
+		$chanels = DB::table('chanels')->where('type_id', '=', $botid)->offset($start)->get();
 		
 		return view('front.bots.paginnate_chanel', compact('chanels','total_pages_chanels','limit','botid','current_page','adjacents'));
 	}
@@ -1128,7 +1128,7 @@ class BotController extends Controller
 		$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->get();
 		$total_bot_commands = count($botCommands);
 		
-		$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->limit($limit)->offset($start)->get();
+		$botCommands = DB::table('bot_commands')->orderBy('title','ASC')->where('bot_id','=',$botid)->offset($start)->get();
 		
 		return view('front.bots.paginnate_bot_command', compact('botCommands','total_bot_commands','limit','botid','current_page','adjacents'));
 	}
