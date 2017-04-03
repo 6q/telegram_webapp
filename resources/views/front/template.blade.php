@@ -125,7 +125,11 @@
                 // It can be called as many times as necessary; previously converted input fields will not be converted again
                 window.emojiPicker.discover();
             });
-
+            $(document).ready(function(){
+	            $(document).on("cut copy paste","#title",function(e) {
+		            e.preventDefault();
+	            });
+            });
             jQuery(document).ready(function(){
                 $('.chat_tab').Emoji({
                     path:'https://app.citymes.com/img/apple40/'
@@ -140,7 +144,11 @@
                     path:'https://app.citymes.com/img/apple40/'
                 });
             });
-
+            $(document).ready(function(){
+	            $('.emoji-wysiwyg-editor').bind("cut copy paste",function(e) {
+		            e.preventDefault();
+	            });
+            });
 			
 			$(function() {
 				setInterval(function() {
