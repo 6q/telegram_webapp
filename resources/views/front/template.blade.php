@@ -143,13 +143,13 @@
                 $('.telebutton').Emoji({
                     path:'https://app.citymes.com/img/apple40/'
                 });
-            });
-            $(document).ready(function(){
-	            $('.emoji-wysiwyg-editor').bind("cut copy paste",function(e) {
-		            e.preventDefault();
+	            $("div[contenteditable]").on("paste", function(event) {
+		            event.preventDefault();
+		            var text = event.originalEvent.clipboardData.getData("text/plain");
+		            document.execCommand("insertHTML", false, text);
 	            });
             });
-			
+
 			$(function() {
 				setInterval(function() {
 					$(".alert").hide()

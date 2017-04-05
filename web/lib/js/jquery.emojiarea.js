@@ -831,4 +831,6 @@
     this.visible = true;
   };
 
+
+
 })(jQuery, window, document);
