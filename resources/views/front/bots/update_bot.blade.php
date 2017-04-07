@@ -2,7 +2,7 @@
 @section('main')
 
 
-    <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
+    <div class="col-sm-9 col-sm-offset-3 col-lg-9 col-lg-offset-3">
 
         @include('front.top')
 
@@ -122,11 +122,11 @@
                         </ul>
                     </div>
 
-                    <div class="submit buy_now">
-                        <a href="{!! URL::to('/bot/detail/'.$bot->id) !!}">{{ trans('front/bots.back') }}</a>
-                        {!! Form::submit_new(trans('front/bots.update')) !!}
-                    </div>
 
+                    <div class="input_submit buy_now new_submit">
+                        <a type="button" class="btn btn-info" href="{!! URL::to('/bot/detail/'.$bot->id) !!}"><i class="fa fa-backward" aria-hidden="true"></i></a>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                    </div>
                 </div>
             </div>
         </div>

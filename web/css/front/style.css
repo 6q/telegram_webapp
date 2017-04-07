@@ -944,7 +944,7 @@ p.h2 > img {
     width: auto;
 }
 .buy_now > a {
-    background-color: #00aca0;
+    /*background-color: #00aca0;*/
     border-radius: 3px;
     color: #fff;
     display: inline-block;
@@ -2117,6 +2117,19 @@ body .emoji-picker-container.text-area .emoji-wysiwyg-editor {
         padding-bottom: 5px;
     }
 }
+.new_submit > a {
+    font-size:20px;
+
+}
+.new_submit > button {
+    font-size:20px;
+
+}
+.new_submit > .btn-success {
+    padding-left:40px;
+    padding-right:40px;
+}
+
 #mobile_footer {
     display:none;
 }

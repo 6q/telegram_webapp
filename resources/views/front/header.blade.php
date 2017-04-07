@@ -1,6 +1,6 @@
 <div class="col-sm-3" id="main-sidebar">
 
-	<div class="col-lg-2" id="menu">
+	<div class="col-sm-2" id="menu">
 		<div class="home">
 			<a href="{!! URL::to('/dashboard') !!}" data-toggle="tooltip" title="{!! trans('front/header.dashboard') !!}">
 				<i class="fa fa-home" aria-hidden="true" style="font-size:22px;"></i>

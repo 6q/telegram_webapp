@@ -5,7 +5,7 @@
 
 
 
-    <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
+    <div class="col-sm-9 col-sm-offset-3 col-lg-9 col-lg-offset-3">
 
         @include('front.top')
 
@@ -88,8 +88,10 @@
                         </div>
                     </div>
                     <? } ?>
-                    <li class="input_submit"><input type="submit" value="{!! trans('front/command.submit') !!}"></li>
-
+                    <li class="input_submit buy_now new_submit">
+                        <a type="button" class="btn btn-info" href="{!! URL::to('/bot/detail/'.$bot_id) !!}"><i class="fa fa-backward" aria-hidden="true"></i></a>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                    </li>
                 </ul>
 
                 {!! Form::close() !!}

@@ -2,7 +2,7 @@
 @section('main')
 
 
-    <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3">
+    <div class="col-sm-9 col-sm-offset-3 col-lg-9 col-lg-offset-3">
      
       @include('front.top')  
       
