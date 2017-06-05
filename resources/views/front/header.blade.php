@@ -64,9 +64,9 @@
 		<h1 class="logo">
 			<a href="{!! URL::to('/dashboard') !!}">
 				<? if (session('statut') == 'vip') { ?>
-					{!! HTML::image('img/front/logo.png') !!}
-				<? } else { ?>
 					{!! HTML::image('img/front/logo_amtu.png') !!}
+				<? } else { ?>
+					{!! HTML::image('img/front/logo.png') !!}
 				<? } ?>
 			</a>
 		</h1>
