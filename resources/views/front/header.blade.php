@@ -63,7 +63,11 @@
 	<div class="col-sm-10 col-sm-offset-2  col-lg-10 col-lg-offset-2 " id="sidebar">
 		<h1 class="logo">
 			<a href="{!! URL::to('/dashboard') !!}">
-				{!! HTML::image('img/front/logo.png') !!}
+				<? if (session('statut') == 'vip') { ?>
+					{!! HTML::image('img/front/logo.png') !!}
+				<? } else { ?>
+					{!! HTML::image('img/front/logo_amtu.png') !!}
+				<? } ?>
 			</a>
 		</h1>
 
