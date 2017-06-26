@@ -160,7 +160,7 @@
                     <li class="input_submit buy_now new_submit">
                         <a type="button" class="btn btn-info" href="{!! URL::to('/bot/detail/'.$botCommands[0]->bot_id) !!}"><i class="fa fa-backward" aria-hidden="true"></i></a>
                         <a type="button" class="btn btn-danger"
-                           onclick="return warnBeforeRedirect('{!! URL::to('/command/bot_command_delete/'.$botCommands[0]->bot_id.'/'.$botCommands[0]->id) !!}')"><i
+                           onclick="return warnBeforeRedirect('{!! URL::to('/bot/bot_command_delete/'.$botCommands[0]->bot_id.'/'.$botCommands[0]->id) !!}')"><i
                                     class="fa fa-trash" aria-hidden="true"></i></a>
                         <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                     </li>

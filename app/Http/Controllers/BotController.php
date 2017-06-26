@@ -1197,7 +1197,8 @@ class BotController extends Controller
 				$bot_command->id = $request->get('id');
 				$bot_command->title = $request->get('title');
 				$bot_command->command_description = $request->get('command_description');
-				$bot_command->webservice_type = $request->get('webservice_type');
+				if ($request->get('webservice_type')) $bot_command->webservice_type = $request->get('webservice_type');
+				else $bot_command->webservice_type = 0;
 				$bot_command->webservice_url = $request->get('webservice_url');
 
 				$img_name_s = $request->get('old_img');
@@ -1574,7 +1575,8 @@ class BotController extends Controller
 			$bot_id = $request->get('bot_id');
 			$title = $request->get('title');
 			$command_description = $request->get('command_description');
-			$webservice_type = $request->get('webservice_type');
+			if ($request->get('webservice_type')) $webservice_type = $request->get('webservice_type');
+			else $webservice_type = 0;
 			$webservice_url = $request->get('webservice_url');
 
 			$error = 'false';

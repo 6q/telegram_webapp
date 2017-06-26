@@ -951,6 +951,12 @@ p.h2 > img {
     font-size: 22px;
     padding: 6px 20px;
 }
+.buy_now > a.btn-danger {
+    background-color: #d9534f;
+}
+.buy_now > a.btn-info {
+    background-color: #5bc0de;
+}
 .buy_now {
     text-align: center;
     margin-top:30px;
