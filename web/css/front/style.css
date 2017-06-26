@@ -944,7 +944,7 @@ p.h2 > img {
     width: auto;
 }
 .buy_now > a {
-    /*background-color: #00aca0;*/
+    background-color: #00aca0;
     border-radius: 3px;
     color: #fff;
     display: inline-block;
